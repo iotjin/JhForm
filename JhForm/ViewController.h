@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JhFormTableViewVC.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : JhFormTableViewVC
 
 
 @end

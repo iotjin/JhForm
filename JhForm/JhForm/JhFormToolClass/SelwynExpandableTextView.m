@@ -281,7 +281,7 @@ static NSString * const kTextAlignmentKey = @"textAlignment";
         _lenthLab.font = [UIFont systemFontOfSize:Jh_LengHintFont];
         _lenthLab.backgroundColor = [UIColor clearColor];
         _lenthLab.textAlignment = NSTextAlignmentRight;
-        _lenthLab.textColor = Jh_PLACEHOLDERCOLOR;
+        _lenthLab.textColor = Jh_PlaceholderColor;
         [self addSubview:_lenthLab];
     }
     return _lenthLab;

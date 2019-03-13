@@ -8,7 +8,7 @@
 
 #import "JhFormSelectImageCell.h"
 
-#import "JhFormItem.h"
+#import "JhFormCellModel.h"
 #import "JhFormConst.h"
 
 
@@ -38,6 +38,17 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+
+
+-(UIView *)line1{
+    if (!_line1) {
+        _line1=[[UIView alloc]init];
+        _line1.backgroundColor=BaselineColor;
+        [self.contentView addSubview:_line1];
+    }
+    return _line1;
 }
 
 
@@ -98,13 +109,11 @@
     self.selectImgArr = allList;
     NSSLog(@" 选择图片cell - allList %@",allList);
    
-    
     //获取原图
     [self.toolManager getSelectedImageList:self.selectImgArr requestType:HXDatePhotoToolManagerRequestTypeOriginal success:^(NSArray<UIImage *> *imageList) {
-        
         self.selectImgArr = imageList;
         NSSLog(@" 选择图片cell - selectImgArr %@",self.selectImgArr);
-        _item.images = self.selectImgArr;
+        self.data.Jh_imageArr = self.selectImgArr;
         
         
     } failed:^{
@@ -118,8 +127,8 @@
 
 #pragma mark -- 刷新当前图片数据
 - (void)Jh_reloadData {
-    if (self.imageSelectCompletion) {
-        self.imageSelectCompletion(self.selectImgArr);
+    if (self.JhImageSelectBlock) {
+        self.JhImageSelectBlock(self.selectImgArr);
     }
     [UIView performWithoutAnimation:^{
         [self.baseTableView beginUpdates];
@@ -128,12 +137,12 @@
 }
 
 
-- (void)setItem:(JhFormItem *)item {
+-(void)setData:(JhFormCellModel *)data{
+    _data= data;
     
-    _item = item;
-    self.titleLabel.attributedText = item.attributedTitle;
+    self.titleLabel.attributedText = data.Jh_attributedTitle;
     
-    item.defaultHeight = 200 +44;
+    data.Jh_defaultHeight = 200 +44;
     
     
 }
@@ -143,13 +152,11 @@
     [super layoutSubviews];
     
     //标题固定top
-    self.titleLabel.frame = CGRectMake(Jh_EdgeMargin, Jh_EdgeMargin, Jh_SCRREN_WIDTH - 2*Jh_EdgeMargin, Jh_TitleHeight);
+    self.titleLabel.frame = CGRectMake(Jh_Margin_left, Jh_EdgeMargin, Jh_SCRREN_WIDTH - 2*Jh_EdgeMargin, Jh_TitleHeight);
     
     /********************************* 底部加线 ********************************/
-    _line1=[[UIView alloc]init];
-    _line1.backgroundColor=BaselineColor;
-    [self addSubview:_line1];
-    _line1.frame= CGRectMake(Jh_EdgeMargin+5,CGRectGetMaxY(self.titleLabel.frame)+10, Jh_SCRREN_WIDTH - Jh_EdgeMargin-5, 1);
+    
+    self.line1.frame= CGRectMake(Jh_LineEdgeMargin,CGRectGetMaxY(self.titleLabel.frame)+10, Jh_SCRREN_WIDTH - Jh_LineEdgeMargin, 1);
     
     /********************************* 底部加线 ********************************/
     

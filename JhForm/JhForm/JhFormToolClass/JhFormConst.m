@@ -14,8 +14,23 @@ CGFloat const Jh_TitleFont = 15.0f;
 // 表单详情字体大小
 CGFloat const Jh_InfoFont = 15.0f;
 
-// 表单条目边缘距离
-CGFloat const Jh_EdgeMargin = 10.0f;
+/**
+ 表单条目左侧边缘距离，缺省为15.0f
+ */
+CGFloat const Jh_Margin_left = 15.0f;
+
+/**
+ 表单条目右侧边缘距离，缺省为10.0f
+ */
+CGFloat const Jh_EdgeMargin= 10.0f;
+
+
+
+/**
+ 表单底部线距离左侧边缘距离，缺省为16.0f (尽量不要动,只在几个cell中使用了)
+ */
+CGFloat const Jh_LineEdgeMargin = 16.0f;
+
 
 // 表单标题宽度
 CGFloat const Jh_TitleWidth = 100.0f;
@@ -24,8 +39,9 @@ CGFloat const Jh_TitleWidth = 100.0f;
 CGFloat const Jh_TitleHeight = 24.0f;
 
 // 表单条目初始高度
-CGFloat const Jh_DefaultItemHeight = 44.0f;
-CGFloat const Jh_DefaultTextViewItemHeight = 200.0f;
+CGFloat const Jh_DefaultCellHeight = 44.0f;
+CGFloat const Jh_DefaultTextViewCellHeight = 200.0f;
+CGFloat const Jh_DefaultCustumBottomViewCellHeight = 240.0f;
 
 // 表单标题显示类别
 NSInteger const Jh_TitleShowType = JhTitleShowTypeOnlyTitle;

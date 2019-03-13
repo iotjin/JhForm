@@ -1,8 +1,8 @@
 //
-//  TestVC2.h
-//  PersonalWage
+//  FormDemo1VC.h
+//  JhReader
 //
-//  Created by Jh on 2019/1/4.
+//  Created by Jh on 2019/3/11.
 //  Copyright © 2019 Jh. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TestVC2 : JhFormTableViewVC
+@interface FormDemo1VC : JhFormTableViewVC
 
 @end
 

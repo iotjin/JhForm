@@ -8,7 +8,7 @@
 
 #import "JhFormCustumRightCell.h"
 
-#import "JhFormItem.h"
+#import "JhFormCellModel.h"
 #import "JhFormConst.h"
 
 
@@ -39,10 +39,10 @@
 }
 
 
-- (void)setItem:(JhFormItem *)item {
+-(void)setData:(JhFormCellModel *)data{
+    _data= data;
     
-    _item = item;
-    self.titleLabel.attributedText = item.attributedTitle;
+    self.titleLabel.attributedText = data.Jh_attributedTitle;
     
 }
 
@@ -50,13 +50,10 @@
     [super layoutSubviews];
     
     //标题居中
-    self.titleLabel.frame = CGRectMake(Jh_EdgeMargin, (self.item.defaultHeight - Jh_TitleHeight)/2, Jh_TitleWidth, Jh_TitleHeight);
-    
-    self.CustumRightView.frame =CGRectMake(Jh_TitleWidth + 2*Jh_EdgeMargin, 0, Jh_SCRREN_WIDTH - (Jh_TitleWidth + 2*Jh_EdgeMargin) -5, self.bounds.size.height);
-    
+    self.titleLabel.frame = CGRectMake(Jh_Margin_left, (self.data.Jh_defaultHeight - Jh_TitleHeight)/2, Jh_TitleWidth, Jh_TitleHeight);
+    self.CustumRightView.frame =CGRectMake(Jh_CustumRightView_leftEdgeMargin, 0, Jh_SCRREN_WIDTH - Jh_CustumRightView_leftEdgeMargin - Jh_CustumRightView_rightEdgeMargin, self.bounds.size.height);
     
 }
-
 
 
 
@@ -64,7 +61,7 @@
 
 @implementation UITableView (JhFormCustumRightCell)
 
-- (JhFormCustumRightCell *)custumRightCellWithId:(NSString *)cellId
+- (JhFormCustumRightCell *)CustumRightCellWithId:(NSString *)cellId
 {
     JhFormCustumRightCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {

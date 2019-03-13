@@ -8,22 +8,22 @@
 
 #import "JhFormBaseCell.h"
 
-@class JhFormItem;
+@class JhFormCellModel;
 
 
 /**
  图片选择或删除block
  
- @param images 当前已存在图片数组
+ @param imageArr 当前已存在图片数组
  */
-typedef void(^JhImageSelectCompletion)(NSArray *images);
+typedef void(^JhImageSelectBlock)(NSArray *imageArr);
 
 
 @interface JhFormSelectImageCell : JhFormBaseCell
 
-@property (nonatomic, strong) JhFormItem *item;
+@property (nonatomic, strong) JhFormCellModel *data;
 
-@property (nonatomic, copy) JhImageSelectCompletion imageSelectCompletion;
+@property (nonatomic, copy) JhImageSelectBlock JhImageSelectBlock;
 
 @end
 

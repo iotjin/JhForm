@@ -8,16 +8,16 @@
 
 #import "JhFormBaseCell.h"
 
-@class JhFormItem;
+@class JhFormCellModel;
 
 /**
  JhFormSelectCell 表单选择条目
  */
 @interface JhFormSelectCell : JhFormBaseCell
 
-@property (nonatomic, strong) JhFormItem *item;
+@property (nonatomic, strong) JhFormCellModel *data;
 
-+ (CGFloat)heightWithItem:(JhFormItem *)item;
++ (CGFloat)heightWithCellModelData:(JhFormCellModel *)data;
 
 @end
 

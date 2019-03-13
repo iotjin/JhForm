@@ -7,10 +7,10 @@
 //  表单输入条目，标题居左，详情居右，支持单行与多行输入
 
 #import "JhFormBaseCell.h"
-#import "JhFormItem.h"
+#import "JhFormCellModel.h"
 
 
-@class JhFormItem;
+@class JhFormCellModel;
 
 /**
  输入内容block
@@ -18,8 +18,6 @@
  @param text 当前输入内容
  */
 typedef void(^JhInputCompletion)(NSString *text);
-
-
 
 
 /**
@@ -32,14 +30,14 @@ typedef void(^JhInputCompletion)(NSString *text);
 /**
  条目配置参数
  */
-@property (nonatomic, strong) JhFormItem *item;
+@property (nonatomic, strong) JhFormCellModel *data;
 
 @property (nonatomic, copy) JhInputCompletion inputCompletion;
 
 /**
  获取条目高度
  */
-+ (CGFloat)heightWithItem:(JhFormItem *)item;
++ (CGFloat)heightWithCellModelData:(JhFormCellModel *)data;
 
 @end
 

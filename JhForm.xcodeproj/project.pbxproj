@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E92500CC2238F6C70076D160 /* form_demo_02.gif in Resources */ = {isa = PBXBuildFile; fileRef = E92500CA2238F6C60076D160 /* form_demo_02.gif */; };
+		E92500CD2238F6C70076D160 /* form_demo_01.gif in Resources */ = {isa = PBXBuildFile; fileRef = E92500CB2238F6C70076D160 /* form_demo_01.gif */; };
 		E93D3F7F21E58DD9003DC702 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3F7E21E58DD9003DC702 /* AppDelegate.m */; };
 		E93D3F8221E58DD9003DC702 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3F8121E58DD9003DC702 /* ViewController.m */; };
 		E93D3F8521E58DD9003DC702 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E93D3F8321E58DD9003DC702 /* Main.storyboard */; };
@@ -15,23 +17,6 @@
 		E93D3F8D21E58DDB003DC702 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3F8C21E58DDB003DC702 /* main.m */; };
 		E93D3F9721E58DDB003DC702 /* JhFormTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3F9621E58DDB003DC702 /* JhFormTests.m */; };
 		E93D3FA221E58DDB003DC702 /* JhFormUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FA121E58DDB003DC702 /* JhFormUITests.m */; };
-		E93D3FD721E58E3C003DC702 /* JhFormTableViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FB021E58E3C003DC702 /* JhFormTableViewVC.m */; };
-		E93D3FD821E58E3C003DC702 /* TestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FB121E58E3C003DC702 /* TestVC.m */; };
-		E93D3FD921E58E3C003DC702 /* JhFormSectionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FB421E58E3C003DC702 /* JhFormSectionItem.m */; };
-		E93D3FDA21E58E3C003DC702 /* JhFormData.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FB821E58E3C003DC702 /* JhFormData.m */; };
-		E93D3FDB21E58E3C003DC702 /* JhFormItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FB921E58E3C003DC702 /* JhFormItem.m */; };
-		E93D3FDC21E58E3C003DC702 /* JhFormTextViewInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FBD21E58E3C003DC702 /* JhFormTextViewInputCell.m */; };
-		E93D3FDD21E58E3C003DC702 /* JhFormInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FC021E58E3C003DC702 /* JhFormInputCell.m */; };
-		E93D3FDE21E58E3C003DC702 /* JhFormSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FC121E58E3C003DC702 /* JhFormSelectCell.m */; };
-		E93D3FDF21E58E3C003DC702 /* JhFormCustumRightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FC321E58E3C003DC702 /* JhFormCustumRightCell.m */; };
-		E93D3FE021E58E3C003DC702 /* JhFormBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FC421E58E3C003DC702 /* JhFormBaseCell.m */; };
-		E93D3FE121E58E3C003DC702 /* JhFormSelectImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FC521E58E3C003DC702 /* JhFormSelectImageCell.m */; };
-		E93D3FE221E58E3C003DC702 /* JhFormCustumBottomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FC721E58E3C003DC702 /* JhFormCustumBottomCell.m */; };
-		E93D3FE421E58E3C003DC702 /* NSString+JhForm.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FCD21E58E3C003DC702 /* NSString+JhForm.m */; };
-		E93D3FE521E58E3C003DC702 /* UITextView+TextLimit.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FCE21E58E3C003DC702 /* UITextView+TextLimit.m */; };
-		E93D3FE621E58E3C003DC702 /* SelwynExpandableTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FCF21E58E3C003DC702 /* SelwynExpandableTextView.m */; };
-		E93D3FE721E58E3C003DC702 /* JhFormConst.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FD021E58E3C003DC702 /* JhFormConst.m */; };
-		E93D3FE821E58E3C003DC702 /* JhFormHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FD621E58E3C003DC702 /* JhFormHandler.m */; };
 		E93D406321E58E52003DC702 /* YYImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FEA21E58E52003DC702 /* YYImageCache.m */; };
 		E93D406421E58E52003DC702 /* YYWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FEB21E58E52003DC702 /* YYWebImageManager.m */; };
 		E93D406521E58E52003DC702 /* YYSpriteSheetImage.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FF121E58E52003DC702 /* YYSpriteSheetImage.m */; };
@@ -94,10 +79,40 @@
 		E93D40A721E58E5D003DC702 /* YYCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D40A021E58E5D003DC702 /* YYCache.m */; };
 		E93D40A821E58E5D003DC702 /* YYKVStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D40A421E58E5D003DC702 /* YYKVStorage.m */; };
 		E93D40A921E58E5D003DC702 /* YYMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D40A521E58E5D003DC702 /* YYMemoryCache.m */; };
-		E93D40AD21E59F07003DC702 /* JhForm.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E93D40AC21E59F07003DC702 /* JhForm.bundle */; };
-		E93D40E921E5A8EB003DC702 /* TestVC2.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D40E821E5A8EB003DC702 /* TestVC2.m */; };
-		E93D40EE21E5C037003DC702 /* 0.gif in Resources */ = {isa = PBXBuildFile; fileRef = E93D40ED21E5C037003DC702 /* 0.gif */; };
-		E93D40F021E5C040003DC702 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = E93D40EF21E5C040003DC702 /* 1.png */; };
+		E9FD211C2238CF20002C67E6 /* JhFormTableViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD20F62238CF20002C67E6 /* JhFormTableViewVC.m */; };
+		E9FD211D2238CF20002C67E6 /* JhFormCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD20F82238CF20002C67E6 /* JhFormCellModel.m */; };
+		E9FD211E2238CF20002C67E6 /* JhFormSectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD20FB2238CF20002C67E6 /* JhFormSectionModel.m */; };
+		E9FD211F2238CF20002C67E6 /* JhFormTextViewInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD20FF2238CF20002C67E6 /* JhFormTextViewInputCell.m */; };
+		E9FD21202238CF20002C67E6 /* JhFormSwitchBtnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21032238CF20002C67E6 /* JhFormSwitchBtnCell.m */; };
+		E9FD21212238CF20002C67E6 /* JhFormInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21042238CF20002C67E6 /* JhFormInputCell.m */; };
+		E9FD21222238CF20002C67E6 /* JhFormSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21052238CF20002C67E6 /* JhFormSelectCell.m */; };
+		E9FD21232238CF20002C67E6 /* JhFormCustumRightCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21072238CF20002C67E6 /* JhFormCustumRightCell.m */; };
+		E9FD21242238CF20002C67E6 /* JhFormBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21082238CF20002C67E6 /* JhFormBaseCell.m */; };
+		E9FD21252238CF20002C67E6 /* JhFormSelectImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21092238CF20002C67E6 /* JhFormSelectImageCell.m */; };
+		E9FD21262238CF20002C67E6 /* JhFormCenterTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD210C2238CF20002C67E6 /* JhFormCenterTextCell.m */; };
+		E9FD21272238CF20002C67E6 /* JhFormCustumBottomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD210D2238CF20002C67E6 /* JhFormCustumBottomCell.m */; };
+		E9FD21282238CF20002C67E6 /* JhForm.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E9FD210F2238CF20002C67E6 /* JhForm.bundle */; };
+		E9FD21292238CF20002C67E6 /* NSString+JhForm.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21122238CF20002C67E6 /* NSString+JhForm.m */; };
+		E9FD212A2238CF20002C67E6 /* UITextView+TextLimit.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21132238CF20002C67E6 /* UITextView+TextLimit.m */; };
+		E9FD212B2238CF20002C67E6 /* SelwynExpandableTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21142238CF20002C67E6 /* SelwynExpandableTextView.m */; };
+		E9FD212C2238CF20002C67E6 /* JhFormConst.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21152238CF20002C67E6 /* JhFormConst.m */; };
+		E9FD212D2238CF20002C67E6 /* JhFormHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD211B2238CF20002C67E6 /* JhFormHandler.m */; };
+		E9FD21322238CF72002C67E6 /* FormDemo2VC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21302238CF71002C67E6 /* FormDemo2VC.m */; };
+		E9FD21332238CF72002C67E6 /* FormDemo1VC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21312238CF72002C67E6 /* FormDemo1VC.m */; };
+		E9FD21542238D2A3002C67E6 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = E9FD21382238D2A3002C67E6 /* LICENSE */; };
+		E9FD21552238D2A3002C67E6 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD213B2238D2A3002C67E6 /* NSLayoutConstraint+MASDebugAdditions.m */; };
+		E9FD21562238D2A3002C67E6 /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21442238D2A3002C67E6 /* ViewController+MASAdditions.m */; };
+		E9FD21572238D2A3002C67E6 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21482238D2A3002C67E6 /* MASCompositeConstraint.m */; };
+		E9FD21582238D2A3002C67E6 /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21492238D2A3002C67E6 /* MASConstraintMaker.m */; };
+		E9FD21592238D2A3002C67E6 /* MASLayoutConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD214A2238D2A3002C67E6 /* MASLayoutConstraint.m */; };
+		E9FD215A2238D2A3002C67E6 /* NSArray+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD214B2238D2A3002C67E6 /* NSArray+MASAdditions.m */; };
+		E9FD215B2238D2A3002C67E6 /* View+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD214C2238D2A3002C67E6 /* View+MASAdditions.m */; };
+		E9FD215C2238D2A3002C67E6 /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD214F2238D2A3002C67E6 /* MASConstraint.m */; };
+		E9FD215D2238D2A3002C67E6 /* MASViewConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21512238D2A3002C67E6 /* MASViewConstraint.m */; };
+		E9FD215E2238D2A3002C67E6 /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21522238D2A3002C67E6 /* MASViewAttribute.m */; };
+		E9FD215F2238D2A3002C67E6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E9FD21532238D2A3002C67E6 /* README.md */; };
+		E9FD21632238D36B002C67E6 /* JhBaseHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21602238D36A002C67E6 /* JhBaseHeaderView.m */; };
+		E9FD21642238D36B002C67E6 /* JhBaseHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9FD21612238D36A002C67E6 /* JhBaseHeaderView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +133,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E92500CA2238F6C60076D160 /* form_demo_02.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = form_demo_02.gif; sourceTree = "<group>"; };
+		E92500CB2238F6C70076D160 /* form_demo_01.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = form_demo_01.gif; sourceTree = "<group>"; };
 		E93D3F7A21E58DD9003DC702 /* JhForm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JhForm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93D3F7D21E58DD9003DC702 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E93D3F7E21E58DD9003DC702 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -134,40 +151,6 @@
 		E93D3F9D21E58DDB003DC702 /* JhFormUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JhFormUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93D3FA121E58DDB003DC702 /* JhFormUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JhFormUITests.m; sourceTree = "<group>"; };
 		E93D3FA321E58DDB003DC702 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E93D3FB021E58E3C003DC702 /* JhFormTableViewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormTableViewVC.m; sourceTree = "<group>"; };
-		E93D3FB121E58E3C003DC702 /* TestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestVC.m; sourceTree = "<group>"; };
-		E93D3FB421E58E3C003DC702 /* JhFormSectionItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormSectionItem.m; sourceTree = "<group>"; };
-		E93D3FB521E58E3C003DC702 /* JhFormItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormItem.h; sourceTree = "<group>"; };
-		E93D3FB621E58E3C003DC702 /* JhFormData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormData.h; sourceTree = "<group>"; };
-		E93D3FB721E58E3C003DC702 /* JhFormSectionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormSectionItem.h; sourceTree = "<group>"; };
-		E93D3FB821E58E3C003DC702 /* JhFormData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormData.m; sourceTree = "<group>"; };
-		E93D3FB921E58E3C003DC702 /* JhFormItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormItem.m; sourceTree = "<group>"; };
-		E93D3FBB21E58E3C003DC702 /* JhFormBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormBaseCell.h; sourceTree = "<group>"; };
-		E93D3FBC21E58E3C003DC702 /* JhFormCustumRightCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormCustumRightCell.h; sourceTree = "<group>"; };
-		E93D3FBD21E58E3C003DC702 /* JhFormTextViewInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormTextViewInputCell.m; sourceTree = "<group>"; };
-		E93D3FBE21E58E3C003DC702 /* JhFormSelectImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormSelectImageCell.h; sourceTree = "<group>"; };
-		E93D3FBF21E58E3C003DC702 /* JhFormCustumBottomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormCustumBottomCell.h; sourceTree = "<group>"; };
-		E93D3FC021E58E3C003DC702 /* JhFormInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormInputCell.m; sourceTree = "<group>"; };
-		E93D3FC121E58E3C003DC702 /* JhFormSelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormSelectCell.m; sourceTree = "<group>"; };
-		E93D3FC221E58E3C003DC702 /* JhFormTextViewInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormTextViewInputCell.h; sourceTree = "<group>"; };
-		E93D3FC321E58E3C003DC702 /* JhFormCustumRightCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormCustumRightCell.m; sourceTree = "<group>"; };
-		E93D3FC421E58E3C003DC702 /* JhFormBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormBaseCell.m; sourceTree = "<group>"; };
-		E93D3FC521E58E3C003DC702 /* JhFormSelectImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormSelectImageCell.m; sourceTree = "<group>"; };
-		E93D3FC621E58E3C003DC702 /* JhFormInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormInputCell.h; sourceTree = "<group>"; };
-		E93D3FC721E58E3C003DC702 /* JhFormCustumBottomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormCustumBottomCell.m; sourceTree = "<group>"; };
-		E93D3FC821E58E3C003DC702 /* JhFormSelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormSelectCell.h; sourceTree = "<group>"; };
-		E93D3FCA21E58E3C003DC702 /* TestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestVC.h; sourceTree = "<group>"; };
-		E93D3FCB21E58E3C003DC702 /* JhFormTableViewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormTableViewVC.h; sourceTree = "<group>"; };
-		E93D3FCD21E58E3C003DC702 /* NSString+JhForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+JhForm.m"; sourceTree = "<group>"; };
-		E93D3FCE21E58E3C003DC702 /* UITextView+TextLimit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+TextLimit.m"; sourceTree = "<group>"; };
-		E93D3FCF21E58E3C003DC702 /* SelwynExpandableTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelwynExpandableTextView.m; sourceTree = "<group>"; };
-		E93D3FD021E58E3C003DC702 /* JhFormConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormConst.m; sourceTree = "<group>"; };
-		E93D3FD121E58E3C003DC702 /* JhFormHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormHandler.h; sourceTree = "<group>"; };
-		E93D3FD221E58E3C003DC702 /* UITextView+TextLimit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+TextLimit.h"; sourceTree = "<group>"; };
-		E93D3FD321E58E3C003DC702 /* NSString+JhForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JhForm.h"; sourceTree = "<group>"; };
-		E93D3FD421E58E3C003DC702 /* JhFormConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormConst.h; sourceTree = "<group>"; };
-		E93D3FD521E58E3C003DC702 /* SelwynExpandableTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelwynExpandableTextView.h; sourceTree = "<group>"; };
-		E93D3FD621E58E3C003DC702 /* JhFormHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormHandler.m; sourceTree = "<group>"; };
 		E93D3FEA21E58E52003DC702 /* YYImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYImageCache.m; sourceTree = "<group>"; };
 		E93D3FEB21E58E52003DC702 /* YYWebImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYWebImageManager.m; sourceTree = "<group>"; };
 		E93D3FEC21E58E52003DC702 /* YYWebImageOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYWebImageOperation.h; sourceTree = "<group>"; };
@@ -294,11 +277,75 @@
 		E93D40A321E58E5D003DC702 /* YYCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYCache.h; sourceTree = "<group>"; };
 		E93D40A421E58E5D003DC702 /* YYKVStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVStorage.m; sourceTree = "<group>"; };
 		E93D40A521E58E5D003DC702 /* YYMemoryCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYMemoryCache.m; sourceTree = "<group>"; };
-		E93D40AC21E59F07003DC702 /* JhForm.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = JhForm.bundle; path = JhForm/JhForm/JhForm.bundle; sourceTree = SOURCE_ROOT; };
-		E93D40E721E5A8EB003DC702 /* TestVC2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestVC2.h; sourceTree = "<group>"; };
-		E93D40E821E5A8EB003DC702 /* TestVC2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestVC2.m; sourceTree = "<group>"; };
-		E93D40ED21E5C037003DC702 /* 0.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 0.gif; sourceTree = "<group>"; };
-		E93D40EF21E5C040003DC702 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		E9FD20F62238CF20002C67E6 /* JhFormTableViewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormTableViewVC.m; sourceTree = "<group>"; };
+		E9FD20F82238CF20002C67E6 /* JhFormCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormCellModel.m; sourceTree = "<group>"; };
+		E9FD20F92238CF20002C67E6 /* JhFormSectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormSectionModel.h; sourceTree = "<group>"; };
+		E9FD20FA2238CF20002C67E6 /* JhFormCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormCellModel.h; sourceTree = "<group>"; };
+		E9FD20FB2238CF20002C67E6 /* JhFormSectionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormSectionModel.m; sourceTree = "<group>"; };
+		E9FD20FD2238CF20002C67E6 /* JhFormBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormBaseCell.h; sourceTree = "<group>"; };
+		E9FD20FE2238CF20002C67E6 /* JhFormCustumRightCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormCustumRightCell.h; sourceTree = "<group>"; };
+		E9FD20FF2238CF20002C67E6 /* JhFormTextViewInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormTextViewInputCell.m; sourceTree = "<group>"; };
+		E9FD21002238CF20002C67E6 /* JhFormSelectImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormSelectImageCell.h; sourceTree = "<group>"; };
+		E9FD21012238CF20002C67E6 /* JhFormCustumBottomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormCustumBottomCell.h; sourceTree = "<group>"; };
+		E9FD21022238CF20002C67E6 /* JhFormCenterTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormCenterTextCell.h; sourceTree = "<group>"; };
+		E9FD21032238CF20002C67E6 /* JhFormSwitchBtnCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormSwitchBtnCell.m; sourceTree = "<group>"; };
+		E9FD21042238CF20002C67E6 /* JhFormInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormInputCell.m; sourceTree = "<group>"; };
+		E9FD21052238CF20002C67E6 /* JhFormSelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormSelectCell.m; sourceTree = "<group>"; };
+		E9FD21062238CF20002C67E6 /* JhFormTextViewInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormTextViewInputCell.h; sourceTree = "<group>"; };
+		E9FD21072238CF20002C67E6 /* JhFormCustumRightCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormCustumRightCell.m; sourceTree = "<group>"; };
+		E9FD21082238CF20002C67E6 /* JhFormBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormBaseCell.m; sourceTree = "<group>"; };
+		E9FD21092238CF20002C67E6 /* JhFormSelectImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormSelectImageCell.m; sourceTree = "<group>"; };
+		E9FD210A2238CF20002C67E6 /* JhFormInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormInputCell.h; sourceTree = "<group>"; };
+		E9FD210B2238CF20002C67E6 /* JhFormSwitchBtnCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormSwitchBtnCell.h; sourceTree = "<group>"; };
+		E9FD210C2238CF20002C67E6 /* JhFormCenterTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormCenterTextCell.m; sourceTree = "<group>"; };
+		E9FD210D2238CF20002C67E6 /* JhFormCustumBottomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormCustumBottomCell.m; sourceTree = "<group>"; };
+		E9FD210E2238CF20002C67E6 /* JhFormSelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormSelectCell.h; sourceTree = "<group>"; };
+		E9FD210F2238CF20002C67E6 /* JhForm.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = JhForm.bundle; sourceTree = "<group>"; };
+		E9FD21102238CF20002C67E6 /* JhFormTableViewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormTableViewVC.h; sourceTree = "<group>"; };
+		E9FD21122238CF20002C67E6 /* NSString+JhForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+JhForm.m"; sourceTree = "<group>"; };
+		E9FD21132238CF20002C67E6 /* UITextView+TextLimit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+TextLimit.m"; sourceTree = "<group>"; };
+		E9FD21142238CF20002C67E6 /* SelwynExpandableTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelwynExpandableTextView.m; sourceTree = "<group>"; };
+		E9FD21152238CF20002C67E6 /* JhFormConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormConst.m; sourceTree = "<group>"; };
+		E9FD21162238CF20002C67E6 /* JhFormHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormHandler.h; sourceTree = "<group>"; };
+		E9FD21172238CF20002C67E6 /* UITextView+TextLimit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+TextLimit.h"; sourceTree = "<group>"; };
+		E9FD21182238CF20002C67E6 /* NSString+JhForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JhForm.h"; sourceTree = "<group>"; };
+		E9FD21192238CF20002C67E6 /* JhFormConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormConst.h; sourceTree = "<group>"; };
+		E9FD211A2238CF20002C67E6 /* SelwynExpandableTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelwynExpandableTextView.h; sourceTree = "<group>"; };
+		E9FD211B2238CF20002C67E6 /* JhFormHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormHandler.m; sourceTree = "<group>"; };
+		E9FD212E2238CF71002C67E6 /* FormDemo2VC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormDemo2VC.h; sourceTree = "<group>"; };
+		E9FD212F2238CF71002C67E6 /* FormDemo1VC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormDemo1VC.h; sourceTree = "<group>"; };
+		E9FD21302238CF71002C67E6 /* FormDemo2VC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormDemo2VC.m; sourceTree = "<group>"; };
+		E9FD21312238CF72002C67E6 /* FormDemo1VC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormDemo1VC.m; sourceTree = "<group>"; };
+		E9FD21382238D2A3002C67E6 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		E9FD213A2238D2A3002C67E6 /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
+		E9FD213B2238D2A3002C67E6 /* NSLayoutConstraint+MASDebugAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+MASDebugAdditions.m"; sourceTree = "<group>"; };
+		E9FD213C2238D2A3002C67E6 /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
+		E9FD213D2238D2A3002C67E6 /* MASLayoutConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASLayoutConstraint.h; sourceTree = "<group>"; };
+		E9FD213E2238D2A3002C67E6 /* NSArray+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MASShorthandAdditions.h"; sourceTree = "<group>"; };
+		E9FD213F2238D2A3002C67E6 /* MASConstraintMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASConstraintMaker.h; sourceTree = "<group>"; };
+		E9FD21402238D2A3002C67E6 /* View+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASAdditions.h"; sourceTree = "<group>"; };
+		E9FD21412238D2A3002C67E6 /* NSArray+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MASAdditions.h"; sourceTree = "<group>"; };
+		E9FD21422238D2A3002C67E6 /* MASUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASUtilities.h; sourceTree = "<group>"; };
+		E9FD21432238D2A3002C67E6 /* MASViewAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASViewAttribute.h; sourceTree = "<group>"; };
+		E9FD21442238D2A3002C67E6 /* ViewController+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ViewController+MASAdditions.m"; sourceTree = "<group>"; };
+		E9FD21452238D2A3002C67E6 /* MASViewConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASViewConstraint.h; sourceTree = "<group>"; };
+		E9FD21462238D2A3002C67E6 /* MASConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASConstraint.h; sourceTree = "<group>"; };
+		E9FD21472238D2A3002C67E6 /* NSLayoutConstraint+MASDebugAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+MASDebugAdditions.h"; sourceTree = "<group>"; };
+		E9FD21482238D2A3002C67E6 /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
+		E9FD21492238D2A3002C67E6 /* MASConstraintMaker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASConstraintMaker.m; sourceTree = "<group>"; };
+		E9FD214A2238D2A3002C67E6 /* MASLayoutConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASLayoutConstraint.m; sourceTree = "<group>"; };
+		E9FD214B2238D2A3002C67E6 /* NSArray+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+MASAdditions.m"; sourceTree = "<group>"; };
+		E9FD214C2238D2A3002C67E6 /* View+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "View+MASAdditions.m"; sourceTree = "<group>"; };
+		E9FD214D2238D2A3002C67E6 /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
+		E9FD214E2238D2A3002C67E6 /* Masonry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Masonry.h; sourceTree = "<group>"; };
+		E9FD214F2238D2A3002C67E6 /* MASConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASConstraint.m; sourceTree = "<group>"; };
+		E9FD21502238D2A3002C67E6 /* ViewController+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ViewController+MASAdditions.h"; sourceTree = "<group>"; };
+		E9FD21512238D2A3002C67E6 /* MASViewConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewConstraint.m; sourceTree = "<group>"; };
+		E9FD21522238D2A3002C67E6 /* MASViewAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewAttribute.m; sourceTree = "<group>"; };
+		E9FD21532238D2A3002C67E6 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		E9FD21602238D36A002C67E6 /* JhBaseHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhBaseHeaderView.m; sourceTree = "<group>"; };
+		E9FD21612238D36A002C67E6 /* JhBaseHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JhBaseHeaderView.xib; sourceTree = "<group>"; };
+		E9FD21622238D36B002C67E6 /* JhBaseHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhBaseHeaderView.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,18 +397,22 @@
 			isa = PBXGroup;
 			children = (
 				E93D40EA21E5C01C003DC702 /* screenshots */,
+				E9FD21372238D2A3002C67E6 /* Masonry */,
 				E93D409D21E58E5D003DC702 /* YYCache */,
 				E93D400921E58E52003DC702 /* HXPhotoPicker */,
 				E93D3FE921E58E52003DC702 /* YYWebImage */,
-				E93D3FAF21E58E3C003DC702 /* JhForm */,
+				E9FD20F52238CF20002C67E6 /* JhForm */,
 				E93D3F7D21E58DD9003DC702 /* AppDelegate.h */,
 				E93D3F7E21E58DD9003DC702 /* AppDelegate.m */,
 				E93D3F8021E58DD9003DC702 /* ViewController.h */,
 				E93D3F8121E58DD9003DC702 /* ViewController.m */,
-				E93D3FCA21E58E3C003DC702 /* TestVC.h */,
-				E93D3FB121E58E3C003DC702 /* TestVC.m */,
-				E93D40E721E5A8EB003DC702 /* TestVC2.h */,
-				E93D40E821E5A8EB003DC702 /* TestVC2.m */,
+				E9FD212F2238CF71002C67E6 /* FormDemo1VC.h */,
+				E9FD21312238CF72002C67E6 /* FormDemo1VC.m */,
+				E9FD212E2238CF71002C67E6 /* FormDemo2VC.h */,
+				E9FD21302238CF71002C67E6 /* FormDemo2VC.m */,
+				E9FD21622238D36B002C67E6 /* JhBaseHeaderView.h */,
+				E9FD21602238D36A002C67E6 /* JhBaseHeaderView.m */,
+				E9FD21612238D36A002C67E6 /* JhBaseHeaderView.xib */,
 				E93D3F8321E58DD9003DC702 /* Main.storyboard */,
 				E93D3F8621E58DDB003DC702 /* Assets.xcassets */,
 				E93D3F8821E58DDB003DC702 /* LaunchScreen.storyboard */,
@@ -387,70 +438,6 @@
 				E93D3FA321E58DDB003DC702 /* Info.plist */,
 			);
 			path = JhFormUITests;
-			sourceTree = "<group>";
-		};
-		E93D3FAF21E58E3C003DC702 /* JhForm */ = {
-			isa = PBXGroup;
-			children = (
-				E93D3FCB21E58E3C003DC702 /* JhFormTableViewVC.h */,
-				E93D3FB021E58E3C003DC702 /* JhFormTableViewVC.m */,
-				E93D3FB321E58E3C003DC702 /* JhFormItem */,
-				E93D3FCC21E58E3C003DC702 /* JhFormToolClass */,
-				E93D3FBA21E58E3C003DC702 /* JhFormCell */,
-			);
-			path = JhForm;
-			sourceTree = "<group>";
-		};
-		E93D3FB321E58E3C003DC702 /* JhFormItem */ = {
-			isa = PBXGroup;
-			children = (
-				E93D3FB621E58E3C003DC702 /* JhFormData.h */,
-				E93D3FB821E58E3C003DC702 /* JhFormData.m */,
-				E93D3FB521E58E3C003DC702 /* JhFormItem.h */,
-				E93D3FB921E58E3C003DC702 /* JhFormItem.m */,
-				E93D3FB721E58E3C003DC702 /* JhFormSectionItem.h */,
-				E93D3FB421E58E3C003DC702 /* JhFormSectionItem.m */,
-			);
-			path = JhFormItem;
-			sourceTree = "<group>";
-		};
-		E93D3FBA21E58E3C003DC702 /* JhFormCell */ = {
-			isa = PBXGroup;
-			children = (
-				E93D3FBB21E58E3C003DC702 /* JhFormBaseCell.h */,
-				E93D3FC421E58E3C003DC702 /* JhFormBaseCell.m */,
-				E93D3FBF21E58E3C003DC702 /* JhFormCustumBottomCell.h */,
-				E93D3FC721E58E3C003DC702 /* JhFormCustumBottomCell.m */,
-				E93D3FBC21E58E3C003DC702 /* JhFormCustumRightCell.h */,
-				E93D3FC321E58E3C003DC702 /* JhFormCustumRightCell.m */,
-				E93D3FC621E58E3C003DC702 /* JhFormInputCell.h */,
-				E93D3FC021E58E3C003DC702 /* JhFormInputCell.m */,
-				E93D3FC821E58E3C003DC702 /* JhFormSelectCell.h */,
-				E93D3FC121E58E3C003DC702 /* JhFormSelectCell.m */,
-				E93D3FBE21E58E3C003DC702 /* JhFormSelectImageCell.h */,
-				E93D3FC521E58E3C003DC702 /* JhFormSelectImageCell.m */,
-				E93D3FC221E58E3C003DC702 /* JhFormTextViewInputCell.h */,
-				E93D3FBD21E58E3C003DC702 /* JhFormTextViewInputCell.m */,
-			);
-			path = JhFormCell;
-			sourceTree = "<group>";
-		};
-		E93D3FCC21E58E3C003DC702 /* JhFormToolClass */ = {
-			isa = PBXGroup;
-			children = (
-				E93D40AC21E59F07003DC702 /* JhForm.bundle */,
-				E93D3FD421E58E3C003DC702 /* JhFormConst.h */,
-				E93D3FD021E58E3C003DC702 /* JhFormConst.m */,
-				E93D3FD121E58E3C003DC702 /* JhFormHandler.h */,
-				E93D3FD621E58E3C003DC702 /* JhFormHandler.m */,
-				E93D3FD321E58E3C003DC702 /* NSString+JhForm.h */,
-				E93D3FCD21E58E3C003DC702 /* NSString+JhForm.m */,
-				E93D3FD521E58E3C003DC702 /* SelwynExpandableTextView.h */,
-				E93D3FCF21E58E3C003DC702 /* SelwynExpandableTextView.m */,
-				E93D3FD221E58E3C003DC702 /* UITextView+TextLimit.h */,
-				E93D3FCE21E58E3C003DC702 /* UITextView+TextLimit.m */,
-			);
-			path = JhFormToolClass;
 			sourceTree = "<group>";
 		};
 		E93D3FE921E58E52003DC702 /* YYWebImage */ = {
@@ -619,10 +606,118 @@
 		E93D40EA21E5C01C003DC702 /* screenshots */ = {
 			isa = PBXGroup;
 			children = (
-				E93D40ED21E5C037003DC702 /* 0.gif */,
-				E93D40EF21E5C040003DC702 /* 1.png */,
+				E92500CB2238F6C70076D160 /* form_demo_01.gif */,
+				E92500CA2238F6C60076D160 /* form_demo_02.gif */,
 			);
 			path = screenshots;
+			sourceTree = "<group>";
+		};
+		E9FD20F52238CF20002C67E6 /* JhForm */ = {
+			isa = PBXGroup;
+			children = (
+				E9FD21102238CF20002C67E6 /* JhFormTableViewVC.h */,
+				E9FD20F62238CF20002C67E6 /* JhFormTableViewVC.m */,
+				E9FD210F2238CF20002C67E6 /* JhForm.bundle */,
+				E9FD20FC2238CF20002C67E6 /* JhFormCell */,
+				E9FD20F72238CF20002C67E6 /* JhFormModel */,
+				E9FD21112238CF20002C67E6 /* JhFormToolClass */,
+			);
+			path = JhForm;
+			sourceTree = "<group>";
+		};
+		E9FD20F72238CF20002C67E6 /* JhFormModel */ = {
+			isa = PBXGroup;
+			children = (
+				E9FD20FA2238CF20002C67E6 /* JhFormCellModel.h */,
+				E9FD20F82238CF20002C67E6 /* JhFormCellModel.m */,
+				E9FD20F92238CF20002C67E6 /* JhFormSectionModel.h */,
+				E9FD20FB2238CF20002C67E6 /* JhFormSectionModel.m */,
+			);
+			path = JhFormModel;
+			sourceTree = "<group>";
+		};
+		E9FD20FC2238CF20002C67E6 /* JhFormCell */ = {
+			isa = PBXGroup;
+			children = (
+				E9FD20FD2238CF20002C67E6 /* JhFormBaseCell.h */,
+				E9FD21082238CF20002C67E6 /* JhFormBaseCell.m */,
+				E9FD21022238CF20002C67E6 /* JhFormCenterTextCell.h */,
+				E9FD210C2238CF20002C67E6 /* JhFormCenterTextCell.m */,
+				E9FD21012238CF20002C67E6 /* JhFormCustumBottomCell.h */,
+				E9FD210D2238CF20002C67E6 /* JhFormCustumBottomCell.m */,
+				E9FD20FE2238CF20002C67E6 /* JhFormCustumRightCell.h */,
+				E9FD21072238CF20002C67E6 /* JhFormCustumRightCell.m */,
+				E9FD210A2238CF20002C67E6 /* JhFormInputCell.h */,
+				E9FD21042238CF20002C67E6 /* JhFormInputCell.m */,
+				E9FD210E2238CF20002C67E6 /* JhFormSelectCell.h */,
+				E9FD21052238CF20002C67E6 /* JhFormSelectCell.m */,
+				E9FD21002238CF20002C67E6 /* JhFormSelectImageCell.h */,
+				E9FD21092238CF20002C67E6 /* JhFormSelectImageCell.m */,
+				E9FD210B2238CF20002C67E6 /* JhFormSwitchBtnCell.h */,
+				E9FD21032238CF20002C67E6 /* JhFormSwitchBtnCell.m */,
+				E9FD21062238CF20002C67E6 /* JhFormTextViewInputCell.h */,
+				E9FD20FF2238CF20002C67E6 /* JhFormTextViewInputCell.m */,
+			);
+			path = JhFormCell;
+			sourceTree = "<group>";
+		};
+		E9FD21112238CF20002C67E6 /* JhFormToolClass */ = {
+			isa = PBXGroup;
+			children = (
+				E9FD21192238CF20002C67E6 /* JhFormConst.h */,
+				E9FD21152238CF20002C67E6 /* JhFormConst.m */,
+				E9FD21162238CF20002C67E6 /* JhFormHandler.h */,
+				E9FD211B2238CF20002C67E6 /* JhFormHandler.m */,
+				E9FD21182238CF20002C67E6 /* NSString+JhForm.h */,
+				E9FD21122238CF20002C67E6 /* NSString+JhForm.m */,
+				E9FD211A2238CF20002C67E6 /* SelwynExpandableTextView.h */,
+				E9FD21142238CF20002C67E6 /* SelwynExpandableTextView.m */,
+				E9FD21172238CF20002C67E6 /* UITextView+TextLimit.h */,
+				E9FD21132238CF20002C67E6 /* UITextView+TextLimit.m */,
+			);
+			path = JhFormToolClass;
+			sourceTree = "<group>";
+		};
+		E9FD21372238D2A3002C67E6 /* Masonry */ = {
+			isa = PBXGroup;
+			children = (
+				E9FD21382238D2A3002C67E6 /* LICENSE */,
+				E9FD21392238D2A3002C67E6 /* Masonry */,
+				E9FD21532238D2A3002C67E6 /* README.md */,
+			);
+			path = Masonry;
+			sourceTree = "<group>";
+		};
+		E9FD21392238D2A3002C67E6 /* Masonry */ = {
+			isa = PBXGroup;
+			children = (
+				E9FD213A2238D2A3002C67E6 /* MASCompositeConstraint.h */,
+				E9FD213B2238D2A3002C67E6 /* NSLayoutConstraint+MASDebugAdditions.m */,
+				E9FD213C2238D2A3002C67E6 /* MASConstraint+Private.h */,
+				E9FD213D2238D2A3002C67E6 /* MASLayoutConstraint.h */,
+				E9FD213E2238D2A3002C67E6 /* NSArray+MASShorthandAdditions.h */,
+				E9FD213F2238D2A3002C67E6 /* MASConstraintMaker.h */,
+				E9FD21402238D2A3002C67E6 /* View+MASAdditions.h */,
+				E9FD21412238D2A3002C67E6 /* NSArray+MASAdditions.h */,
+				E9FD21422238D2A3002C67E6 /* MASUtilities.h */,
+				E9FD21432238D2A3002C67E6 /* MASViewAttribute.h */,
+				E9FD21442238D2A3002C67E6 /* ViewController+MASAdditions.m */,
+				E9FD21452238D2A3002C67E6 /* MASViewConstraint.h */,
+				E9FD21462238D2A3002C67E6 /* MASConstraint.h */,
+				E9FD21472238D2A3002C67E6 /* NSLayoutConstraint+MASDebugAdditions.h */,
+				E9FD21482238D2A3002C67E6 /* MASCompositeConstraint.m */,
+				E9FD21492238D2A3002C67E6 /* MASConstraintMaker.m */,
+				E9FD214A2238D2A3002C67E6 /* MASLayoutConstraint.m */,
+				E9FD214B2238D2A3002C67E6 /* NSArray+MASAdditions.m */,
+				E9FD214C2238D2A3002C67E6 /* View+MASAdditions.m */,
+				E9FD214D2238D2A3002C67E6 /* View+MASShorthandAdditions.h */,
+				E9FD214E2238D2A3002C67E6 /* Masonry.h */,
+				E9FD214F2238D2A3002C67E6 /* MASConstraint.m */,
+				E9FD21502238D2A3002C67E6 /* ViewController+MASAdditions.h */,
+				E9FD21512238D2A3002C67E6 /* MASViewConstraint.m */,
+				E9FD21522238D2A3002C67E6 /* MASViewAttribute.m */,
+			);
+			path = Masonry;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -728,13 +823,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E93D40EE21E5C037003DC702 /* 0.gif in Resources */,
+				E92500CD2238F6C70076D160 /* form_demo_01.gif in Resources */,
 				E93D409A21E58E52003DC702 /* HXPhotoPicker.bundle in Resources */,
-				E93D40AD21E59F07003DC702 /* JhForm.bundle in Resources */,
+				E9FD21542238D2A3002C67E6 /* LICENSE in Resources */,
+				E92500CC2238F6C70076D160 /* form_demo_02.gif in Resources */,
+				E9FD21282238CF20002C67E6 /* JhForm.bundle in Resources */,
 				E93D3F8A21E58DDB003DC702 /* LaunchScreen.storyboard in Resources */,
 				E93D3F8721E58DDB003DC702 /* Assets.xcassets in Resources */,
+				E9FD21642238D36B002C67E6 /* JhBaseHeaderView.xib in Resources */,
+				E9FD215F2238D2A3002C67E6 /* README.md in Resources */,
 				E93D3F8521E58DD9003DC702 /* Main.storyboard in Resources */,
-				E93D40F021E5C040003DC702 /* 1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -761,51 +859,63 @@
 			files = (
 				E93D407921E58E52003DC702 /* HXCollectionView.m in Sources */,
 				E93D408321E58E52003DC702 /* HXDatePhotoViewFlowLayout.m in Sources */,
-				E93D3FD921E58E3C003DC702 /* JhFormSectionItem.m in Sources */,
+				E9FD212D2238CF20002C67E6 /* JhFormHandler.m in Sources */,
 				E93D407B21E58E52003DC702 /* UIFont+HXExtension.m in Sources */,
 				E93D408421E58E52003DC702 /* HXDatePhotoViewController.m in Sources */,
+				E9FD215A2238D2A3002C67E6 /* NSArray+MASAdditions.m in Sources */,
 				E93D408821E58E52003DC702 /* UIImage+HXExtension.m in Sources */,
+				E9FD215D2238D2A3002C67E6 /* MASViewConstraint.m in Sources */,
 				E93D40A621E58E5D003DC702 /* YYDiskCache.m in Sources */,
-				E93D3FD821E58E3C003DC702 /* TestVC.m in Sources */,
+				E9FD215B2238D2A3002C67E6 /* View+MASAdditions.m in Sources */,
 				E93D407D21E58E52003DC702 /* HXPhotoModel.m in Sources */,
 				E93D409821E58E52003DC702 /* UILabel+HXExtension.m in Sources */,
-				E93D3FE021E58E3C003DC702 /* JhFormBaseCell.m in Sources */,
-				E93D3FDD21E58E3C003DC702 /* JhFormInputCell.m in Sources */,
 				E93D408021E58E52003DC702 /* HXPhotoCustomNavigationBar.m in Sources */,
-				E93D40E921E5A8EB003DC702 /* TestVC2.m in Sources */,
+				E9FD215C2238D2A3002C67E6 /* MASConstraint.m in Sources */,
+				E9FD21322238CF72002C67E6 /* FormDemo2VC.m in Sources */,
+				E9FD21582238D2A3002C67E6 /* MASConstraintMaker.m in Sources */,
 				E93D406E21E58E52003DC702 /* UIImage+YYWebImage.m in Sources */,
+				E9FD21572238D2A3002C67E6 /* MASCompositeConstraint.m in Sources */,
 				E93D406D21E58E52003DC702 /* MKAnnotationView+YYWebImage.m in Sources */,
-				E93D3FDE21E58E3C003DC702 /* JhFormSelectCell.m in Sources */,
 				E93D407421E58E52003DC702 /* HXDownloadProgressView.m in Sources */,
+				E9FD212A2238CF20002C67E6 /* UITextView+TextLimit.m in Sources */,
 				E93D407521E58E52003DC702 /* NSArray+HXExtension.m in Sources */,
+				E9FD21242238CF20002C67E6 /* JhFormBaseCell.m in Sources */,
+				E9FD211D2238CF20002C67E6 /* JhFormCellModel.m in Sources */,
+				E9FD21292238CF20002C67E6 /* NSString+JhForm.m in Sources */,
 				E93D406721E58E52003DC702 /* YYImageCoder.m in Sources */,
+				E9FD21232238CF20002C67E6 /* JhFormCustumRightCell.m in Sources */,
 				E93D406821E58E52003DC702 /* YYFrameImage.m in Sources */,
 				E93D409121E58E52003DC702 /* HXPhotoSubViewCell.m in Sources */,
+				E9FD21552238D2A3002C67E6 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				E93D407321E58E52003DC702 /* HXPhotoConfiguration.m in Sources */,
 				E93D409021E58E52003DC702 /* HXDatePhotoViewTransition.m in Sources */,
-				E93D3FD721E58E3C003DC702 /* JhFormTableViewVC.m in Sources */,
 				E93D406A21E58E52003DC702 /* _YYWebImageSetter.m in Sources */,
-				E93D3FE221E58E3C003DC702 /* JhFormCustumBottomCell.m in Sources */,
 				E93D408D21E58E52003DC702 /* NSDate+HXExtension.m in Sources */,
 				E93D409621E58E52003DC702 /* HXDatePhotoPersentInteractiveTransition.m in Sources */,
-				E93D3FDA21E58E3C003DC702 /* JhFormData.m in Sources */,
 				E93D407E21E58E52003DC702 /* HXAlbumListViewController.m in Sources */,
 				E93D408721E58E52003DC702 /* HXCustomCameraController.m in Sources */,
 				E93D409721E58E52003DC702 /* HXCircleProgressView.m in Sources */,
+				E9FD21202238CF20002C67E6 /* JhFormSwitchBtnCell.m in Sources */,
+				E9FD21222238CF20002C67E6 /* JhFormSelectCell.m in Sources */,
 				E93D408F21E58E52003DC702 /* HXCustomNavigationController.m in Sources */,
 				E93D409921E58E52003DC702 /* HXDateVideoEditViewController.m in Sources */,
+				E9FD21332238CF72002C67E6 /* FormDemo1VC.m in Sources */,
 				E93D409C21E58E52003DC702 /* HXDatePhotoEditViewController.m in Sources */,
 				E93D407021E58E52003DC702 /* YYWebImageOperation.m in Sources */,
+				E9FD212C2238CF20002C67E6 /* JhFormConst.m in Sources */,
+				E9FD21252238CF20002C67E6 /* JhFormSelectImageCell.m in Sources */,
+				E9FD211E2238CF20002C67E6 /* JhFormSectionModel.m in Sources */,
+				E9FD21632238D36B002C67E6 /* JhBaseHeaderView.m in Sources */,
 				E93D409321E58E52003DC702 /* HXAlbumlistView.m in Sources */,
-				E93D3FDB21E58E3C003DC702 /* JhFormItem.m in Sources */,
+				E9FD21212238CF20002C67E6 /* JhFormInputCell.m in Sources */,
+				E9FD21272238CF20002C67E6 /* JhFormCustumBottomCell.m in Sources */,
 				E93D408221E58E52003DC702 /* HXDatePhotoPreviewViewController.m in Sources */,
 				E93D40A921E58E5D003DC702 /* YYMemoryCache.m in Sources */,
+				E9FD215E2238D2A3002C67E6 /* MASViewAttribute.m in Sources */,
 				E93D40A821E58E5D003DC702 /* YYKVStorage.m in Sources */,
 				E93D409221E58E52003DC702 /* HXAlbumModel.m in Sources */,
 				E93D406621E58E52003DC702 /* YYImage.m in Sources */,
-				E93D3FE721E58E3C003DC702 /* JhFormConst.m in Sources */,
 				E93D406321E58E52003DC702 /* YYImageCache.m in Sources */,
-				E93D3FDF21E58E3C003DC702 /* JhFormCustumRightCell.m in Sources */,
 				E93D406521E58E52003DC702 /* YYSpriteSheetImage.m in Sources */,
 				E93D407721E58E52003DC702 /* HXDatePhotoPreviewBottomView.m in Sources */,
 				E93D408E21E58E52003DC702 /* NSTimer+HXExtension.m in Sources */,
@@ -814,33 +924,33 @@
 				E93D406C21E58E52003DC702 /* UIImageView+YYWebImage.m in Sources */,
 				E93D407621E58E52003DC702 /* HXPhoto3DTouchViewController.m in Sources */,
 				E93D406421E58E52003DC702 /* YYWebImageManager.m in Sources */,
-				E93D3FE621E58E3C003DC702 /* SelwynExpandableTextView.m in Sources */,
 				E93D408C21E58E52003DC702 /* HXFullScreenCameraPlayView.m in Sources */,
 				E93D408A21E58E52003DC702 /* HXCustomAssetModel.m in Sources */,
 				E93D408621E58E52003DC702 /* HXDatePhotoViewPresentTransition.m in Sources */,
-				E93D3FDC21E58E3C003DC702 /* JhFormTextViewInputCell.m in Sources */,
 				E93D3F8221E58DD9003DC702 /* ViewController.m in Sources */,
 				E93D407C21E58E52003DC702 /* HXDatePhotoInteractiveTransition.m in Sources */,
+				E9FD211F2238CF20002C67E6 /* JhFormTextViewInputCell.m in Sources */,
 				E93D407A21E58E52003DC702 /* UIImageView+HXExtension.m in Sources */,
+				E9FD21562238D2A3002C67E6 /* ViewController+MASAdditions.m in Sources */,
 				E93D409B21E58E52003DC702 /* HXDatePhotoToolManager.m in Sources */,
+				E9FD212B2238CF20002C67E6 /* SelwynExpandableTextView.m in Sources */,
 				E93D409421E58E52003DC702 /* UIButton+HXExtension.m in Sources */,
 				E93D408B21E58E52003DC702 /* HXPhotoView.m in Sources */,
-				E93D3FE121E58E3C003DC702 /* JhFormSelectImageCell.m in Sources */,
 				E93D407F21E58E52003DC702 /* UIView+HXExtension.m in Sources */,
 				E93D407221E58E52003DC702 /* UIViewController+HXExtension.m in Sources */,
-				E93D3FE521E58E3C003DC702 /* UITextView+TextLimit.m in Sources */,
 				E93D408121E58E52003DC702 /* HXPhotoTools.m in Sources */,
 				E93D408521E58E52003DC702 /* HXPhotoManager.m in Sources */,
+				E9FD211C2238CF20002C67E6 /* JhFormTableViewVC.m in Sources */,
 				E93D408921E58E52003DC702 /* HXCustomCollectionReusableView.m in Sources */,
 				E93D409521E58E52003DC702 /* HXCustomPreviewView.m in Sources */,
 				E93D406921E58E52003DC702 /* YYAnimatedImageView.m in Sources */,
 				E93D3F8D21E58DDB003DC702 /* main.m in Sources */,
+				E9FD21262238CF20002C67E6 /* JhFormCenterTextCell.m in Sources */,
 				E93D40A721E58E5D003DC702 /* YYCache.m in Sources */,
-				E93D3FE821E58E3C003DC702 /* JhFormHandler.m in Sources */,
+				E9FD21592238D2A3002C67E6 /* MASLayoutConstraint.m in Sources */,
 				E93D406F21E58E52003DC702 /* CALayer+YYWebImage.m in Sources */,
 				E93D3F7F21E58DD9003DC702 /* AppDelegate.m in Sources */,
 				E93D406B21E58E52003DC702 /* UIButton+YYWebImage.m in Sources */,
-				E93D3FE421E58E3C003DC702 /* NSString+JhForm.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

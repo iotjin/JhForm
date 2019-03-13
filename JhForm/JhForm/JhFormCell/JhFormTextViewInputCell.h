@@ -8,7 +8,7 @@
 
 #import "JhFormBaseCell.h"
 
-@class JhFormItem;
+@class JhFormCellModel;
 
 typedef void(^JhTextViewInputCompletion)(NSString *text);
 
@@ -17,10 +17,10 @@ typedef void(^JhTextViewInputCompletion)(NSString *text);
  */
 @interface JhFormTextViewInputCell : JhFormBaseCell
 
-@property (nonatomic, strong) JhFormItem *item;
+@property (nonatomic, strong) JhFormCellModel *data;
 @property (nonatomic, copy) JhTextViewInputCompletion textViewInputCompletion;
 
-+ (CGFloat)heightWithItem:(JhFormItem *)item;
++ (CGFloat)heightWithCellModelData:(JhFormCellModel *)data;
 
 @end
 

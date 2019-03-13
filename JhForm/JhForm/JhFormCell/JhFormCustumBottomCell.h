@@ -8,7 +8,7 @@
 
 #import "JhFormBaseCell.h"
 
-@class JhFormItem;
+@class JhFormCellModel;
 
 @interface JhFormCustumBottomCell : JhFormBaseCell
 
@@ -17,7 +17,7 @@
  */
 @property (nonatomic, strong) UIView *CustumBottomView;
 
-@property (nonatomic, strong) JhFormItem *item;
+@property (nonatomic, strong) JhFormCellModel *data;
 
 @end
 

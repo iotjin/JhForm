@@ -8,7 +8,7 @@
 
 #import "JhFormSelectCell.h"
 
-#import "JhFormItem.h"
+#import "JhFormCellModel.h"
 #import "JhFormConst.h"
 #import "SelwynExpandableTextView.h"
 #import "NSString+JhForm.h"
@@ -27,29 +27,39 @@
     // Configure the view for the selected state
 }
 
-- (void)setItem:(JhFormItem *)item {
+-(void)setData:(JhFormCellModel *)data{
+    _data= data;
     
-    _item = item;
-    self.titleLabel.attributedText = item.attributedTitle;
-    self.rightTextView.text = [item.info addUnit:item.unit];
-    self.rightTextView.attributedPlaceholder = item.attributedPlaceholder;
-    self.rightTextView.editable = item.editable;
+    self.titleLabel.attributedText = data.Jh_attributedTitle;
+    self.rightTextView.text = [data.Jh_info addUnit:data.Jh_unit];
+    self.rightTextView.attributedPlaceholder = data.Jh_attributedPlaceholder;
+    self.rightTextView.editable = data.Jh_editable;
+    //设置右侧显示一个箭头
     self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    //设置右侧文本的对齐方式
+    if (data.Jh_InfoTextAlignment == JhFormCellInfoTextAlignmentRight) {
+        self.rightTextView.textAlignment = NSTextAlignmentRight;
+    }
+    
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    self.titleLabel.frame = CGRectMake(Jh_EdgeMargin, (self.item.defaultHeight - Jh_TitleHeight)/2, Jh_TitleWidth, Jh_TitleHeight);
+    self.titleLabel.frame = CGRectMake(Jh_Margin_left, (self.data.Jh_defaultHeight - Jh_TitleHeight)/2, Jh_TitleWidth, Jh_TitleHeight);
     self.rightTextView.userInteractionEnabled = NO;
     
-    CGFloat newHeight = [JhFormSelectCell heightWithItem:self.item];
+    CGFloat newHeight = [JhFormSelectCell heightWithCellModelData:self.data];
     self.rightTextView.frame = CGRectMake(Jh_TitleWidth + 2*Jh_EdgeMargin, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - (Jh_TitleWidth + 2*Jh_EdgeMargin + 30),  newHeight - 2*Jh_EdgeMargin);
 }
 
-+ (CGFloat)heightWithItem:(JhFormItem *)item {
-    CGFloat infoHeight = [item.info sizeWithFontSize:Jh_InfoFont maxSize:CGSizeMake(Jh_SCRREN_WIDTH - Jh_TitleWidth - 2*Jh_EdgeMargin - 30, MAXFLOAT)].height;
-    return MAX(item.defaultHeight, infoHeight + 2*Jh_EdgeMargin);
+
+
++ (CGFloat)heightWithCellModelData:(JhFormCellModel *)data{
+    
+    CGFloat infoHeight = [data.Jh_info sizeWithFontSize:Jh_InfoFont maxSize:CGSizeMake(Jh_SCRREN_WIDTH - Jh_TitleWidth - 2*Jh_EdgeMargin - 30, MAXFLOAT)].height;
+    return MAX(data.Jh_defaultHeight, infoHeight + 2*Jh_EdgeMargin);
 }
 
 

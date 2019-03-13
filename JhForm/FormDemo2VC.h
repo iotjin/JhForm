@@ -1,8 +1,8 @@
 //
-//  TestVC.h
-//  JhForm
+//  FormDemo2VC.h
+//  JhReader
 //
-//  Created by Jh on 2019/1/4.
+//  Created by Jh on 2019/3/12.
 //  Copyright © 2019 Jh. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TestVC : JhFormTableViewVC
+@interface FormDemo2VC : JhFormTableViewVC
 
 @end
 

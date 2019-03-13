@@ -8,7 +8,7 @@
 
 #import "JhFormCustumBottomCell.h"
 
-#import "JhFormItem.h"
+#import "JhFormCellModel.h"
 #import "JhFormConst.h"
 
 
@@ -23,6 +23,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+  
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -32,6 +33,15 @@
 }
 
 
+-(UIView *)line1{
+    if (!_line1) {
+        _line1=[[UIView alloc]init];
+        _line1.backgroundColor=BaselineColor;
+        [self.contentView addSubview:_line1];
+    }
+    return _line1;
+}
+
 -(UIView *)CustumBottomView{
     if (!_CustumBottomView) {
         
@@ -39,17 +49,16 @@
         _CustumBottomView.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:_CustumBottomView];
         
+        
     }
     return _CustumBottomView;
 }
 
+-(void)setData:(JhFormCellModel *)data{
+    _data= data;
 
-- (void)setItem:(JhFormItem *)item {
+    self.titleLabel.attributedText = data.Jh_attributedTitle;
     
-    _item = item;
-    self.titleLabel.attributedText = item.attributedTitle;
-    
-    item.defaultHeight = 200 +44;
     
 }
 
@@ -58,18 +67,17 @@
     [super layoutSubviews];
     
     //标题固定top
-    self.titleLabel.frame = CGRectMake(Jh_EdgeMargin, Jh_EdgeMargin, Jh_SCRREN_WIDTH - 2*Jh_EdgeMargin, Jh_TitleHeight);
-
+    self.titleLabel.frame = CGRectMake(Jh_Margin_left, Jh_EdgeMargin, Jh_SCRREN_WIDTH - 2*Jh_EdgeMargin, Jh_TitleHeight);
+    
     /********************************* 底部加线 ********************************/
-    _line1=[[UIView alloc]init];
-    _line1.backgroundColor=BaselineColor;
-    [self addSubview:_line1];
-    _line1.frame= CGRectMake(Jh_EdgeMargin+5,CGRectGetMaxY(self.titleLabel.frame)+10, Jh_SCRREN_WIDTH - Jh_EdgeMargin-5, 1);
+    
+    self.line1.frame= CGRectMake(Jh_LineEdgeMargin,CGRectGetMaxY(self.titleLabel.frame)+10, Jh_SCRREN_WIDTH - Jh_LineEdgeMargin, 1);
     
     /********************************* 底部加线 ********************************/
     
     self.CustumBottomView.frame = CGRectMake(0, CGRectGetMaxY(_line1.frame)+10, Jh_SCRREN_WIDTH, self.bounds.size.height - CGRectGetMaxY(_line1.frame)-20);
-   
+    
+    
     
 }
 
@@ -88,8 +96,21 @@
         cell = [[JhFormCustumBottomCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.baseTableView = self;
+        
     }
     return cell;
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+

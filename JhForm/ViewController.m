@@ -7,40 +7,59 @@
 //
 
 #import "ViewController.h"
-
-#import "TestVC.h"
+#import "FormDemo1VC.h"
+#import "FormDemo2VC.h"
 
 @interface ViewController ()
-
 @end
 
 @implementation ViewController
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+   
     
-    UIButton *btn = [[UIButton alloc]init];
-    btn.frame = CGRectMake(100 , 200, 200, 200);
-    btn.backgroundColor = [UIColor orangeColor];
-    [btn.layer setCornerRadius:5.0];
-    [btn addTarget:self action:@selector(clickBtn) forControlEvents:UIControlEventTouchUpInside];
-    [btn setTitle:@"跳转" forState:UIControlStateNormal];
-    [self.view addSubview:btn];
+    self.Jh_navTitle = @"JhForm";
     
+    [self initModel];
     
 }
 
-#pragma mark - clickBtn
--(void)clickBtn{
+
+#pragma mark - initModel
+-(void)initModel{
+    
+    
+    __weak typeof(self) weakSelf = self;
+    
+    NSMutableArray *cellArr0 = [NSMutableArray array];
+    
+    JhFormCellModel *cell0 = JhFormCellModel_AddRightArrowCell(@"默认表单", nil);
+    cell0.Jh_CellSelectCellBlock = ^(JhFormCellModel *cellModel) {
+        FormDemo1VC *jumpVC= [[FormDemo1VC alloc]init];
+        [weakSelf.navigationController pushViewController:jumpVC animated:YES];
+    };
+    
+    
+    JhFormCellModel *cell1 = JhFormCellModel_AddRightArrowCell(@"自定义view表单", nil);
+    cell1.Jh_CellSelectCellBlock = ^(JhFormCellModel *cellModel) {
+        FormDemo2VC *jumpVC= [[FormDemo2VC alloc]init];
+        [weakSelf.navigationController pushViewController:jumpVC animated:YES];
+    };
+    
+    [cellArr0 addObjectsFromArray: @[cell0,cell1]];
+    
+    JhFormSectionModel *section0= JhSectionModel_Add(cellArr0);
+    
+    [self.Jh_formModelArr addObject:section0];
     
 
-    TestVC *jumpVC= [[TestVC alloc]init];
-    [self.navigationController pushViewController:jumpVC animated:YES];
-    
+    //隐藏默认的footerView
+    self.Jh_defaultFooterViewHidden = YES;
     
 }
-
 
 @end

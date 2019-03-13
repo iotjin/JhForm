@@ -30,8 +30,7 @@
         _titleLabel = [[UILabel alloc]init];
         _titleLabel.font = [UIFont systemFontOfSize:Jh_TitleFont];
         _titleLabel.adjustsFontSizeToFitWidth = YES;
-        [self.contentView addSubview:_titleLabel];        
-//        _titleLabel.backgroundColor =JhRandomColor;
+        [self.contentView addSubview:_titleLabel];
     }
     return _titleLabel;
 }
@@ -45,6 +44,7 @@
         _rightTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         _rightTextView.backgroundColor = [UIColor clearColor];
         _rightTextView.font = [UIFont systemFontOfSize:Jh_InfoFont];
+        _rightTextView.textColor = Jh_rightTextViewTextColor;
         _rightTextView.scrollEnabled = NO;
         _rightTextView.autocorrectionType = UITextAutocorrectionTypeNo;
         _rightTextView.layoutManager.allowsNonContiguousLayout = NO;

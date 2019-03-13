@@ -8,7 +8,7 @@
 
 #import "JhFormBaseCell.h"
 
-@class JhFormItem;
+@class JhFormCellModel;
 
 
 @interface JhFormCustumRightCell : JhFormBaseCell
@@ -18,7 +18,7 @@
  */
 @property (nonatomic, strong) UIView *CustumRightView;
 
-@property (nonatomic, strong) JhFormItem *item;
+@property (nonatomic, strong) JhFormCellModel *data;
 
 
 @end
@@ -27,7 +27,7 @@
 
 @interface UITableView (JhFormCustumRightCell)
 
-- (JhFormCustumRightCell *)custumRightCellWithId:(NSString *)cellId;
+- (JhFormCustumRightCell *)CustumRightCellWithId:(NSString *)cellId;
 
 @end
 
