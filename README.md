@@ -1,5 +1,7 @@
 # JhForm
-JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单,感谢
+JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
+
+注:本类copy的SWForm代码(代码地址:https://github.com/RockChanel/SWForm),在此基础上新增了几种自定义的cell,改成了自己熟悉的代码风格.
 
 ![](https://gitee.com/iotjh/Picture/raw/master/form_demo_00.gif)  <br> 
 ![](https://gitee.com/iotjh/Picture/raw/master/form_demo_01.gif)  <br> 
