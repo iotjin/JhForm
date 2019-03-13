@@ -9,18 +9,22 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 
 * 样式1 - 输入样式
 ```
-  
-       JhFormCellModel *cell3 = JhFormCellModel_Add(@"姓名:", @"", JhFormCellTypeInput, YES, YES, UIKeyboardTypeDefault);
-    cell3.Jh_placeholder = @"请输入姓名(必选)";
-
-```
-
-* 样式2 - 输入样式2
-```
-    JhFormCellModel *cell4 = JhFormCellModel_Add(@"手机号:", @"XXX(可编辑)", JhFormCellTypeInput, YES, YES, UIKeyboardTypePhonePad);
+      JhFormCellModel *cell4 = JhFormCellModel_Add(@"手机号:", @"XXX(可编辑)", JhFormCellTypeInput, YES, YES, UIKeyboardTypePhonePad);
     cell4.Jh_placeholder = @"请输入手机号(最长11位,必选)";
     cell4.Jh_maxInputLength = 11;
-   
+
+```
+
+* 样式2 - 选择样式
+```
+
+    JhFormCellModel *cell5 = JhFormCellModel_AddSelectCell(@"性别:", @"文本居左(可选择)", YES);
+    cell5.Jh_placeholder = @"请选择性别";
+    __weak typeof(cell5) weakCell5 = cell5;
+    cell5.Jh_CellSelectCellBlock = ^(JhFormCellModel *cellModel) {
+        //1.使用自己熟悉的选择弹框 ,选择完成对 Jh_info 赋值 (需要对应ID的话对Jh_info_idStr 赋值 )
+        //2. 刷新 [weakSelf.Jh_formTableView reloadData];
+    };
 
 
 ```
@@ -117,6 +121,21 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
     //文本居中
     JhFormCellModel *Section1_cell1 = JhFormCellModel_AddCenterTextCell(@"退出登录");
     
+    //设置头部
+    JhBaseHeaderView *headerV = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, Kwidth, 44)];
+    headerV.backgroundColor = BaseBgWhiteColor;
+    headerV.Jh_leftTitle = @"第一组头部";
+    section0.Jh_headerView = headerV;
+    section0.Jh_headerHeight= headerV.bounds.size.height;
+
+```
+
+*  一些其他的设置
+```
+   
+     //隐藏默认的footerView
+    self.Jh_defaultFooterViewHidden = YES;
+    
     
 
 ```
@@ -125,8 +144,7 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 * 添加和提交的处理
 ```
 
-    //隐藏默认的footerView
-   // self.Jh_defaultFooterViewHidden = YES;
+   
 
      NSMutableArray *cellArr0 = [NSMutableArray array];
   
