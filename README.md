@@ -3,11 +3,10 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 
 注:本类copy的SWForm代码,在此基础上新增了几种自定义的cell,改成了自己顺手的代码风格.(SWForm代码地址:https://github.com/RockChanel/SWForm)
 
-![](https://gitee.com/iotjh/Picture/raw/master/formDemo_00.gif)  <br> 
-![](https://gitee.com/iotjh/Picture/raw/master/form_demo_01.gif)  <br> 
-![](https://gitee.com/iotjh/Picture/raw/master/form_demo_02.gif)  <br> 
-![](https://raw.githubusercontent.com/iotjin/JhForm/master/JhForm/screenshots/form_demo_01.gif)  <br> 
-![](https://raw.githubusercontent.com/iotjin/JhForm/master/JhForm/screenshots/form_demo_02.gif)  <br> 
+![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/formDemo_00.png)  <br> 
+![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/formDemo_01.gif)  <br> 
+![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/formDemo_02.gif)  <br> 
+
 
 ## Examples
 
