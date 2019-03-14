@@ -112,11 +112,6 @@ typedef void (^JhCellSwitchBtnBlock)(BOOL switchBtn_on,UISwitch *switchBtn);
 @property (nonatomic, copy, nullable) JhCellSelectCellBlock Jh_CellSelectCellBlock;
 
 
-
-
-
-
-
 /**
  表单条目缺省高度，缺省值为44.0f, 可根据需求设置(如果设置底部自定义view 最好设置view的高度+60 )
  */
@@ -148,6 +143,9 @@ typedef void (^JhCellSwitchBtnBlock)(BOOL switchBtn_on,UISwitch *switchBtn);
  */
 @property (nonatomic, copy, nullable) NSString *Jh_placeholder;
 @property (nonatomic, strong, nullable) NSAttributedString *Jh_attributedPlaceholder;
+
+/** 表单条目占位字符 字体大小(默认15) */
+@property (assign, nonatomic) CGFloat  Jh_placeholderFont;
 
 /**
   表单条目右侧文本 的排列方式, (居左,居右 ,默认居左,只在选择和输入样式下生效)

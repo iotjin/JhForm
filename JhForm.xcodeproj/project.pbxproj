@@ -79,6 +79,7 @@
 		E93D40A721E58E5D003DC702 /* YYCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D40A021E58E5D003DC702 /* YYCache.m */; };
 		E93D40A821E58E5D003DC702 /* YYKVStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D40A421E58E5D003DC702 /* YYKVStorage.m */; };
 		E93D40A921E58E5D003DC702 /* YYMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D40A521E58E5D003DC702 /* YYMemoryCache.m */; };
+		E94AE3D12239F7F600ABD0BA /* formDemo_00.png in Resources */ = {isa = PBXBuildFile; fileRef = E94AE3D02239F7F600ABD0BA /* formDemo_00.png */; };
 		E9FD211C2238CF20002C67E6 /* JhFormTableViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD20F62238CF20002C67E6 /* JhFormTableViewVC.m */; };
 		E9FD211D2238CF20002C67E6 /* JhFormCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD20F82238CF20002C67E6 /* JhFormCellModel.m */; };
 		E9FD211E2238CF20002C67E6 /* JhFormSectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD20FB2238CF20002C67E6 /* JhFormSectionModel.m */; };
@@ -277,6 +278,7 @@
 		E93D40A321E58E5D003DC702 /* YYCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYCache.h; sourceTree = "<group>"; };
 		E93D40A421E58E5D003DC702 /* YYKVStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVStorage.m; sourceTree = "<group>"; };
 		E93D40A521E58E5D003DC702 /* YYMemoryCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYMemoryCache.m; sourceTree = "<group>"; };
+		E94AE3D02239F7F600ABD0BA /* formDemo_00.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = formDemo_00.png; sourceTree = "<group>"; };
 		E9FD20F62238CF20002C67E6 /* JhFormTableViewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormTableViewVC.m; sourceTree = "<group>"; };
 		E9FD20F82238CF20002C67E6 /* JhFormCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormCellModel.m; sourceTree = "<group>"; };
 		E9FD20F92238CF20002C67E6 /* JhFormSectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormSectionModel.h; sourceTree = "<group>"; };
@@ -606,6 +608,7 @@
 		E93D40EA21E5C01C003DC702 /* screenshots */ = {
 			isa = PBXGroup;
 			children = (
+				E94AE3D02239F7F600ABD0BA /* formDemo_00.png */,
 				E92500CB2238F6C70076D160 /* form_demo_01.gif */,
 				E92500CA2238F6C60076D160 /* form_demo_02.gif */,
 			);
@@ -827,6 +830,7 @@
 				E93D409A21E58E52003DC702 /* HXPhotoPicker.bundle in Resources */,
 				E9FD21542238D2A3002C67E6 /* LICENSE in Resources */,
 				E92500CC2238F6C70076D160 /* form_demo_02.gif in Resources */,
+				E94AE3D12239F7F600ABD0BA /* formDemo_00.png in Resources */,
 				E9FD21282238CF20002C67E6 /* JhForm.bundle in Resources */,
 				E93D3F8A21E58DDB003DC702 /* LaunchScreen.storyboard in Resources */,
 				E93D3F8721E58DDB003DC702 /* Assets.xcassets in Resources */,

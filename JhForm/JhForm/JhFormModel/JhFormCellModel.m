@@ -337,11 +337,18 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
     
 }
 -(void)setJh_placeholder:(NSString *)Jh_placeholder{
-    _Jh_showPlaceholder =Jh_placeholder;
+    _Jh_placeholder =Jh_placeholder;
     
     NSAttributedString *attributedPlaceholder = [[NSAttributedString alloc]initWithString:Jh_placeholder ?: @"" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:Jh_InfoFont],NSForegroundColorAttributeName:Jh_PlaceholderColor}];
     _Jh_attributedPlaceholder = attributedPlaceholder;
     
+}
+
+- (void)setJh_placeholderFont:(CGFloat)Jh_placeholderFont{
+    _Jh_placeholderFont = Jh_placeholderFont;
+    
+    NSAttributedString *attributedPlaceholder = [[NSAttributedString alloc]initWithString:self.Jh_placeholder ?: @"" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:Jh_placeholderFont],NSForegroundColorAttributeName:Jh_PlaceholderColor}];
+    self.Jh_attributedPlaceholder = attributedPlaceholder;
 }
 
 -(void)setJh_attributedPlaceholder:(NSAttributedString *)Jh_attributedPlaceholder{
