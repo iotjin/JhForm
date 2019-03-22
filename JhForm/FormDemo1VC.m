@@ -74,6 +74,11 @@
     //默认文本居左可编辑
     JhFormCellModel *cell3 = JhFormCellModel_AddInputCell(@"姓名:", @"", YES, UIKeyboardTypeDefault);
     cell3.Jh_placeholder = @"请输入姓名(必选)";
+    cell3.JhInputBlock = ^(NSString *text, BOOL isInputCompletion) {
+        NSLog(@" 监听输入的文字 %@ ",text);
+        BOOL boolValue = isInputCompletion;
+        NSLog(@"是否输入完成%@", boolValue ? @"YES" : @"NO");
+    };
     
     
     JhFormCellModel *cell4 = JhFormCellModel_AddInputCell(@"手机号:", @"XXX(可编辑)", YES, UIKeyboardTypePhonePad);
