@@ -60,6 +60,12 @@
     if (self.inputCompletion) {
         self.inputCompletion(self.rightTextView.text);
     }
+    
+    if (_data.JhInputBlock) {
+        _data.JhInputBlock(self.rightTextView.text ,NO);
+    }
+    
+    
     // 防止输入时表单因刷新动画抖动
     [UIView performWithoutAnimation:^{
         [self.baseTableView beginUpdates];
@@ -70,6 +76,10 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
     self.rightTextView.text = [self.data.Jh_info addUnit:self.data.Jh_unit];
+    
+    if (_data.JhInputBlock) {
+        _data.JhInputBlock(self.rightTextView.text ,YES);
+    }
 }
 
 + (CGFloat)heightWithCellModelData:(JhFormCellModel *)data{

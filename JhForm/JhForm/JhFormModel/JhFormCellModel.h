@@ -90,6 +90,9 @@ typedef void(^JhCellCustumBottomViewBlock)(UIView *BottomView);
 
 typedef void (^JhCellSwitchBtnBlock)(BOOL switchBtn_on,UISwitch *switchBtn);
 
+/** 获取输入内容 和 输入状态 block */
+typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
+
 
 @interface JhFormCellModel : NSObject
 
@@ -105,6 +108,9 @@ typedef void (^JhCellSwitchBtnBlock)(BOOL switchBtn_on,UISwitch *switchBtn);
 /** 点击居中文本的block */
 @property (nonatomic, copy) void(^JhCellClickCenterTextBlock)(void);
 
+
+/** 获取输入内容 和 输入状态 block */
+@property (nonatomic, copy) JhInputBlock JhInputBlock;
 
 /**
  表单条目点击选择事件block
