@@ -8,7 +8,9 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 ![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01.gif)  <br> 
 ![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_02.GIF)  <br> 
 
+## 更新说明
 
+* 2019.03.22 - 新增设置导航条右侧文字和图片的方法,添加快捷添加输入样式cell的方法
 
 
 ## Examples
@@ -16,7 +18,8 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 
 * 样式1 - 输入样式
 ```
-      JhFormCellModel *cell4 = JhFormCellModel_Add(@"手机号:", @"XXX(可编辑)", JhFormCellTypeInput, YES, YES, UIKeyboardTypePhonePad);
+      //默认文本居左可编辑
+    JhFormCellModel *cell4 = JhFormCellModel_AddInputCell(@"手机号:", @"XXX(可编辑)", YES, UIKeyboardTypePhonePad);
     cell4.Jh_placeholder = @"请输入手机号(最长11位,必选)";
     cell4.Jh_maxInputLength = 11;
 
@@ -143,6 +146,18 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
      //隐藏默认的footerView
     self.Jh_defaultFooterViewHidden = YES;
     
+ 
+    
+#pragma mark - 设置导航条title和右侧文字
+-(void)setNav{
+    
+    self.Jh_navTitle = @"表单Demo1 - 默认";
+    self.Jh_navRightTitle =@"文字";
+    self.JhClickNavRightItemBlock = ^{
+        NSLog(@" 点击跳转 ");
+    };
+    
+}
     
 
 ```
