@@ -23,11 +23,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.Jh_navTitle = @"表单Demo1 - 默认";
+    
     
     [self initModel];
     
+    [self setNav];
+    
 }
+
+#pragma mark - setNav
+-(void)setNav{
+    
+    self.Jh_navTitle = @"表单Demo1 - 默认";
+    self.Jh_navRightTitle =@"文字";
+    self.JhClickNavRightItemBlock = ^{
+        NSLog(@" 点击跳转 ");
+    };
+    
+}
+
 
 
 #pragma mark - initModel
@@ -54,12 +68,15 @@
         [weakSelf.Jh_formTableView reloadData];
     };
     
-    //默认文本居左
-    JhFormCellModel *cell3 = JhFormCellModel_Add(@"姓名:", @"", JhFormCellTypeInput, YES, YES, UIKeyboardTypeDefault);
+    //默认文本居左可编辑
+//    JhFormCellModel *cell3 = JhFormCellModel_Add(@"姓名:", @"", JhFormCellTypeInput, YES, YES, UIKeyboardTypeDefault);
+    
+    //默认文本居左可编辑
+    JhFormCellModel *cell3 = JhFormCellModel_AddInputCell(@"姓名:", @"", YES, UIKeyboardTypeDefault);
     cell3.Jh_placeholder = @"请输入姓名(必选)";
     
     
-    JhFormCellModel *cell4 = JhFormCellModel_Add(@"手机号:", @"XXX(可编辑)", JhFormCellTypeInput, YES, YES, UIKeyboardTypePhonePad);
+    JhFormCellModel *cell4 = JhFormCellModel_AddInputCell(@"手机号:", @"XXX(可编辑)", YES, UIKeyboardTypePhonePad);
     cell4.Jh_placeholder = @"请输入手机号(最长11位,必选)";
     cell4.Jh_maxInputLength = 11;
     

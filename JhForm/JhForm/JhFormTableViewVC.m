@@ -7,7 +7,7 @@
 //
 
 #import "JhFormTableViewVC.h"
-
+#import "UIBarButtonItem+JhForm.h"
 #import "JhFormCellModel.h"
 #import "JhFormSectionModel.h"
 #import "JhFormInputCell.h"
@@ -37,6 +37,30 @@
     _Jh_navTitle =Jh_navTitle;
     self.navigationItem.title =Jh_navTitle;
 }
+
+-(void)setJh_navRightTitle:(NSString *)Jh_navRightTitle{
+    _Jh_navRightTitle = Jh_navRightTitle;
+    if (Jh_navRightTitle.length) {
+        UIBarButtonItem *rightItem = [UIBarButtonItem itemWithTitle:Jh_navRightTitle titleColor:[UIColor blackColor] target:self action:@selector(ClickRightItem)];
+        self.navigationItem.rightBarButtonItems =  @[rightItem];
+    }
+}
+-(void)setJh_navRightImage:(NSString *)Jh_navRightImage{
+    _Jh_navRightImage = Jh_navRightImage;
+    if (Jh_navRightImage.length) {
+        UIBarButtonItem *rightItem = [UIBarButtonItem itemWithImage:Jh_navRightImage highImage:Jh_navRightImage target:self action:@selector(ClickRightItem)];
+        self.navigationItem.rightBarButtonItems =  @[rightItem];
+    }
+    
+}
+
+
+-(void)ClickRightItem{
+    if (self.JhClickNavRightItemBlock) {
+        self.JhClickNavRightItemBlock();
+    }
+}
+
 
 -(void)setJh_submitStr:(NSString *)Jh_submitStr{
     _Jh_submitStr = Jh_submitStr;

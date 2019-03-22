@@ -79,6 +79,7 @@
 		E93D40A721E58E5D003DC702 /* YYCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D40A021E58E5D003DC702 /* YYCache.m */; };
 		E93D40A821E58E5D003DC702 /* YYKVStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D40A421E58E5D003DC702 /* YYKVStorage.m */; };
 		E93D40A921E58E5D003DC702 /* YYMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D40A521E58E5D003DC702 /* YYMemoryCache.m */; };
+		E947A74322446FA600BE50FC /* UIBarButtonItem+JhForm.m in Sources */ = {isa = PBXBuildFile; fileRef = E947A74222446FA600BE50FC /* UIBarButtonItem+JhForm.m */; };
 		E94AE3D12239F7F600ABD0BA /* formDemo_00.png in Resources */ = {isa = PBXBuildFile; fileRef = E94AE3D02239F7F600ABD0BA /* formDemo_00.png */; };
 		E9FD211C2238CF20002C67E6 /* JhFormTableViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD20F62238CF20002C67E6 /* JhFormTableViewVC.m */; };
 		E9FD211D2238CF20002C67E6 /* JhFormCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD20F82238CF20002C67E6 /* JhFormCellModel.m */; };
@@ -278,6 +279,8 @@
 		E93D40A321E58E5D003DC702 /* YYCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYCache.h; sourceTree = "<group>"; };
 		E93D40A421E58E5D003DC702 /* YYKVStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYKVStorage.m; sourceTree = "<group>"; };
 		E93D40A521E58E5D003DC702 /* YYMemoryCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYMemoryCache.m; sourceTree = "<group>"; };
+		E947A74122446FA600BE50FC /* UIBarButtonItem+JhForm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+JhForm.h"; sourceTree = "<group>"; };
+		E947A74222446FA600BE50FC /* UIBarButtonItem+JhForm.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+JhForm.m"; sourceTree = "<group>"; };
 		E94AE3D02239F7F600ABD0BA /* formDemo_00.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = formDemo_00.png; sourceTree = "<group>"; };
 		E9FD20F62238CF20002C67E6 /* JhFormTableViewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormTableViewVC.m; sourceTree = "<group>"; };
 		E9FD20F82238CF20002C67E6 /* JhFormCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormCellModel.m; sourceTree = "<group>"; };
@@ -677,6 +680,8 @@
 				E9FD21142238CF20002C67E6 /* SelwynExpandableTextView.m */,
 				E9FD21172238CF20002C67E6 /* UITextView+TextLimit.h */,
 				E9FD21132238CF20002C67E6 /* UITextView+TextLimit.m */,
+				E947A74122446FA600BE50FC /* UIBarButtonItem+JhForm.h */,
+				E947A74222446FA600BE50FC /* UIBarButtonItem+JhForm.m */,
 			);
 			path = JhFormToolClass;
 			sourceTree = "<group>";
@@ -895,6 +900,7 @@
 				E93D409021E58E52003DC702 /* HXDatePhotoViewTransition.m in Sources */,
 				E93D406A21E58E52003DC702 /* _YYWebImageSetter.m in Sources */,
 				E93D408D21E58E52003DC702 /* NSDate+HXExtension.m in Sources */,
+				E947A74322446FA600BE50FC /* UIBarButtonItem+JhForm.m in Sources */,
 				E93D409621E58E52003DC702 /* HXDatePhotoPersentInteractiveTransition.m in Sources */,
 				E93D407E21E58E52003DC702 /* HXAlbumListViewController.m in Sources */,
 				E93D408721E58E52003DC702 /* HXCustomCameraController.m in Sources */,

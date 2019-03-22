@@ -20,11 +20,14 @@ static NSString *const JhUnitMillion = @"万元";
 
 + (instancetype)Jh_cellWithTitle:(NSString *)title info:(NSString *)info cellType:(JhFormCellType)cellType;
 
-/** 选择图片的cell */
-+ (instancetype)Jh_imageCellWithTitle:(NSString *)title required: (BOOL)required;
+/** 输入类型的cell(默认样式,居左,可编辑) */
++ (instancetype)Jh_inputCellWithTitle:(NSString *)title info:(NSString *)info required: (BOOL)required keyboardType:(UIKeyboardType)keyboardType;
 
 /** 选择类型的cell(默认样式,居左,可编辑) */
 + (instancetype)Jh_selectCellWithTitle:(NSString *)title info:(NSString *)info required: (BOOL)required;
+
+/** 选择图片的cell */
++ (instancetype)Jh_imageCellWithTitle:(NSString *)title required: (BOOL)required;
 
 
 
@@ -44,6 +47,13 @@ inline JhFormCellModel *JhFormCellModel_Add(NSString * _Nonnull title, NSString 
 
 inline JhFormCellModel *JhFormCellModel_Info(NSString * _Nonnull title, NSString * _Nullable info, JhFormCellType cellType) {
     return [JhFormCellModel Jh_cellWithTitle:title info:info cellType:cellType];
+}
+
+
+/** 快捷添加一个输入类型的cell(默认样式,居左,可编辑) */
+inline JhFormCellModel *JhFormCellModel_AddInputCell(NSString * _Nonnull title,NSString * _Nullable info, BOOL required, UIKeyboardType keyboardType){
+    
+    return [JhFormCellModel Jh_inputCellWithTitle:title info:info required:required keyboardType:keyboardType];
 }
 
 /** 快捷添加一个选择类型的cell(默认样式,居左,可编辑) */
@@ -100,6 +110,14 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
 }
 + (instancetype)Jh_cellWithTitle:(NSString *)title info:(NSString *)info cellType:(JhFormCellType)cellType {
     return [[self alloc]initWithTitle:title info:info cellType:cellType editable:NO required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
+}
+
+
+/** 输入类型的cell(默认样式,居左,可编辑) */
++ (instancetype)Jh_inputCellWithTitle:(NSString *)title info:(NSString *)info required: (BOOL)required keyboardType:(UIKeyboardType)keyboardType{
+    
+    return [[self alloc]initWithTitle:title info:info cellType:JhFormCellTypeInput editable:YES required:required keyboardType:keyboardType images:nil showPlaceholder:YES];
+    
 }
 
 

@@ -31,6 +31,15 @@ typedef void(^JhFormSubmitBlock)(void);
 
 /** 标题 */
 @property (strong, nonatomic) NSString  *Jh_navTitle;
+
+/** 导航栏右侧标题 */
+@property(nonatomic,strong) NSString * Jh_navRightTitle;
+/** 导航栏右侧img */
+@property(nonatomic,strong) NSString * Jh_navRightImage;
+/** 点击导航栏右侧item Block */
+@property (nonatomic, copy) void(^JhClickNavRightItemBlock)(void);
+
+
 /** 提交文字 */
 @property (strong, nonatomic) NSString  *Jh_submitStr;
 

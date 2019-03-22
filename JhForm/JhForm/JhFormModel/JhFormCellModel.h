@@ -246,7 +246,8 @@ FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_Add(NSString * _Nonnull title
 FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_Info(NSString * _Nonnull title, NSString * _Nullable info, JhFormCellType cellType);
 
 
-
+/** 快捷添加一个输入类型的cell(默认样式,居左,可编辑) */
+FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddInputCell(NSString * _Nonnull title,NSString * _Nullable info, BOOL required, UIKeyboardType keyboardType);
 
 /** 快捷添加一个选择类型的cell(默认样式,居左) */
 FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddSelectCell(NSString * _Nonnull title,NSString * _Nullable info, BOOL required);
