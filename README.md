@@ -146,6 +146,18 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
      //隐藏默认的footerView
     self.Jh_defaultFooterViewHidden = YES;
     
+ 
+    
+#pragma mark - 设置导航条title和右侧文字
+-(void)setNav{
+    
+    self.Jh_navTitle = @"表单Demo1 - 默认";
+    self.Jh_navRightTitle =@"文字";
+    self.JhClickNavRightItemBlock = ^{
+        NSLog(@" 点击跳转 ");
+    };
+    
+}
     
 
 ```
