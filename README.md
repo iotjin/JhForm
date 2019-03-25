@@ -1,7 +1,7 @@
 # JhForm
 JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 
-注:本类copy的SWForm代码,在此基础上新增了几种自定义的cell,改成了自己熟悉的代码风格.<br> 
+注:JhForm是在SWForm代码的基础上新增了几种自定义的cell,添加了一些属性和方法,改成了自己熟悉的代码风格.<br> 
 (SWForm代码地址:https://github.com/RockChanel/SWForm)
 
 ![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/formDemo_00.png)  <br> 
@@ -10,18 +10,29 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 
 ## 更新说明
 
-* 2019.03.22 - 新增设置导航条右侧文字和图片的方法,添加快捷添加输入样式cell的方法
+* 2019.03.22 - 新增设置导航条右侧文字和图片的方法,添加快捷添加输入样式cell的方法,监听输入文字和输入完成状态的Block
 
 
 ## Examples
 
 
+* 特别提醒:
+```
+好多地方用到Block,认真检查是否用的弱引用,否则控制器不会被释放
+
+```
+
 * 样式1 - 输入样式
 ```
-      //默认文本居左可编辑
+     //默认文本居左可编辑
     JhFormCellModel *cell4 = JhFormCellModel_AddInputCell(@"手机号:", @"XXX(可编辑)", YES, UIKeyboardTypePhonePad);
     cell4.Jh_placeholder = @"请输入手机号(最长11位,必选)";
     cell4.Jh_maxInputLength = 11;
+    cell4.JhInputBlock = ^(NSString *text, BOOL isInputCompletion) {
+        NSLog(@" 监听输入的文字 %@ ",text);
+        BOOL boolValue = isInputCompletion;
+        NSLog(@"是否输入完成%@", boolValue ? @"YES" : @"NO");
+      };
 
 ```
 
