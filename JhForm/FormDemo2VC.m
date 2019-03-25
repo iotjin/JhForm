@@ -159,8 +159,8 @@
     JhFormCellModel *Section1_cell0 = JhFormCellModel_AddCustumRightCell(@"选择选项:");
     Section1_cell0.Jh_defaultHeight = 60;
     Section1_cell0.Jh_custumRightViewBlock = ^(UIView *RightView) {
-        [RightView  addSubview:self.btnBgView];
-        [self.btnBgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [RightView  addSubview:weakSelf.btnBgView];
+        [weakSelf.btnBgView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(0);
             make.left.mas_equalTo(0);
             make.bottom.mas_equalTo(0);
