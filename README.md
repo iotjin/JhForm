@@ -4,12 +4,13 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 注:JhForm是在SWForm代码的基础上新增了几种自定义的cell,添加了一些属性和方法,改成了自己熟悉的代码风格.<br> 
 (SWForm代码地址:https://github.com/RockChanel/SWForm)
 
-![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/formDemo_00.png)  <br> 
-![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01.gif)  <br> 
+![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_Demo_00.png)  <br> 
+![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01.Gif)  <br> 
 ![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_02.GIF)  <br> 
 
 ## 更新说明
 
+* 2019.03.27 - CustumRightCell样式添加显示箭头的属性 <br> 
 * 2019.03.22 - 新增设置导航条右侧文字和图片的方法,添加快捷添加输入样式cell的方法,监听输入文字和输入完成状态的Block <br> 
 
 
