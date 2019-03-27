@@ -78,9 +78,9 @@
 		E93D40A821E58E5D003DC702 /* YYKVStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D40A421E58E5D003DC702 /* YYKVStorage.m */; };
 		E93D40A921E58E5D003DC702 /* YYMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D40A521E58E5D003DC702 /* YYMemoryCache.m */; };
 		E947A74322446FA600BE50FC /* UIBarButtonItem+JhForm.m in Sources */ = {isa = PBXBuildFile; fileRef = E947A74222446FA600BE50FC /* UIBarButtonItem+JhForm.m */; };
-		E9FC99F7224B105A00C5AE9E /* form_demo_00.png in Resources */ = {isa = PBXBuildFile; fileRef = E9FC99F6224B105A00C5AE9E /* form_demo_00.png */; };
-		E9FC99FA224B13AD00C5AE9E /* form_demo_01.GIF in Resources */ = {isa = PBXBuildFile; fileRef = E9FC99F8224B13AD00C5AE9E /* form_demo_01.GIF */; };
-		E9FC99FB224B13AD00C5AE9E /* form_demo_02.GIF in Resources */ = {isa = PBXBuildFile; fileRef = E9FC99F9224B13AD00C5AE9E /* form_demo_02.GIF */; };
+		E9FC99FF224B14B700C5AE9E /* form_demo_01.GIF in Resources */ = {isa = PBXBuildFile; fileRef = E9FC99FC224B14B700C5AE9E /* form_demo_01.GIF */; };
+		E9FC9A00224B14B700C5AE9E /* form_demo_00.png in Resources */ = {isa = PBXBuildFile; fileRef = E9FC99FD224B14B700C5AE9E /* form_demo_00.png */; };
+		E9FC9A01224B14B700C5AE9E /* form_demo_02.GIF in Resources */ = {isa = PBXBuildFile; fileRef = E9FC99FE224B14B700C5AE9E /* form_demo_02.GIF */; };
 		E9FD211C2238CF20002C67E6 /* JhFormTableViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD20F62238CF20002C67E6 /* JhFormTableViewVC.m */; };
 		E9FD211D2238CF20002C67E6 /* JhFormCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD20F82238CF20002C67E6 /* JhFormCellModel.m */; };
 		E9FD211E2238CF20002C67E6 /* JhFormSectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD20FB2238CF20002C67E6 /* JhFormSectionModel.m */; };
@@ -279,9 +279,9 @@
 		E93D40A521E58E5D003DC702 /* YYMemoryCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYMemoryCache.m; sourceTree = "<group>"; };
 		E947A74122446FA600BE50FC /* UIBarButtonItem+JhForm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+JhForm.h"; sourceTree = "<group>"; };
 		E947A74222446FA600BE50FC /* UIBarButtonItem+JhForm.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+JhForm.m"; sourceTree = "<group>"; };
-		E9FC99F6224B105A00C5AE9E /* form_demo_00.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_demo_00.png; sourceTree = "<group>"; };
-		E9FC99F8224B13AD00C5AE9E /* form_demo_01.GIF */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = form_demo_01.GIF; sourceTree = "<group>"; };
-		E9FC99F9224B13AD00C5AE9E /* form_demo_02.GIF */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = form_demo_02.GIF; sourceTree = "<group>"; };
+		E9FC99FC224B14B700C5AE9E /* form_demo_01.GIF */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = form_demo_01.GIF; sourceTree = "<group>"; };
+		E9FC99FD224B14B700C5AE9E /* form_demo_00.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_demo_00.png; sourceTree = "<group>"; };
+		E9FC99FE224B14B700C5AE9E /* form_demo_02.GIF */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = form_demo_02.GIF; sourceTree = "<group>"; };
 		E9FD20F62238CF20002C67E6 /* JhFormTableViewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormTableViewVC.m; sourceTree = "<group>"; };
 		E9FD20F82238CF20002C67E6 /* JhFormCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormCellModel.m; sourceTree = "<group>"; };
 		E9FD20F92238CF20002C67E6 /* JhFormSectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormSectionModel.h; sourceTree = "<group>"; };
@@ -611,9 +611,9 @@
 		E93D40EA21E5C01C003DC702 /* screenshots */ = {
 			isa = PBXGroup;
 			children = (
-				E9FC99F8224B13AD00C5AE9E /* form_demo_01.GIF */,
-				E9FC99F9224B13AD00C5AE9E /* form_demo_02.GIF */,
-				E9FC99F6224B105A00C5AE9E /* form_demo_00.png */,
+				E9FC99FD224B14B700C5AE9E /* form_demo_00.png */,
+				E9FC99FC224B14B700C5AE9E /* form_demo_01.GIF */,
+				E9FC99FE224B14B700C5AE9E /* form_demo_02.GIF */,
 			);
 			path = screenshots;
 			sourceTree = "<group>";
@@ -833,11 +833,11 @@
 			files = (
 				E93D409A21E58E52003DC702 /* HXPhotoPicker.bundle in Resources */,
 				E9FD21542238D2A3002C67E6 /* LICENSE in Resources */,
-				E9FC99FA224B13AD00C5AE9E /* form_demo_01.GIF in Resources */,
-				E9FC99F7224B105A00C5AE9E /* form_demo_00.png in Resources */,
 				E9FD21282238CF20002C67E6 /* JhForm.bundle in Resources */,
 				E93D3F8A21E58DDB003DC702 /* LaunchScreen.storyboard in Resources */,
-				E9FC99FB224B13AD00C5AE9E /* form_demo_02.GIF in Resources */,
+				E9FC9A00224B14B700C5AE9E /* form_demo_00.png in Resources */,
+				E9FC99FF224B14B700C5AE9E /* form_demo_01.GIF in Resources */,
+				E9FC9A01224B14B700C5AE9E /* form_demo_02.GIF in Resources */,
 				E93D3F8721E58DDB003DC702 /* Assets.xcassets in Resources */,
 				E9FD21642238D36B002C67E6 /* JhBaseHeaderView.xib in Resources */,
 				E9FD215F2238D2A3002C67E6 /* README.md in Resources */,
