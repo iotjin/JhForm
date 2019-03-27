@@ -156,7 +156,10 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 /**
   表单条目右侧文本 的排列方式, (居左,居右 ,默认居左,只在选择和输入样式下生效)
  */
-@property (nonatomic, assign) JhFormCellInfoTextAlignmentStyle Jh_InfoTextAlignment;
+@property (assign, nonatomic) JhFormCellInfoTextAlignmentStyle Jh_InfoTextAlignment;
+
+/** 显示右侧的箭头     (只在CustumRightCell样式下生效,默认不显示) */
+@property (assign, nonatomic) BOOL  Jh_custumRightCellShowArrow;
 
 /**
   表单条目右侧 SwitchBtn 开关状态

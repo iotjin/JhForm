@@ -7,8 +7,11 @@
 //
 
 #import "FormDemo1VC.h"
+#import "Masonry.h"
 
 @interface FormDemo1VC ()
+
+@property (strong, nonatomic)  UITextField *passWordTextField;
 
 @end
 
@@ -19,6 +22,17 @@
     NSLog(@" FormDemo1VC - dealloc ");
 }
 
+
+-(UITextField *)passWordTextField{
+    if (!_passWordTextField) {
+        _passWordTextField=[[UITextField alloc]init];
+        _passWordTextField.textAlignment = NSTextAlignmentLeft;
+        _passWordTextField.placeholder =@"请输入密码";
+        _passWordTextField.secureTextEntry=YES;
+        _passWordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    }
+    return _passWordTextField;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,7 +49,7 @@
 -(void)setNav{
     
     self.Jh_navTitle = @"表单Demo1 - 默认";
-    self.Jh_navRightTitle =@"文字";
+    self.Jh_navRightTitle =@"文字"; //也可以设置图片
     self.JhClickNavRightItemBlock = ^{
         NSLog(@" 点击跳转 ");
     };
@@ -80,6 +94,16 @@
         NSLog(@"是否输入完成%@", boolValue ? @"YES" : @"NO");
     };
     
+    JhFormCellModel *pwd = JhFormCellModel_AddCustumRightCell(@"密码:");
+    pwd.Jh_custumRightViewBlock = ^(UIView *RightView) {
+        [RightView addSubview:weakSelf.passWordTextField];
+        [weakSelf.passWordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.mas_equalTo(RightView);
+            make.right.mas_equalTo(-40);
+            make.left.mas_equalTo(0);
+        }];
+    };
+    
     
     JhFormCellModel *cell4 = JhFormCellModel_AddInputCell(@"手机号:", @"XXX(可编辑)", YES, UIKeyboardTypePhonePad);
     cell4.Jh_placeholder = @"请输入手机号(最长11位,必选)";
@@ -105,7 +129,7 @@
     
     JhFormCellModel *cell7 = JhFormCellModel_AddImageCell(@"选择图片:", NO);
     
-    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,cell4,cell5,cell6,cell7]];
+    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,pwd,cell4,cell5,cell6,cell7]];
     
     JhFormSectionModel *section0 = JhSectionModel_Add(cellArr0);
     

@@ -32,6 +32,7 @@
     if (!_btnBgView) {
 
         UIView *bgView = [[UIView alloc]init];
+        bgView.backgroundColor =JhRandomColor;
 
 //        JhPositionButton *btn1 = [[JhPositionButton alloc]init];
 //        [btn1 setTitle:@"选项一" forState:UIControlStateNormal];
@@ -157,7 +158,6 @@
     
     //右侧自定义View
     JhFormCellModel *Section1_cell0 = JhFormCellModel_AddCustumRightCell(@"选择选项:");
-    Section1_cell0.Jh_defaultHeight = 60;
     Section1_cell0.Jh_custumRightViewBlock = ^(UIView *RightView) {
         [RightView  addSubview:weakSelf.btnBgView];
         [weakSelf.btnBgView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -168,6 +168,9 @@
         }];
         
     };
+    Section1_cell0.Jh_custumRightCellShowArrow =YES;
+    
+    
     
     //文本居中
     JhFormCellModel *Section1_cell1 = JhFormCellModel_AddCenterTextCell(@"退出登录");

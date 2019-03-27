@@ -44,15 +44,18 @@
     
     self.titleLabel.attributedText = data.Jh_attributedTitle;
     
+    if(data.Jh_custumRightCellShowArrow == YES){
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    //标题居中
+    //标题垂直居中
     self.titleLabel.frame = CGRectMake(Jh_Margin_left, (self.data.Jh_defaultHeight - Jh_TitleHeight)/2, Jh_TitleWidth, Jh_TitleHeight);
     self.CustumRightView.frame =CGRectMake(Jh_CustumRightView_leftEdgeMargin, 0, Jh_SCRREN_WIDTH - Jh_CustumRightView_leftEdgeMargin - Jh_CustumRightView_rightEdgeMargin, self.bounds.size.height);
-    
 }
 
 
