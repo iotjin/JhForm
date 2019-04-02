@@ -161,7 +161,7 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
     if (self) {
         self.Jh_cellUnitType = JhFormCellUnitTypeNone;
         self.Jh_maxInputLength = Jh_GlobalMaxInputLength;
-        self.Jh_maxImageCount = Jh_GlobalMaxImages;
+        self.Jh_maxImageCount = self.Jh_maxImageCount ? self.Jh_maxImageCount : Jh_GlobalMaxImages;
         self.Jh_title = title;
         self.Jh_info = info;
         self.Jh_cellType = cellType;
@@ -181,17 +181,17 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
 - (void)jh_setDefaultHeight:(JhFormCellType)cellType {
     
     if(cellType ==JhFormCellTypeTextViewInput){
-        //200
         self.Jh_defaultHeight = Jh_DefaultTextViewCellHeight;
-    }else if(cellType ==JhFormCellTypeCustumBottom){
-        //240
+    }
+    else if(cellType ==JhFormCellTypeCustumBottom){
         self.Jh_defaultHeight = Jh_DefaultCustumBottomViewCellHeight;
-    }else {
-        //44
+    }
+    else if(cellType ==JhFormCellTypeSelectImage){
+        self.Jh_defaultHeight = Jh_DefaultSelectImageCellHeight;
+    }
+    else {
         self.Jh_defaultHeight = Jh_DefaultCellHeight;
     }
-    
-    
 }
 
 #pragma mark -- 设置是否显示输入框占位字符

@@ -40,17 +40,19 @@ CGFloat const Jh_TitleHeight = 24.0f;
 
 // 表单条目初始高度
 CGFloat const Jh_DefaultCellHeight = 44.0f;
-CGFloat const Jh_DefaultTextViewCellHeight = 200.0f;
-CGFloat const Jh_DefaultCustumBottomViewCellHeight = 240.0f;
+CGFloat const Jh_DefaultTextViewCellHeight = 150.0f; //(默认输入50字的高度)
+CGFloat const Jh_DefaultCustumBottomViewCellHeight = 264.0f;
+CGFloat const Jh_DefaultSelectImageCellHeight = 264;
+
 
 // 表单标题显示类别
 NSInteger const Jh_TitleShowType = JhTitleShowTypeOnlyTitle;
 
 // 表单输入字数限制
-NSUInteger const Jh_GlobalMaxInputLength = 200;
+NSUInteger const Jh_GlobalMaxInputLength = 50;
 
 // 表单选择图片附件数
-NSUInteger const Jh_GlobalMaxImages = 6;
+NSUInteger const Jh_GlobalMaxImages = 8;
 
 // 表单TextView字数提示文字大小
 CGFloat const Jh_LengHintFont = 12;

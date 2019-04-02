@@ -98,12 +98,13 @@ extern CGFloat const Jh_TitleHeight;
 
 /**
  表单Cell高度，
- JhFormCustumRightCell  缺省为240.0f  JhFormCellModelTypeTextViewInput 类型缺省高度为200 ，其余 缺省为44.0f， 为确保显示正常，设置值>= 44
+ JhFormCellModelTypeTextViewInput 类型缺省高度为150 ，选择图片和自定义底部 264,  其余 缺省为44.0f， 为确保显示正常，设置值>= 44
  
  */
-extern CGFloat const Jh_DefaultCellHeight;
-extern CGFloat const Jh_DefaultTextViewCellHeight;
-extern CGFloat const Jh_DefaultCustumBottomViewCellHeight;
+extern CGFloat const Jh_DefaultCellHeight; //44
+extern CGFloat const Jh_DefaultTextViewCellHeight;  //150
+extern CGFloat const Jh_DefaultCustumBottomViewCellHeight; //264
+extern CGFloat const Jh_DefaultSelectImageCellHeight; //264 
 
 /**
  表单标题显示类别，缺省为 JhTitleShowTypeRedStarFront
@@ -111,13 +112,13 @@ extern CGFloat const Jh_DefaultCustumBottomViewCellHeight;
 extern NSInteger const Jh_TitleShowType;
 
 /**
- 表单输入字数限制，缺省为200
+ 表单输入字数限制，缺省为50
  0 表示无限制
  */
 extern NSUInteger const Jh_GlobalMaxInputLength;
 
 /**
- 表单选择图片附件数，缺省为6
+ 表单选择图片附件数，缺省为8
  */
 extern NSUInteger const Jh_GlobalMaxImages;
 

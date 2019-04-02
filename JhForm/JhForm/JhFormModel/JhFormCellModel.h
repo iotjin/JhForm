@@ -174,9 +174,6 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
  */
 @property (strong, nonatomic) UIColor  *Jh_switchTintColor;
 
-
-
-
 /**
  是否显示表单条目占位字符 YES:显示 NO:不显示 --- 新增 default is YES；详情 default is NO
  */
@@ -210,13 +207,13 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 
 
 /**
- JhFormCellTypeInput 以及 JhFormCellTypeTextViewInput 类别中表示最大输入字数 (默认200)
+ JhFormCellTypeInput 以及 JhFormCellTypeTextViewInput 类别中表示最大输入字数 (默认50)
  0 表示无限制
  */
 @property (nonatomic, assign) NSUInteger Jh_maxInputLength;
 
 /**
- JhFormCellTypeImage 类别中表示最大选择图片数
+ JhFormCellTypeImage 类别中表示最大选择图片数 (默认8)
  */
 @property (nonatomic, assign) NSUInteger Jh_maxImageCount;
 

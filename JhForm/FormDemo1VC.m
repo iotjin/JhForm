@@ -128,8 +128,12 @@
     cell6.Jh_maxInputLength = 50;
     
     JhFormCellModel *cell7 = JhFormCellModel_AddImageCell(@"选择图片:", NO);
+     cell7.Jh_defaultHeight = 64 +190;
+    JhFormCellModel *picture = JhFormCellModel_AddImageCell(@"选择图片2:", NO);
+    picture.Jh_maxImageCount = 2;
+    picture.Jh_defaultHeight = 64 +100;
     
-    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,pwd,cell4,cell5,cell6,cell7]];
+    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,pwd,cell4,cell5,cell6,cell7,picture]];
     
     JhFormSectionModel *section0 = JhSectionModel_Add(cellArr0);
     

@@ -69,7 +69,7 @@
 - (HXPhotoManager *)oneManager {
     if (!_oneManager) {
         
-        NSInteger maxNum = 8;
+        NSInteger maxNum = Jh_GlobalMaxImages;
         _oneManager = [[HXPhotoManager alloc] initWithType:HXPhotoManagerSelectedTypePhoto];
         _oneManager.configuration.photoMaxNum = maxNum;
         _oneManager.configuration.selectTogether = NO;
@@ -142,8 +142,10 @@
     
     self.titleLabel.attributedText = data.Jh_attributedTitle;
     
-    data.Jh_defaultHeight = 200 +44;
-    
+    if(data.Jh_maxImageCount){
+        self.oneManager.configuration.maxNum = data.Jh_maxImageCount;
+        self.oneManager.configuration.photoMaxNum = data.Jh_maxImageCount;
+    }
     
 }
 
