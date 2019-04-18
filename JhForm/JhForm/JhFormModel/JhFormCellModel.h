@@ -128,6 +128,9 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
  */
 @property (nonatomic, assign) JhFormCellType Jh_cellType;
 
+/** title的宽度,默认100 ,若标题太长,不想牺牲字体大小,可设置宽度 */
+@property (nonatomic, assign) CGFloat Jh_titleWidth;
+
 /**
  表单条目标题，表单标题为单行显示，尽可能简短，若标题太长，会牺牲字体大小以达到显示完全的效果 (左侧标题)
  */

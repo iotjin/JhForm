@@ -47,18 +47,18 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    self.titleLabel.frame = CGRectMake(Jh_Margin_left, (self.data.Jh_defaultHeight - Jh_TitleHeight)/2, Jh_TitleWidth, Jh_TitleHeight);
+    self.titleLabel.frame = CGRectMake(Jh_Margin_left, (self.data.Jh_defaultHeight - Jh_TitleHeight)/2, self.data.Jh_titleWidth, Jh_TitleHeight);
     self.rightTextView.userInteractionEnabled = NO;
     
     CGFloat newHeight = [JhFormSelectCell heightWithCellModelData:self.data];
-    self.rightTextView.frame = CGRectMake(Jh_TitleWidth + 2*Jh_EdgeMargin, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - (Jh_TitleWidth + 2*Jh_EdgeMargin + 30),  newHeight - 2*Jh_EdgeMargin);
+    self.rightTextView.frame = CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 2*Jh_EdgeMargin + 30),  newHeight - 2*Jh_EdgeMargin);
 }
 
 
 
 + (CGFloat)heightWithCellModelData:(JhFormCellModel *)data{
     
-    CGFloat infoHeight = [data.Jh_info sizeWithFontSize:Jh_InfoFont maxSize:CGSizeMake(Jh_SCRREN_WIDTH - Jh_TitleWidth - 2*Jh_EdgeMargin - 30, MAXFLOAT)].height;
+    CGFloat infoHeight = [data.Jh_info sizeWithFontSize:Jh_InfoFont maxSize:CGSizeMake(Jh_SCRREN_WIDTH - data.Jh_titleWidth - 2*Jh_EdgeMargin - 30, MAXFLOAT)].height;
     return MAX(data.Jh_defaultHeight, infoHeight + 2*Jh_EdgeMargin);
 }
 

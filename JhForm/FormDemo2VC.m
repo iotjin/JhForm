@@ -157,7 +157,7 @@
     NSMutableArray *cellArr1 = [NSMutableArray array];
     
     //右侧自定义View
-    JhFormCellModel *Section1_cell0 = JhFormCellModel_AddCustumRightCell(@"选择选项:");
+    JhFormCellModel *Section1_cell0 = JhFormCellModel_AddCustumRightCell(@"右侧自定义带箭头:");
     Section1_cell0.Jh_custumRightViewBlock = ^(UIView *RightView) {
         [RightView  addSubview:weakSelf.btnBgView];
         [weakSelf.btnBgView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -170,17 +170,24 @@
     };
     Section1_cell0.Jh_custumRightCellShowArrow =YES;
     
+    //设置宽度
+    
+
+    JhFormCellModel *Section1_cell1 = JhFormCellModel_AddInputCell(@"统一社会信用代码:",nil, YES, UIKeyboardTypeDecimalPad);
+    Section1_cell1.Jh_placeholder = @"请输入18位统一社会信用代码";
+    Section1_cell1.Jh_maxInputLength = 18;
+    Section1_cell1.Jh_titleWidth = 120;
     
     
     //文本居中
-    JhFormCellModel *Section1_cell1 = JhFormCellModel_AddCenterTextCell(@"退出登录");
-    Section1_cell1.Jh_defaultHeight = 60;
-    Section1_cell1.JhCellClickCenterTextBlock = ^{
+    JhFormCellModel *Section1_cell2 = JhFormCellModel_AddCenterTextCell(@"退出登录");
+    Section1_cell2.Jh_defaultHeight = 60;
+    Section1_cell2.JhCellClickCenterTextBlock = ^{
           NSLog(@" 点击了退出登录 ");
 //        [JhProgressHUD showText:@"点击了退出登录"];
     };
     
-    [cellArr1 addObjectsFromArray: @[Section1_cell0,Section1_cell1]];
+    [cellArr1 addObjectsFromArray: @[Section1_cell0,Section1_cell1,Section1_cell2]];
     JhFormSectionModel *section1 = JhSectionModel_Add(cellArr1);
     
 

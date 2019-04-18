@@ -162,6 +162,7 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
         self.Jh_cellUnitType = JhFormCellUnitTypeNone;
         self.Jh_maxInputLength = Jh_GlobalMaxInputLength;
         self.Jh_maxImageCount = self.Jh_maxImageCount ? self.Jh_maxImageCount : Jh_GlobalMaxImages;
+        self.Jh_titleWidth = self.Jh_titleWidth ? self.Jh_titleWidth : Jh_TitleWidth;
         self.Jh_title = title;
         self.Jh_info = info;
         self.Jh_cellType = cellType;
