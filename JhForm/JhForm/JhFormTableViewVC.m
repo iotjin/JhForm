@@ -206,11 +206,14 @@
     NSParameterAssert([sectionModel.Jh_sectionModelArr[indexPath.row] isKindOfClass:[JhFormCellModel class]]);
     JhFormCellModel *cellModel = sectionModel.Jh_sectionModelArr[indexPath.row];
     
+    CGFloat LeftTitleWidth = self.Jh_leftTitleWidth ? self.Jh_leftTitleWidth :Jh_TitleWidth;
+    
         // 表单条目类别判断
         if (cellModel.Jh_cellType == JhFormCellTypeTextViewInput) {
             static NSString *cell_id = @"textViewInput_cell_id";
             JhFormTextViewInputCell *cell = [tableView textViewInputCellWithId:cell_id];
             cell.data = cellModel;
+            cell.data.Jh_titleWidth = LeftTitleWidth;
             cell.textViewInputCompletion = ^(NSString *text) {
                 [weakSelf updateTextViewInputWithText:text indexPath:indexPath];
             };
@@ -220,12 +223,14 @@
             static NSString *cell_id = @"select_cell_id";
             JhFormSelectCell *cell = [tableView selectCellWithId:cell_id];
             cell.data = cellModel;
+            cell.data.Jh_titleWidth = LeftTitleWidth;
             return cell;
             
         }else if (cellModel.Jh_cellType == JhFormCellTypeCustumRight) {
             static NSString *cell_id = @"custumRight_cell_id";
             JhFormCustumRightCell *cell = [tableView CustumRightCellWithId:cell_id];
-            cell.data = cellModel;        
+            cell.data = cellModel;
+            cell.data.Jh_titleWidth = LeftTitleWidth;
             if (cellModel.Jh_custumRightViewBlock) {
                 cellModel.Jh_custumRightViewBlock(cell.CustumRightView);
             }
@@ -235,6 +240,7 @@
             static NSString *cell_id = @"custumBottom_cell_id";
             JhFormCustumBottomCell *cell = [tableView CustumBottomCellWithId:cell_id];
             cell.data = cellModel;
+            cell.data.Jh_titleWidth = LeftTitleWidth;
             if (cellModel.Jh_custumBottomViewBlock) {
                 cellModel.Jh_custumBottomViewBlock(cell.CustumBottomView);
             }
@@ -243,6 +249,7 @@
             static NSString *cell_id = @"SelectImage_cell_id";
             JhFormSelectImageCell *cell = [tableView SelectImageCellWithId:cell_id];
             cell.data = cellModel;
+            cell.data.Jh_titleWidth = LeftTitleWidth;
             cell.JhImageSelectBlock = ^(NSArray *imageArr) {
                 [weakSelf updateImageWithImages:imageArr indexPath:indexPath];
             };
@@ -252,12 +259,14 @@
             static NSString *cell_id = @"SwitchBtn_cell_id";
             JhFormSwitchBtnCell *cell = [tableView SwitchBtnCellWithId:cell_id];
             cell.data = cellModel;
+            cell.data.Jh_titleWidth = LeftTitleWidth;
             return cell;
         }
         else if (cellModel.Jh_cellType == JhFormCellTypeCenterTextCell) {
             static NSString *cell_id = @"CenterText_cell_id";
             JhFormCenterTextCell *cell = [tableView CenterTextWithId:cell_id];
             cell.data = cellModel;
+            cell.data.Jh_titleWidth = LeftTitleWidth;
             return cell;
         }
     
@@ -266,6 +275,7 @@
             static NSString *cell_id = @"input_cell_id";
             JhFormInputCell *cell = [tableView inputCellWithId:cell_id];
             cell.data = cellModel;
+            cell.data.Jh_titleWidth = LeftTitleWidth;
             cell.inputCompletion = ^(NSString *text) {
                 [weakSelf updateInputWithText:text indexPath:indexPath];
             };

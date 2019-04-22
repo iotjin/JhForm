@@ -26,8 +26,8 @@
 #define Jh_textView_BackgroundColor [UIColor colorWithRed:250/255.0 green:250/255.0 blue:250/255.0 alpha:1/1.0]
 
 
-// 表单右侧自定义view的左间距 (默认120)
-#define  Jh_CustumRightView_leftEdgeMargin  Jh_TitleWidth + 2*Jh_EdgeMargin
+// 表单右侧自定义view的左间距 (默认120)  如果设置 self.Jh_leftTitleWidth ,会变小
+
 // 表单右侧自定义view的右间距
 #define  Jh_CustumRightView_rightEdgeMargin   5.0f
 

@@ -176,8 +176,8 @@
     JhFormCellModel *Section1_cell1 = JhFormCellModel_AddInputCell(@"统一社会信用代码:",nil, YES, UIKeyboardTypeDecimalPad);
     Section1_cell1.Jh_placeholder = @"请输入18位统一社会信用代码";
     Section1_cell1.Jh_maxInputLength = 18;
-    Section1_cell1.Jh_titleWidth = 120;
-    
+    Section1_cell1.Jh_titleWidth = 120;     //单个设置左侧title的宽度
+    self.Jh_leftTitleWidth = 120;           //统一设置左侧title的宽度
     
     //文本居中
     JhFormCellModel *Section1_cell2 = JhFormCellModel_AddCenterTextCell(@"退出登录");
