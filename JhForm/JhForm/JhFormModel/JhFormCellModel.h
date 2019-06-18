@@ -29,6 +29,7 @@
 #define kNavHeight (kStatusBarHeight + kContentNavBarHeight)
 #define kBottomSafeHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?34:0)
 
+NS_ASSUME_NONNULL_BEGIN
 
 @class JhFormCellModel;
 
@@ -292,3 +293,4 @@ FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddRightArrowCell(NSString * 
 FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull title, BOOL Jh_switchBtn_on);
 
 
+NS_ASSUME_NONNULL_END

@@ -58,7 +58,7 @@ typedef void(^JhFormSubmitBlock)(void);
 /**
  隐藏默认的footerView
  */
-@property (assign, nonatomic) BOOL Jh_defaultFooterViewHidden;
+@property (assign, nonatomic) BOOL Jh_hiddenDefaultFooterView;
 
 /** 统一配置cell左侧title的宽度(默认100) */
 @property (assign, nonatomic) CGFloat  Jh_leftTitleWidth;

@@ -58,7 +58,7 @@
     
 
     //隐藏默认的footerView
-    self.Jh_defaultFooterViewHidden = YES;
+    self.Jh_hiddenDefaultFooterView = YES;
     
 }
 

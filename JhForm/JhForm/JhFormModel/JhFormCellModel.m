@@ -151,6 +151,7 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
 + (instancetype)Jh_SwitchBtnCellWithTitle:(NSString *)title switchBtn_on:(BOOL)Jh_switchBtn_on{
     JhFormCellModel *model = [[self alloc]initWithTitle:title info:nil cellType:JhFormCellTypeRightSwitchBtn editable:YES required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
     model.Jh_InfoTextAlignment = JhFormCellInfoTextAlignmentRight;
+    model.Jh_switchBtn_on = Jh_switchBtn_on;
     return model;
 }
 

@@ -76,12 +76,10 @@
     return _Jh_formModelArr;
 }
 
-
--(void)setJh_defaultFooterViewHidden:(BOOL)Jh_defaultFooterViewHidden{
-    _Jh_defaultFooterViewHidden = Jh_defaultFooterViewHidden;
-
-    self.FooterView.hidden = Jh_defaultFooterViewHidden;
-   
+-(void)setJh_hiddenDefaultFooterView:(BOOL)Jh_hiddenDefaultFooterView{
+    
+    _Jh_hiddenDefaultFooterView = Jh_hiddenDefaultFooterView;
+    self.FooterView.hidden = Jh_hiddenDefaultFooterView;
 }
 
 
