@@ -7,9 +7,13 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 ![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_00.png)  <br> <br> 
 ![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01.GIF)  <br> <br> 
 ![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_02.GIF)  <br> <br> 
+![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_03.gif)  <br> <br> 
+
+
 
 ## 更新说明
 
+* 2019.06.21 - 新增密码输入样式cell (JhFormPwdCell) <br> 
 * 2019.06.18 - 修复switchBtn开关失效的问题 <br> 
 * 2019.04.22 - 添加统一设置标题宽度的属性 "Jh_leftTitleWidth" <br> 
 * 2019.04.18 - 添加单个设置标题宽度的属性 "Jh_titleWidth" <br> 
@@ -155,6 +159,23 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
     section0.Jh_headerHeight= headerV.bounds.size.height;
 
 ```
+
+* 样式11 - 密码输入样式
+```
+   
+    //文本居中
+    JhFormCellModel *pwd = JhFormCellModel_AddPwdInputCell(@"旧密码:", @"", YES);
+    pwd.Jh_placeholder = @"请输入旧密码";
+    pwd.Jh_maxInputLength = 25;
+    pwd.Jh_InfoTextAlignment =  JhFormCellInfoTextAlignmentRight; //默认居左
+    pwd.Jh_keyboardType = UIKeyboardTypeNumberPad;
+    pwd.JhInputBlock = ^(NSString * _Nonnull text, BOOL isInputCompletion) {
+        NSLog(@"当前的输入状态: %@", isInputCompletion ? @"YES" : @"NO");
+        NSLog(@"文字: %@", text);
+    };
+
+```
+
 
 *  一些其他的设置
 ```
