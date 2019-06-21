@@ -18,6 +18,7 @@
 #import "JhFormSelectImageCell.h"
 #import "JhFormSwitchBtnCell.h"
 #import "JhFormCenterTextCell.h"
+#import "JhFormPwdCell.h"
 
 @interface JhFormTableViewVC ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -267,7 +268,16 @@
             cell.data.Jh_titleWidth = LeftTitleWidth;
             return cell;
         }
-    
+        else if (cellModel.Jh_cellType == JhFormCellTypePwdInput) {
+            static NSString *cell_id = @"PwdInput_cell_id";
+            JhFormPwdCell *cell = [tableView PwdCellWithId:cell_id];
+            cell.data = cellModel;
+            cell.data.Jh_titleWidth = LeftTitleWidth;
+            cell.Jh_pwdInputCompletion = ^(NSString *text) {
+                [weakSelf updatePwdInputWithText:text indexPath:indexPath];
+            };
+            return cell;
+        }
         else {
             
             static NSString *cell_id = @"input_cell_id";
@@ -355,6 +365,13 @@
     JhFormSectionModel *sectionModel = self.Jh_formModelArr[indexPath.section];
     JhFormCellModel *cellModel = sectionModel.Jh_sectionModelArr[indexPath.row];
     cellModel.Jh_imageArr = images;
+}
+
+//更新密码输入样式信息
+- (void)updatePwdInputWithText:(NSString *)text indexPath:(NSIndexPath *)indexPath {
+    JhFormSectionModel *sectionModel = self.Jh_formModelArr[indexPath.section];
+    JhFormCellModel *cellModel = sectionModel.Jh_sectionModelArr[indexPath.row];
+    cellModel.Jh_info = text;
 }
 
 - (void)didReceiveMemoryWarning {

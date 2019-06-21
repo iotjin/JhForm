@@ -58,6 +58,9 @@ typedef NS_ENUM(NSInteger, JhFormCellType) {
     
     /**  表单条目包含图片选择  */
     JhFormCellTypeSelectImage ,
+    
+    /**  表单密码输入样式  */
+    JhFormCellTypePwdInput,
 };
 
 typedef NS_ENUM(NSInteger, JhFormCellUnitType) {
@@ -110,7 +113,7 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 @property (nonatomic, copy) void(^JhCellClickCenterTextBlock)(void);
 
 
-/** 获取输入内容 和 输入状态 block */
+/** 获取输入内容 和 输入状态(是否输入完成) block */
 @property (nonatomic, copy) JhInputBlock JhInputBlock;
 
 /**
@@ -276,6 +279,10 @@ FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddCustumBottomCell(NSString 
 
 /** 快捷添加一个文本居中的 cell*/
 FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddCenterTextCell(NSString * _Nonnull title);
+
+
+/** 快捷添加一个密码输入类型的cell(默认样式,居左,可编辑) */
+FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddPwdInputCell(NSString * _Nonnull title,NSString * _Nullable info, BOOL required);
 
 
 

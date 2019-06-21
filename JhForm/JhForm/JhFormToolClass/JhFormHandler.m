@@ -28,7 +28,7 @@
                 NSString *title = [NSString stringWithFormat:@"%@",rowItem.Jh_title];
                 NSString *NewTitle = [title substringToIndex:title.length-1];
                 
-                if (rowItem.Jh_cellType == JhFormCellTypeInput || rowItem.Jh_cellType == JhFormCellTypeTextViewInput) {
+                if (rowItem.Jh_cellType == JhFormCellTypeInput || rowItem.Jh_cellType == JhFormCellTypeTextViewInput || rowItem.Jh_cellType == JhFormCellTypePwdInput) {
                     if (!rowItem.Jh_info || [rowItem.Jh_info isEqualToString:@""]) {
                         failure([NSString stringWithFormat:@"请输入%@", NewTitle]);
                         return;

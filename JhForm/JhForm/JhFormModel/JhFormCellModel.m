@@ -29,6 +29,9 @@ static NSString *const JhUnitMillion = @"万元";
 /** 选择图片的cell */
 + (instancetype)Jh_imageCellWithTitle:(NSString *)title required: (BOOL)required;
 
+/** 密码输入类型的cell(默认样式,居左,可编辑) */
++ (instancetype)Jh_pwdInputCellWithTitle:(NSString *)title info:(NSString *)info required: (BOOL)required;
+
 
 
 /********************************* 以下方法快速创建本文居右的cell ********************************/
@@ -66,6 +69,13 @@ inline JhFormCellModel *JhFormCellModel_AddSelectCell(NSString * _Nonnull title,
 inline JhFormCellModel *JhFormCellModel_AddImageCell(NSString * _Nonnull title, BOOL required){
     return [JhFormCellModel Jh_imageCellWithTitle:title required:required];
 }
+
+/** 快捷添加一个密码输入类型的cell(默认样式,居左,可编辑) */
+inline JhFormCellModel *JhFormCellModel_AddPwdInputCell(NSString * _Nonnull title,NSString * _Nullable info, BOOL required){
+    return [JhFormCellModel Jh_pwdInputCellWithTitle:title info:info required:required];
+}
+
+
 
 /** 快捷添加右侧自定义View cell*/
 inline JhFormCellModel *JhFormCellModel_AddCustumRightCell(NSString * _Nonnull title){
@@ -129,6 +139,11 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
 /** 选择图片的cell */
 + (instancetype)Jh_imageCellWithTitle:(NSString *)title required: (BOOL)required{
     return [[self alloc]initWithTitle:title info:nil cellType:JhFormCellTypeSelectImage editable:YES required:required keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
+}
+
+/** 密码输入类型的cell(默认样式,居左,可编辑) */
++ (instancetype)Jh_pwdInputCellWithTitle:(NSString *)title info:(NSString *)info required: (BOOL)required{
+    return [[self alloc]initWithTitle:title info:info cellType:JhFormCellTypePwdInput editable:YES required:required keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:YES];
 }
 
 
@@ -204,6 +219,7 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
     }
     switch (cellType) {
         case JhFormCellTypeInput:
+        case JhFormCellTypePwdInput:
         case JhFormCellTypeTextViewInput:
         {
             self.Jh_placeholder = @"请输入";
@@ -226,6 +242,7 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
         if (Jh_TitleShowType == JhTitleShowTypeDefault) {
             switch (self.Jh_cellType) {
                 case JhFormCellTypeInput:
+                case JhFormCellTypePwdInput:
                 case JhFormCellTypeTextViewInput:
                 {
                     title = [NSString stringWithFormat:@"%@(必填)", title];

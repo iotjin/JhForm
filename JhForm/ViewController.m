@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "FormDemo1VC.h"
 #import "FormDemo2VC.h"
+#import "FormDemo3VC.h"
 
 @interface ViewController ()
 @end
@@ -50,7 +51,13 @@
         [weakSelf.navigationController pushViewController:jumpVC animated:YES];
     };
     
-    [cellArr0 addObjectsFromArray: @[cell0,cell1]];
+    JhFormCellModel *cell2 = JhFormCellModel_AddRightArrowCell(@"密码样式", nil);
+    cell2.Jh_CellSelectCellBlock = ^(JhFormCellModel *cellModel) {
+        FormDemo3VC *jumpVC= [[FormDemo3VC alloc]init];
+        [weakSelf.navigationController pushViewController:jumpVC animated:YES];
+    };
+    
+    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2]];
     
     JhFormSectionModel *section0= JhSectionModel_Add(cellArr0);
     

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E93159EF22BC84DD00074665 /* FormDemo3VC.m in Sources */ = {isa = PBXBuildFile; fileRef = E93159EE22BC84DD00074665 /* FormDemo3VC.m */; };
+		E93159F222BC85A800074665 /* JhFormPwdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E93159F022BC85A800074665 /* JhFormPwdCell.m */; };
+		E93159FA22BCAEA300074665 /* form_demo_00.png in Resources */ = {isa = PBXBuildFile; fileRef = E93159F822BCAEA300074665 /* form_demo_00.png */; };
+		E93159FB22BCAEA300074665 /* form_demo_03.gif in Resources */ = {isa = PBXBuildFile; fileRef = E93159F922BCAEA300074665 /* form_demo_03.gif */; };
 		E93D3F7F21E58DD9003DC702 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3F7E21E58DD9003DC702 /* AppDelegate.m */; };
 		E93D3F8221E58DD9003DC702 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3F8121E58DD9003DC702 /* ViewController.m */; };
 		E93D3F8521E58DD9003DC702 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E93D3F8321E58DD9003DC702 /* Main.storyboard */; };
@@ -78,7 +82,6 @@
 		E93D40A821E58E5D003DC702 /* YYKVStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D40A421E58E5D003DC702 /* YYKVStorage.m */; };
 		E93D40A921E58E5D003DC702 /* YYMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D40A521E58E5D003DC702 /* YYMemoryCache.m */; };
 		E947A74322446FA600BE50FC /* UIBarButtonItem+JhForm.m in Sources */ = {isa = PBXBuildFile; fileRef = E947A74222446FA600BE50FC /* UIBarButtonItem+JhForm.m */; };
-		E9FC9A00224B14B700C5AE9E /* form_demo_00.png in Resources */ = {isa = PBXBuildFile; fileRef = E9FC99FD224B14B700C5AE9E /* form_demo_00.png */; };
 		E9FC9A04224B158A00C5AE9E /* form_demo_02.gif in Resources */ = {isa = PBXBuildFile; fileRef = E9FC9A02224B158A00C5AE9E /* form_demo_02.gif */; };
 		E9FC9A05224B158A00C5AE9E /* form_demo_01.gif in Resources */ = {isa = PBXBuildFile; fileRef = E9FC9A03224B158A00C5AE9E /* form_demo_01.gif */; };
 		E9FD211C2238CF20002C67E6 /* JhFormTableViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD20F62238CF20002C67E6 /* JhFormTableViewVC.m */; };
@@ -135,6 +138,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E93159ED22BC84DD00074665 /* FormDemo3VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormDemo3VC.h; sourceTree = "<group>"; };
+		E93159EE22BC84DD00074665 /* FormDemo3VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FormDemo3VC.m; sourceTree = "<group>"; };
+		E93159F022BC85A800074665 /* JhFormPwdCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormPwdCell.m; sourceTree = "<group>"; };
+		E93159F122BC85A800074665 /* JhFormPwdCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormPwdCell.h; sourceTree = "<group>"; };
+		E93159F822BCAEA300074665 /* form_demo_00.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_demo_00.png; sourceTree = "<group>"; };
+		E93159F922BCAEA300074665 /* form_demo_03.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = form_demo_03.gif; sourceTree = "<group>"; };
 		E93D3F7A21E58DD9003DC702 /* JhForm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JhForm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93D3F7D21E58DD9003DC702 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E93D3F7E21E58DD9003DC702 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -279,7 +288,6 @@
 		E93D40A521E58E5D003DC702 /* YYMemoryCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYMemoryCache.m; sourceTree = "<group>"; };
 		E947A74122446FA600BE50FC /* UIBarButtonItem+JhForm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+JhForm.h"; sourceTree = "<group>"; };
 		E947A74222446FA600BE50FC /* UIBarButtonItem+JhForm.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+JhForm.m"; sourceTree = "<group>"; };
-		E9FC99FD224B14B700C5AE9E /* form_demo_00.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_demo_00.png; sourceTree = "<group>"; };
 		E9FC9A02224B158A00C5AE9E /* form_demo_02.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = form_demo_02.gif; sourceTree = "<group>"; };
 		E9FC9A03224B158A00C5AE9E /* form_demo_01.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = form_demo_01.gif; sourceTree = "<group>"; };
 		E9FD20F62238CF20002C67E6 /* JhFormTableViewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormTableViewVC.m; sourceTree = "<group>"; };
@@ -415,6 +423,8 @@
 				E9FD21312238CF72002C67E6 /* FormDemo1VC.m */,
 				E9FD212E2238CF71002C67E6 /* FormDemo2VC.h */,
 				E9FD21302238CF71002C67E6 /* FormDemo2VC.m */,
+				E93159ED22BC84DD00074665 /* FormDemo3VC.h */,
+				E93159EE22BC84DD00074665 /* FormDemo3VC.m */,
 				E9FD21622238D36B002C67E6 /* JhBaseHeaderView.h */,
 				E9FD21602238D36A002C67E6 /* JhBaseHeaderView.m */,
 				E9FD21612238D36A002C67E6 /* JhBaseHeaderView.xib */,
@@ -611,9 +621,10 @@
 		E93D40EA21E5C01C003DC702 /* screenshots */ = {
 			isa = PBXGroup;
 			children = (
-				E9FC99FD224B14B700C5AE9E /* form_demo_00.png */,
+				E93159F822BCAEA300074665 /* form_demo_00.png */,
 				E9FC9A03224B158A00C5AE9E /* form_demo_01.gif */,
 				E9FC9A02224B158A00C5AE9E /* form_demo_02.gif */,
+				E93159F922BCAEA300074665 /* form_demo_03.gif */,
 			);
 			path = screenshots;
 			sourceTree = "<group>";
@@ -655,6 +666,8 @@
 				E9FD21072238CF20002C67E6 /* JhFormCustumRightCell.m */,
 				E9FD210A2238CF20002C67E6 /* JhFormInputCell.h */,
 				E9FD21042238CF20002C67E6 /* JhFormInputCell.m */,
+				E93159F122BC85A800074665 /* JhFormPwdCell.h */,
+				E93159F022BC85A800074665 /* JhFormPwdCell.m */,
 				E9FD210E2238CF20002C67E6 /* JhFormSelectCell.h */,
 				E9FD21052238CF20002C67E6 /* JhFormSelectCell.m */,
 				E9FD21002238CF20002C67E6 /* JhFormSelectImageCell.h */,
@@ -833,10 +846,11 @@
 			files = (
 				E93D409A21E58E52003DC702 /* HXPhotoPicker.bundle in Resources */,
 				E9FD21542238D2A3002C67E6 /* LICENSE in Resources */,
+				E93159FB22BCAEA300074665 /* form_demo_03.gif in Resources */,
 				E9FD21282238CF20002C67E6 /* JhForm.bundle in Resources */,
+				E93159FA22BCAEA300074665 /* form_demo_00.png in Resources */,
 				E93D3F8A21E58DDB003DC702 /* LaunchScreen.storyboard in Resources */,
 				E9FC9A05224B158A00C5AE9E /* form_demo_01.gif in Resources */,
-				E9FC9A00224B14B700C5AE9E /* form_demo_00.png in Resources */,
 				E9FC9A04224B158A00C5AE9E /* form_demo_02.gif in Resources */,
 				E93D3F8721E58DDB003DC702 /* Assets.xcassets in Resources */,
 				E9FD21642238D36B002C67E6 /* JhBaseHeaderView.xib in Resources */,
@@ -911,6 +925,7 @@
 				E93D409921E58E52003DC702 /* HXDateVideoEditViewController.m in Sources */,
 				E9FD21332238CF72002C67E6 /* FormDemo1VC.m in Sources */,
 				E93D409C21E58E52003DC702 /* HXDatePhotoEditViewController.m in Sources */,
+				E93159EF22BC84DD00074665 /* FormDemo3VC.m in Sources */,
 				E93D407021E58E52003DC702 /* YYWebImageOperation.m in Sources */,
 				E9FD212C2238CF20002C67E6 /* JhFormConst.m in Sources */,
 				E9FD21252238CF20002C67E6 /* JhFormSelectImageCell.m in Sources */,
@@ -956,6 +971,7 @@
 				E93D406921E58E52003DC702 /* YYAnimatedImageView.m in Sources */,
 				E93D3F8D21E58DDB003DC702 /* main.m in Sources */,
 				E9FD21262238CF20002C67E6 /* JhFormCenterTextCell.m in Sources */,
+				E93159F222BC85A800074665 /* JhFormPwdCell.m in Sources */,
 				E93D40A721E58E5D003DC702 /* YYCache.m in Sources */,
 				E9FD21592238D2A3002C67E6 /* MASLayoutConstraint.m in Sources */,
 				E93D406F21E58E52003DC702 /* CALayer+YYWebImage.m in Sources */,

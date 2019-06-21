@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  JhFormSectionModel 主要对表单section条目提供动态配置属性
  */
@@ -48,3 +50,8 @@
  @param Jh_sectionModelArr 表单section包含的条目集合
  */
 FOUNDATION_EXPORT JhFormSectionModel *JhSectionModel_Add(NSArray * _Nonnull Jh_sectionModelArr);
+
+
+
+
+NS_ASSUME_NONNULL_END
