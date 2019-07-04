@@ -147,6 +147,26 @@
         self.oneManager.configuration.photoMaxNum = data.Jh_maxImageCount;
     }
     
+    if(data.Jh_imageArr.count){
+        
+        if(data.Jh_isUseUrlShowPicture ==YES){
+            NSMutableArray *mUrlArr = @[].mutableCopy;
+            for (NSString *url in data.Jh_imageArr) {
+                HXCustomAssetModel *model =[HXCustomAssetModel assetWithNetworkImageURL:[NSURL URLWithString:url] selected:YES];
+                [mUrlArr addObject:model];
+            }
+            [self.oneManager addCustomAssetModel:mUrlArr];
+        }
+        if(data.Jh_isUseImgShowPicture ==YES){
+            NSMutableArray *mUrlArr = @[].mutableCopy;
+            for (UIImage *img in data.Jh_imageArr) {
+                HXCustomAssetModel *model = [HXCustomAssetModel assetWithLocalImage:img selected:YES];
+                [mUrlArr addObject:model];
+            }
+            [self.oneManager addCustomAssetModel:mUrlArr];
+        }
+    }
+    
 }
 
 

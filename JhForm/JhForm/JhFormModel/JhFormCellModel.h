@@ -191,6 +191,13 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
  图片附件条目图片数组，支持UIImage、NSURL、NSString(图片URLString)类型元素
  */
 @property (nonatomic, strong, nullable) NSArray *Jh_imageArr;
+
+/** 是否通过URL(字符串格式)展示图片 必须设置YES使用 */
+@property (nonatomic, assign) BOOL Jh_isUseUrlShowPicture;
+/** 是否通过UIImage格式展示图片    必须设置YES使用  */
+@property (nonatomic, assign) BOOL Jh_isUseImgShowPicture;
+
+
 /**
  images 图片数组中类型筛选出为UIImage的数组子集，以实现图片上传筛选
  */
