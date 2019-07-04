@@ -163,7 +163,6 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 * 样式11 - 密码输入样式
 ```
    
-    //文本居中
     JhFormCellModel *pwd = JhFormCellModel_AddPwdInputCell(@"旧密码:", @"", YES);
     pwd.Jh_placeholder = @"请输入旧密码";
     pwd.Jh_maxInputLength = 25;
