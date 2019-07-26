@@ -61,6 +61,11 @@ typedef NS_ENUM(NSInteger, JhFormCellType) {
     
     /**  表单密码输入样式  */
     JhFormCellTypePwdInput,
+    
+    /**  完全自定义样式  */
+    JhFormCellTypeCustumALLView,
+    
+    
 };
 
 typedef NS_ENUM(NSInteger, JhFormCellUnitType) {
@@ -92,6 +97,8 @@ typedef void(^JhCellCustumRightViewBlock)(UIView *RightView);
 
 typedef void(^JhCellCustumBottomViewBlock)(UIView *BottomView);
 
+typedef void(^JhCellCustumALLViewBlock)(UIView *AllView);
+
 typedef void (^JhCellSwitchBtnBlock)(BOOL switchBtn_on,UISwitch *switchBtn);
 
 /** 获取输入内容 和 输入状态 block */
@@ -105,6 +112,9 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 @property (nonatomic, copy, nullable) JhCellCustumRightViewBlock Jh_custumRightViewBlock;
 /** 底部自定义视图的Block (左0 ,右0,高默认240)*/
 @property (nonatomic, copy, nullable) JhCellCustumBottomViewBlock Jh_custumBottomViewBlock;
+
+/** 完全自定义视图的Block (左15 ,右15,高需要设置)*/
+@property (nonatomic, copy, nullable) JhCellCustumALLViewBlock Jh_custumALLViewBlock;
 
 /** SwitchBtn Block  */
 @property (copy, nonatomic) JhCellSwitchBtnBlock Jh_switchBtnBlock;
@@ -248,6 +258,10 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
  */
 @property (nonatomic, assign) BOOL Jh_showLength;
 
+@property (nonatomic, strong) UIColor *Jh_cellBgColor;
+
+
+
 @end
 
 /**
@@ -290,6 +304,9 @@ FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddCenterTextCell(NSString * 
 
 /** 快捷添加一个密码输入类型的cell(默认样式,居左,可编辑) */
 FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddPwdInputCell(NSString * _Nonnull title,NSString * _Nullable info, BOOL required);
+
+/** 快捷添加一个完全自定义View的cell */
+FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddCustumALLViewCell(CGFloat cellHeight);
 
 
 

@@ -19,6 +19,7 @@
 #import "JhFormSwitchBtnCell.h"
 #import "JhFormCenterTextCell.h"
 #import "JhFormPwdCell.h"
+#import "JhFormCustumALLViewCell.h"
 
 @interface JhFormTableViewVC ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -278,6 +279,16 @@
             };
             return cell;
         }
+        else if (cellModel.Jh_cellType == JhFormCellTypeCustumALLView) {
+            static NSString *cell_id = @"CustumALLView_cell_id";
+            JhFormCustumALLViewCell *cell = [tableView CustumALLCellWithId:cell_id];
+            cell.data = cellModel;
+            cell.data.Jh_titleWidth = LeftTitleWidth;
+            if (cellModel.Jh_custumALLViewBlock) {
+                cellModel.Jh_custumALLViewBlock(cell.CustumALLView);
+            }
+            return cell;
+        }
         else {
             
             static NSString *cell_id = @"input_cell_id";
@@ -303,6 +314,9 @@
         return [JhFormTextViewInputCell heightWithCellModelData:cellModel];
     }else if (cellModel.Jh_cellType  == JhFormCellTypeSelect) {
         return [JhFormSelectCell heightWithCellModelData:cellModel];
+    }
+    else if (cellModel.Jh_cellType  == JhFormCellTypeCustumALLView) {
+        return cellModel.Jh_defaultHeight;
     }
     else {
         return [JhFormInputCell heightWithCellModelData:cellModel];

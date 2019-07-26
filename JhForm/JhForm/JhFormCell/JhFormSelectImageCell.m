@@ -167,6 +167,10 @@
         }
     }
     
+    if(data.Jh_cellBgColor){
+        self.backgroundColor = data.Jh_cellBgColor;
+    }
+    
 }
 
 

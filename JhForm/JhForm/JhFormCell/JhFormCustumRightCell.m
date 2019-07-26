@@ -47,6 +47,9 @@
     if(data.Jh_custumRightCellShowArrow == YES){
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
+    if(data.Jh_cellBgColor){
+        self.backgroundColor = data.Jh_cellBgColor;
+    }
     
 }
 

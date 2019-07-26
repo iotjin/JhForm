@@ -34,6 +34,9 @@
     if (data.Jh_InfoTextAlignment == JhFormCellInfoTextAlignmentRight) {
         self.rightTextView.textAlignment = NSTextAlignmentRight;
     }
+    if(data.Jh_cellBgColor){
+        self.backgroundColor = data.Jh_cellBgColor;
+    }
     
 }
 

@@ -82,6 +82,9 @@
 		E93D40A821E58E5D003DC702 /* YYKVStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D40A421E58E5D003DC702 /* YYKVStorage.m */; };
 		E93D40A921E58E5D003DC702 /* YYMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D40A521E58E5D003DC702 /* YYMemoryCache.m */; };
 		E947A74322446FA600BE50FC /* UIBarButtonItem+JhForm.m in Sources */ = {isa = PBXBuildFile; fileRef = E947A74222446FA600BE50FC /* UIBarButtonItem+JhForm.m */; };
+		E96B13EC22EAA7D100DDF432 /* FormDemo4VC.m in Sources */ = {isa = PBXBuildFile; fileRef = E96B13EB22EAA7D100DDF432 /* FormDemo4VC.m */; };
+		E96B13EF22EAAB4F00DDF432 /* JhFormCustumALLViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E96B13EE22EAAB4F00DDF432 /* JhFormCustumALLViewCell.m */; };
+		E96B13F122EADC2700DDF432 /* form_demo_04.png in Resources */ = {isa = PBXBuildFile; fileRef = E96B13F022EADC2700DDF432 /* form_demo_04.png */; };
 		E9FC9A04224B158A00C5AE9E /* form_demo_02.gif in Resources */ = {isa = PBXBuildFile; fileRef = E9FC9A02224B158A00C5AE9E /* form_demo_02.gif */; };
 		E9FC9A05224B158A00C5AE9E /* form_demo_01.gif in Resources */ = {isa = PBXBuildFile; fileRef = E9FC9A03224B158A00C5AE9E /* form_demo_01.gif */; };
 		E9FD211C2238CF20002C67E6 /* JhFormTableViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD20F62238CF20002C67E6 /* JhFormTableViewVC.m */; };
@@ -288,6 +291,11 @@
 		E93D40A521E58E5D003DC702 /* YYMemoryCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYMemoryCache.m; sourceTree = "<group>"; };
 		E947A74122446FA600BE50FC /* UIBarButtonItem+JhForm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+JhForm.h"; sourceTree = "<group>"; };
 		E947A74222446FA600BE50FC /* UIBarButtonItem+JhForm.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+JhForm.m"; sourceTree = "<group>"; };
+		E96B13EA22EAA7D100DDF432 /* FormDemo4VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormDemo4VC.h; sourceTree = "<group>"; };
+		E96B13EB22EAA7D100DDF432 /* FormDemo4VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FormDemo4VC.m; sourceTree = "<group>"; };
+		E96B13ED22EAAB4F00DDF432 /* JhFormCustumALLViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JhFormCustumALLViewCell.h; sourceTree = "<group>"; };
+		E96B13EE22EAAB4F00DDF432 /* JhFormCustumALLViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JhFormCustumALLViewCell.m; sourceTree = "<group>"; };
+		E96B13F022EADC2700DDF432 /* form_demo_04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_demo_04.png; sourceTree = "<group>"; };
 		E9FC9A02224B158A00C5AE9E /* form_demo_02.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = form_demo_02.gif; sourceTree = "<group>"; };
 		E9FC9A03224B158A00C5AE9E /* form_demo_01.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = form_demo_01.gif; sourceTree = "<group>"; };
 		E9FD20F62238CF20002C67E6 /* JhFormTableViewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormTableViewVC.m; sourceTree = "<group>"; };
@@ -425,6 +433,8 @@
 				E9FD21302238CF71002C67E6 /* FormDemo2VC.m */,
 				E93159ED22BC84DD00074665 /* FormDemo3VC.h */,
 				E93159EE22BC84DD00074665 /* FormDemo3VC.m */,
+				E96B13EA22EAA7D100DDF432 /* FormDemo4VC.h */,
+				E96B13EB22EAA7D100DDF432 /* FormDemo4VC.m */,
 				E9FD21622238D36B002C67E6 /* JhBaseHeaderView.h */,
 				E9FD21602238D36A002C67E6 /* JhBaseHeaderView.m */,
 				E9FD21612238D36A002C67E6 /* JhBaseHeaderView.xib */,
@@ -625,6 +635,7 @@
 				E9FC9A03224B158A00C5AE9E /* form_demo_01.gif */,
 				E9FC9A02224B158A00C5AE9E /* form_demo_02.gif */,
 				E93159F922BCAEA300074665 /* form_demo_03.gif */,
+				E96B13F022EADC2700DDF432 /* form_demo_04.png */,
 			);
 			path = screenshots;
 			sourceTree = "<group>";
@@ -676,6 +687,8 @@
 				E9FD21032238CF20002C67E6 /* JhFormSwitchBtnCell.m */,
 				E9FD21062238CF20002C67E6 /* JhFormTextViewInputCell.h */,
 				E9FD20FF2238CF20002C67E6 /* JhFormTextViewInputCell.m */,
+				E96B13ED22EAAB4F00DDF432 /* JhFormCustumALLViewCell.h */,
+				E96B13EE22EAAB4F00DDF432 /* JhFormCustumALLViewCell.m */,
 			);
 			path = JhFormCell;
 			sourceTree = "<group>";
@@ -856,6 +869,7 @@
 				E9FD21642238D36B002C67E6 /* JhBaseHeaderView.xib in Resources */,
 				E9FD215F2238D2A3002C67E6 /* README.md in Resources */,
 				E93D3F8521E58DD9003DC702 /* Main.storyboard in Resources */,
+				E96B13F122EADC2700DDF432 /* form_demo_04.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -966,6 +980,7 @@
 				E93D408121E58E52003DC702 /* HXPhotoTools.m in Sources */,
 				E93D408521E58E52003DC702 /* HXPhotoManager.m in Sources */,
 				E9FD211C2238CF20002C67E6 /* JhFormTableViewVC.m in Sources */,
+				E96B13EF22EAAB4F00DDF432 /* JhFormCustumALLViewCell.m in Sources */,
 				E93D408921E58E52003DC702 /* HXCustomCollectionReusableView.m in Sources */,
 				E93D409521E58E52003DC702 /* HXCustomPreviewView.m in Sources */,
 				E93D406921E58E52003DC702 /* YYAnimatedImageView.m in Sources */,
@@ -974,6 +989,7 @@
 				E93159F222BC85A800074665 /* JhFormPwdCell.m in Sources */,
 				E93D40A721E58E5D003DC702 /* YYCache.m in Sources */,
 				E9FD21592238D2A3002C67E6 /* MASLayoutConstraint.m in Sources */,
+				E96B13EC22EAA7D100DDF432 /* FormDemo4VC.m in Sources */,
 				E93D406F21E58E52003DC702 /* CALayer+YYWebImage.m in Sources */,
 				E93D3F7F21E58DD9003DC702 /* AppDelegate.m in Sources */,
 				E93D406B21E58E52003DC702 /* UIButton+YYWebImage.m in Sources */,

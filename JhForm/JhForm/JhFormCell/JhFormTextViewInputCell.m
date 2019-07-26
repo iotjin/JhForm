@@ -59,6 +59,10 @@
     self.rightTextView.showLength = data.Jh_showLength;
     self.rightTextView.maxLength = data.Jh_maxInputLength;
     self.accessoryType = UITableViewCellAccessoryNone;
+    if(data.Jh_cellBgColor){
+        self.backgroundColor = data.Jh_cellBgColor;
+    }
+    
 }
 
 - (void)layoutSubviews {

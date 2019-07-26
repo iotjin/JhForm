@@ -10,6 +10,7 @@
 #import "FormDemo1VC.h"
 #import "FormDemo2VC.h"
 #import "FormDemo3VC.h"
+#import "FormDemo4VC.h"
 
 @interface ViewController ()
 @end
@@ -57,7 +58,13 @@
         [weakSelf.navigationController pushViewController:jumpVC animated:YES];
     };
     
-    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2]];
+    JhFormCellModel *cell3 = JhFormCellModel_AddRightArrowCell(@"完全自定义Cell", nil);
+    cell3.Jh_CellSelectCellBlock = ^(JhFormCellModel *cellModel) {
+        FormDemo4VC *jumpVC= [[FormDemo4VC alloc]init];
+        [weakSelf.navigationController pushViewController:jumpVC animated:YES];
+    };
+    
+    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3]];
     
     JhFormSectionModel *section0= JhSectionModel_Add(cellArr0);
     

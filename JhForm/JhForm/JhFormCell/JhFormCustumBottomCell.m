@@ -58,7 +58,9 @@
     _data= data;
 
     self.titleLabel.attributedText = data.Jh_attributedTitle;
-    
+    if(data.Jh_cellBgColor){
+        self.backgroundColor = data.Jh_cellBgColor;
+    }
     
 }
 

@@ -33,6 +33,9 @@ static NSString *const JhUnitMillion = @"万元";
 + (instancetype)Jh_pwdInputCellWithTitle:(NSString *)title info:(NSString *)info required: (BOOL)required;
 
 
+/** 完全自定义类型的cell*/
++ (instancetype)Jh_custumALLViewCellWithCellHeight:(CGFloat)cellHeight;
+
 
 /********************************* 以下方法快速创建本文居右的cell ********************************/
 /** 右侧text 不可编辑的cell */
@@ -73,6 +76,11 @@ inline JhFormCellModel *JhFormCellModel_AddImageCell(NSString * _Nonnull title, 
 /** 快捷添加一个密码输入类型的cell(默认样式,居左,可编辑) */
 inline JhFormCellModel *JhFormCellModel_AddPwdInputCell(NSString * _Nonnull title,NSString * _Nullable info, BOOL required){
     return [JhFormCellModel Jh_pwdInputCellWithTitle:title info:info required:required];
+}
+
+/** 快捷添加一个完全自定义View的cell */
+inline JhFormCellModel *JhFormCellModel_AddCustumALLViewCell(CGFloat cellHeight){
+    return [JhFormCellModel Jh_custumALLViewCellWithCellHeight:cellHeight];
 }
 
 
@@ -146,6 +154,12 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
     return [[self alloc]initWithTitle:title info:info cellType:JhFormCellTypePwdInput editable:YES required:required keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:YES];
 }
 
+/** 完全自定义类型的cell*/
++ (instancetype)Jh_custumALLViewCellWithCellHeight:(CGFloat)cellHeight{
+    JhFormCellModel *model = [[self alloc]initWithTitle:@"" info:@"" cellType:JhFormCellTypeCustumALLView editable:NO required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
+    model.Jh_defaultHeight = cellHeight;
+    return model;
+}
 
 
 /********************************* 本文居右的cell ********************************/

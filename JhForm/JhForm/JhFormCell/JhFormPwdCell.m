@@ -67,7 +67,9 @@
     if (data.Jh_InfoTextAlignment == JhFormCellInfoTextAlignmentRight) {
         self.Jh_pwdTextField.textAlignment = NSTextAlignmentRight;
     }
-    
+    if(data.Jh_cellBgColor){
+        self.backgroundColor = data.Jh_cellBgColor;
+    }
 }
 
 - (void)layoutSubviews {

@@ -32,6 +32,10 @@
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.textColor = [UIColor blackColor];
     self.titleLabel.font = [UIFont systemFontOfSize:20];
+    if(data.Jh_cellBgColor){
+       self.backgroundColor = data.Jh_cellBgColor;
+    }
+    
     
 }
 

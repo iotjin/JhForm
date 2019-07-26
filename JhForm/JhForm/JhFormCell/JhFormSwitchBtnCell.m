@@ -56,6 +56,9 @@
     self.switchBtn.onTintColor = data.Jh_switchOnTintColor;
     self.switchBtn.tintColor = data.Jh_switchTintColor;
     self.switchBtn.enabled = data.Jh_editable;
+    if(data.Jh_cellBgColor){
+        self.backgroundColor = data.Jh_cellBgColor;
+    }
     
 }
 
