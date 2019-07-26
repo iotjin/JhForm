@@ -8,11 +8,12 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 ![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01.GIF)  <br> <br> 
 ![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_02.GIF)  <br> <br> 
 ![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_03.gif)  <br> <br> 
-
+![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_04.png)  <br> <br> 
 
 
 ## 更新说明
 
+* 2019.07.26 - 新增完全自定义样式cell (JhFormCustumALLViewCell) ,添加cell背景色设置属性 "Jh_cellBgColor"<br> 
 * 2019.06.21 - 新增密码输入样式cell (JhFormPwdCell) <br> 
 * 2019.06.18 - 修复switchBtn开关失效的问题 <br> 
 * 2019.04.22 - 添加统一设置标题宽度的属性 "Jh_leftTitleWidth" <br> 
@@ -171,6 +172,24 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
     pwd.JhInputBlock = ^(NSString * _Nonnull text, BOOL isInputCompletion) {
         NSLog(@"当前的输入状态: %@", isInputCompletion ? @"YES" : @"NO");
         NSLog(@"文字: %@", text);
+    };
+
+```
+
+* 样式12 - 完全自定义样式
+```
+   
+     JhFormCellModel *cell_allcustum = JhFormCellModel_AddCustumALLViewCell(80);
+     cell_allcustum.Jh_cellBgColor = JhRandomColor; //完全自定义样式的cell 只有高度和背景颜色可以设置
+      cell_allcustum.Jh_custumALLViewBlock = ^(UIView * _Nonnull AllView) {
+        AllView.backgroundColor =[UIColor yellowColor];
+        
+        UILabel *label = [[UILabel alloc]init];
+        label.backgroundColor =JhRandomColor;
+        label.text =@"这是一个可以完全自定义的cell";
+        label.frame=CGRectMake(0, 30, Kwidth-30, 20);
+        [AllView addSubview:label];
+        
     };
 
 ```
