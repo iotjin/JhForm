@@ -4,15 +4,18 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 注:JhForm是在SWForm代码的基础上新增了几种自定义的cell,添加了一些属性和方法,改成了自己熟悉的代码风格.<br> 
 (SWForm代码地址:https://github.com/RockChanel/SWForm)
 
-![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_00.png)  <br> <br> 
-![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01.GIF)  <br> <br> 
-![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_02.GIF)  <br> <br> 
-![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_03.gif)  <br> <br> 
-![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_04.png)  <br> <br> 
+
+<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_00.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01_1.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01.gif" width="208" height="404">
+<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_02.gif" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_03_1.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_03.gif" width="208" height="404">
+<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_04.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_05.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.png" width="208" height="404">
+<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.gif" width="208" height="404">
+
+
 
 
 ## 更新说明
 
+* 2019.09.11 - 文本输入和密码输入样式增加右侧自定义View,新增只显示右侧输入框样式(设置Jh_title为空即可),标题增加换行展示,选择图片cell增加底部提示文本(不设置默认不显示),优化红星展示方式 <br> 
 * 2019.07.26 - 新增完全自定义样式cell (JhFormCustumALLViewCell) ,添加cell背景色设置属性 "Jh_cellBgColor"<br> 
 * 2019.06.21 - 新增密码输入样式cell (JhFormPwdCell) <br> 
 * 2019.06.18 - 修复switchBtn开关失效的问题 <br> 
@@ -194,6 +197,17 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 
 ```
 
+* 13 - 标题换行展示
+```
+
+    NSString *title= @"统一社会\n 信用代码";
+    JhFormCellModel *cell6 = JhFormCellModel_AddInputCell(title, @"", YES, 0);
+    cell6.Jh_placeholder = @"请输入18位统一社会信用代码";
+    cell6.Jh_titleMultiLineShow =YES; //标题换行展示
+    cell6.Jh_maxInputLength = 18;
+```
+
+
 
 *  一些其他的设置
 ```
@@ -201,6 +215,9 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
      //隐藏默认的footerView
     self.Jh_defaultFooterViewHidden = YES;
     
+    
+    可隐藏整个页面的红星按只有标题显示
+    self.Jh_leftTitleHiddenRedStar =YES;
  
     
 #pragma mark - 设置导航条title和右侧文字
