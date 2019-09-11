@@ -5,15 +5,9 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 (SWForm代码地址:https://github.com/RockChanel/SWForm)
 
 
-<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_00.png" width="208" height="404">
-<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01_1.png" width="208" height="404">
-<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01.gif" width="208" height="404">
-<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_02.gif" width="208" height="404">
-<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_03_1.png" width="208" height="404">
-<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_03.gif" width="208" height="404">
-<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_04.png" width="208" height="404">
-<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_05.png" width="208" height="404">
-<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.png" width="208" height="404">
+<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_00.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01_1.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01.gif" width="208" height="404">
+<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_02.gif" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_03_1.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_03.gif" width="208" height="404">
+<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_04.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_05.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.png" width="208" height="404">
 <img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.gif" width="208" height="404">
 
 ![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_00.png)  <br> <br> 
