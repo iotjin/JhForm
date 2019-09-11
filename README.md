@@ -197,6 +197,17 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 
 ```
 
+* 13 - 标题换行展示
+```
+
+    NSString *title= @"统一社会\n 信用代码";
+    JhFormCellModel *cell6 = JhFormCellModel_AddInputCell(title, @"", YES, 0);
+    cell6.Jh_placeholder = @"请输入18位统一社会信用代码";
+    cell6.Jh_titleMultiLineShow =YES; //标题换行展示
+    cell6.Jh_maxInputLength = 18;
+```
+
+
 
 *  一些其他的设置
 ```
@@ -204,6 +215,9 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
      //隐藏默认的footerView
     self.Jh_defaultFooterViewHidden = YES;
     
+    
+    可隐藏整个页面的红星按只有标题显示
+    self.Jh_leftTitleHiddenRedStar =YES;
  
     
 #pragma mark - 设置导航条title和右侧文字
