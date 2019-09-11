@@ -10,15 +10,12 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 <img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_04.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_05.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.png" width="208" height="404">
 <img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.gif" width="208" height="404">
 
-![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_00.png)  <br> <br> 
-![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01.GIF)  <br> <br> 
-![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_02.GIF)  <br> <br> 
-![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_03.gif)  <br> <br> 
-![](https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_04.png)  <br> <br> 
+
 
 
 ## 更新说明
 
+* 2019.09.11 - 文本输入和密码输入样式增加右侧自定义View,新增只显示右侧输入框样式(设置Jh_title为空即可),标题增加换行展示,优化红星展示方式, <br> 
 * 2019.07.26 - 新增完全自定义样式cell (JhFormCustumALLViewCell) ,添加cell背景色设置属性 "Jh_cellBgColor"<br> 
 * 2019.06.21 - 新增密码输入样式cell (JhFormPwdCell) <br> 
 * 2019.06.18 - 修复switchBtn开关失效的问题 <br> 
