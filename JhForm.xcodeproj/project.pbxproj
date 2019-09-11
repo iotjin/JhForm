@@ -87,13 +87,13 @@
 		E9B3E1ED2328B650001F1780 /* form_demo_01_1.png in Resources */ = {isa = PBXBuildFile; fileRef = E9B3E1E32328B64F001F1780 /* form_demo_01_1.png */; };
 		E9B3E1EE2328B650001F1780 /* form_demo_03.gif in Resources */ = {isa = PBXBuildFile; fileRef = E9B3E1E42328B64F001F1780 /* form_demo_03.gif */; };
 		E9B3E1EF2328B650001F1780 /* form_demo_03_1.png in Resources */ = {isa = PBXBuildFile; fileRef = E9B3E1E52328B64F001F1780 /* form_demo_03_1.png */; };
-		E9B3E1F02328B650001F1780 /* form_demo_06.png in Resources */ = {isa = PBXBuildFile; fileRef = E9B3E1E62328B64F001F1780 /* form_demo_06.png */; };
 		E9B3E1F12328B650001F1780 /* form_demo_04.png in Resources */ = {isa = PBXBuildFile; fileRef = E9B3E1E72328B650001F1780 /* form_demo_04.png */; };
 		E9B3E1F22328B650001F1780 /* form_demo_00.png in Resources */ = {isa = PBXBuildFile; fileRef = E9B3E1E82328B650001F1780 /* form_demo_00.png */; };
 		E9B3E1F32328B650001F1780 /* form_demo_01.gif in Resources */ = {isa = PBXBuildFile; fileRef = E9B3E1E92328B650001F1780 /* form_demo_01.gif */; };
 		E9B3E1F42328B650001F1780 /* form_demo_05.png in Resources */ = {isa = PBXBuildFile; fileRef = E9B3E1EA2328B650001F1780 /* form_demo_05.png */; };
-		E9B3E1F52328B650001F1780 /* form_demo_06.gif in Resources */ = {isa = PBXBuildFile; fileRef = E9B3E1EB2328B650001F1780 /* form_demo_06.gif */; };
 		E9B3E1F62328B650001F1780 /* form_demo_02.gif in Resources */ = {isa = PBXBuildFile; fileRef = E9B3E1EC2328B650001F1780 /* form_demo_02.gif */; };
+		E9B3E1FC2328DF86001F1780 /* form_demo_06.png in Resources */ = {isa = PBXBuildFile; fileRef = E9B3E1FA2328DF86001F1780 /* form_demo_06.png */; };
+		E9B3E1FD2328DF86001F1780 /* form_demo_06.gif in Resources */ = {isa = PBXBuildFile; fileRef = E9B3E1FB2328DF86001F1780 /* form_demo_06.gif */; };
 		E9FD211C2238CF20002C67E6 /* JhFormTableViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD20F62238CF20002C67E6 /* JhFormTableViewVC.m */; };
 		E9FD211D2238CF20002C67E6 /* JhFormCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD20F82238CF20002C67E6 /* JhFormCellModel.m */; };
 		E9FD211E2238CF20002C67E6 /* JhFormSectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD20FB2238CF20002C67E6 /* JhFormSectionModel.m */; };
@@ -307,13 +307,13 @@
 		E9B3E1E32328B64F001F1780 /* form_demo_01_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_demo_01_1.png; sourceTree = "<group>"; };
 		E9B3E1E42328B64F001F1780 /* form_demo_03.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = form_demo_03.gif; sourceTree = "<group>"; };
 		E9B3E1E52328B64F001F1780 /* form_demo_03_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_demo_03_1.png; sourceTree = "<group>"; };
-		E9B3E1E62328B64F001F1780 /* form_demo_06.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_demo_06.png; sourceTree = "<group>"; };
 		E9B3E1E72328B650001F1780 /* form_demo_04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_demo_04.png; sourceTree = "<group>"; };
 		E9B3E1E82328B650001F1780 /* form_demo_00.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_demo_00.png; sourceTree = "<group>"; };
 		E9B3E1E92328B650001F1780 /* form_demo_01.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = form_demo_01.gif; sourceTree = "<group>"; };
 		E9B3E1EA2328B650001F1780 /* form_demo_05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_demo_05.png; sourceTree = "<group>"; };
-		E9B3E1EB2328B650001F1780 /* form_demo_06.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = form_demo_06.gif; sourceTree = "<group>"; };
 		E9B3E1EC2328B650001F1780 /* form_demo_02.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = form_demo_02.gif; sourceTree = "<group>"; };
+		E9B3E1FA2328DF86001F1780 /* form_demo_06.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_demo_06.png; sourceTree = "<group>"; };
+		E9B3E1FB2328DF86001F1780 /* form_demo_06.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = form_demo_06.gif; sourceTree = "<group>"; };
 		E9FD20F62238CF20002C67E6 /* JhFormTableViewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormTableViewVC.m; sourceTree = "<group>"; };
 		E9FD20F82238CF20002C67E6 /* JhFormCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormCellModel.m; sourceTree = "<group>"; };
 		E9FD20F92238CF20002C67E6 /* JhFormSectionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormSectionModel.h; sourceTree = "<group>"; };
@@ -659,8 +659,8 @@
 				E9B3E1E42328B64F001F1780 /* form_demo_03.gif */,
 				E9B3E1E72328B650001F1780 /* form_demo_04.png */,
 				E9B3E1EA2328B650001F1780 /* form_demo_05.png */,
-				E9B3E1EB2328B650001F1780 /* form_demo_06.gif */,
-				E9B3E1E62328B64F001F1780 /* form_demo_06.png */,
+				E9B3E1FB2328DF86001F1780 /* form_demo_06.gif */,
+				E9B3E1FA2328DF86001F1780 /* form_demo_06.png */,
 			);
 			path = screenshots;
 			sourceTree = "<group>";
@@ -882,23 +882,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9B3E1F02328B650001F1780 /* form_demo_06.png in Resources */,
 				E9B3E1EE2328B650001F1780 /* form_demo_03.gif in Resources */,
 				E93D409A21E58E52003DC702 /* HXPhotoPicker.bundle in Resources */,
 				E9FD21542238D2A3002C67E6 /* LICENSE in Resources */,
 				E9B3E1F22328B650001F1780 /* form_demo_00.png in Resources */,
 				E9B3E1F32328B650001F1780 /* form_demo_01.gif in Resources */,
-				E9B3E1F52328B650001F1780 /* form_demo_06.gif in Resources */,
 				E9FD21282238CF20002C67E6 /* JhForm.bundle in Resources */,
 				E93D3F8A21E58DDB003DC702 /* LaunchScreen.storyboard in Resources */,
 				E93D3F8721E58DDB003DC702 /* Assets.xcassets in Resources */,
 				E9FD21642238D36B002C67E6 /* JhBaseHeaderView.xib in Resources */,
 				E9B3E1F62328B650001F1780 /* form_demo_02.gif in Resources */,
 				E9FD215F2238D2A3002C67E6 /* README.md in Resources */,
+				E9B3E1FD2328DF86001F1780 /* form_demo_06.gif in Resources */,
 				E93D3F8521E58DD9003DC702 /* Main.storyboard in Resources */,
 				E9B3E1ED2328B650001F1780 /* form_demo_01_1.png in Resources */,
 				E9B3E1EF2328B650001F1780 /* form_demo_03_1.png in Resources */,
 				E9B3E1F12328B650001F1780 /* form_demo_04.png in Resources */,
+				E9B3E1FC2328DF86001F1780 /* form_demo_06.png in Resources */,
 				E9B3E1F42328B650001F1780 /* form_demo_05.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

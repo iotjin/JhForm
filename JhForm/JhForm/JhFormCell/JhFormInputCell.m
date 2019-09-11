@@ -68,18 +68,18 @@
     
     if (!_data.Jh_title.length) {
         
-        self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset, Jh_TitleHeight);
+        self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset+5, Jh_TitleHeight);
         
         CGFloat newHeight = [JhFormInputCell heightWithCellModelData:self.data];
         
         if(_data.Jh_intputCellRightViewWidth>0){
             
-            self.rightTextView.frame = CGRectMake(Jh_Margin_left, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - 2*Jh_Margin_left - _data.Jh_intputCellRightViewWidth, newHeight - 2*Jh_EdgeMargin);
+            self.rightTextView.frame = CGRectMake(Jh_Margin_left+3, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - 2*Jh_Margin_left - _data.Jh_intputCellRightViewWidth-3, newHeight - 2*Jh_EdgeMargin);
             
             self.RightView.frame =CGRectMake(CGRectGetMaxX(self.rightTextView.frame), 0, _data.Jh_intputCellRightViewWidth, self.bounds.size.height);
             
         }else{
-            self.rightTextView.frame = CGRectMake(Jh_Margin_left, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - 2*Jh_Margin_left, newHeight - 2*Jh_EdgeMargin);
+            self.rightTextView.frame = CGRectMake(Jh_Margin_left+3, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - 2*Jh_Margin_left-3, newHeight - 2*Jh_EdgeMargin);
         }
         
     }else{
@@ -154,7 +154,7 @@
     
     CGFloat width;
     if (!data.Jh_title.length) {
-        width = (data.Jh_intputCellRightViewWidth>0) ? (2*Jh_Margin_left+data.Jh_intputCellRightViewWidth) : (2*Jh_Margin_left);
+        width = (data.Jh_intputCellRightViewWidth>0) ? (2*Jh_Margin_left+data.Jh_intputCellRightViewWidth+3) : (2*Jh_Margin_left+3);
     }else{
         width = (data.Jh_intputCellRightViewWidth>0) ? (data.Jh_titleWidth + 3*Jh_EdgeMargin+data.Jh_intputCellRightViewWidth) : (data.Jh_titleWidth + 3*Jh_EdgeMargin);
     }

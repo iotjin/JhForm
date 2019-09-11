@@ -63,8 +63,8 @@
     
     if (!_data.Jh_title.length) {
         
-        self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset, Jh_TitleHeight);
-        self.CustumRightView.frame =CGRectMake(Jh_Margin_left, 0, Jh_SCRREN_WIDTH-Jh_Margin_left-Jh_EdgeMargin, self.bounds.size.height);
+        self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset+5, Jh_TitleHeight);
+        self.CustumRightView.frame =CGRectMake(Jh_Margin_left+3, 0, Jh_SCRREN_WIDTH-Jh_Margin_left-Jh_EdgeMargin-3, self.bounds.size.height);
         
     }else{
         

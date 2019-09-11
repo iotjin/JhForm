@@ -70,9 +70,9 @@
     
     if (!_data.Jh_title.length) {
         
-        self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset, Jh_TitleHeight);
+        self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset+5, Jh_TitleHeight);
         CGFloat newHeight = [JhFormTextViewInputCell heightWithCellModelData:self.data];
-        self.rightTextView.frame = CGRectMake(Jh_Margin_left, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - 2*Jh_Margin_left, newHeight - 2*Jh_EdgeMargin);
+        self.rightTextView.frame = CGRectMake(Jh_Margin_left+3, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - 2*Jh_Margin_left-3, newHeight - 2*Jh_EdgeMargin);
         
     }else{
     
@@ -126,7 +126,7 @@
 + (CGFloat)heightWithCellModelData:(JhFormCellModel *)data{
     
     
-    CGFloat width = data.Jh_title.length ? (4*Jh_EdgeMargin) : (2*Jh_Margin_left);
+    CGFloat width = data.Jh_title.length ? (4*Jh_EdgeMargin+3) : (2*Jh_Margin_left+3);
     
     CGFloat infoHeight = [data.Jh_info sizeWithFontSize:Jh_InfoFont maxSize:CGSizeMake(Jh_SCRREN_WIDTH - width, MAXFLOAT)].height;
     
