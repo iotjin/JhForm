@@ -30,6 +30,15 @@
     // Configure the view for the selected state
 }
 
+-(UIView *)RightView{
+    if (!_RightView) {
+        _RightView = [[UIView alloc]init];
+        _RightView.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:_RightView];
+    }
+    return _RightView;
+}
+
 
 -(UITextField *)Jh_pwdTextField{
     if (!_Jh_pwdTextField) {
@@ -53,6 +62,11 @@
 -(void)setData:(JhFormCellModel *)data{
     _data= data;
     
+    if (data.Jh_titleMultiLineShow==YES) {
+        self.titleLabel.adjustsFontSizeToFitWidth = NO;
+        self.titleLabel.numberOfLines = 0;
+    }
+    
     self.titleLabel.attributedText = data.Jh_attributedTitle;
     
     self.Jh_pwdTextField.text = [self.data.Jh_info addUnit:self.data.Jh_unit];
@@ -70,15 +84,60 @@
     if(data.Jh_cellBgColor){
         self.backgroundColor = data.Jh_cellBgColor;
     }
+    
+    if(data.Jh_intputCellRightViewWidth>0 && data.Jh_intputCellRightViewBlock){
+        data.Jh_intputCellRightViewBlock(self.RightView);
+    }
+    
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+
+    if (!_data.Jh_title.length) {
+        
+        self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset, Jh_TitleHeight);
+        
+        if(_data.Jh_intputCellRightViewWidth>0){
+            
+            self.Jh_pwdTextField.frame =CGRectMake(Jh_Margin_left, 0, Jh_SCRREN_WIDTH - 2*Jh_Margin_left - _data.Jh_intputCellRightViewWidth, self.bounds.size.height);
+            self.RightView.frame =CGRectMake(CGRectGetMaxX(self.Jh_pwdTextField.frame), 0, _data.Jh_intputCellRightViewWidth, self.bounds.size.height);
+            
+        }else{
+           self.Jh_pwdTextField.frame =CGRectMake(Jh_Margin_left, 0, Jh_SCRREN_WIDTH - 2*Jh_Margin_left, self.bounds.size.height);
+        }
+        
+    }else{
+        
+        /********************************* 左侧标题换行 ********************************/
+        
+        CGFloat titleHeight = _data.Jh_titleHeight;
+        CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
+        self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, self.data.Jh_titleWidth, titleHeight);
+        
+        
+        if (_data.Jh_titleMultiLineShow==YES) {
+            if (titleHeight >(_data.Jh_defaultHeight-Jh_EdgeMargin*2)){
+                _data.Jh_defaultHeight = titleHeight+Jh_EdgeMargin*2;
+                [self.baseTableView reloadData];
+            }
+        }
+        
+        /********************************* 左侧标题换行 ********************************/
+
+        if(_data.Jh_intputCellRightViewWidth>0){
+            
+            self.Jh_pwdTextField.frame =CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, 0, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 3*Jh_EdgeMargin)-_data.Jh_intputCellRightViewWidth, self.bounds.size.height);
+            self.RightView.frame =CGRectMake(CGRectGetMaxX(self.Jh_pwdTextField.frame), 0, _data.Jh_intputCellRightViewWidth, self.bounds.size.height);
+            
+        }else{
+            self.Jh_pwdTextField.frame =CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, 0, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 3*Jh_EdgeMargin), self.bounds.size.height);
+            
+        }
+        
+    }
     
-    //标题垂直居中
-    self.titleLabel.frame = CGRectMake(Jh_Margin_left, (self.data.Jh_defaultHeight - Jh_TitleHeight)/2, self.data.Jh_titleWidth, Jh_TitleHeight);
     
-    self.Jh_pwdTextField.frame =CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, 0, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 3*Jh_EdgeMargin), self.bounds.size.height);
     
 }
 

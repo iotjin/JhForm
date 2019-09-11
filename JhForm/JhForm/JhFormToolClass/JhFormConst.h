@@ -36,29 +36,6 @@
 #define Jh_SCRREN_WIDTH [UIScreen mainScreen].bounds.size.width
 
 
-
-/**
- 必选条目标题呈现形式类别
- */
-typedef NS_ENUM(NSInteger, JhTitleShowType) {
-    /**
-     默认呈现形式，如: 标题(必填)
-     */
-    JhTitleShowTypeDefault,
-    /**
-     标题前部加红色*，如: *标题
-     */
-    JhTitleShowTypeRedStarFront,
-    /**
-     标题后部加红色*，如: 标题*
-     */
-    JhTitleShowTypeRedStarBack,
-    /**
-     仅显示标题
-     */
-    JhTitleShowTypeOnlyTitle,
-};
-
 /**
  表单标题字体大小，缺省为15
  */
@@ -79,7 +56,8 @@ extern CGFloat const Jh_Margin_left;
  */
 extern CGFloat const Jh_EdgeMargin;
 
-
+/** 红星在前样式,tilte往左侧偏移量 */
+extern CGFloat const Jh_redStarLeftOffset;
 
 /**
  表单底部线距离左侧边缘距离，缺省为16.0f (尽量不要动,只在几个cell中使用了)
@@ -104,12 +82,8 @@ extern CGFloat const Jh_TitleHeight;
 extern CGFloat const Jh_DefaultCellHeight; //44
 extern CGFloat const Jh_DefaultTextViewCellHeight;  //150
 extern CGFloat const Jh_DefaultCustumBottomViewCellHeight; //264
-extern CGFloat const Jh_DefaultSelectImageCellHeight; //264 
+extern CGFloat const Jh_DefaultSelectImageCellHeight; //264
 
-/**
- 表单标题显示类别，缺省为 JhTitleShowTypeRedStarFront
- */
-extern NSInteger const Jh_TitleShowType;
 
 /**
  表单输入字数限制，缺省为50

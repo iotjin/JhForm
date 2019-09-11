@@ -24,7 +24,8 @@ CGFloat const Jh_Margin_left = 15.0f;
  */
 CGFloat const Jh_EdgeMargin= 10.0f;
 
-
+/** 红星在前样式,tilte往左侧偏移量 */
+CGFloat const Jh_redStarLeftOffset = 5.0f;
 
 /**
  表单底部线距离左侧边缘距离，缺省为16.0f (尽量不要动,只在几个cell中使用了)
@@ -44,9 +45,6 @@ CGFloat const Jh_DefaultTextViewCellHeight = 150.0f; //(默认输入50字的高�
 CGFloat const Jh_DefaultCustumBottomViewCellHeight = 264.0f;
 CGFloat const Jh_DefaultSelectImageCellHeight = 264;
 
-
-// 表单标题显示类别
-NSInteger const Jh_TitleShowType = JhTitleShowTypeOnlyTitle;
 
 // 表单输入字数限制
 NSUInteger const Jh_GlobalMaxInputLength = 50;

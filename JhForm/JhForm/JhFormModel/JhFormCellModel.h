@@ -90,6 +90,31 @@ typedef NS_ENUM(NSInteger, JhFormCellInfoTextAlignmentStyle)
     JhFormCellInfoTextAlignmentRight,           
 };
 
+/**
+ 必选条目标题呈现形式类别
+ */
+typedef NS_ENUM(NSInteger, JhTitleShowType) {
+    
+    /** 仅显示标题 */
+    JhTitleShowTypeOnlyTitle =0,
+    /**
+     标题后加必填文字，如: 标题(必填)
+     */
+    JhTitleShowTypeAddText,
+    /**
+     标题前部加红色*，如: *标题
+     */
+    JhTitleShowTypeRedStarFront,
+    /**
+     标题后部加红色*，如: 标题*
+     */
+    JhTitleShowTypeRedStarBack,
+  
+};
+
+
+
+typedef void(^JhCellIntputCellRightViewBlock)(UIView *RightView);
 
 typedef void(^JhCellSelectCellBlock)(JhFormCellModel *cellModel);
 
@@ -108,6 +133,9 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 @interface JhFormCellModel : NSObject
 
 
+
+/** inputCell最右侧设置自定义View,需要先设置Jh_intputCellRightViewWidth */
+@property (nonatomic, copy, nullable) JhCellIntputCellRightViewBlock Jh_intputCellRightViewBlock;
 /** 右侧自定义视图的Block (左默认120 ,右 5,高是cell的高) */
 @property (nonatomic, copy, nullable) JhCellCustumRightViewBlock Jh_custumRightViewBlock;
 /** 底部自定义视图的Block (左0 ,右0,高默认240)*/
@@ -142,14 +170,32 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
  */
 @property (nonatomic, assign) JhFormCellType Jh_cellType;
 
+/**
+ 必选条目标题呈现形式类别(默认标题前加红星,Jh_leftTitleHiddenRedStar 可隐藏整个页面的红星按只有标题显示)
+ */
+@property (nonatomic, assign) JhTitleShowType Jh_titleShowType;
+
+
 /** title的宽度,默认100 ,若标题太长,不想牺牲字体大小,可设置宽度 */
 @property (nonatomic, assign) CGFloat Jh_titleWidth;
 
+/** 左侧title高度(一般不用设置) */
+@property (nonatomic, assign) CGFloat Jh_titleHeight;
+
+
 /**
  表单条目标题，表单标题为单行显示，尽可能简短，若标题太长，会牺牲字体大小以达到显示完全的效果 (左侧标题)
+ Jh_title为空时,只显示右侧控件(可生效的cell:JhFormInputCell,JhFormPwdCell,JhFormSelectCell,JhFormTextViewInputCell,JhFormCustumRightCell)
  */
 @property (nonatomic, copy, nonnull) NSString *Jh_title;
 @property (nonatomic, strong, nonnull) NSAttributedString *Jh_attributedTitle;
+
+/**
+ 标题换行展示 (默认NO,单行展示)
+ (可生效的cell:JhFormInputCell,JhFormPwdCell,JhFormSelectCell,JhFormCustumRightCell)
+ */
+@property (nonatomic, assign) BOOL  Jh_titleMultiLineShow;
+
 
 /**
  表单条目详情 (右侧Text)
@@ -177,6 +223,14 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 
 /** 显示右侧的箭头     (只在CustumRightCell样式下生效,默认不显示) */
 @property (assign, nonatomic) BOOL  Jh_custumRightCellShowArrow;
+
+
+/**
+ Jh_intputCell 右侧自定义view的宽度,和Jh_intputCellRightViewBlock配合使用
+ Jh_intputCellRightViewBlock 使用之前要先设置宽度
+ */
+@property (nonatomic, assign) CGFloat  Jh_intputCellRightViewWidth;
+
 
 /**
   表单条目右侧 SwitchBtn 开关状态
@@ -241,6 +295,11 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
  */
 @property (nonatomic, assign) NSUInteger Jh_maxImageCount;
 
+/** 选择图片底部提示文字 (默认不设置,显示图片cell左下角 )*/
+@property (nonatomic, strong) NSString *Jh_tipsInfo;
+
+/** 选择图片底部提示文字颜色 */
+@property (nonatomic, strong) UIColor *Jh_tipsInfoColor;
 
 /**
  条目附带单位

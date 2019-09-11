@@ -207,6 +207,7 @@
     JhFormCellModel *cellModel = sectionModel.Jh_sectionModelArr[indexPath.row];
     
     CGFloat LeftTitleWidth = self.Jh_leftTitleWidth ? self.Jh_leftTitleWidth :Jh_TitleWidth;
+    self.Jh_leftTitleHiddenRedStar==YES ? (cellModel.Jh_titleShowType =JhTitleShowTypeOnlyTitle):(cellModel.Jh_titleShowType =JhTitleShowTypeRedStarFront);
     
         // 表单条目类别判断
         if (cellModel.Jh_cellType == JhFormCellTypeTextViewInput) {
@@ -315,7 +316,7 @@
     }else if (cellModel.Jh_cellType  == JhFormCellTypeSelect) {
         return [JhFormSelectCell heightWithCellModelData:cellModel];
     }
-    else if (cellModel.Jh_cellType  == JhFormCellTypeCustumALLView) {
+    else if (cellModel.Jh_cellType  == JhFormCellTypeCustumALLView || cellModel.Jh_cellType  == JhFormCellTypePwdInput) {
         return cellModel.Jh_defaultHeight;
     }
     else {

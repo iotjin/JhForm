@@ -26,4 +26,19 @@
  */
 - (CGSize)sizeWithFontSize:(CGFloat)fontSize maxSize:(CGSize)maxSize;
 
+
+/**
+ 一串字符在固定宽度下，正常显示所需要的高度(字符串固定宽度计算高度)
+ 
+ @param string 字符串
+ @param width 宽度
+ @param font 大小
+ @return 高度
+ */
++ (CGFloat)Jh_stingAutoHeightWithString:(NSString *)string
+                                  Width:(CGFloat)width
+                                   Font:(NSInteger)font;
+
+
+
 @end

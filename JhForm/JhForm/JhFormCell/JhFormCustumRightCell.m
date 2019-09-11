@@ -7,7 +7,7 @@
 //
 
 #import "JhFormCustumRightCell.h"
-
+#import "NSString+JhForm.h"
 #import "JhFormCellModel.h"
 #import "JhFormConst.h"
 
@@ -42,6 +42,11 @@
 -(void)setData:(JhFormCellModel *)data{
     _data= data;
     
+    if (data.Jh_titleMultiLineShow==YES) {
+        self.titleLabel.adjustsFontSizeToFitWidth = NO;
+        self.titleLabel.numberOfLines = 0;
+    }
+    
     self.titleLabel.attributedText = data.Jh_attributedTitle;
     
     if(data.Jh_custumRightCellShowArrow == YES){
@@ -56,9 +61,32 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    //标题垂直居中
-    self.titleLabel.frame = CGRectMake(Jh_Margin_left, (self.data.Jh_defaultHeight - Jh_TitleHeight)/2, self.data.Jh_titleWidth, Jh_TitleHeight);
-    self.CustumRightView.frame =CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, 0, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 2*Jh_EdgeMargin) - Jh_CustumRightView_rightEdgeMargin, self.bounds.size.height);
+    if (!_data.Jh_title.length) {
+        
+        self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset, Jh_TitleHeight);
+        self.CustumRightView.frame =CGRectMake(Jh_Margin_left, 0, Jh_SCRREN_WIDTH-Jh_Margin_left-Jh_EdgeMargin, self.bounds.size.height);
+        
+    }else{
+        
+         /********************************* 左侧标题换行 ********************************/
+        CGFloat titleHeight = _data.Jh_titleHeight;
+        CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
+        self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, self.data.Jh_titleWidth, titleHeight);
+        
+        if (_data.Jh_titleMultiLineShow==YES) {
+            if (titleHeight >(_data.Jh_defaultHeight-Jh_EdgeMargin*2)){
+                _data.Jh_defaultHeight = titleHeight+Jh_EdgeMargin*2;
+                [self.baseTableView reloadData];
+            }
+        }
+        /********************************* 左侧标题换行 ********************************/
+  
+        self.CustumRightView.frame =CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, 0, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 2*Jh_EdgeMargin) - Jh_CustumRightView_rightEdgeMargin, self.bounds.size.height);
+        
+        
+    }
+    
+    
 }
 
 

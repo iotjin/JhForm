@@ -19,8 +19,26 @@
 
 @implementation JhFormInputCell
 
+-(UIView *)RightView{
+    if (!_RightView) {
+        _RightView = [[UIView alloc]init];
+        _RightView.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:_RightView];
+    }
+    return _RightView;
+}
+
+
+
 -(void)setData:(JhFormCellModel *)data{
     _data= data;
+    
+    
+    if (data.Jh_titleMultiLineShow==YES) {
+        self.titleLabel.adjustsFontSizeToFitWidth = NO;
+        self.titleLabel.numberOfLines = 0;
+    }
+    
     
 //    self.titleLabel.text = data.title;
     self.titleLabel.attributedText = data.Jh_attributedTitle;
@@ -38,16 +56,63 @@
         self.backgroundColor = data.Jh_cellBgColor;
     }
     
+    if(data.Jh_intputCellRightViewWidth>0 && data.Jh_intputCellRightViewBlock){
+        data.Jh_intputCellRightViewBlock(self.RightView);
+    }
+    
+    
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    self.titleLabel.frame = CGRectMake(Jh_Margin_left, Jh_EdgeMargin, self.data.Jh_titleWidth, Jh_TitleHeight);
-    
-    CGFloat newHeight = [JhFormInputCell heightWithCellModelData:self.data];
-    self.rightTextView.frame = CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 3*Jh_EdgeMargin), newHeight - 2*Jh_EdgeMargin);
-    
+    if (!_data.Jh_title.length) {
+        
+        self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset, Jh_TitleHeight);
+        
+        CGFloat newHeight = [JhFormInputCell heightWithCellModelData:self.data];
+        
+        if(_data.Jh_intputCellRightViewWidth>0){
+            
+            self.rightTextView.frame = CGRectMake(Jh_Margin_left, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - 2*Jh_Margin_left - _data.Jh_intputCellRightViewWidth, newHeight - 2*Jh_EdgeMargin);
+            
+            self.RightView.frame =CGRectMake(CGRectGetMaxX(self.rightTextView.frame), 0, _data.Jh_intputCellRightViewWidth, self.bounds.size.height);
+            
+        }else{
+            self.rightTextView.frame = CGRectMake(Jh_Margin_left, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - 2*Jh_Margin_left, newHeight - 2*Jh_EdgeMargin);
+        }
+        
+    }else{
+        
+        /********************************* 左侧标题换行 ********************************/
+        
+        CGFloat titleHeight = _data.Jh_titleHeight;
+        CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
+        self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, self.data.Jh_titleWidth, titleHeight);
+        
+        
+        if (_data.Jh_titleMultiLineShow==YES) {
+            if (titleHeight >(_data.Jh_defaultHeight-Jh_EdgeMargin*2)){
+                _data.Jh_defaultHeight = titleHeight+Jh_EdgeMargin*2;
+                [self.baseTableView reloadData];
+            }
+        }
+
+        /********************************* 左侧标题换行 ********************************/
+        
+        CGFloat newHeight = [JhFormInputCell heightWithCellModelData:self.data];
+        
+        if(_data.Jh_intputCellRightViewWidth>0){
+            
+            self.rightTextView.frame = CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 3*Jh_EdgeMargin)-_data.Jh_intputCellRightViewWidth, newHeight - 2*Jh_EdgeMargin);
+            
+            self.RightView.frame =CGRectMake(CGRectGetMaxX(self.rightTextView.frame), 0, _data.Jh_intputCellRightViewWidth, self.bounds.size.height);
+            
+        }else{
+            self.rightTextView.frame = CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 3*Jh_EdgeMargin), newHeight - 2*Jh_EdgeMargin);
+        }
+        
+    }
     
 }
 
@@ -86,8 +151,17 @@
 }
 
 + (CGFloat)heightWithCellModelData:(JhFormCellModel *)data{
-    CGFloat infoHeight = [data.Jh_info sizeWithFontSize:Jh_InfoFont maxSize:CGSizeMake(Jh_SCRREN_WIDTH - (data.Jh_titleWidth + 3*Jh_EdgeMargin), MAXFLOAT)].height;
+    
+    CGFloat width;
+    if (!data.Jh_title.length) {
+        width = (data.Jh_intputCellRightViewWidth>0) ? (2*Jh_Margin_left+data.Jh_intputCellRightViewWidth) : (2*Jh_Margin_left);
+    }else{
+        width = (data.Jh_intputCellRightViewWidth>0) ? (data.Jh_titleWidth + 3*Jh_EdgeMargin+data.Jh_intputCellRightViewWidth) : (data.Jh_titleWidth + 3*Jh_EdgeMargin);
+    }
+    CGFloat infoHeight = [data.Jh_info sizeWithFontSize:Jh_InfoFont maxSize:CGSizeMake(Jh_SCRREN_WIDTH -width, MAXFLOAT)].height;
     return MAX(data.Jh_defaultHeight, infoHeight + 2*Jh_EdgeMargin);
+
+    
 }
 
 

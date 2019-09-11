@@ -64,6 +64,10 @@ typedef void(^JhFormSubmitBlock)(void);
 @property (assign, nonatomic) CGFloat  Jh_leftTitleWidth;
 
 
+/** 可隐藏整个页面的红星按只有标题显示 */
+@property (assign, nonatomic) CGFloat  Jh_leftTitleHiddenRedStar;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

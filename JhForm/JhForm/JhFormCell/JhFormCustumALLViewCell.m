@@ -50,7 +50,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    self.CustumALLView.frame =CGRectMake(Jh_Margin_left,0, Jh_SCRREN_WIDTH - 2*Jh_Margin_left, self.data.Jh_defaultHeight);
+    self.CustumALLView.frame =CGRectMake(Jh_Margin_left,0, Jh_SCRREN_WIDTH -Jh_Margin_left-Jh_EdgeMargin, self.data.Jh_defaultHeight);
     
 }
 

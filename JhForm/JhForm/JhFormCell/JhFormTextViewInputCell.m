@@ -68,23 +68,33 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    self.titleLabel.frame = CGRectMake(Jh_Margin_left, Jh_EdgeMargin, Jh_SCRREN_WIDTH - 2*Jh_EdgeMargin, Jh_TitleHeight);
+    if (!_data.Jh_title.length) {
+        
+        self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset, Jh_TitleHeight);
+        CGFloat newHeight = [JhFormTextViewInputCell heightWithCellModelData:self.data];
+        self.rightTextView.frame = CGRectMake(Jh_Margin_left, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - 2*Jh_Margin_left, newHeight - 2*Jh_EdgeMargin);
+        
+    }else{
     
-    //重置 rightTextView 内边距
-    self.rightTextView.textContainerInset = UIEdgeInsetsMake(8, 8, 8, 8);
-    self.rightTextView.backgroundColor = Jh_textView_BackgroundColor;
+        CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
+        self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, self.data.Jh_titleWidth, Jh_TitleHeight);
     
-    CGFloat newHeight = [JhFormTextViewInputCell heightWithCellModelData:self.data];
-    
-    CGFloat width = self.bounds.size.width - 2*Jh_EdgeMargin;
-    
-    self.rightTextView.frame = CGRectMake(Jh_EdgeMargin, CGRectGetMaxY(self.titleLabel.frame) + Jh_EdgeMargin, width, newHeight - 3*Jh_EdgeMargin - Jh_TitleHeight);
-    
-    /********************************* 底部加线 ********************************/
-    self.line1.frame= CGRectMake(Jh_LineEdgeMargin,CGRectGetMinY(self.rightTextView.frame)-2, Jh_SCRREN_WIDTH - Jh_LineEdgeMargin, 1);
-    
-    /********************************* 底部加线 ********************************/
-    
+        
+        //重置 rightTextView 内边距
+        self.rightTextView.textContainerInset = UIEdgeInsetsMake(8, 8, 8, 8);
+        self.rightTextView.backgroundColor = Jh_textView_BackgroundColor;
+        
+        CGFloat newHeight = [JhFormTextViewInputCell heightWithCellModelData:self.data];
+        
+        CGFloat width = self.bounds.size.width - 2*Jh_EdgeMargin;
+        
+        self.rightTextView.frame = CGRectMake(Jh_EdgeMargin, CGRectGetMaxY(self.titleLabel.frame) + Jh_EdgeMargin, width, newHeight - 3*Jh_EdgeMargin - Jh_TitleHeight);
+        
+        /********************************* 底部加线 ********************************/
+        self.line1.frame= CGRectMake(Jh_LineEdgeMargin,CGRectGetMinY(self.rightTextView.frame)-2, Jh_SCRREN_WIDTH - Jh_LineEdgeMargin, 1);
+        /********************************* 底部加线 ********************************/
+        
+    }
     
 }
 
@@ -114,8 +124,15 @@
 }
 
 + (CGFloat)heightWithCellModelData:(JhFormCellModel *)data{
-    CGFloat infoHeight = [data.Jh_info sizeWithFontSize:Jh_InfoFont maxSize:CGSizeMake(Jh_SCRREN_WIDTH - 4*Jh_EdgeMargin, MAXFLOAT)].height;
-    return MAX(data.Jh_defaultHeight, infoHeight + Jh_TitleHeight + 5*Jh_EdgeMargin);
+    
+    
+    CGFloat width = data.Jh_title.length ? (4*Jh_EdgeMargin) : (2*Jh_Margin_left);
+    
+    CGFloat infoHeight = [data.Jh_info sizeWithFontSize:Jh_InfoFont maxSize:CGSizeMake(Jh_SCRREN_WIDTH - width, MAXFLOAT)].height;
+    
+    return MAX(data.Jh_defaultHeight, infoHeight + 2*Jh_EdgeMargin);
+    
+    
 }
 
 

@@ -8,7 +8,7 @@
 
 #import "JhFormCellModel.h"
 #import "JhFormConst.h"
-
+#import "NSString+JhForm.h"
 
 static NSString *const JhUnitYuan = @"元";
 static NSString *const JhUnitYear = @"年";
@@ -198,6 +198,7 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
         self.Jh_cellType = cellType;
         self.Jh_editable = editable;
         self.Jh_required = required;
+        self.Jh_titleShowType = JhTitleShowTypeRedStarFront;
         self.Jh_keyboardType = keyboardType;
         self.Jh_imageArr = images;
         self.Jh_showPlaceholder = showPlaceholder;
@@ -253,7 +254,7 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
 #pragma mark -- 设置标题显示
 - (void)jh_setAttributedTitleWithRequired:(BOOL)required title:(NSString *)title cellModelType:(JhFormCellType)cellModelType{
     if (required) {
-        if (Jh_TitleShowType == JhTitleShowTypeDefault) {
+        if (self.Jh_titleShowType == JhTitleShowTypeAddText) {
             switch (self.Jh_cellType) {
                 case JhFormCellTypeInput:
                 case JhFormCellTypePwdInput:
@@ -272,10 +273,10 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
                     break;
             }
         }
-        else if (Jh_TitleShowType == JhTitleShowTypeRedStarFront) {
+        else if (self.Jh_titleShowType == JhTitleShowTypeRedStarFront) {
             title = [NSString stringWithFormat:@"*%@", title];
         }
-        else if (Jh_TitleShowType == JhTitleShowTypeRedStarBack) {
+        else if (self.Jh_titleShowType == JhTitleShowTypeRedStarBack) {
             title = [NSString stringWithFormat:@"%@*", title];
         }
     }
@@ -283,10 +284,10 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
     NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:title attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:Jh_TitleFont], NSForegroundColorAttributeName:Jh_titleColor}];
     
     if (required) {
-        if (Jh_TitleShowType == JhTitleShowTypeRedStarFront) {
+        if (self.Jh_titleShowType == JhTitleShowTypeRedStarFront) {
             [attributedTitle addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
         }
-        else if (Jh_TitleShowType == JhTitleShowTypeRedStarBack) {
+        else if (self.Jh_titleShowType == JhTitleShowTypeRedStarBack) {
             [attributedTitle addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(title.length - 1, 1)];
         }
     }
@@ -408,6 +409,56 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
     
 }
 
+
+-(CGFloat)Jh_titleHeight{
+    
+    CGFloat titleHeight;
+    
+    if (self.Jh_titleMultiLineShow==YES) {
+
+        NSString *title = [NSString stringWithFormat:@"%@",self.Jh_attributedTitle.string];
+        titleHeight = [NSString Jh_stingAutoHeightWithString:title Width:self.Jh_titleWidth Font:Jh_TitleFont];
+        if (titleHeight > Jh_TitleHeight) {
+            titleHeight = titleHeight+5;
+        }else{
+            titleHeight = Jh_TitleHeight;
+        }
+        
+    }else{
+        
+        titleHeight = Jh_TitleHeight;
+    }
+    
+    _Jh_titleHeight =titleHeight;
+    
+    return _Jh_titleHeight;
+    
+    
+}
+
+-(void)setJh_tipsInfo:(NSString *)Jh_tipsInfo{
+    _Jh_tipsInfo = Jh_tipsInfo;
+    
+    if (self.Jh_cellType ==JhFormCellTypeSelectImage) {
+        self.Jh_defaultHeight +=25;
+    }
+}
+
+-(void)setJh_maxImageCount:(NSUInteger)Jh_maxImageCount{
+    _Jh_maxImageCount =Jh_maxImageCount;
+    if (self.Jh_cellType ==JhFormCellTypeSelectImage) {
+        if (Jh_maxImageCount<5) {
+            self.Jh_defaultHeight = 164;
+        }
+    }
+}
+
+
+-(void)setJh_titleShowType:(JhTitleShowType)Jh_titleShowType{
+    _Jh_titleShowType = Jh_titleShowType;
+    
+    [self jh_setAttributedTitleWithRequired:self.Jh_required title:self.Jh_title cellModelType:self.Jh_cellType];
+}
 
 
 @end

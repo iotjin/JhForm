@@ -11,6 +11,8 @@
 #import "FormDemo2VC.h"
 #import "FormDemo3VC.h"
 #import "FormDemo4VC.h"
+#import "FormDemo5VC.h"
+#import "FormDemo6VC.h"
 
 @interface ViewController ()
 @end
@@ -64,12 +66,28 @@
         [weakSelf.navigationController pushViewController:jumpVC animated:YES];
     };
     
-    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3]];
+    JhFormCellModel *cell5 = JhFormCellModel_AddRightArrowCell(@"inputCell最右侧添加自定义View,title换行处理", nil);
+
+    cell5.Jh_CellSelectCellBlock = ^(JhFormCellModel *cellModel) {
+        FormDemo5VC *jumpVC= [[FormDemo5VC alloc]init];
+        [weakSelf.navigationController pushViewController:jumpVC animated:YES];
+    };
+    
+    JhFormCellModel *cell6 = JhFormCellModel_AddRightArrowCell(@"左侧标题为空样式", nil);
+    cell6.Jh_CellSelectCellBlock = ^(JhFormCellModel *cellModel) {
+        FormDemo6VC *jumpVC= [[FormDemo6VC alloc]init];
+        [weakSelf.navigationController pushViewController:jumpVC animated:YES];
+    };
+    
+    
+    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,cell5,cell6]];
     
     JhFormSectionModel *section0= JhSectionModel_Add(cellArr0);
     
     [self.Jh_formModelArr addObject:section0];
     
+    
+    self.Jh_leftTitleWidth =300;
 
     //隐藏默认的footerView
     self.Jh_hiddenDefaultFooterView = YES;

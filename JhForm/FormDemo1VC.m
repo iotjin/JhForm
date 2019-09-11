@@ -30,6 +30,7 @@
         _passWordTextField.placeholder =@"请输入密码";
         _passWordTextField.secureTextEntry=YES;
         _passWordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _passWordTextField.font = [UIFont systemFontOfSize:15];
     }
     return _passWordTextField;
 }
@@ -128,10 +129,12 @@
     cell6.Jh_maxInputLength = 50;
     
     JhFormCellModel *cell7 = JhFormCellModel_AddImageCell(@"选择图片:", NO);
-     cell7.Jh_defaultHeight = 64 +190;
+    cell7.Jh_tipsInfo =@"这是一条默认颜色的提示信息(不设置不显示)";
+    
     JhFormCellModel *picture = JhFormCellModel_AddImageCell(@"选择图片2:", NO);
     picture.Jh_maxImageCount = 2;
-    picture.Jh_defaultHeight = 64 +100;
+    picture.Jh_tipsInfo =@"这是一条可设置颜色的提示信息";
+    picture.Jh_tipsInfoColor = [UIColor redColor];
     
     [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,pwd,cell4,cell5,cell6,cell7,picture]];
     
@@ -150,7 +153,7 @@
         NSLog(@" cell4.Jh_info - %@", cell4.Jh_info);
         NSLog(@" cell5.Jh_info - %@", cell5.Jh_info);
         NSLog(@" cell6.Jh_info - %@", cell6.Jh_info);
-        NSLog(@" 选择图片类 - Jh_selectImageArr: %@ ",cell6.Jh_selectImageArr);
+        NSLog(@" 选择图片类 - Jh_selectImageArr: %@ ",cell7.Jh_selectImageArr);
         
         // 这里只是简单描述校验逻辑，可根据自身需求封装数据校验逻辑
         [JhFormHandler Jh_checkFormNullDataWithWithDatas:weakSelf.Jh_formModelArr success:^{

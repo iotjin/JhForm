@@ -68,8 +68,10 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
+    
     //标题固定top
-    self.titleLabel.frame = CGRectMake(Jh_Margin_left, Jh_EdgeMargin, Jh_SCRREN_WIDTH - 2*Jh_EdgeMargin, Jh_TitleHeight);
+    CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
+    self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, Jh_SCRREN_WIDTH - 2*Jh_EdgeMargin, Jh_TitleHeight);
     
     /********************************* 底部加线 ********************************/
     

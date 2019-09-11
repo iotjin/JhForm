@@ -25,6 +25,8 @@
 /** 图片背景View */
 @property (nonatomic, strong) UIView *BottomImageBgView;
 
+@property (nonatomic, strong) UILabel *tipsLabel;
+
 @end
 
 @implementation JhFormSelectImageCell
@@ -40,7 +42,18 @@
     // Configure the view for the selected state
 }
 
-
+-(UILabel *)tipsLabel{
+    if (!_tipsLabel) {
+        
+        _tipsLabel =[[UILabel alloc]init];
+        _tipsLabel.font = [UIFont systemFontOfSize:13];
+        _tipsLabel.textColor = [UIColor colorWithRed:119/255.0 green:119/255.0 blue:119/255.0 alpha:1/1.0];
+        _tipsLabel.numberOfLines = 0;
+        [self.contentView addSubview:_tipsLabel];
+ 
+    }
+    return _tipsLabel;
+}
 
 -(UIView *)line1{
     if (!_line1) {
@@ -57,7 +70,6 @@
         
         _BottomImageBgView = [[UIView alloc]init];
         _BottomImageBgView.backgroundColor = [UIColor clearColor];
-        
         [self.contentView addSubview:_BottomImageBgView];
         
         [_BottomImageBgView addSubview:self.onePhotoView];
@@ -98,7 +110,6 @@
         _onePhotoView.spacing =3;
         _onePhotoView.delegate = self;
         _onePhotoView.addImageName = Jh_AddIcon;
-        
     }
     return _onePhotoView;
 }
@@ -171,6 +182,14 @@
         self.backgroundColor = data.Jh_cellBgColor;
     }
     
+    if (data.Jh_tipsInfo.length) {
+        self.tipsLabel.text = data.Jh_tipsInfo;
+        if (data.Jh_tipsInfoColor) {
+            self.tipsLabel.textColor = data.Jh_tipsInfoColor;
+        }
+    }
+   
+    
 }
 
 
@@ -178,7 +197,8 @@
     [super layoutSubviews];
     
     //标题固定top
-    self.titleLabel.frame = CGRectMake(Jh_Margin_left, Jh_EdgeMargin, Jh_SCRREN_WIDTH - 2*Jh_EdgeMargin, Jh_TitleHeight);
+    CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
+    self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, Jh_SCRREN_WIDTH - 2*Jh_EdgeMargin, Jh_TitleHeight);
     
     /********************************* 底部加线 ********************************/
     
@@ -187,6 +207,10 @@
     /********************************* 底部加线 ********************************/
     
     self.BottomImageBgView.frame = CGRectMake(0, CGRectGetMaxY(_line1.frame)+10, Jh_SCRREN_WIDTH, self.bounds.size.height - CGRectGetMaxY(_line1.frame)-20);
+
+    if (_data.Jh_tipsInfo.length) {
+        self.tipsLabel.frame = CGRectMake(Jh_Margin_left, self.bounds.size.height-25, Jh_SCRREN_WIDTH-Jh_Margin_left*2, 15);
+    }
     
     
 }

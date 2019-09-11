@@ -23,6 +23,12 @@
 }
 
 
++ (CGFloat)Jh_stingAutoHeightWithString:(NSString *)string
+                                  Width:(CGFloat)width
+                                   Font:(NSInteger)font {
+    CGSize size = [string boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin| NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:font]} context:nil].size;
+    return size.height;
+}
 
 
 @end

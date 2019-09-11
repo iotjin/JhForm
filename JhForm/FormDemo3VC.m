@@ -8,6 +8,10 @@
 
 #import "FormDemo3VC.h"
 
+
+#define JhColor(r, g, b)     [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+#define JhRandomColor JhColor(arc4random_uniform(255), arc4random_uniform(255), arc4random_uniform(255))
+
 @interface FormDemo3VC ()
 
 @property (nonatomic, strong) JhFormCellModel *pwd;
@@ -57,8 +61,24 @@
     _pwd3 = JhFormCellModel_AddPwdInputCell(@"确认密码:", @"", YES);
     _pwd3.Jh_placeholder = @"请确认密码";
     
+    JhFormCellModel *cell1 = JhFormCellModel_AddPwdInputCell(@"密码", @"", YES);
+    cell1.Jh_placeholder =@"请输入16位数字、字母组合";
+    cell1.Jh_maxInputLength = 16;
+    cell1.Jh_intputCellRightViewWidth = 60; //右侧自定义view 可添加显示密码按钮
+    cell1.Jh_intputCellRightViewBlock = ^(UIView * _Nonnull RightView) {
+        RightView.backgroundColor =JhRandomColor;
+    };
     
-    [cellModelArr addObjectsFromArray: @[_pwd,_pwd2,_pwd3]];
+
+    JhFormCellModel *pwd4 = JhFormCellModel_AddPwdInputCell(@"可换行的密码密码密码密码", @"", NO);
+    pwd4.Jh_titleMultiLineShow = YES;
+    pwd4.Jh_placeholder = @"请输入密码";
+    
+    JhFormCellModel *pwd5 = JhFormCellModel_AddPwdInputCell(@"", @"", YES);
+    pwd5.Jh_placeholder = @"请输入密码";
+    
+    
+    [cellModelArr addObjectsFromArray: @[_pwd,_pwd2,cell1,_pwd3,pwd4,pwd5]];
     
     JhFormSectionModel *section0 = JhSectionModel_Add(cellModelArr);
     [self.Jh_formModelArr addObject:section0];
