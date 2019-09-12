@@ -91,7 +91,7 @@
 
 + (CGFloat)heightWithCellModelData:(JhFormCellModel *)data{
     
-    CGFloat width = data.Jh_title.length ? (data.Jh_titleWidth + 2*Jh_EdgeMargin + 30+3) : (2*Jh_Margin_left+3);
+    CGFloat width = data.Jh_title.length ? (data.Jh_titleWidth + 2*Jh_EdgeMargin + 30) : (2*Jh_Margin_left+3);
     
     CGFloat infoHeight = [data.Jh_info sizeWithFontSize:Jh_InfoFont maxSize:CGSizeMake(Jh_SCRREN_WIDTH - width, MAXFLOAT)].height;
     

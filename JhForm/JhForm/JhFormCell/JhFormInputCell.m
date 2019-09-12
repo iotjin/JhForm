@@ -156,7 +156,7 @@
     if (!data.Jh_title.length) {
         width = (data.Jh_intputCellRightViewWidth>0) ? (2*Jh_Margin_left+data.Jh_intputCellRightViewWidth+3) : (2*Jh_Margin_left+3);
     }else{
-        width = (data.Jh_intputCellRightViewWidth>0) ? (data.Jh_titleWidth + 3*Jh_EdgeMargin+data.Jh_intputCellRightViewWidth+3) : (data.Jh_titleWidth + 3*Jh_EdgeMargin+3);
+        width = (data.Jh_intputCellRightViewWidth>0) ? (data.Jh_titleWidth + 3*Jh_EdgeMargin+data.Jh_intputCellRightViewWidth) : (data.Jh_titleWidth + 3*Jh_EdgeMargin);
     }
     CGFloat infoHeight = [data.Jh_info sizeWithFontSize:Jh_InfoFont maxSize:CGSizeMake(Jh_SCRREN_WIDTH -width, MAXFLOAT)].height;
     return MAX(data.Jh_defaultHeight, infoHeight + 2*Jh_EdgeMargin);

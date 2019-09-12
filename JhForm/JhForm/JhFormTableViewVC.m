@@ -209,9 +209,11 @@
     CGFloat LeftTitleWidth = self.Jh_leftTitleWidth ? self.Jh_leftTitleWidth :Jh_TitleWidth;
     self.Jh_leftTitleHiddenRedStar==YES ? (cellModel.Jh_titleShowType =JhTitleShowTypeOnlyTitle):(cellModel.Jh_titleShowType =JhTitleShowTypeRedStarFront);
     
+    NSString *cell_id = [NSString stringWithFormat:@"Cell%ld%ld", (long)[indexPath section], (long)[indexPath row]];//以indexPath来唯一确定cell
+    
         // 表单条目类别判断
         if (cellModel.Jh_cellType == JhFormCellTypeTextViewInput) {
-            static NSString *cell_id = @"textViewInput_cell_id";
+//            static NSString *cell_id = @"textViewInput_cell_id";
             JhFormTextViewInputCell *cell = [tableView textViewInputCellWithId:cell_id];
             cell.data = cellModel;
             cell.data.Jh_titleWidth = LeftTitleWidth;
@@ -221,14 +223,14 @@
             return cell;
             
         }else if (cellModel.Jh_cellType == JhFormCellTypeSelect) {
-            static NSString *cell_id = @"select_cell_id";
+//            static NSString *cell_id = @"select_cell_id";
             JhFormSelectCell *cell = [tableView selectCellWithId:cell_id];
             cell.data = cellModel;
             cell.data.Jh_titleWidth = LeftTitleWidth;
             return cell;
             
         }else if (cellModel.Jh_cellType == JhFormCellTypeCustumRight) {
-            static NSString *cell_id = @"custumRight_cell_id";
+//            static NSString *cell_id = @"custumRight_cell_id";
             JhFormCustumRightCell *cell = [tableView CustumRightCellWithId:cell_id];
             cell.data = cellModel;
             cell.data.Jh_titleWidth = LeftTitleWidth;
@@ -238,7 +240,7 @@
             
             return cell;
         }else if (cellModel.Jh_cellType == JhFormCellTypeCustumBottom) {
-            static NSString *cell_id = @"custumBottom_cell_id";
+//            static NSString *cell_id = @"custumBottom_cell_id";
             JhFormCustumBottomCell *cell = [tableView CustumBottomCellWithId:cell_id];
             cell.data = cellModel;
             cell.data.Jh_titleWidth = LeftTitleWidth;
@@ -247,7 +249,7 @@
             }
             return cell;
         }else if (cellModel.Jh_cellType == JhFormCellTypeSelectImage) {
-            static NSString *cell_id = @"SelectImage_cell_id";
+//            static NSString *cell_id = @"SelectImage_cell_id";
             JhFormSelectImageCell *cell = [tableView SelectImageCellWithId:cell_id];
             cell.data = cellModel;
             cell.data.Jh_titleWidth = LeftTitleWidth;
@@ -257,21 +259,21 @@
             return cell;
         }
         else if (cellModel.Jh_cellType == JhFormCellTypeRightSwitchBtn) {
-            static NSString *cell_id = @"SwitchBtn_cell_id";
+//            static NSString *cell_id = @"SwitchBtn_cell_id";
             JhFormSwitchBtnCell *cell = [tableView SwitchBtnCellWithId:cell_id];
             cell.data = cellModel;
             cell.data.Jh_titleWidth = LeftTitleWidth;
             return cell;
         }
         else if (cellModel.Jh_cellType == JhFormCellTypeCenterTextCell) {
-            static NSString *cell_id = @"CenterText_cell_id";
+//            static NSString *cell_id = @"CenterText_cell_id";
             JhFormCenterTextCell *cell = [tableView CenterTextWithId:cell_id];
             cell.data = cellModel;
             cell.data.Jh_titleWidth = LeftTitleWidth;
             return cell;
         }
         else if (cellModel.Jh_cellType == JhFormCellTypePwdInput) {
-            static NSString *cell_id = @"PwdInput_cell_id";
+//            static NSString *cell_id = @"PwdInput_cell_id";
             JhFormPwdCell *cell = [tableView PwdCellWithId:cell_id];
             cell.data = cellModel;
             cell.data.Jh_titleWidth = LeftTitleWidth;
@@ -281,7 +283,7 @@
             return cell;
         }
         else if (cellModel.Jh_cellType == JhFormCellTypeCustumALLView) {
-            static NSString *cell_id = @"CustumALLView_cell_id";
+//            static NSString *cell_id = @"CustumALLView_cell_id";
             JhFormCustumALLViewCell *cell = [tableView CustumALLCellWithId:cell_id];
             cell.data = cellModel;
             cell.data.Jh_titleWidth = LeftTitleWidth;
@@ -292,7 +294,7 @@
         }
         else {
             
-            static NSString *cell_id = @"input_cell_id";
+//            static NSString *cell_id = @"input_cell_id";
             JhFormInputCell *cell = [tableView inputCellWithId:cell_id];
             cell.data = cellModel;
             cell.data.Jh_titleWidth = LeftTitleWidth;
