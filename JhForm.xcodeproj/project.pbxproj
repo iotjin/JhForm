@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E92D45332341F7470089F1C0 /* FormDemo7VC.m in Sources */ = {isa = PBXBuildFile; fileRef = E92D45322341F7470089F1C0 /* FormDemo7VC.m */; };
+		E92D45352341FA5C0089F1C0 /* form_demo_07.png in Resources */ = {isa = PBXBuildFile; fileRef = E92D45342341FA5C0089F1C0 /* form_demo_07.png */; };
 		E93159EF22BC84DD00074665 /* FormDemo3VC.m in Sources */ = {isa = PBXBuildFile; fileRef = E93159EE22BC84DD00074665 /* FormDemo3VC.m */; };
 		E93159F222BC85A800074665 /* JhFormPwdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E93159F022BC85A800074665 /* JhFormPwdCell.m */; };
 		E93D3F7F21E58DD9003DC702 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3F7E21E58DD9003DC702 /* AppDelegate.m */; };
@@ -151,6 +152,7 @@
 /* Begin PBXFileReference section */
 		E92D45312341F7470089F1C0 /* FormDemo7VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormDemo7VC.h; sourceTree = "<group>"; };
 		E92D45322341F7470089F1C0 /* FormDemo7VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FormDemo7VC.m; sourceTree = "<group>"; };
+		E92D45342341FA5C0089F1C0 /* form_demo_07.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_demo_07.png; sourceTree = "<group>"; };
 		E93159ED22BC84DD00074665 /* FormDemo3VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormDemo3VC.h; sourceTree = "<group>"; };
 		E93159EE22BC84DD00074665 /* FormDemo3VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FormDemo3VC.m; sourceTree = "<group>"; };
 		E93159F022BC85A800074665 /* JhFormPwdCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormPwdCell.m; sourceTree = "<group>"; };
@@ -666,6 +668,7 @@
 				E9B3E1EA2328B650001F1780 /* form_demo_05.png */,
 				E9B3E1FB2328DF86001F1780 /* form_demo_06.gif */,
 				E9B3E1FA2328DF86001F1780 /* form_demo_06.png */,
+				E92D45342341FA5C0089F1C0 /* form_demo_07.png */,
 			);
 			path = screenshots;
 			sourceTree = "<group>";
@@ -903,6 +906,7 @@
 				E9B3E1ED2328B650001F1780 /* form_demo_01_1.png in Resources */,
 				E9B3E1EF2328B650001F1780 /* form_demo_03_1.png in Resources */,
 				E9B3E1F12328B650001F1780 /* form_demo_04.png in Resources */,
+				E92D45352341FA5C0089F1C0 /* form_demo_07.png in Resources */,
 				E9B3E1FC2328DF86001F1780 /* form_demo_06.png in Resources */,
 				E9B3E1F42328B650001F1780 /* form_demo_05.png in Resources */,
 			);
