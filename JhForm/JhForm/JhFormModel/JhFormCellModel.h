@@ -319,6 +319,31 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 
 @property (nonatomic, strong) UIColor *Jh_cellBgColor;
 
+/** 设置为YES ,隐藏右侧箭头(只对选择样式cell起作用) */
+@property (nonatomic, assign) BOOL  Jh_hiddenArrow;
+
+/** 隐藏左侧小红星(把JhTitleShowType 改为默认) */
+@property (nonatomic, assign) BOOL Jh_titleHiddenRedStar;
+
+/** 设置为YES ,整个cell不可编辑 */
+@property (nonatomic, assign) BOOL  Jh_Cell_NoEdit;
+
+@property (nonatomic, strong) UIColor *Jh_titleTextColor;
+
+
+
+
+/** 添加一些备用字段 */
+@property (nonatomic, strong) NSString  *Jh_temp1;
+@property (nonatomic, strong) NSString  *Jh_temp2;
+@property (nonatomic, strong) NSString  *Jh_temp3;
+@property (nonatomic, strong) NSString  *Jh_temp4;
+@property (nonatomic, assign) BOOL       Jh_temp5;
+@property (nonatomic, assign) BOOL       Jh_temp6;
+@property (nonatomic, assign) NSInteger  Jh_temp7;
+@property (nonatomic, assign) NSInteger  Jh_temp8;
+@property (nonatomic, strong) NSMutableArray *Jh_tempMArr;
+
 
 
 @end

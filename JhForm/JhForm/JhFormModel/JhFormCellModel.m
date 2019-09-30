@@ -281,7 +281,9 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
         }
     }
     
-    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:title attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:Jh_TitleFont], NSForegroundColorAttributeName:Jh_titleColor}];
+     UIColor *TitleColor = self.Jh_titleTextColor ? self.Jh_titleTextColor : Jh_titleColor;
+       
+       NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:title attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:Jh_TitleFont], NSForegroundColorAttributeName:TitleColor}];
     
     if (required) {
         if (self.Jh_titleShowType == JhTitleShowTypeRedStarFront) {
@@ -457,6 +459,21 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
 -(void)setJh_titleShowType:(JhTitleShowType)Jh_titleShowType{
     _Jh_titleShowType = Jh_titleShowType;
     
+    [self jh_setAttributedTitleWithRequired:self.Jh_required title:self.Jh_title cellModelType:self.Jh_cellType];
+}
+
+-(void)setJh_titleHiddenRedStar:(BOOL)Jh_titleHiddenRedStar{
+    _Jh_titleHiddenRedStar = Jh_titleHiddenRedStar;
+    
+    if (Jh_titleHiddenRedStar ==YES) {
+        self.Jh_titleShowType = JhTitleShowTypeOnlyTitle;
+    }else{
+        self.Jh_titleShowType = JhTitleShowTypeRedStarFront;
+    }
+}
+
+-(void)setJh_titleTextColor:(UIColor *)Jh_titleTextColor{
+    _Jh_titleTextColor = Jh_titleTextColor;
     [self jh_setAttributedTitleWithRequired:self.Jh_required title:self.Jh_title cellModelType:self.Jh_cellType];
 }
 

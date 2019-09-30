@@ -51,6 +51,18 @@
         self.backgroundColor = data.Jh_cellBgColor;
     }
     
+    if (data.Jh_hiddenArrow ==YES) {
+        self.accessoryType = UITableViewCellAccessoryNone;
+    }else{
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    
+    if (data.Jh_Cell_NoEdit == YES) {
+        self.userInteractionEnabled = NO;
+    }else{
+        self.userInteractionEnabled = YES;
+    }
+
 }
 
 - (void)layoutSubviews {

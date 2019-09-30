@@ -35,7 +35,11 @@
     if(data.Jh_cellBgColor){
        self.backgroundColor = data.Jh_cellBgColor;
     }
-    
+    if (data.Jh_Cell_NoEdit == YES) {
+        self.userInteractionEnabled = NO;
+    }else{
+        self.userInteractionEnabled = YES;
+    }
     
 }
 

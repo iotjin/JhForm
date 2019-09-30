@@ -88,7 +88,12 @@
     if(data.Jh_intputCellRightViewWidth>0 && data.Jh_intputCellRightViewBlock){
         data.Jh_intputCellRightViewBlock(self.RightView);
     }
-    
+    if (data.Jh_Cell_NoEdit == YES) {
+        self.userInteractionEnabled = NO;
+    }else{
+        self.userInteractionEnabled = YES;
+    }
+
 }
 
 - (void)layoutSubviews {

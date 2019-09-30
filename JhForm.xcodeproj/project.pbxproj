@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E92D45332341F7470089F1C0 /* FormDemo7VC.m in Sources */ = {isa = PBXBuildFile; fileRef = E92D45322341F7470089F1C0 /* FormDemo7VC.m */; };
 		E93159EF22BC84DD00074665 /* FormDemo3VC.m in Sources */ = {isa = PBXBuildFile; fileRef = E93159EE22BC84DD00074665 /* FormDemo3VC.m */; };
 		E93159F222BC85A800074665 /* JhFormPwdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E93159F022BC85A800074665 /* JhFormPwdCell.m */; };
 		E93D3F7F21E58DD9003DC702 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3F7E21E58DD9003DC702 /* AppDelegate.m */; };
@@ -148,6 +149,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E92D45312341F7470089F1C0 /* FormDemo7VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormDemo7VC.h; sourceTree = "<group>"; };
+		E92D45322341F7470089F1C0 /* FormDemo7VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FormDemo7VC.m; sourceTree = "<group>"; };
 		E93159ED22BC84DD00074665 /* FormDemo3VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormDemo3VC.h; sourceTree = "<group>"; };
 		E93159EE22BC84DD00074665 /* FormDemo3VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FormDemo3VC.m; sourceTree = "<group>"; };
 		E93159F022BC85A800074665 /* JhFormPwdCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormPwdCell.m; sourceTree = "<group>"; };
@@ -455,6 +458,8 @@
 				E94A67532327434A00174144 /* FormDemo5VC.m */,
 				E94A67552327435900174144 /* FormDemo6VC.h */,
 				E94A67562327435900174144 /* FormDemo6VC.m */,
+				E92D45312341F7470089F1C0 /* FormDemo7VC.h */,
+				E92D45322341F7470089F1C0 /* FormDemo7VC.m */,
 				E9FD21622238D36B002C67E6 /* JhBaseHeaderView.h */,
 				E9FD21602238D36A002C67E6 /* JhBaseHeaderView.m */,
 				E9FD21612238D36A002C67E6 /* JhBaseHeaderView.xib */,
@@ -933,6 +938,7 @@
 				E93D408821E58E52003DC702 /* UIImage+HXExtension.m in Sources */,
 				E9FD215D2238D2A3002C67E6 /* MASViewConstraint.m in Sources */,
 				E93D40A621E58E5D003DC702 /* YYDiskCache.m in Sources */,
+				E92D45332341F7470089F1C0 /* FormDemo7VC.m in Sources */,
 				E9FD215B2238D2A3002C67E6 /* View+MASAdditions.m in Sources */,
 				E93D407D21E58E52003DC702 /* HXPhotoModel.m in Sources */,
 				E93D409821E58E52003DC702 /* UILabel+HXExtension.m in Sources */,

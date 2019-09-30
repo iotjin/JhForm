@@ -35,17 +35,7 @@
     __weak typeof(self) weakSelf = self;
     
     self.Jh_navRightTitle = @"隐藏红星";
-    self.JhClickNavRightItemBlock = ^{
-        if ([weakSelf.Jh_navRightTitle isEqualToString:@"隐藏红星"]) {
-            weakSelf.Jh_leftTitleHiddenRedStar =YES;
-            weakSelf.Jh_navRightTitle = @"显示红星";
-        }else{
-            weakSelf.Jh_leftTitleHiddenRedStar =NO;
-            weakSelf.Jh_navRightTitle = @"隐藏红星";
-        }
-        [weakSelf.Jh_formTableView reloadData];
-    };
-    
+
     
     NSMutableArray *cellModelArr = [NSMutableArray array];
     
@@ -112,7 +102,26 @@
     [self.Jh_formModelArr addObject:section0];
     
     
-    
+    self.JhClickNavRightItemBlock = ^{
+             if ([weakSelf.Jh_navRightTitle isEqualToString:@"隐藏红星"]) {
+                 weakSelf.Jh_leftTitleHiddenRedStar =YES;
+                 weakSelf.Jh_navRightTitle = @"显示红星";
+             }else{
+                 weakSelf.Jh_leftTitleHiddenRedStar =NO;
+                 weakSelf.Jh_navRightTitle = @"隐藏红星";
+                 
+                  cell0.Jh_titleHiddenRedStar = NO;
+                  cell1.Jh_titleHiddenRedStar = NO;
+                  cell2.Jh_titleHiddenRedStar = NO;
+                  cell3.Jh_titleHiddenRedStar = NO;
+                  cell4.Jh_titleHiddenRedStar = NO;
+                  cell_tip.Jh_titleHiddenRedStar = NO;
+                  cell5.Jh_titleHiddenRedStar = NO;
+                  cell6.Jh_titleHiddenRedStar = NO;
+                 
+             }
+             [weakSelf.Jh_formTableView reloadData];
+         };
     
     
 };

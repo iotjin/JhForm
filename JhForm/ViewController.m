@@ -13,6 +13,7 @@
 #import "FormDemo4VC.h"
 #import "FormDemo5VC.h"
 #import "FormDemo6VC.h"
+#import "FormDemo7VC.h"
 
 @interface ViewController ()
 @end
@@ -79,8 +80,14 @@
         [weakSelf.navigationController pushViewController:jumpVC animated:YES];
     };
     
+    JhFormCellModel *cell7 = JhFormCellModel_AddRightArrowCell(@"设置标题颜色", nil);
+    cell7.Jh_CellSelectCellBlock = ^(JhFormCellModel *cellModel) {
+        FormDemo7VC *jumpVC= [[FormDemo7VC alloc]init];
+        [weakSelf.navigationController pushViewController:jumpVC animated:YES];
+    };
     
-    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,cell5,cell6]];
+    
+    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,cell5,cell6,cell7]];
     
     JhFormSectionModel *section0= JhSectionModel_Add(cellArr0);
     

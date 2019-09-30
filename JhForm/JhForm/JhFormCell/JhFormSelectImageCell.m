@@ -188,7 +188,12 @@
             self.tipsLabel.textColor = data.Jh_tipsInfoColor;
         }
     }
-   
+    if (data.Jh_Cell_NoEdit == YES) {
+        self.userInteractionEnabled = NO;
+    }else{
+        self.userInteractionEnabled = YES;
+    }
+
     
 }
 
