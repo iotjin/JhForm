@@ -64,3 +64,11 @@ CGFloat const Jh_LengHintFont = 12;
 // 表单添加图标
 NSString *const Jh_AddIcon = @"JhForm.bundle/compose_picture_add";
 
+// 表单选择cell右侧箭头
+NSString *const Jh_SelectCell_rightArrow = @"JhForm.bundle/Jh_SelectCell_rightArrow";
+
+
+
+
+JhThemeType const Jh_ThemeType = JhThemeTypeLight;
+

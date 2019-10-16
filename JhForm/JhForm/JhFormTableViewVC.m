@@ -43,7 +43,11 @@
 -(void)setJh_navRightTitle:(NSString *)Jh_navRightTitle{
     _Jh_navRightTitle = Jh_navRightTitle;
     if (Jh_navRightTitle.length) {
-        UIBarButtonItem *rightItem = [UIBarButtonItem itemWithTitle:Jh_navRightTitle titleColor:[UIColor blackColor] target:self action:@selector(ClickRightItem)];
+        UIColor *color = [UIColor blackColor];
+        if (@available(iOS 13.0, *)) {
+            color = [UIColor labelColor];
+        }
+        UIBarButtonItem *rightItem = [UIBarButtonItem itemWithTitle:Jh_navRightTitle titleColor:color target:self action:@selector(ClickRightItem)];
         self.navigationItem.rightBarButtonItems =  @[rightItem];
     }
 }
@@ -165,6 +169,45 @@
 
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self configureIOS13Theme];
+        }
+    }
+
+}
+
+
+- (void)configureIOS13Theme{
+    
+    if (@available(iOS 13.0, *)) {
+        
+        switch (Jh_ThemeType) {
+            case JhThemeTypeAuto:
+            {
+                if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+                    self.view.backgroundColor = [UIColor systemBackgroundColor];
+                }else {
+                    self.view.backgroundColor = BaseBgWhiteColor;
+                }
+                self.Jh_formTableView .backgroundColor = [UIColor systemBackgroundColor];
+            }
+                break;
+            case JhThemeTypeLight:
+            {
+                self.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
+            }
+                break;
+            default:
+                break;
+        }
+    }
+    
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -175,6 +218,8 @@
     
     [self configureIOS11];
     
+    
+    [self configureIOS13Theme];
     
 }
 
@@ -211,6 +256,15 @@
     if(self.Jh_leftTitleHiddenRedStar ==YES){
         cellModel.Jh_titleHiddenRedStar = YES;
     }
+    
+    if(self.Jh_useLightTheme ==YES){
+        if(@available(iOS 13.0,*)){
+            self.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
+            
+        }
+    }
+    
+    
      // 表单条目类别判断
        if (cellModel.Jh_cellType == JhFormCellTypeTextViewInput) {
            NSString *cell_id = [NSString stringWithFormat:@"textViewInput_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
@@ -231,7 +285,6 @@
            
        }else if (cellModel.Jh_cellType == JhFormCellTypeCustumRight) {
            NSString *cell_id = [NSString stringWithFormat:@"custumRight_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
-           NSLog(@" cell_id %@ ",cell_id);
            JhFormCustumRightCell *cell = [tableView CustumRightCellWithId:cell_id];
            cell.data = cellModel;
            cell.data.Jh_titleWidth = LeftTitleWidth;
@@ -389,6 +442,15 @@
     JhFormCellModel *cellModel = sectionModel.Jh_sectionModelArr[indexPath.row];
     cellModel.Jh_info = text;
 }
+
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    // 不用系统自带的箭头
+//    if (cell.accessoryType == UITableViewCellAccessoryDisclosureIndicator) {
+//        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:Jh_SelectCell_rightArrow]];
+//        cell.accessoryView = imageView;
+//    }
+//}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

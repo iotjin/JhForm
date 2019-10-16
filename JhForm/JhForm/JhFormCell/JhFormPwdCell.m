@@ -53,6 +53,8 @@
         [self.contentView addSubview:textField];
         self.Jh_pwdTextField =textField;
         
+        [self configureIOS13Theme];
+        
     }
     return _Jh_pwdTextField;
 }
@@ -192,7 +194,33 @@
     }
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self configureIOS13Theme];
+        }
+    }
 
+}
+
+
+
+-(void)configureIOS13Theme{
+    
+     if (@available(iOS 13.0, *)) {
+         
+         if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+             self.Jh_pwdTextField.textColor = UIColor.labelColor;
+         }else {
+             self.Jh_pwdTextField.textColor = Jh_rightTextViewTextColor;
+         }
+     }
+    
+    
+}
 
 
 

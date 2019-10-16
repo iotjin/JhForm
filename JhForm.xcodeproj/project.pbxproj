@@ -86,6 +86,7 @@
 		E94A67572327435900174144 /* FormDemo6VC.m in Sources */ = {isa = PBXBuildFile; fileRef = E94A67562327435900174144 /* FormDemo6VC.m */; };
 		E96B13EC22EAA7D100DDF432 /* FormDemo4VC.m in Sources */ = {isa = PBXBuildFile; fileRef = E96B13EB22EAA7D100DDF432 /* FormDemo4VC.m */; };
 		E96B13EF22EAAB4F00DDF432 /* JhFormCustumALLViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E96B13EE22EAAB4F00DDF432 /* JhFormCustumALLViewCell.m */; };
+		E99C32762356BEE800A91F1C /* UIViewController+JhPresentStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = E99C32752356BEE800A91F1C /* UIViewController+JhPresentStyle.m */; };
 		E9B3E1ED2328B650001F1780 /* form_demo_01_1.png in Resources */ = {isa = PBXBuildFile; fileRef = E9B3E1E32328B64F001F1780 /* form_demo_01_1.png */; };
 		E9B3E1EE2328B650001F1780 /* form_demo_03.gif in Resources */ = {isa = PBXBuildFile; fileRef = E9B3E1E42328B64F001F1780 /* form_demo_03.gif */; };
 		E9B3E1EF2328B650001F1780 /* form_demo_03_1.png in Resources */ = {isa = PBXBuildFile; fileRef = E9B3E1E52328B64F001F1780 /* form_demo_03_1.png */; };
@@ -309,6 +310,8 @@
 		E96B13EB22EAA7D100DDF432 /* FormDemo4VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FormDemo4VC.m; sourceTree = "<group>"; };
 		E96B13ED22EAAB4F00DDF432 /* JhFormCustumALLViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JhFormCustumALLViewCell.h; sourceTree = "<group>"; };
 		E96B13EE22EAAB4F00DDF432 /* JhFormCustumALLViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JhFormCustumALLViewCell.m; sourceTree = "<group>"; };
+		E99C32742356BEE800A91F1C /* UIViewController+JhPresentStyle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+JhPresentStyle.h"; sourceTree = "<group>"; };
+		E99C32752356BEE800A91F1C /* UIViewController+JhPresentStyle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+JhPresentStyle.m"; sourceTree = "<group>"; };
 		E9B3E1E32328B64F001F1780 /* form_demo_01_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_demo_01_1.png; sourceTree = "<group>"; };
 		E9B3E1E42328B64F001F1780 /* form_demo_03.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = form_demo_03.gif; sourceTree = "<group>"; };
 		E9B3E1E52328B64F001F1780 /* form_demo_03_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_demo_03_1.png; sourceTree = "<group>"; };
@@ -741,6 +744,8 @@
 				E9FD21132238CF20002C67E6 /* UITextView+TextLimit.m */,
 				E947A74122446FA600BE50FC /* UIBarButtonItem+JhForm.h */,
 				E947A74222446FA600BE50FC /* UIBarButtonItem+JhForm.m */,
+				E99C32742356BEE800A91F1C /* UIViewController+JhPresentStyle.h */,
+				E99C32752356BEE800A91F1C /* UIViewController+JhPresentStyle.m */,
 			);
 			path = JhFormToolClass;
 			sourceTree = "<group>";
@@ -936,6 +941,7 @@
 				E93D407921E58E52003DC702 /* HXCollectionView.m in Sources */,
 				E93D408321E58E52003DC702 /* HXDatePhotoViewFlowLayout.m in Sources */,
 				E9FD212D2238CF20002C67E6 /* JhFormHandler.m in Sources */,
+				E99C32762356BEE800A91F1C /* UIViewController+JhPresentStyle.m in Sources */,
 				E93D407B21E58E52003DC702 /* UIFont+HXExtension.m in Sources */,
 				E93D408421E58E52003DC702 /* HXDatePhotoViewController.m in Sources */,
 				E9FD215A2238D2A3002C67E6 /* NSArray+MASAdditions.m in Sources */,

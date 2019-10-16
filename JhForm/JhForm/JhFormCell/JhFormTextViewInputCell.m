@@ -42,6 +42,8 @@
         _line1=[[UIView alloc]init];
         _line1.backgroundColor=BaselineColor;
         [self.contentView addSubview:_line1];
+        
+        [self configureIOS13Theme];
     }
     return _line1;
 }
@@ -139,6 +141,37 @@
     
     
 }
+
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self configureIOS13Theme];
+        }
+    }
+
+}
+
+
+
+-(void)configureIOS13Theme{
+    
+    if (@available(iOS 13.0, *)) {
+        if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.line1.backgroundColor = [UIColor separatorColor];
+            self.rightTextView.backgroundColor = JhColor(50, 50, 50);
+        }else {
+            self.line1.backgroundColor = BaselineColor;
+            self.rightTextView.backgroundColor = Jh_textView_BackgroundColor;
+        }
+    }
+    
+    
+}
+
 
 
 @end

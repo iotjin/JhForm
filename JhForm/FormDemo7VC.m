@@ -63,6 +63,7 @@
     [self.Jh_formModelArr addObject:section0];
     
     
+    self.Jh_useLightTheme = YES;
     
     
 }

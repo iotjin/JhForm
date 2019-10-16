@@ -60,6 +60,9 @@
         _line1=[[UIView alloc]init];
         _line1.backgroundColor=BaselineColor;
         [self.contentView addSubview:_line1];
+        
+        [self configureIOS13Theme];
+        
     }
     return _line1;
 }
@@ -215,6 +218,37 @@
 
     if (_data.Jh_tipsInfo.length) {
         self.tipsLabel.frame = CGRectMake(Jh_Margin_left, self.bounds.size.height-25, Jh_SCRREN_WIDTH-Jh_Margin_left*2, 15);
+    }
+    
+    
+}
+
+
+
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self configureIOS13Theme];
+        }
+    }
+
+}
+
+
+
+-(void)configureIOS13Theme{
+    
+    if (@available(iOS 13.0, *)) {
+        if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.line1.backgroundColor = [UIColor separatorColor];
+        }else {
+            self.line1.backgroundColor = BaselineColor;
+        }
+        
     }
     
     

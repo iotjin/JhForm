@@ -285,6 +285,22 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
        
        NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:title attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:Jh_TitleFont], NSForegroundColorAttributeName:TitleColor}];
     
+    if (@available(iOS 13.0, *)) {
+        
+        if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            if (self.Jh_titleTextColor) {
+                TitleColor = self.Jh_titleTextColor;
+            }else{
+                TitleColor = [UIColor labelColor];
+            }
+            [attributedTitle  addAttribute:NSForegroundColorAttributeName value:TitleColor range:NSMakeRange(0, title.length)];
+        }
+        else {
+            [attributedTitle  addAttribute:NSForegroundColorAttributeName value:TitleColor range:NSMakeRange(0, title.length)];
+        }
+        
+    }
+    
     if (required) {
         if (self.Jh_titleShowType == JhTitleShowTypeRedStarFront) {
             [attributedTitle addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];

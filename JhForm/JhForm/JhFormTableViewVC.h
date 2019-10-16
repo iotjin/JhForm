@@ -68,6 +68,10 @@ typedef void(^JhFormSubmitBlock)(void);
 @property (assign, nonatomic) CGFloat  Jh_leftTitleHiddenRedStar;
 
 
+/** 设置主题为light(不跟随系统设置切换 ,iOS13生效) */
+@property (assign, nonatomic) BOOL Jh_useLightTheme;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

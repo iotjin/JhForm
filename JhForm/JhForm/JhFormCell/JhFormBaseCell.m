@@ -31,6 +31,10 @@
         _titleLabel.font = [UIFont systemFontOfSize:Jh_TitleFont];
         _titleLabel.adjustsFontSizeToFitWidth = YES;
         [self.contentView addSubview:_titleLabel];
+        
+        if (@available(iOS 13.0, *)) {
+            _titleLabel.textColor = UIColor.labelColor;
+        }
     }
     return _titleLabel;
 }
@@ -51,10 +55,52 @@
         _rightTextView.showsVerticalScrollIndicator = NO;
         _rightTextView.showsHorizontalScrollIndicator = NO;
         [self.contentView addSubview:_rightTextView];
+        
+        if (@available(iOS 13.0, *)) {
+            
+            _rightTextView.placeholderTextColor = UIColor.placeholderTextColor;
+            if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+                _rightTextView.textColor = UIColor.labelColor;
+            }else {
+                _rightTextView.textColor = Jh_rightTextViewTextColor;
+            }
+        }
+               
+        
     }
     return _rightTextView;
 }
 
+
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self configureIOS13Theme];
+        }
+    }
+    
+}
+
+-(void)configureIOS13Theme{
+    
+    if (@available(iOS 13.0, *)) {
+        
+        _titleLabel.textColor = UIColor.labelColor;
+        _rightTextView.placeholderTextColor = UIColor.placeholderTextColor;
+        
+        if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            _rightTextView.textColor = UIColor.labelColor;
+        }else {
+            _rightTextView.textColor = Jh_rightTextViewTextColor;
+        }
+        
+        [self.baseTableView reloadData];
+    }
+    
+}
 
 
 @end

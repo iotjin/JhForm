@@ -38,6 +38,9 @@
         _line1=[[UIView alloc]init];
         _line1.backgroundColor=BaselineColor;
         [self.contentView addSubview:_line1];
+        
+        [self configureIOS13Theme];
+        
     }
     return _line1;
 }
@@ -48,7 +51,6 @@
         _CustumBottomView = [[UIView alloc]init];
         _CustumBottomView.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:_CustumBottomView];
-        
         
     }
     return _CustumBottomView;
@@ -87,9 +89,33 @@
     self.CustumBottomView.frame = CGRectMake(0, CGRectGetMaxY(_line1.frame)+10, Jh_SCRREN_WIDTH, self.bounds.size.height - CGRectGetMaxY(_line1.frame)-20);
     
     
-    
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if (@available(iOS 13.0, *)) {
+        
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            
+            [self configureIOS13Theme];
+        }
+    }
+
+}
+
+-(void)configureIOS13Theme{
+    
+    if (@available(iOS 13.0, *)) {
+        if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.line1.backgroundColor = [UIColor separatorColor];
+        }else {
+            self.line1.backgroundColor = BaselineColor;
+        }
+    }
+    
+    
+}
 
 @end
 

@@ -111,6 +111,10 @@ extern NSUInteger const Jh_GlobalMaxImages;
 */
 extern NSString *const Jh_AddIcon;
 
+/**
+ 表单选择cell右侧箭头
+ */
+extern NSString *const Jh_SelectCell_rightArrow;
 
 /**
  表单TextView字数提示文字大小
@@ -118,7 +122,20 @@ extern NSString *const Jh_AddIcon;
 extern CGFloat const Jh_LengHintFont;
 
 
+/**
+iOS13 生效  主题默认light
+*/
+typedef NS_ENUM(NSInteger, JhThemeType)
+{
+    JhThemeTypeLight = 0,
+    /** 跟随系统设置自动切换 */
+    JhThemeTypeAuto ,
+};
 
+/**
+iOS13 生效  主题默认light
+*/
+extern JhThemeType const Jh_ThemeType;
 
 
 
