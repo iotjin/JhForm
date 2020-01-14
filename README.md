@@ -1,8 +1,10 @@
 # JhForm
 JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 
-注:JhForm是在SWForm代码的基础上新增了几种自定义的cell,添加了一些属性和方法,改成了自己熟悉的代码风格.<br> 
-(SWForm代码地址:https://github.com/RockChanel/SWForm)
+
+
+### 特别感谢：SWForm<br> 
+[SWForm代码地址](https://github.com/RockChanel/SWForm)
 
 
 <img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_00.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01_1.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01.gif" width="208" height="404">
@@ -14,6 +16,7 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单
 
 ## 更新说明
 
+* 2020.01.14 - 优化图片动态更新 <br>
 * 2019.10.16 - 适配iOS13暗黑模式(默认跟随系统自动切换,可控制某个页面一直处于light模式) <br>
 * 2019.09.30 - 添加设置标题颜色属性,添加设置cell不可编辑的属性,添加一些备用字段,修改cell重用的逻辑<br>
 * 2019.09.12 - 修复存在多个相同类型iuputCell右侧自定义view复用的问题<br>
