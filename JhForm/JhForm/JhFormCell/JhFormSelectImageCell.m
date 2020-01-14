@@ -161,24 +161,32 @@
         self.oneManager.configuration.photoMaxNum = data.Jh_maxImageCount;
     }
     
+    if (data.Jh_noShowAddImgBtn==YES) {
+        self.onePhotoView.showAddCell = NO;
+    }
+    
     if(data.Jh_imageArr.count){
-        
-        if(data.Jh_isUseUrlShowPicture ==YES){
-            NSMutableArray *mUrlArr = @[].mutableCopy;
-            for (NSString *url in data.Jh_imageArr) {
-                HXCustomAssetModel *model =[HXCustomAssetModel assetWithNetworkImageURL:[NSURL URLWithString:url] selected:YES];
-                [mUrlArr addObject:model];
+
+        [self.oneManager clearSelectedList];
+        NSMutableArray *mUrlArr = @[].mutableCopy;
+        for (id img in data.Jh_imageArr) {
+            HXPhotoModel *model ;
+            if([img isKindOfClass:[UIImage class]]){
+                model = [HXPhotoModel photoModelWithImage:img];
             }
-            [self.oneManager addCustomAssetModel:mUrlArr];
-        }
-        if(data.Jh_isUseImgShowPicture ==YES){
-            NSMutableArray *mUrlArr = @[].mutableCopy;
-            for (UIImage *img in data.Jh_imageArr) {
-                HXCustomAssetModel *model = [HXCustomAssetModel assetWithLocalImage:img selected:YES];
-                [mUrlArr addObject:model];
+            if([img isKindOfClass:[NSString class]]){
+                model = [HXPhotoModel photoModelWithImageURL:[NSURL URLWithString:img]];
             }
-            [self.oneManager addCustomAssetModel:mUrlArr];
+            if([img isKindOfClass:[NSURL class]]){
+                model = [HXPhotoModel photoModelWithImageURL:img];
+            }
+            if ([img isKindOfClass:[HXPhotoModel class]]) {
+                model =img;
+            }
+            [mUrlArr addObject:model];
         }
+        [self.oneManager addModelArray:mUrlArr];
+        [self.onePhotoView refreshView];
     }
     
     if(data.Jh_cellBgColor){

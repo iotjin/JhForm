@@ -44,6 +44,7 @@ CGFloat const Jh_DefaultCellHeight = 44.0f;
 CGFloat const Jh_DefaultTextViewCellHeight = 150.0f; //(默认输入50字的高度)
 CGFloat const Jh_DefaultCustumBottomViewCellHeight = 264.0f;
 CGFloat const Jh_DefaultSelectImageCellHeight = 264;
+CGFloat const Jh_DefaultSelectImageCellHeight_oneRow = 164; //选择图片只有一行的高度
 
 
 // 表单输入字数限制

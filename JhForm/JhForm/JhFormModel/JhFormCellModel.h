@@ -256,10 +256,8 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
  */
 @property (nonatomic, strong, nullable) NSArray *Jh_imageArr;
 
-/** 是否通过URL(字符串格式)展示图片 必须设置YES使用 */
-@property (nonatomic, assign) BOOL Jh_isUseUrlShowPicture;
-/** 是否通过UIImage格式展示图片    必须设置YES使用  */
-@property (nonatomic, assign) BOOL Jh_isUseImgShowPicture;
+/** 是否显示添加图片按钮  (默认显示NO)  */
+@property (nonatomic, assign) BOOL Jh_noShowAddImgBtn;
 
 
 /**

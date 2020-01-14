@@ -136,7 +136,11 @@
     picture.Jh_tipsInfo =@"这是一条可设置颜色的提示信息";
     picture.Jh_tipsInfoColor = [UIColor redColor];
     
-    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,pwd,cell4,cell5,cell6,cell7,picture]];
+    JhFormCellModel *urlPicture = JhFormCellModel_AddImageCell(@"加载网络图片:", NO);
+    urlPicture.Jh_noShowAddImgBtn=YES; urlPicture.Jh_defaultHeight = 164;
+    urlPicture.Jh_imageArr =@[@"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_00.png",@"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_05.png",@"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.png"];
+    
+    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,pwd,cell4,cell5,cell6,cell7,picture,urlPicture]];
     
     JhFormSectionModel *section0 = JhSectionModel_Add(cellArr0);
     
@@ -154,6 +158,7 @@
         NSLog(@" cell5.Jh_info - %@", cell5.Jh_info);
         NSLog(@" cell6.Jh_info - %@", cell6.Jh_info);
         NSLog(@" 选择图片类 - Jh_selectImageArr: %@ ",cell7.Jh_selectImageArr);
+        NSLog(@" 选择图片类 - urlPicture- Jh_selectImageArr: %@ ",urlPicture.Jh_selectImageArr);
         
         // 这里只是简单描述校验逻辑，可根据自身需求封装数据校验逻辑
         [JhFormHandler Jh_checkFormNullDataWithWithDatas:weakSelf.Jh_formModelArr success:^{

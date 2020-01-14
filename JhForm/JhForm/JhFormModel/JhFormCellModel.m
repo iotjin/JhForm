@@ -466,7 +466,7 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
     _Jh_maxImageCount =Jh_maxImageCount;
     if (self.Jh_cellType ==JhFormCellTypeSelectImage) {
         if (Jh_maxImageCount<5) {
-            self.Jh_defaultHeight = 164;
+            self.Jh_defaultHeight = Jh_DefaultSelectImageCellHeight_oneRow;
         }
     }
 }
