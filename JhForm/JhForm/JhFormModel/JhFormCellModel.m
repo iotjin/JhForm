@@ -218,9 +218,6 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
     else if(cellType ==JhFormCellTypeCustumBottom){
         self.Jh_defaultHeight = Jh_DefaultCustumBottomViewCellHeight;
     }
-    else if(cellType ==JhFormCellTypeSelectImage){
-        self.Jh_defaultHeight = Jh_DefaultSelectImageCellHeight;
-    }
     else {
         self.Jh_defaultHeight = Jh_DefaultCellHeight;
     }
@@ -462,14 +459,14 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
     }
 }
 
--(void)setJh_maxImageCount:(NSUInteger)Jh_maxImageCount{
-    _Jh_maxImageCount =Jh_maxImageCount;
-    if (self.Jh_cellType ==JhFormCellTypeSelectImage) {
-        if (Jh_maxImageCount<5) {
-            self.Jh_defaultHeight = Jh_DefaultSelectImageCellHeight_oneRow;
-        }
-    }
-}
+//-(void)setJh_maxImageCount:(NSUInteger)Jh_maxImageCount{
+//    _Jh_maxImageCount =Jh_maxImageCount;
+//    if (self.Jh_cellType ==JhFormCellTypeSelectImage) {
+//        if (Jh_maxImageCount<5) {
+//            self.Jh_defaultHeight = Jh_DefaultSelectImageCellHeight_oneRow;
+//        }
+//    }
+//}
 
 
 -(void)setJh_titleShowType:(JhTitleShowType)Jh_titleShowType{

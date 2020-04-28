@@ -25,6 +25,8 @@ typedef void(^JhImageSelectBlock)(NSArray *imageArr);
 
 @property (nonatomic, copy) JhImageSelectBlock JhImageSelectBlock;
 
++ (CGFloat)heightWithCellModelData:(JhFormCellModel *)data;
+
 @end
 
 

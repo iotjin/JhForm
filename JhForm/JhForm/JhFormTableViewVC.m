@@ -189,11 +189,12 @@
             case JhThemeTypeAuto:
             {
                 if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-                    self.view.backgroundColor = [UIColor systemBackgroundColor];
+                    self.view.backgroundColor = BaseBgWhiteColor_dark;
+                    self.Jh_formTableView.backgroundColor = BaseBgWhiteColor_dark;
                 }else {
                     self.view.backgroundColor = BaseBgWhiteColor;
+                    self.Jh_formTableView.backgroundColor = BaseBgWhiteColor;
                 }
-                self.Jh_formTableView .backgroundColor = [UIColor systemBackgroundColor];
             }
                 break;
             case JhThemeTypeLight:
@@ -372,6 +373,9 @@
     }
     else if (cellModel.Jh_cellType  == JhFormCellTypeCustumALLView || cellModel.Jh_cellType  == JhFormCellTypePwdInput) {
         return cellModel.Jh_defaultHeight;
+    }
+    else if (cellModel.Jh_cellType  == JhFormCellTypeSelectImage) {
+        return [JhFormSelectImageCell heightWithCellModelData:cellModel];
     }
     else {
         return [JhFormInputCell heightWithCellModelData:cellModel];

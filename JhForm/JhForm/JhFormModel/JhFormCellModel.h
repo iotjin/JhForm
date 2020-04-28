@@ -16,6 +16,7 @@
 #define BaseThemeColor JhColor(46, 150, 213)
 /** 背景色 */
 #define BaseBgWhiteColor JhColor(248, 248, 248)
+#define BaseBgWhiteColor_dark JhColor(10, 10, 10)
 /** line背景色 */
 #define BaselineColor JhColor(230, 230, 230)
 
@@ -258,7 +259,8 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 
 /** 是否显示添加图片按钮  (默认显示NO)  */
 @property (nonatomic, assign) BOOL Jh_noShowAddImgBtn;
-
+/** 是否显示图片右上角的删除按钮  (默认显示  NO)  */
+@property (nonatomic, assign) BOOL Jh_hideDeleteButton;
 
 /**
  images 图片数组中类型筛选出为UIImage的数组子集，以实现图片上传筛选

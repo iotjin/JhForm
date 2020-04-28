@@ -17,10 +17,6 @@
 
 typedef void (^ viewControllerDidDoneBlock)(NSArray<HXPhotoModel *> *allList, NSArray<HXPhotoModel *> *photoList, NSArray<HXPhotoModel *> *videoList, BOOL original, UIViewController *viewController, HXPhotoManager *manager);
 
-typedef void (^ viewControllerDidDoneAllImageBlock)(NSArray<UIImage *> *imageList, BOOL original, UIViewController *viewController, HXPhotoManager *manager);
-
-typedef void (^ viewControllerDidDoneAllAssetBlock)(NSArray<PHAsset *> *allAsset, NSArray<PHAsset *> *photoAssets, NSArray<PHAsset *> *videoAssets, BOOL original, UIViewController *viewController, HXPhotoManager *manager);
-
 typedef void (^ viewControllerDidCancelBlock)(UIViewController *viewController, HXPhotoManager *manager);
 
 typedef void (^ getAllAlbumListBlock)(NSMutableArray<HXAlbumModel *> *albums);
@@ -81,6 +77,17 @@ typedef NS_ENUM(NSUInteger, HXPhotoManagerVideoSelectedType) {
  @param assetArray 模型数组
  */
 - (void)addCustomAssetModel:(NSArray<HXCustomAssetModel *> *)assetArray;
+
+/**
+ 获取已选照片数组的照片总大小
+ 
+ @param completion 获取完成
+ */
+- (void)requestPhotosBytesWithCompletion:(void (^)(NSString *totalBytes, NSUInteger totalDataLengths))completion;
+
+/// 已选照片数据的总大小
+@property (assign, nonatomic) NSUInteger *selectPhotoTotalDataLengths;
+@property (strong, nonatomic) NSOperationQueue *dataOperationQueue;
 
 /**
  建议使用 addCustomAssetModel: 此方法
@@ -369,8 +376,6 @@ typedef NS_ENUM(NSUInteger, HXPhotoManagerVideoSelectedType) {
 
 #pragma mark - < 辅助属性 >
 @property (assign, nonatomic) HXPhotoManagerVideoSelectedType videoSelectedType;
-@property (strong, nonatomic) UIView *tempCameraPreviewView;
-@property (strong, nonatomic) UIView *tempCameraView;
 
 @property (assign, nonatomic) BOOL selectPhotoing;
 
@@ -380,8 +385,6 @@ typedef NS_ENUM(NSUInteger, HXPhotoManagerVideoSelectedType) {
 @property (copy, nonatomic) getSelectAlbumBlock selectAlbumBlock;
 @property (copy, nonatomic) getAllAlbumListBlock allAlbumListBlock;
 @property (copy, nonatomic) getPhotoListBlock photoListBlock;
-
-typedef void (^ getPhotoListBlock)(NSArray *allList , NSArray *previewList,NSArray *photoList ,NSArray *videoList ,NSArray *dateList , HXPhotoModel *firstSelectModel, HXAlbumModel *albumModel);
 
 @property (copy, nonatomic) NSArray *tempAllList;
 @property (copy, nonatomic) NSArray *tempPreviewList;

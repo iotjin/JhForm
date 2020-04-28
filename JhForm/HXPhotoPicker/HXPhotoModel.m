@@ -11,32 +11,170 @@
 #import "HXPhotoManager.h"
 #import "UIImage+HXExtension.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import "HXPhotoCommon.h" 
 
 #if __has_include(<SDWebImage/UIImageView+WebCache.h>)
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImage/SDWebImageManager.h>
 #elif __has_include("UIImageView+WebCache.h")
 #import "UIImageView+WebCache.h"
+#import "SDWebImageManager.h"
 #endif
 
 #if __has_include(<YYWebImage/YYWebImage.h>)
 #import <YYWebImage/YYWebImage.h>
 #elif __has_include("YYWebImage.h")
 #import "YYWebImage.h"
+#elif __has_include(<YYKit/YYKit.h>)
+#import <YYKit/YYKit.h>
+#elif __has_include("YYKit.h")
+#import "YYKit.h"
 #endif
 
 @implementation HXPhotoModel
-
-- (NSURL *)fileURL {
-    if (self.type == HXPhotoModelMediaTypeCameraVideo && !_fileURL) {
-        _fileURL = self.videoURL;
+- (NSUInteger)assetByte {
+    if (_assetByte > 0) {
+        return _assetByte;
     }
-    if (self.type != HXPhotoModelMediaTypeCameraPhoto) {
-        if (self.asset && !_fileURL) {
-            _fileURL = [self.asset valueForKey:@"mainFileURL"];
+    NSUInteger byte = 0;
+    if (self.asset) {
+        if (self.type == HXPhotoModelMediaTypeLivePhoto) {
+            NSArray *resources = [PHAssetResource assetResourcesForAsset:self.asset];
+            for (PHAssetResource *resource in resources) {
+                byte += [[resource valueForKey:@"fileSize"] unsignedIntegerValue];
+            }
+        }else {
+            byte = [[[[PHAssetResource assetResourcesForAsset:self.asset] firstObject] valueForKey:@"fileSize"] unsignedIntegerValue];
+        }
+    }else {
+        if (self.type == HXPhotoModelMediaTypeCameraPhoto) {
+            if (self.networkPhotoUrl || self.networkThumbURL) {
+                byte = 0;
+            }else {
+                NSData *imageData;
+                if (UIImagePNGRepresentation(self.thumbPhoto)) {
+                    //返回为png图像。
+                    imageData = UIImagePNGRepresentation(self.thumbPhoto);
+                }else {
+                    //返回为JPEG图像。
+                    imageData = UIImageJPEGRepresentation(self.thumbPhoto, 0.7);
+                }
+                byte = imageData.length;
+            }
+        }else if (self.type == HXPhotoModelMediaTypeCameraVideo) {
+            if (self.cameraVideoType == HXPhotoModelMediaTypeCameraVideoTypeNetWork) {
+                byte = 0;
+            }else {
+                AVURLAsset* urlAsset = [AVURLAsset assetWithURL:self.videoURL];
+                NSNumber *size;
+                [urlAsset.URL getResourceValue:&size forKey:NSURLFileSizeKey error:nil];
+                byte = size.unsignedIntegerValue;
+            }
         }
     }
-    return _fileURL;
+    return byte;
 }
+- (HXPhotoModelFormat)photoFormat {
+    if (self.subType == HXPhotoModelMediaSubTypePhoto) {
+        if (self.asset) {
+            if ([[self.asset valueForKey:@"filename"] hasSuffix:@"PNG"]) {
+                return HXPhotoModelFormatPNG;
+            }
+            if ([[self.asset valueForKey:@"filename"] hasSuffix:@"JPG"]) {
+                return HXPhotoModelFormatJPG;
+            }
+            if ([[self.asset valueForKey:@"filename"] hasSuffix:@"HEIC"]) {
+                return HXPhotoModelFormatHEIC;
+            }
+            if ([[self.asset valueForKey:@"filename"] hasSuffix:@"GIF"]) {
+                return HXPhotoModelFormatGIF;
+            }
+        }else {
+            if (self.thumbPhoto) {
+                if (UIImagePNGRepresentation(self.thumbPhoto)) {
+                    return HXPhotoModelFormatPNG;
+                }else {
+                    return HXPhotoModelFormatJPG;
+                }
+            }
+            if (self.networkPhotoUrl) {
+                if ([[self.networkPhotoUrl.absoluteString lowercaseString] hasSuffix:@"png"]) {
+                    return HXPhotoModelFormatPNG;
+                }
+                if ([[self.networkPhotoUrl.absoluteString lowercaseString] hasSuffix:@"jpg"]) {
+                    return HXPhotoModelFormatJPG;
+                }
+                if ([[self.networkPhotoUrl.absoluteString lowercaseString] hasSuffix:@"gif"]) {
+                    return HXPhotoModelFormatGIF;
+                }
+            }
+        }
+    }
+    return HXPhotoModelFormatUnknown;
+}
+- (BOOL)isEqualPhotoModel:(HXPhotoModel *)photoModel {
+    if (!photoModel) {
+        return NO;
+    }
+    
+    if (self.localIdentifier &&
+        photoModel.localIdentifier &&
+        [self.localIdentifier isEqualToString:photoModel.localIdentifier]) {
+        return YES;
+    }
+    if (self.thumbPhoto && photoModel.thumbPhoto &&
+        self.thumbPhoto == photoModel.thumbPhoto) {
+        return YES;
+    }
+    if (self.previewPhoto && photoModel.previewPhoto &&
+        self.previewPhoto == photoModel.previewPhoto) {
+        return YES;
+    }
+    if (self.thumbPhoto && photoModel.previewPhoto &&
+        self.thumbPhoto == photoModel.previewPhoto) {
+        return YES;
+    }
+    if (self.previewPhoto && photoModel.thumbPhoto &&
+        self.previewPhoto == photoModel.thumbPhoto) {
+        return YES;
+    }
+    if (self.videoURL && photoModel.videoURL &&
+        [self.videoURL.absoluteString isEqualToString:photoModel.videoURL.absoluteString]) {
+        return YES;
+    }
+    if (self.networkPhotoUrl && photoModel.networkPhotoUrl &&
+        [self.networkPhotoUrl.absoluteString isEqualToString:photoModel.networkPhotoUrl.absoluteString]) {
+        return YES;
+    }
+    return NO;
+}
+
+
+/// 重写 isEqual 方法 会因为 isEqualPhotoModel 这个在选择照片的时候导致一点点卡顿所以屏蔽
+/// 想要判断两个model是否相容请在需要的时候调用 isEqualPhotoModel 方法来判断
+//- (BOOL)isEqual:(id)object {
+//    if (self == object) {
+//        return YES;
+//    }
+//    if (![self isKindOfClass:[HXPhotoModel class]]) {
+//        return NO;
+//    }
+//    return [self isEqualPhotoModel:object];
+//}
+
+
+/// 避免造成误解去掉此属性
+//- (NSURL *)fileURL {
+//    if (self.type == HXPhotoModelMediaTypeCameraVideo && !_fileURL) {
+//        _fileURL = self.videoURL;
+//    }
+//    if (self.type != HXPhotoModelMediaTypeCameraPhoto) {
+//        if (self.asset && !_fileURL) {
+//            _fileURL = [self.asset valueForKey:@"mainFileURL"];
+//        }
+//    }
+//    return _fileURL;
+//}
 
 - (NSDate *)creationDate {
     if (self.type == HXPhotoModelMediaTypeCameraPhoto || self.type == HXPhotoModelMediaTypeCameraVideo) {
@@ -58,17 +196,7 @@
         return [self.asset valueForKey:@"modificationDate"];
 //    }
     return _modificationDate;
-}
-
-- (NSData *)locationData {
-//    if (!_locationData) {
-        if (self.asset) {
-            return [self.asset valueForKey:@"locationData"];
-        }
-//    }
-    return _locationData;
-}
-
+} 
 - (CLLocation *)location {
     if (!_location) {
         if (self.asset) {
@@ -85,10 +213,21 @@
     return _localIdentifier;
 }
 
+- (NSTimeInterval)videoDuration {
+    if (!_videoDuration) {
+        if (self.asset) {
+            return self.asset.duration;
+        }
+    }
+    return _videoDuration;
+}
+
 + (instancetype)photoModelWithPHAsset:(PHAsset *)asset {
     return [[self alloc] initWithPHAsset:asset];
 }
-
++ (instancetype)videoCoverWithPHAsset:(PHAsset *)asset {
+    return [[self alloc] initVideoCoverWithPHAsset:asset];
+}
 + (instancetype)photoModelWithImage:(UIImage *)image {
     return [[self alloc] initWithImage:image];
 }
@@ -108,6 +247,33 @@
 + (instancetype)photoModelWithImageURL:(NSURL *)imageURL thumbURL:(NSURL *)thumbURL {
     return [[self alloc] initWithImageURL:imageURL thumbURL:thumbURL];
 }
+
++ (instancetype)photoModelWithNetworkVideoURL:(NSURL *)videoURL videoCoverURL:(NSURL *)videoCoverURL videoDuration:(NSTimeInterval)videoDuration {
+    return [[self alloc] initWithNetworkVideoURL:videoURL videoCoverURL:videoCoverURL videoDuration:videoDuration];
+}
+
+- (instancetype)initWithNetworkVideoURL:(NSURL *)videoURL videoCoverURL:(NSURL *)videoCoverURL videoDuration:(NSTimeInterval)videoDuration {
+    if (self = [super init]) {
+        self.type = HXPhotoModelMediaTypeCameraVideo;
+        self.subType = HXPhotoModelMediaSubTypeVideo;
+        self.cameraVideoType = HXPhotoModelMediaTypeCameraVideoTypeNetWork;
+        if (videoDuration <= 0) {
+            videoDuration = 1;
+        }
+        NSString *time = [HXPhotoTools transformVideoTimeToString:videoDuration];
+        self.videoDuration = videoDuration;
+        self.videoURL = videoURL;
+        self.videoTime = time;
+        self.thumbPhoto = [UIImage hx_imageNamed:@"hx_qz_photolist_picture_fail"];
+        self.previewPhoto = self.thumbPhoto;
+        self.imageSize = self.thumbPhoto.size;
+        self.networkPhotoUrl = videoCoverURL;
+        self.networkThumbURL = videoCoverURL;
+        self.loadOriginalImage = YES;
+    }
+    return self;
+}
+
 - (instancetype)initWithImageURL:(NSURL *)imageURL thumbURL:(NSURL *)thumbURL  {
     if (self = [super init]) {
         self.type = HXPhotoModelMediaTypeCameraPhoto;
@@ -122,6 +288,11 @@
         }
         self.networkPhotoUrl = imageURL;
         self.networkThumbURL = thumbURL;
+        if (imageURL.absoluteString.length > 3 && [[imageURL.absoluteString substringFromIndex:imageURL.absoluteString.length - 3] isEqualToString:@"gif"]) {
+            self.cameraPhotoType = HXPhotoModelMediaTypeCameraPhotoTypeNetWorkGif;
+        }else {
+            self.cameraPhotoType = HXPhotoModelMediaTypeCameraPhotoTypeNetWork;
+        } 
         if (imageURL == thumbURL ||
             [imageURL.absoluteString isEqualToString:thumbURL.absoluteString]) {
             self.loadOriginalImage = YES;
@@ -130,7 +301,7 @@
     return self;
 }
 
-- (instancetype)initWithPHAsset:(PHAsset *)asset{
+- (instancetype)initWithPHAsset:(PHAsset *)asset {
     if (self = [super init]) {
         if (asset.mediaType == PHAssetMediaTypeImage) {
             self.subType = HXPhotoModelMediaSubTypePhoto;
@@ -138,10 +309,18 @@
         }else if (asset.mediaType == PHAssetMediaTypeVideo) {
             self.subType = HXPhotoModelMediaSubTypeVideo;
             self.type = HXPhotoModelMediaTypeVideo;
-            self.videoDuration = asset.duration;
-            NSString *time = [HXPhotoTools getNewTimeFromDurationSecond:self.videoDuration];
+            self.videoDuration = [[NSString stringWithFormat:@"%.0f",asset.duration] floatValue];
+            NSString *time = [HXPhotoTools transformVideoTimeToString:self.videoDuration];
             self.videoTime = time;
         }
+        self.asset = asset;
+    }
+    return self;
+}
+- (instancetype)initVideoCoverWithPHAsset:(PHAsset *)asset {
+    if (self = [super init]) {
+        self.subType = HXPhotoModelMediaSubTypePhoto;
+        self.type = HXPhotoModelMediaTypePhoto;
         self.asset = asset;
     }
     return self;
@@ -159,12 +338,13 @@
     if (self = [super init]) {
         self.type = HXPhotoModelMediaTypeCameraVideo;
         self.subType = HXPhotoModelMediaSubTypeVideo;
+        self.cameraVideoType = HXPhotoModelMediaTypeCameraVideoTypeLocal;
         self.videoURL = videoURL;
         if (videoTime <= 0) {
             videoTime = 1;
         }
         UIImage  *image = [UIImage hx_thumbnailImageForVideo:videoURL atTime:0.1f];
-        NSString *time = [HXPhotoTools getNewTimeFromDurationSecond:videoTime];
+        NSString *time = [HXPhotoTools transformVideoTimeToString:videoTime];
         self.videoDuration = videoTime;
         self.videoURL = videoURL;
         self.videoTime = time;
@@ -179,6 +359,7 @@
     self = [super init];
     if (self) {
         self.type = HXPhotoModelMediaTypeCameraPhoto;
+        self.cameraPhotoType = HXPhotoModelMediaTypeCameraPhotoTypeLocal;
         self.subType = HXPhotoModelMediaSubTypePhoto;
         if (image.imageOrientation != UIImageOrientationUp) {
             image = [image hx_normalizedImage];
@@ -200,15 +381,18 @@
                 _imageSize = CGSizeMake(self.asset.pixelWidth, self.asset.pixelHeight);
             }
         }else {
-            _imageSize = self.thumbPhoto.size;
+            if (CGSizeEqualToSize(self.thumbPhoto.size, CGSizeZero)) {
+                _imageSize = CGSizeMake(200, 200);
+            }else {
+                _imageSize = self.thumbPhoto.size;
+            }
         }
     }
     return _imageSize;
 }
 - (NSString *)videoTime {
-    if (!_videoTime) {
-        NSString *timeLength = [NSString stringWithFormat:@"%0.0f",self.asset.duration];
-        _videoTime = [HXPhotoTools getNewTimeFromDurationSecond:timeLength.integerValue];
+    if (!_videoTime) { 
+        _videoTime = [HXPhotoTools transformVideoTimeToString:self.videoDuration];
     }
     return _videoTime;
 }
@@ -216,24 +400,20 @@
 {
     if (_endImageSize.width == 0 || _endImageSize.height == 0) {
         CGFloat width = [UIScreen mainScreen].bounds.size.width;
-        CGFloat height = [UIScreen mainScreen].bounds.size.height - hxNavigationBarHeight;
+        CGFloat height = [UIScreen mainScreen].bounds.size.height;
         CGFloat imgWidth = self.imageSize.width;
         CGFloat imgHeight = self.imageSize.height;
         CGFloat w;
         CGFloat h;
-        imgHeight = width / imgWidth * imgHeight;
-        if (imgHeight > height) {
+
+        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+        if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft) {
             w = height / self.imageSize.height * imgWidth;
             h = height;
         }else {
+            imgHeight = width / imgWidth * imgHeight;
             w = width;
             h = imgHeight;
-        }
-        if (w == NAN) {
-            w = 0;
-        }
-        if (h == NAN) {
-            h = 0;
         }
         _endImageSize = CGSizeMake(w, h);
     }
@@ -241,52 +421,19 @@
 }
 - (CGSize)previewViewSize {
     if (_previewViewSize.width == 0 || _previewViewSize.height == 0) {
-        CGFloat width = [UIScreen mainScreen].bounds.size.width;
+        _previewViewSize = self.endImageSize;
         CGFloat height = [UIScreen mainScreen].bounds.size.height;
-        CGFloat imgWidth = self.imageSize.width;
-        CGFloat imgHeight = self.imageSize.height;
-        CGFloat w;
-        CGFloat h;
-        
-        if (imgWidth > width) {
-            h = width / self.imageSize.width * imgHeight;
-            w = width;
+        if ([HXPhotoCommon photoCommon].isHapticTouch) {
+            if (_previewViewSize.height > height * 0.6f) {
+                _previewViewSize.height = height * 0.6f;
+            }
         }else {
-            w = width;
-            h = width / imgWidth * imgHeight;
+            if (_previewViewSize.height > height + 20) {
+                _previewViewSize.height = height;
+            }
         }
-        if (h > height + 20) {
-            h = height;
-        }
-        _previewViewSize = CGSizeMake(w, h);
     }
     return _previewViewSize;
-}
-- (CGSize)endDateImageSize {
-    if (_endDateImageSize.width == 0 || _endDateImageSize.height == 0) {
-        CGFloat width = [UIScreen mainScreen].bounds.size.width;
-        CGFloat height = [UIScreen mainScreen].bounds.size.height;
-//        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-//        if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft){
-//            if (HX_IS_IPhoneX_All) {
-//                height = [UIScreen mainScreen].bounds.size.height - hxTopMargin - 21;
-//            }
-//        }
-        CGFloat imgWidth = self.imageSize.width;
-        CGFloat imgHeight = self.imageSize.height;
-        CGFloat w;
-        CGFloat h;
-        imgHeight = width / imgWidth * imgHeight;
-        if (imgHeight > height) {
-            w = height / self.imageSize.height * imgWidth;
-            h = height;
-        }else {
-            w = width;
-            h = imgHeight;
-        }
-        _endDateImageSize = CGSizeMake(w, h);
-    }
-    return _endDateImageSize;
 }
 - (CGSize)requestSize {
     if (_requestSize.width == 0 || _requestSize.height == 0) {
@@ -318,7 +465,6 @@
 }
 - (NSString *)barTitle {
     if (!_barTitle) {
-        NSString *language = [NSLocale preferredLanguages].firstObject;
         if ([self.creationDate hx_isToday]) {
             _barTitle = [NSBundle hx_localizedStringForKey:@"今天"];
         }else if ([self.creationDate hx_isYesterday]) {
@@ -326,40 +472,68 @@
         }else if ([self.creationDate hx_isSameWeek]) {
             _barTitle = [self.creationDate hx_getNowWeekday];
         }else if ([self.creationDate hx_isThisYear]) {
-            if ([language hasPrefix:@"en"]) {
-                // 英文
-                _barTitle = [NSString stringWithFormat:@"%@ %@",[self.creationDate hx_dateStringWithFormat:@"MMM dd"],[self.creationDate hx_getNowWeekday]];
-            } else if ([language hasPrefix:@"zh"]) {
-                // 中文
-                _barTitle = [NSString stringWithFormat:@"%@ %@",[self.creationDate hx_dateStringWithFormat:@"MM月dd日"],[self.creationDate hx_getNowWeekday]];
-                
-            }else if ([language hasPrefix:@"ko"]) {
-                // 韩语
-                _barTitle = [NSString stringWithFormat:@"%@ %@",[self.creationDate hx_dateStringWithFormat:@"MM월dd일"],[self.creationDate hx_getNowWeekday]];
-            }else if ([language hasPrefix:@"ja"]) {
-                // 日语
-                _barTitle = [NSString stringWithFormat:@"%@ %@",[self.creationDate hx_dateStringWithFormat:@"MM月dd日"],[self.creationDate hx_getNowWeekday]];
-            }else {
-                // 英文
-                _barTitle = [NSString stringWithFormat:@"%@ %@",[self.creationDate hx_dateStringWithFormat:@"MMM dd"],[self.creationDate hx_getNowWeekday]];
+            HXPhotoLanguageType type = [HXPhotoCommon photoCommon].languageType;
+            switch (type) {
+                case HXPhotoLanguageTypeSc :
+                case HXPhotoLanguageTypeTc :
+                case HXPhotoLanguageTypeJa : {
+                    // 中 / 日 / 繁
+                    _barTitle = [NSString stringWithFormat:@"%@ %@",[self.creationDate hx_dateStringWithFormat:@"MM月dd日"],[self.creationDate hx_getNowWeekday]];
+                } break;
+                case HXPhotoLanguageTypeKo : {
+                    // 韩语
+                    _barTitle = [NSString stringWithFormat:@"%@ %@",[self.creationDate hx_dateStringWithFormat:@"MM월dd일"],[self.creationDate hx_getNowWeekday]];
+                } break;
+                case HXPhotoLanguageTypeEn : {
+                    // 英文
+                    _barTitle = [NSString stringWithFormat:@"%@ %@",[self.creationDate hx_dateStringWithFormat:@"MMM dd"],[self.creationDate hx_getNowWeekday]];
+                } break;
+                default : {
+                    NSString *language = [NSLocale preferredLanguages].firstObject;
+                    if ([language hasPrefix:@"zh"] ||
+                               [language hasPrefix:@"ja"]) {
+                        // 中 / 日 / 繁
+                        _barTitle = [NSString stringWithFormat:@"%@ %@",[self.creationDate hx_dateStringWithFormat:@"MM月dd日"],[self.creationDate hx_getNowWeekday]];
+                    }else if ([language hasPrefix:@"ko"]) {
+                        // 韩语
+                        _barTitle = [NSString stringWithFormat:@"%@ %@",[self.creationDate hx_dateStringWithFormat:@"MM월dd일"],[self.creationDate hx_getNowWeekday]];
+                    } else {
+                        // 英文
+                        _barTitle = [NSString stringWithFormat:@"%@ %@",[self.creationDate hx_dateStringWithFormat:@"MMM dd"],[self.creationDate hx_getNowWeekday]];
+                    }
+                }break;
             }
         }else {
-            if ([language hasPrefix:@"en"]) {
-                // 英文
-                _barTitle = [self.creationDate hx_dateStringWithFormat:@"MMM dd, yyyy"];
-            } else if ([language hasPrefix:@"zh"]) {
-                // 中文
-                _barTitle = [self.creationDate hx_dateStringWithFormat:@"yyyy年MM月dd日"];
-                
-            }else if ([language hasPrefix:@"ko"]) {
-                // 韩语
-                _barTitle = [self.creationDate hx_dateStringWithFormat:@"yyyy년MM월dd일"];
-            }else if ([language hasPrefix:@"ja"]) {
-                // 日语
-                _barTitle = [self.creationDate hx_dateStringWithFormat:@"yyyy年MM月dd日"];
-            }else {
-                // 其他
-                _barTitle = [self.creationDate hx_dateStringWithFormat:@"MMM dd, yyyy"];
+            HXPhotoLanguageType type = [HXPhotoCommon photoCommon].languageType;
+            switch (type) {
+                case HXPhotoLanguageTypeSc :
+                case HXPhotoLanguageTypeTc :
+                case HXPhotoLanguageTypeJa : {
+                    // 中 / 日 / 繁
+                    _barTitle = [self.creationDate hx_dateStringWithFormat:@"yyyy年MM月dd日"];
+                } break;
+                case HXPhotoLanguageTypeKo : {
+                    // 韩语
+                    _barTitle = [self.creationDate hx_dateStringWithFormat:@"yyyy년MM월dd일"];
+                } break;
+                case HXPhotoLanguageTypeEn : {
+                    // 英文
+                    _barTitle = [self.creationDate hx_dateStringWithFormat:@"MMM dd, yyyy"];
+                } break;
+                default : {
+                    NSString *language = [NSLocale preferredLanguages].firstObject;
+                    if ([language hasPrefix:@"zh"] ||
+                        [language hasPrefix:@"ja"]) {
+                        // 中 / 日 / 繁
+                        _barTitle = [self.creationDate hx_dateStringWithFormat:@"yyyy年MM月dd日"];
+                    }else if ([language hasPrefix:@"ko"]) {
+                        // 韩语
+                        _barTitle = [self.creationDate hx_dateStringWithFormat:@"yyyy년MM월dd일"];
+                    } else {
+                        // 英文
+                        _barTitle = [self.creationDate hx_dateStringWithFormat:@"MMM dd, yyyy"];
+                    }
+                }break;
             }
         }
     }
@@ -397,12 +571,12 @@
         self.networkThumbURL = [aDecoder decodeObjectForKey:@"networkThumbURL"];
         self.creationDate = [aDecoder decodeObjectForKey:@"creationDate"];
         self.modificationDate = [aDecoder decodeObjectForKey:@"modificationDate"];
-        self.locationData = [aDecoder decodeObjectForKey:@"locationData"];
         self.location = [aDecoder decodeObjectForKey:@"location"];
         self.videoTime = [aDecoder decodeObjectForKey:@"videoTime"];
         self.selectIndexStr = [aDecoder decodeObjectForKey:@"videoTime"];
         self.cameraIdentifier = [aDecoder decodeObjectForKey:@"cameraIdentifier"];
-        self.fileURL = [aDecoder decodeObjectForKey:@"fileURL"];
+        self.cameraPhotoType = [aDecoder decodeIntegerForKey:@"cameraPhotoType"];
+        self.cameraVideoType = [aDecoder decodeIntegerForKey:@"cameraVideoType"];
     }
     return self;
 }
@@ -416,41 +590,48 @@
     [aCoder encodeObject:self.localIdentifier forKey:@"localIdentifier"];
     [aCoder encodeInteger:self.type forKey:@"type"];
     [aCoder encodeInteger:self.subType forKey:@"subType"];
+    [aCoder encodeInteger:self.cameraPhotoType forKey:@"cameraPhotoType"];
+    [aCoder encodeInteger:self.cameraVideoType forKey:@"cameraVideoType"];
     [aCoder encodeFloat:self.videoDuration forKey:@"videoDuration"];
     [aCoder encodeBool:self.selected forKey:@"selected"];
     [aCoder encodeObject:self.videoURL forKey:@"videoURL"];
     [aCoder encodeObject:self.networkPhotoUrl forKey:@"networkPhotoUrl"];
     [aCoder encodeObject:self.networkThumbURL forKey:@"networkThumbURL"];
     [aCoder encodeObject:self.creationDate forKey:@"creationDate"];
-    [aCoder encodeObject:self.modificationDate forKey:@"modificationDate"];
-    [aCoder encodeObject:self.locationData forKey:@"locationData"];
+    [aCoder encodeObject:self.modificationDate forKey:@"modificationDate"]; 
     [aCoder encodeObject:self.location forKey:@"location"];
     [aCoder encodeObject:self.videoTime forKey:@"videoTime"];
     [aCoder encodeObject:self.selectIndexStr forKey:@"selectIndexStr"];
     [aCoder encodeObject:self.cameraIdentifier forKey:@"cameraIdentifier"];
-    [aCoder encodeObject:self.fileURL forKey:@"fileURL"];
+//    [aCoder encodeObject:self.fileURL forKey:@"fileURL"];
 }
 #pragma mark - < Request >
 
-+ (id)requestImageWithURL:(NSURL *)url progress:(void (^) (NSInteger receivedSize, NSInteger expectedSize))progress completion:(void (^) (UIImage * _Nullable image, NSURL * _Nonnull url, NSError * _Nullable error))completion {
-#if __has_include(<YYWebImage/YYWebImage.h>) || __has_include("YYWebImage.h")
++ (id)requestImageWithURL:(NSURL *)url progress:(void (^ _Nullable)(NSInteger, NSInteger))progress completion:(void (^ _Nullable)(UIImage * _Nullable, NSURL * _Nullable, NSError * _Nullable))completion {
+#if HasYYKitOrWebImage
     YYWebImageOperation *operation = [[YYWebImageManager sharedManager] requestImageWithURL:url options:0 progress:progress transform:nil completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, YYWebImageFromType from, YYWebImageStage stage, NSError * _Nullable error) {
         if (completion) {
             completion(image, url, error);
         }
     }];
     return operation;
-#elif __has_include(<SDWebImage/UIImageView+WebCache.h>) || __has_include("UIImageView+WebCache.h")
-    SDWebImageDownloadToken *token = [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:model.networkPhotoUrl options:0 progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
+#elif HasSDWebImage
+    SDWebImageCombinedOperation *operation = [[SDWebImageManager sharedManager] loadImageWithURL:url options:0 progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
         if (completion) {
             completion(image, url, error);
         }
     }];
-    return token;
+    return operation;
 #endif
     return nil;
 }
-+ (PHImageRequestID)requestThumbImageWithPHAsset:(PHAsset *)asset size:(CGSize)size completion:(void (^)(UIImage *image, PHAsset *asset))completion; {
++ (PHImageRequestID)requestThumbImageWithPHAsset:(PHAsset *)asset size:(CGSize)size completion:(void (^)(UIImage * _Nullable, PHAsset * _Nullable))completion {
+    if (!asset) {
+        if (completion) {
+            completion(nil, nil);
+        }
+        return 0;
+    }
     PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
     option.resizeMode = PHImageRequestOptionsResizeModeFast;
     return [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:size contentMode:PHImageContentModeAspectFill options:option resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
@@ -464,6 +645,19 @@
 }
 - (PHImageRequestID)requestThumbImageCompletion:(HXModelImageSuccessBlock)completion {
     return [self requestThumbImageWithSize:self.requestSize completion:completion];
+}
+- (PHImageRequestID)highQualityRequestThumbImageWithSize:(CGSize)size completion:(HXModelImageSuccessBlock)completion {
+    PHImageRequestOptions *option = [self imageHighQualityRequestOptions];
+    option.resizeMode = PHImageRequestOptionsResizeModeFast;
+    HXWeakSelf
+    return [self requestImageWithOptions:option targetSize:size resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        BOOL downloadFinined = (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey]);
+        if (downloadFinined && result) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion) completion(result, weakSelf, info);
+            });
+        }
+    }];
 }
 
 - (PHImageRequestID)requestThumbImageWithSize:(CGSize)size completion:(HXModelImageSuccessBlock)completion {
@@ -491,11 +685,14 @@
         }
     }];
 }
-- (PHImageRequestOptions *)imageHighQualityRequestOptions {
+- (PHImageRequestOptions *)imageRequestOptionsWithDeliveryMode:(PHImageRequestOptionsDeliveryMode)deliveryMode {
     PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
-    option.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    option.deliveryMode = deliveryMode;
     option.resizeMode = PHImageRequestOptionsResizeModeFast;
     return option;
+}
+- (PHImageRequestOptions *)imageHighQualityRequestOptions {
+    return [self imageRequestOptionsWithDeliveryMode:PHImageRequestOptionsDeliveryModeHighQualityFormat];
 }
 - (PHImageRequestID)requestPreviewImageWithSize:(CGSize)size
                              startRequestICloud:(HXModelStartRequestICloud)startRequestICloud
@@ -518,6 +715,8 @@
             } completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, NSError * _Nullable error) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (image) {
+                        if (!weakSelf.thumbPhoto) weakSelf.thumbPhoto = image;
+                        if (!weakSelf.previewPhoto) weakSelf.previewPhoto = image;
                         if (success) success(image, weakSelf, nil);
                     }else {
                         if (failed) failed(nil, weakSelf);
@@ -527,7 +726,7 @@
         }
         return 0;
     }
-    [[PHImageManager defaultManager] cancelImageRequest:self.iCloudRequestID];
+//    [[PHImageManager defaultManager] cancelImageRequest:self.iCloudRequestID];
     
     PHImageRequestOptions *option = [self imageHighQualityRequestOptions];
     option.networkAccessAllowed = NO;
@@ -535,6 +734,8 @@
     PHImageRequestID requestId = [self requestImageWithOptions:option targetSize:size resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
         [weakSelf requestDataWithResult:result info:info size:size resultClass:[UIImage class] orientation:0 audioMix:nil startRequestICloud:startRequestICloud progressHandler:progressHandler success:^(id result, NSDictionary *info, UIImageOrientation orientation, AVAudioMix *audioMix) {
             if (success) {
+                weakSelf.thumbPhoto = result;
+                weakSelf.previewPhoto = result;
                 success(result, weakSelf, info);
             }
         } failed:failed];
@@ -547,7 +748,7 @@
                              progressHandler:(HXModelProgressHandler)progressHandler
                                      success:(HXModelLivePhotoSuccessBlock)success
                                       failed:(HXModelFailedBlock)failed {
-    [[PHImageManager defaultManager] cancelImageRequest:self.iCloudRequestID];
+//    [[PHImageManager defaultManager] cancelImageRequest:self.iCloudRequestID];
     
     PHLivePhotoRequestOptions *option = [[PHLivePhotoRequestOptions alloc] init];
     option.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
@@ -573,7 +774,7 @@
     
     HXWeakSelf
     if (self.type == HXPhotoModelMediaTypeCameraPhoto && self.networkPhotoUrl) {
-#if __has_include(<YYWebImage/YYWebImage.h>) || __has_include("YYWebImage.h")
+#if HasYYKitOrWebImage
         [[YYWebImageManager sharedManager] requestImageWithURL:self.networkPhotoUrl options:0 progress:nil transform:nil completion:^(UIImage * _Nullable image, NSURL * _Nonnull url, YYWebImageFromType from, YYWebImageStage stage, NSError * _Nullable error) {
             if (image) {
                 if (success) {
@@ -598,8 +799,8 @@
             }
         }];
         return 0;
-#elif __has_include(<SDWebImage/UIImageView+WebCache.h>) || __has_include("UIImageView+WebCache.h")
-        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:self.networkPhotoUrl options:0 progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
+#elif HasSDWebImage
+        [[SDWebImageManager sharedManager] loadImageWithURL:self.networkPhotoUrl options:0 progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
             if (data) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (success) {
@@ -617,7 +818,7 @@
         return 0;
 #endif
     }
-    [[PHImageManager defaultManager] cancelImageRequest:self.iCloudRequestID];
+//    [[PHImageManager defaultManager] cancelImageRequest:self.iCloudRequestID];
     
     PHImageRequestOptions *option = [self imageHighQualityRequestOptions];
     option.networkAccessAllowed = NO;
@@ -640,6 +841,15 @@
                                      progressHandler:(HXModelProgressHandler)progressHandler
                                              success:(HXModelAVAssetSuccessBlock)success
                                               failed:(HXModelFailedBlock)failed {
+    return [self requestAVAssetStartRequestICloud:startRequestICloud deliveryMode:PHVideoRequestOptionsDeliveryModeFastFormat progressHandler:progressHandler success:success failed:failed];
+}
+
+- (PHImageRequestID)requestAVAssetStartRequestICloud:(HXModelStartRequestICloud)startRequestICloud
+                                        deliveryMode:(PHVideoRequestOptionsDeliveryMode)deliveryMode
+                                     progressHandler:(HXModelProgressHandler)progressHandler
+                                             success:(HXModelAVAssetSuccessBlock)success
+                                              failed:(HXModelFailedBlock)failed
+ {
     if (self.type == HXPhotoModelMediaTypeCameraVideo) {
         if (success) {
             AVAsset *asset = [AVAsset assetWithURL:self.videoURL];
@@ -647,10 +857,9 @@
         }
         return 0;
     }
-    [[PHImageManager defaultManager] cancelImageRequest:self.iCloudRequestID];
     
     PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
-    options.deliveryMode = PHVideoRequestOptionsDeliveryModeFastFormat;
+    options.deliveryMode = deliveryMode;
     options.networkAccessAllowed = NO;
     PHImageRequestID requestId = 0;
     self.iCloudDownloading = YES;
@@ -676,7 +885,7 @@
         }
         return 0;
     }
-    [[PHImageManager defaultManager] cancelImageRequest:self.iCloudRequestID];
+//    [[PHImageManager defaultManager] cancelImageRequest:self.iCloudRequestID];
     
     PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
     options.deliveryMode = PHVideoRequestOptionsDeliveryModeFastFormat;
@@ -706,7 +915,7 @@
         }
         return 0;
     }
-    [[PHImageManager defaultManager] cancelImageRequest:self.iCloudRequestID];
+//    [[PHImageManager defaultManager] cancelImageRequest:self.iCloudRequestID];
     
     PHVideoRequestOptions *options = [[PHVideoRequestOptions alloc] init];
     options.deliveryMode = PHVideoRequestOptionsDeliveryModeFastFormat;
@@ -737,7 +946,7 @@
     BOOL downloadFinined = (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
     if (downloadFinined && results) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.isICloud = NO;
+//            self.isICloud = NO;
             self.iCloudDownloading = NO;
             if (success) {
                 success(results, info, orientation, audioMix);
@@ -763,7 +972,7 @@
                     BOOL downloadFinined = (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
                     if (downloadFinined && result) {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            weakSelf.isICloud = NO;
+//                            weakSelf.isICloud = NO;
                             weakSelf.iCloudDownloading = NO;
                             if (success) {
                                 success(result, info, 0, nil);
@@ -796,7 +1005,7 @@
                     BOOL downloadFinined = (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
                     if (downloadFinined && livePhoto) {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            weakSelf.isICloud = NO;
+//                            weakSelf.isICloud = NO;
                             weakSelf.iCloudDownloading = NO;
                             if (success) {
                                 success(livePhoto, info, 0, nil);
@@ -831,7 +1040,7 @@
                     BOOL downloadFinined = (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
                     if (downloadFinined && imageData) {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            weakSelf.isICloud = NO;
+//                            weakSelf.isICloud = NO;
                             weakSelf.iCloudDownloading = NO;
                             if (success) {
                                 success(imageData, info, orientation, nil);
@@ -850,7 +1059,7 @@
                 }];
             }else if ([resultClass isEqual:[AVAsset class]]) {
                 PHVideoRequestOptions *iCloudOptions = [[PHVideoRequestOptions alloc] init];
-                iCloudOptions.deliveryMode = PHVideoRequestOptionsDeliveryModeFastFormat;
+//                iCloudOptions.deliveryMode = PHVideoRequestOptionsDeliveryModeFastFormat;
                 iCloudOptions.networkAccessAllowed = YES;
                 iCloudOptions.progressHandler = ^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -865,7 +1074,7 @@
                     if (downloadFinined && asset) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             weakSelf.iCloudDownloading = NO;
-                            weakSelf.isICloud = NO;
+//                            weakSelf.isICloud = NO;
                             if (success) {
                                 success(asset, info, 0, audioMix);
                             }
@@ -883,7 +1092,7 @@
                 }];
             }else if ([resultClass isEqual:[AVAssetExportSession class]]) {
                 PHVideoRequestOptions *iCloudOptions = [[PHVideoRequestOptions alloc] init];
-                iCloudOptions.deliveryMode = PHVideoRequestOptionsDeliveryModeFastFormat;
+//                iCloudOptions.deliveryMode = PHVideoRequestOptionsDeliveryModeFastFormat;
                 iCloudOptions.networkAccessAllowed = YES;
                 iCloudOptions.progressHandler = ^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -898,7 +1107,7 @@
                     if (downloadFinined && exportSession) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             weakSelf.iCloudDownloading = NO;
-                            weakSelf.isICloud = NO;
+//                            weakSelf.isICloud = NO;
                             if (success) {
                                 success(exportSession, info, 0, nil);
                             }
@@ -916,7 +1125,7 @@
                 }];
             }else if ([resultClass isEqual:[AVPlayerItem class]]) {
                 PHVideoRequestOptions *iCloudOptions = [[PHVideoRequestOptions alloc] init];
-                iCloudOptions.deliveryMode = PHVideoRequestOptionsDeliveryModeFastFormat;
+//                iCloudOptions.deliveryMode = PHVideoRequestOptionsDeliveryModeFastFormat;
                 iCloudOptions.networkAccessAllowed = YES;
                 iCloudOptions.progressHandler = ^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -931,7 +1140,7 @@
                     if (downloadFinined && playerItem) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             weakSelf.iCloudDownloading = NO;
-                            weakSelf.isICloud = NO;
+//                            weakSelf.isICloud = NO;
                             if (success) {
                                 success(playerItem, info, 0, nil);
                             }
@@ -989,13 +1198,17 @@
         }
         return;
     }
+    if (!presetName) {
+        presetName = AVAssetExportPresetMediumQuality;
+    }
     HXWeakSelf
-    [self requestAVAssetStartRequestICloud:startRequestICloud progressHandler:iCloudProgressHandler success:^(AVAsset *avAsset, AVAudioMix *audioMix, HXPhotoModel *model, NSDictionary *info) {
-        
+    PHVideoRequestOptionsDeliveryMode mode = [presetName isEqualToString:AVAssetExportPresetHighestQuality] ? PHVideoRequestOptionsDeliveryModeHighQualityFormat : PHVideoRequestOptionsDeliveryModeFastFormat;
+    [self requestAVAssetStartRequestICloud:startRequestICloud deliveryMode:mode progressHandler:iCloudProgressHandler success:^(AVAsset * _Nullable avAsset, AVAudioMix * _Nullable audioMix, HXPhotoModel * _Nullable model, NSDictionary * _Nullable info) {
+        HXStrongSelf
         NSArray *presets = [AVAssetExportSession exportPresetsCompatibleWithAsset:avAsset];
         if ([presets containsObject:presetName]) {
             AVAssetExportSession *session = [[AVAssetExportSession alloc] initWithAsset:avAsset presetName:presetName];
-            NSString *fileName = [[HXPhotoTools uploadFileName] stringByAppendingString:@".mp4"];
+            NSString *fileName = [[NSString hx_fileName] stringByAppendingString:@".mp4"];
             NSString *fullPathToFile = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
             NSURL *videoURL = [NSURL fileURLWithPath:fullPathToFile];
             session.outputURL = videoURL;
@@ -1016,7 +1229,7 @@
             
             NSTimer *timer = [NSTimer hx_scheduledTimerWithTimeInterval:0.1f block:^{
                 if (exportProgressHandler) {
-                    exportProgressHandler(session.progress, weakSelf);
+                    exportProgressHandler(session.progress, strongSelf);
                 }
             } repeats:YES];
             
@@ -1025,90 +1238,49 @@
                     if ([session status] == AVAssetExportSessionStatusCompleted) {
                         if (HXShowLog) NSSLog(@"视频导出完成");
                         [timer invalidate];
+                        strongSelf.videoURL = videoURL;
                         if (success) {
-                            success(videoURL, weakSelf);
+                            success(videoURL, strongSelf);
                         }
                     }else if ([session status] == AVAssetExportSessionStatusFailed){
                         if (HXShowLog) NSSLog(@"视频导出失败");
                         [timer invalidate];
                         if (failed) {
-                            failed(nil, weakSelf);
+                            failed(nil, strongSelf);
                         }
                     }else if ([session status] == AVAssetExportSessionStatusCancelled) {
                         if (HXShowLog) NSSLog(@"视频导出被取消");
                         [timer invalidate];
                         if (failed) {
-                            failed(nil, weakSelf);
+                            failed(nil, strongSelf);
                         }
                     }
                 });
             }];
         }else {
+            if (failed) {
+                failed(nil, strongSelf);
+            }
             if (HXShowLog) NSSLog(@"该设备不支持:%@",presetName);
         }
     } failed:failed];
-//    [self requestAVAssetExportSessionStartRequestICloud:startRequestICloud
-//                                        progressHandler:iCloudProgressHandler
-//                                             completion:^(AVAssetExportSession *assetExportSession, HXPhotoModel *model, NSDictionary *info) {
-//
-//        NSString *fileName = [[HXPhotoTools uploadFileName] stringByAppendingString:@".mp4"];
-//        NSString *fullPathToFile = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
-//        NSURL *videoURL = [NSURL fileURLWithPath:fullPathToFile];
-//        assetExportSession.outputURL = videoURL;
-//        assetExportSession.shouldOptimizeForNetworkUse = YES;
-//
-//        NSArray *supportedTypeArray = assetExportSession.supportedFileTypes;
-//        if ([supportedTypeArray containsObject:AVFileTypeMPEG4]) {
-//            assetExportSession.outputFileType = AVFileTypeMPEG4;
-//        } else if (supportedTypeArray.count == 0) {
-//            if (failed) {
-//                failed(nil, model);
-//            }
-//            if (HXShowLog) NSSLog(@"不支持导入该类型视频");
-//            return;
-//        }else {
-//            assetExportSession.outputFileType = [supportedTypeArray objectAtIndex:0];
-//        }
-//
-//        NSTimer *timer = [NSTimer hx_scheduledTimerWithTimeInterval:0.1f block:^{
-//            if (exportProgressHandler) {
-//                exportProgressHandler(assetExportSession.progress, weakSelf);
-//            }
-//        } repeats:YES];
-//
-//        [assetExportSession exportAsynchronouslyWithCompletionHandler:^{
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                if ([assetExportSession status] == AVAssetExportSessionStatusCompleted) {
-//                    if (HXShowLog) NSSLog(@"视频导出完成");
-//                    [timer invalidate];
-//                    if (success) {
-//                        success(videoURL, weakSelf);
-//                    }
-//                }else if ([assetExportSession status] == AVAssetExportSessionStatusFailed){
-//                    if (HXShowLog) NSSLog(@"视频导出失败");
-//                    [timer invalidate];
-//                    if (failed) {
-//                        failed(nil, weakSelf);
-//                    }
-//                }else if ([assetExportSession status] == AVAssetExportSessionStatusCancelled) {
-//                    if (HXShowLog) NSSLog(@"视频导出被取消");
-//                    [timer invalidate];
-//                    if (failed) {
-//                        failed(nil, weakSelf);
-//                    }
-//                }
-//            });
-//        }];
-//    } failed:failed];
 }
-- (PHContentEditingInputRequestID)requestImagePathStartRequestICloud:(void (^)(PHContentEditingInputRequestID iCloudRequestId, HXPhotoModel *model))startRequestICloud
-                                                     progressHandler:(HXModelProgressHandler)progressHandler
-                                                             success:(HXModelImagePathSuccessBlock)success
-                                                              failed:(HXModelFailedBlock)failed {
-    if (self.type == HXPhotoModelMediaTypeCameraPhoto && self.networkPhotoUrl) {
-        if (success) {
-            success(self.networkPhotoUrl.absoluteString, self, nil);
+- (PHContentEditingInputRequestID)requestImageURLStartRequestICloud:(void (^)(PHContentEditingInputRequestID iCloudRequestId, HXPhotoModel *model))startRequestICloud
+                                                    progressHandler:(HXModelProgressHandler)progressHandler
+                                                            success:(HXModelImageURLSuccessBlock)success
+                                                             failed:(HXModelFailedBlock)failed {
+    if (self.type == HXPhotoModelMediaTypeCameraPhoto) {
+        if (failed) {
+            failed(nil, self);
         }
+//        if (self.networkPhotoUrl) {
+//            if (success) {
+//                success(self.networkPhotoUrl, self, nil);
+//            }
+//        }else {
+//            //
+//
+//        }
         return 0;
     }
     
@@ -1118,14 +1290,16 @@
     return [self.asset requestContentEditingInputWithOptions:options completionHandler:^(PHContentEditingInput * _Nullable contentEditingInput, NSDictionary * _Nonnull info) {
         BOOL downloadFinined = (![[info objectForKey:PHContentEditingInputCancelledKey] boolValue] && ![info objectForKey:PHContentEditingInputErrorKey]);
         
-        if (downloadFinined && contentEditingInput.fullSizeImageURL.relativePath) {
+        if (downloadFinined && contentEditingInput.fullSizeImageURL) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (success) {
-                    success(contentEditingInput.fullSizeImageURL.relativePath, weakSelf, info);
+                    weakSelf.imageURL = contentEditingInput.fullSizeImageURL;
+                    success(contentEditingInput.fullSizeImageURL, weakSelf, info);
                 }
             });
         }else {
-            if ([[info objectForKey:PHContentEditingInputResultIsInCloudKey] boolValue] && ![[info objectForKey:PHContentEditingInputCancelledKey] boolValue] && ![info objectForKey:PHContentEditingInputErrorKey]) {
+            if ([[info objectForKey:PHContentEditingInputResultIsInCloudKey] boolValue] &&
+                ![[info objectForKey:PHContentEditingInputCancelledKey] boolValue]) {
                 PHContentEditingInputRequestOptions *iCloudOptions = [[PHContentEditingInputRequestOptions alloc] init];
                 iCloudOptions.networkAccessAllowed = YES;
                 iCloudOptions.progressHandler = ^(double progress, BOOL * _Nonnull stop) {
@@ -1139,10 +1313,11 @@
                 PHContentEditingInputRequestID iCloudRequestID = [weakSelf.asset requestContentEditingInputWithOptions:iCloudOptions completionHandler:^(PHContentEditingInput * _Nullable contentEditingInput, NSDictionary * _Nonnull info) {
                     BOOL downloadFinined = (![[info objectForKey:PHContentEditingInputCancelledKey] boolValue] && ![info objectForKey:PHContentEditingInputErrorKey]);
                     
-                    if (downloadFinined && contentEditingInput.fullSizeImageURL.relativePath) {
+                    if (downloadFinined && contentEditingInput.fullSizeImageURL) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             if (success) {
-                                success(contentEditingInput.fullSizeImageURL.relativePath, weakSelf, nil);
+                                weakSelf.imageURL = contentEditingInput.fullSizeImageURL;
+                                success(contentEditingInput.fullSizeImageURL, weakSelf, nil);
                             }
                         });
                     }else {
@@ -1196,8 +1371,30 @@
         NSUInteger year  = [components year];
         NSUInteger day   = [components day];
         
-        NSString *localization = [NSBundle mainBundle].preferredLocalizations.firstObject;
-        NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:localization];
+        HXPhotoLanguageType type = [HXPhotoCommon photoCommon].languageType;
+        NSLocale *locale;
+        switch (type) {
+            case HXPhotoLanguageTypeEn:
+                locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en"];
+                break;
+            case HXPhotoLanguageTypeSc:
+                locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh-Hans"];
+                break;
+            case HXPhotoLanguageTypeTc:
+                locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh-Hant"];
+                break;
+            case HXPhotoLanguageTypeJa:
+                locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ja"];
+                break;
+            case HXPhotoLanguageTypeKo:
+                locale = [[NSLocale alloc] initWithLocaleIdentifier:@"ko"];
+                break;
+            default: {
+                NSString *localization = [NSBundle mainBundle].preferredLocalizations.firstObject;
+                locale = [[NSLocale alloc] initWithLocaleIdentifier:localization];
+            }
+                break;
+        }
         
         dateFormatter.locale    = locale;
         dateFormatter.dateStyle = kCFDateFormatterLongStyle;
@@ -1209,7 +1406,6 @@
                                                                                locale:locale];
             [dateFormatter setDateFormat:longFormatWithoutYear];
         }
-        
         NSString *resultString = [dateFormatter stringFromDate:date];
         
         if (year == modelYear && month == modelMonth)
@@ -1228,51 +1424,6 @@
         _dateString = resultString;
     }
     return _dateString;
-        
-//        NSString *language = [NSLocale preferredLanguages].firstObject;
-//        if ([self.date hx_isToday]) {
-//            _dateString = [NSBundle hx_localizedStringForKey:@"今天"];
-//        }else if ([self.date hx_isYesterday]) {
-//            _dateString = [NSBundle hx_localizedStringForKey:@"昨天"];
-//        }else if ([self.date hx_isSameWeek]) {
-//            _dateString = [self.date hx_getNowWeekday];
-//        }else if ([self.date hx_isThisYear]) {
-//            if ([language hasPrefix:@"en"]) {
-//                // 英文
-//                _dateString = [NSString stringWithFormat:@"%@ %@",[self.date hx_dateStringWithFormat:@"MMM dd"],[self.date hx_getNowWeekday]];
-//            } else if ([language hasPrefix:@"zh"]) {
-//                // 中文
-//                _dateString = [NSString stringWithFormat:@"%@ %@",[self.date hx_dateStringWithFormat:@"MM月dd日"],[self.date hx_getNowWeekday]];
-//            }else if ([language hasPrefix:@"ko"]) {
-//                // 韩语
-//                _dateString = [NSString stringWithFormat:@"%@ %@",[self.date hx_dateStringWithFormat:@"MM월dd일"],[self.date hx_getNowWeekday]];
-//            }else if ([language hasPrefix:@"ja"]) {
-//                // 日语
-//                _dateString = [NSString stringWithFormat:@"%@ %@",[self.date hx_dateStringWithFormat:@"MM月dd日"],[self.date hx_getNowWeekday]];
-//            } else {
-//                // 英文
-//                _dateString = [NSString stringWithFormat:@"%@ %@",[self.date hx_dateStringWithFormat:@"MMM dd"],[self.date hx_getNowWeekday]];
-//            }
-//        }else {
-//            if ([language hasPrefix:@"en"]) {
-//                // 英文
-//                _dateString = [self.date hx_dateStringWithFormat:@"MMMM dd, yyyy"];
-//            } else if ([language hasPrefix:@"zh"]) {
-//                // 中文
-//                _dateString = [self.date hx_dateStringWithFormat:@"yyyy年MM月dd日"];
-//            }else if ([language hasPrefix:@"ko"]) {
-//                // 韩语
-//                _dateString = [self.date hx_dateStringWithFormat:@"yyyy년MM월dd일"];
-//            }else if ([language hasPrefix:@"ja"]) {
-//                // 日语
-//                _dateString = [self.date hx_dateStringWithFormat:@"yyyy年MM月dd日"];
-//            } else {
-//                // 其他
-//                _dateString = [self.date hx_dateStringWithFormat:@"MMMM dd, yyyy"];
-//            }
-//        }
-//    }
-//    return _dateString;
 }
 - (NSMutableArray *)locationList {
     if (!_locationList) {

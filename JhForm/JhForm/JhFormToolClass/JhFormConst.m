@@ -43,15 +43,15 @@ CGFloat const Jh_TitleHeight = 24.0f;
 CGFloat const Jh_DefaultCellHeight = 44.0f;
 CGFloat const Jh_DefaultTextViewCellHeight = 150.0f; //(默认输入50字的高度)
 CGFloat const Jh_DefaultCustumBottomViewCellHeight = 264.0f;
-CGFloat const Jh_DefaultSelectImageCellHeight = 264;
-CGFloat const Jh_DefaultSelectImageCellHeight_oneRow = 164; //选择图片只有一行的高度
+//CGFloat const Jh_DefaultSelectImageCellHeight = 264;
+//CGFloat const Jh_DefaultSelectImageCellHeight_oneRow = 164; //选择图片只有一行的高度
 
 
 // 表单输入字数限制
 NSUInteger const Jh_GlobalMaxInputLength = 50;
 
 // 表单选择图片附件数
-NSUInteger const Jh_GlobalMaxImages = 8;
+NSUInteger const Jh_GlobalMaxImages = 8;  //大于8 要修改selectImageCell 此行代码 【row = row > 2?2: row】
 
 // 表单TextView字数提示文字大小
 CGFloat const Jh_LengHintFont = 12;
@@ -72,4 +72,3 @@ NSString *const Jh_SelectCell_rightArrow = @"JhForm.bundle/Jh_SelectCell_rightAr
 
 
 JhThemeType const Jh_ThemeType = JhThemeTypeLight;
-

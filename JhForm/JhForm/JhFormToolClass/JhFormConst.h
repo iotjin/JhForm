@@ -82,8 +82,8 @@ extern CGFloat const Jh_TitleHeight;
 extern CGFloat const Jh_DefaultCellHeight; //44
 extern CGFloat const Jh_DefaultTextViewCellHeight;  //150
 extern CGFloat const Jh_DefaultCustumBottomViewCellHeight; //264
-extern CGFloat const Jh_DefaultSelectImageCellHeight; //264
-extern CGFloat const Jh_DefaultSelectImageCellHeight_oneRow; //164
+//extern CGFloat const Jh_DefaultSelectImageCellHeight; //264
+//extern CGFloat const Jh_DefaultSelectImageCellHeight_oneRow; //164
 
 
 /**

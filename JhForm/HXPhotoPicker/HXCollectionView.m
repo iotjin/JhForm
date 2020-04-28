@@ -45,7 +45,27 @@
     [self addGestureRecognizer:longPgr];
     self.longPgr = longPgr;
 }
+#pragma mark - 修复iOS13 下滚动异常API
+#ifdef __IPHONE_13_0
+- (void)scrollToItemAtIndexPath:(NSIndexPath *)indexPath atScrollPosition:(UICollectionViewScrollPosition)scrollPosition animated:(BOOL)animated{
+    
+    [super scrollToItemAtIndexPath:indexPath atScrollPosition:scrollPosition animated:animated];
 
+    //修复13下 Cell滚动位置异常
+   if (@available(iOS 13.0, *)) {
+      //顶部
+      if(self.contentOffset.y < 0){
+          [self setContentOffset:CGPointZero];
+          return;
+      }
+    
+      //底部
+      if(self.contentOffset.y > self.contentSize.height){
+          [self setContentOffset:CGPointMake(0, self.contentSize.height)];
+      }
+  }
+}
+#endif
 - (void)setEditEnabled:(BOOL)editEnabled {
     _editEnabled = editEnabled;
     self.longPgr.enabled = editEnabled;
@@ -75,6 +95,9 @@
     }
     if (longPgr.state == UIGestureRecognizerStateCancelled ||
         longPgr.state == UIGestureRecognizerStateEnded){
+        if ([(HXPhotoSubViewCell *)[self cellForItemAtIndexPath:self.originalIndexPath] model].type == HXPhotoModelMediaTypeCamera) {
+            return;
+        }
         if ([self.delegate respondsToSelector:@selector(collectionView:gestureRecognizerEnded:indexPath:)]) {
             [self.delegate collectionView:self gestureRecognizerEnded:longPgr indexPath:self.originalIndexPath];
         }
@@ -191,7 +214,7 @@
     
     NSArray *totalArray = [self findAllLastIndexPathInVisibleSection];
     //找到目标空白区域
-    CGRect rect;
+//    CGRect rect;
     _moveIndexPath = nil;
     
     NSMutableArray *sourceArray = nil;
@@ -217,7 +240,7 @@
         }
         
         if (CGRectContainsPoint(tempRect, _tempMoveCell.center)) {
-            rect = tempRect;
+//            rect = tempRect;
             _moveIndexPath = indexPath;
             break;
         }

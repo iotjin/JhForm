@@ -19,13 +19,15 @@
     return self;
 }
 
-- (void)setup {
+- (void)setup { 
     self.changeAlbumListContentView = YES;
     self.open3DTouchPreview = YES;
     self.openCamera = YES;
     self.lookLivePhoto = NO;
     self.lookGifPhoto = YES;
     self.selectTogether = NO;
+    self.showOriginalBytesLoading = NO;
+    self.exportVideoURLForHighestQuality = NO;
     self.maxNum = 10;
     self.photoMaxNum = 9;
     self.videoMaxNum = 1;
@@ -48,12 +50,12 @@
     self.videoMinimumSelectDuration = 0.f;
     self.videoMaximumDuration = 60.f;
     
-    self.creationDateSort = YES;
+//    self.creationDateSort = YES;
     
     //    self.saveSystemAblum = NO;
 //    self.deleteTemporaryPhoto = YES;
 //    self.showDateSectionHeader = YES; 
-    if ([UIScreen mainScreen].bounds.size.width != 320) {
+    if ([UIScreen mainScreen].bounds.size.width != 320 && [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone) {
         self.cameraCellShowPreview = YES;
     }
     //    self.horizontalHideStatusBar = NO;
@@ -65,9 +67,9 @@
     self.pushTransitionDuration = 0.45f;
     self.popTransitionDuration = 0.35f;
     self.popInteractiveTransitionDuration = 0.35f;
-    self.transitionAnimationOption = UIViewAnimationOptionCurveEaseOut;
+    
     if (HX_IS_IPhoneX_All) {
-        self.clarityScale = 2.4f;
+        self.clarityScale = 3;
     }else if ([UIScreen mainScreen].bounds.size.width == 320) {
         self.clarityScale = 1.2;
     }else if ([UIScreen mainScreen].bounds.size.width == 375) {
@@ -77,37 +79,77 @@
     }
     
     self.doneBtnShowDetail = YES;
-//    self.videoCanEdit = YES;
+    self.videoCanEdit = YES;
 //    self.singleJumpEdit = YES;
     self.photoCanEdit = YES;
     self.localFileName = @"HXPhotoPickerModelArray";
-//    self.requestImageAfterFinishingSelection = YES;
     
     self.popupTableViewCellHeight = 65.f;
     if (HX_IS_IPhoneX_All) {
+        self.editVideoExportPresetName = AVAssetExportPresetHighestQuality;
         self.popupTableViewHeight = 450;
     }else {
+        self.editVideoExportPresetName = AVAssetExportPresetMediumQuality;
         self.popupTableViewHeight = 350;
     }
-    self.popupTableViewHorizontalHeight = 250;
+    self.popupTableViewHorizontalHeight = 250; 
 //    self.albumShowMode = HXPhotoAlbumShowModePopup;
+    
+    
+    self.cellDarkSelectTitleColor = [UIColor whiteColor];
+    self.cellDarkSelectBgColor = [UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1];
+    self.previewDarkSelectBgColor = [UIColor whiteColor];
+    self.previewDarkSelectTitleColor = [UIColor blackColor];
+    [HXPhotoCommon photoCommon].photoStyle = HXPhotoStyleDefault;
+    self.defaultFrontCamera = NO;
+    
+    self.limitPhotoSize = 0;
+    self.limitVideoSize = 0;
+    self.selectPhotoLimitSize = NO;
+    self.selectVideoLimitSize = NO;
+    self.navBarTranslucent = YES;
+    self.bottomViewTranslucent = YES;
+    self.selectVideoBeyondTheLimitTimeAutoEdit = NO;
+    self.videoAutoPlayType = HXVideoAutoPlayTypeWiFi;
+    
+    self.downloadNetworkVideo = YES;
+    
+    self.editAssetSaveSystemAblum = NO;
+    self.photoEditCustomRatios = @[@{@"原始值" : @"{0, 0}"}, @{@"正方形" : @"{1, 1}"}, @{@"2:3" : @"{2, 3}"}, @{@"3:4" : @"{3, 4}"}, @{@"9:16" : @"{9, 16}"}, @{@"16:9" : @"{16, 9}"}];
 }
-
-//- (NSInteger)maxNum {
-//    if (!_maxNum) {
-//        if (self.type == HXPhotoManagerSelectedTypePhoto) {
-//            _maxNum = self.photoMaxNum;
-//        }else if (self.type == HXPhotoManagerSelectedTypeVideo) {
-//            _maxNum = self.videoMaxNum;
-//        }else {
-//            if (self.videoMaxNum + self.photoMaxNum != self.maxNum) {
-//                _maxNum = self.videoMaxNum + self.photoMaxNum;
-//            }
-//        }
-//    }
-//    return _maxNum;
-//}
-
+- (void)setShowDateSectionHeader:(BOOL)showDateSectionHeader {
+    _showDateSectionHeader = showDateSectionHeader;
+    if (showDateSectionHeader) {
+        self.creationDateSort = YES;
+    }else {
+        self.creationDateSort = NO;
+    }
+}
+- (UIColor *)cameraFocusBoxColor {
+    if (!_cameraFocusBoxColor) {
+        _cameraFocusBoxColor = [UIColor colorWithRed:0 green:0.47843137254901963 blue:1 alpha:1];
+    }
+    return _cameraFocusBoxColor;
+}
+- (void)setVideoAutoPlayType:(HXVideoAutoPlayType)videoAutoPlayType {
+    _videoAutoPlayType = videoAutoPlayType;
+    [HXPhotoCommon photoCommon].videoAutoPlayType = videoAutoPlayType;
+}
+- (void)setDownloadNetworkVideo:(BOOL)downloadNetworkVideo {
+    _downloadNetworkVideo = downloadNetworkVideo;
+    [HXPhotoCommon photoCommon].downloadNetworkVideo = downloadNetworkVideo;
+}
+- (void)setPhotoStyle:(HXPhotoStyle)photoStyle {
+    _photoStyle = photoStyle;
+    [HXPhotoCommon photoCommon].photoStyle = photoStyle;
+}
+- (void)setLanguageType:(HXPhotoLanguageType)languageType {
+    if ([HXPhotoCommon photoCommon].languageType != languageType) {
+        [HXPhotoCommon photoCommon].languageBundle = nil;
+    }
+    _languageType = languageType;
+    [HXPhotoCommon photoCommon].languageType = languageType;
+}
 - (void)setClarityScale:(CGFloat)clarityScale {
     if (clarityScale <= 0.f) {
         if ([UIScreen mainScreen].bounds.size.width == 320) {
@@ -139,6 +181,12 @@
     }
     return _originalSelectedImageName;
 }
+- (void)setVideoMaximumSelectDuration:(NSInteger)videoMaximumSelectDuration {
+    if (videoMaximumSelectDuration <= 0) {
+        videoMaximumSelectDuration = MAXFLOAT;
+    }
+    _videoMaximumSelectDuration = videoMaximumSelectDuration;
+}
 - (void)setVideoMaximumDuration:(NSTimeInterval)videoMaximumDuration {
     if (videoMaximumDuration <= 3) {
         videoMaximumDuration = 4;
@@ -150,5 +198,17 @@
 //        return CGPointMake(1, 1);
 //    }
     return _movableCropBoxCustomRatio;
+}
+- (NSInteger)minVideoClippingTime {
+    if (_minVideoClippingTime < 1) {
+        _minVideoClippingTime = 1;
+    }
+    return _minVideoClippingTime;
+}
+- (NSInteger)maxVideoClippingTime {
+    if (!_maxVideoClippingTime) {
+        _maxVideoClippingTime = 15;
+    }
+    return _maxVideoClippingTime;
 }
 @end

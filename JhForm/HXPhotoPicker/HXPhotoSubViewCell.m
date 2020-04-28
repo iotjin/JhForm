@@ -44,20 +44,22 @@
         _stateLb = [[UILabel alloc] init];
         _stateLb.textColor = [UIColor whiteColor];
         _stateLb.textAlignment = NSTextAlignmentRight;
-        _stateLb.font = [UIFont systemFontOfSize:12];
+        _stateLb.font = [UIFont hx_mediumSFUITextOfSize:12];
     }
     return _stateLb;
 }
 - (CAGradientLayer *)bottomMaskLayer {
     if (!_bottomMaskLayer) {
-        _bottomMaskLayer = [CAGradientLayer layer];
+        _bottomMaskLayer = [CAGradientLayer layer]; 
         _bottomMaskLayer.colors = @[
-                                    (id)[[UIColor blackColor] colorWithAlphaComponent:0].CGColor,
-                                    (id)[[UIColor blackColor] colorWithAlphaComponent:0.35].CGColor
+                                    (id)[[UIColor blackColor] colorWithAlphaComponent:0].CGColor ,
+                                    (id)[[UIColor blackColor] colorWithAlphaComponent:0.15].CGColor ,
+                                    (id)[[UIColor blackColor] colorWithAlphaComponent:0.35].CGColor ,
+                                    (id)[[UIColor blackColor] colorWithAlphaComponent:0.6].CGColor
                                     ];
         _bottomMaskLayer.startPoint = CGPointMake(0, 0);
         _bottomMaskLayer.endPoint = CGPointMake(0, 1);
-        _bottomMaskLayer.locations = @[@(0.15f),@(0.9f)];
+        _bottomMaskLayer.locations = @[@(0.15f),@(0.35f),@(0.6f),@(0.9f)];
         _bottomMaskLayer.borderWidth  = 0.0;
     }
     return _bottomMaskLayer;
@@ -82,20 +84,23 @@
     [self.contentView addSubview:self.stateLb];
     [self.contentView addSubview:self.deleteBtn];
     [self.contentView addSubview:self.progressView];
+    [self.contentView addSubview:self.highlightMaskView];
 }
 
 - (void)didDeleteClick {
     if (self.model.networkPhotoUrl) {
         if (self.showDeleteNetworkPhotoAlert) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSBundle hx_localizedStringForKey:@"提示"] message:[NSBundle hx_localizedStringForKey:@"是否删除此照片"] delegate:self cancelButtonTitle:[NSBundle hx_localizedStringForKey:@"取消"] otherButtonTitles:[NSBundle hx_localizedStringForKey:@"确定"], nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSBundle hx_localizedStringForKey:@"提示"] message:[NSBundle hx_localizedStringForKey:@"是否删除此资源"] delegate:self cancelButtonTitle:[NSBundle hx_localizedStringForKey:@"取消"] otherButtonTitles:[NSBundle hx_localizedStringForKey:@"确定"], nil];
             [alert show];
             return;
         }
-    } 
-#if __has_include(<YYWebImage/YYWebImage.h>) || __has_include("YYWebImage.h")
+    }
+#if HasYYWebImage
     [self.imageView yy_cancelCurrentImageRequest];
-#elif __has_include(<SDWebImage/UIImageView+WebCache.h>) || __has_include("UIImageView+WebCache.h")
-    [self.imageView sd_cancelCurrentAnimationImagesLoad];
+#elif HasYYKit
+    [self.imageView cancelCurrentImageRequest];
+#elif HasSDWebImage
+//    [self.imageView sd_cancelCurrentAnimationImagesLoad];
 #endif
     if ([self.delegate respondsToSelector:@selector(cellDidDeleteClcik:)]) {
         [self.delegate cellDidDeleteClcik:self];
@@ -112,7 +117,7 @@
 - (void)againDownload {
     self.model.downloadError = NO;
     self.model.downloadComplete = NO;
-    __weak typeof(self) weakSelf = self;
+    HXWeakSelf
     [self.imageView hx_setImageWithModel:self.model original:NO progress:^(CGFloat progress, HXPhotoModel *model) {
         if (weakSelf.model == model) {
             weakSelf.progressView.progress = progress;
@@ -146,7 +151,8 @@
 }
 - (void)resetNetworkImage {
     if (self.model.networkPhotoUrl &&
-        self.model.type == HXPhotoModelMediaTypeCameraPhoto) {
+       (self.model.type == HXPhotoModelMediaTypeCameraPhoto ||
+        self.model.cameraVideoType == HXPhotoModelMediaTypeCameraVideoTypeNetWork)) {
         self.model.loadOriginalImage = YES;
         HXWeakSelf
         [self.imageView hx_setImageWithModel:self.model original:YES progress:nil completed:^(UIImage *image, NSError *error, HXPhotoModel *model) {
@@ -198,13 +204,11 @@
                 self.imageView.image = model.thumbPhoto;
             }else {
                 HXWeakSelf
-                model.clarityScale = 1.5f;
-                model.rowCount = 3.f;
-                [self.model requestThumbImageCompletion:^(UIImage *image, HXPhotoModel *model, NSDictionary *info) {
+                [self.model requestThumbImageWithSize:CGSizeMake(200, 200) completion:^(UIImage *image, HXPhotoModel *model, NSDictionary *info) {
                     if (weakSelf.model == model) {
                         weakSelf.imageView.image = image;
                     }
-                }]; 
+                }];
             }
         }
     }
@@ -222,14 +226,12 @@
             self.stateLb.hidden = NO;
             self.bottomMaskLayer.hidden = NO;
         }else {
-            if (model.networkPhotoUrl) {
-                if ([[model.networkPhotoUrl.absoluteString substringFromIndex:model.networkPhotoUrl.absoluteString.length - 3] isEqualToString:@"gif"]) {
-                    self.stateLb.text = @"GIF";
-                    self.stateLb.hidden = NO;
-                    self.bottomMaskLayer.hidden = NO;
-                    return;
-                }
-            }
+            if (model.cameraPhotoType == HXPhotoModelMediaTypeCameraPhotoTypeNetWorkGif) {
+                self.stateLb.text = @"GIF";
+                self.stateLb.hidden = NO;
+                self.bottomMaskLayer.hidden = NO;
+                return;
+            } 
             self.stateLb.hidden = YES;
             self.bottomMaskLayer.hidden = YES;
         }
@@ -251,11 +253,23 @@
     self.deleteBtn.frame = CGRectMake(width - deleteBtnW, 0, deleteBtnW, deleteBtnH);
     
     self.progressView.center = CGPointMake(width / 2, height / 2);
+    self.highlightMaskView.frame = self.bounds;
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
     [super setHighlighted:highlighted];
-    
+    if (self.model.type == HXPhotoModelMediaTypeCamera || self.canEdit) {
+        return;
+    }
+    self.highlightMaskView.hidden = !highlighted;
 }
 
+- (UIView *)highlightMaskView {
+    if (!_highlightMaskView) {
+        _highlightMaskView = [[UIView alloc] init];
+        _highlightMaskView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5f];
+        _highlightMaskView.hidden = YES;
+    }
+    return _highlightMaskView;
+}
 @end

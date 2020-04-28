@@ -20,13 +20,34 @@
 /**
  版本号 x.x.x
  */
-#define HXVersion @"2.2.4"
+#define HXVersion @"2.4.2"
+
+#define HXGetCameraContentInRealTime HX_IS_IPhoneX_All
 
 #define HXEncodeKey @"HXModelArray"
+
+#define HXCameraImageKey @"HXCameraImageKey"
+
+#define HXPhotoPickerDownloadPath [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject]
+
+#define HXPhotoPickerDownloadVideosPath [HXPhotoPickerDownloadPath stringByAppendingPathComponent:@"HXPhotoPickerDownload/Videos"]
 
 #define HXShowLog YES
 
 #define HX_UI_IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+
+#define HasAFNetworking (__has_include(<AFNetworking/AFNetworking.h>) || __has_include("AFNetworking.h"))
+
+#define HasYYWebImage (__has_include(<YYWebImage/YYWebImage.h>) || __has_include("YYWebImage.h"))
+
+#define HasYYKit (__has_include(<YYKit/YYKit.h>) || __has_include("YYKit.h"))
+
+#define HasYYKitOrWebImage (__has_include(<YYWebImage/YYWebImage.h>) || __has_include("YYWebImage.h") || __has_include(<YYKit/YYKit.h>) || __has_include("YYKit.h"))
+
+#define HasSDWebImage (__has_include(<SDWebImage/UIImageView+WebCache.h>) || __has_include("UIImageView+WebCache.h"))
+
+#define HX_ScreenWidth [UIScreen mainScreen].bounds.size.width
+#define HX_ScreenHeight [UIScreen mainScreen].bounds.size.height
 
 #define HX_IS_IPHONEX (CGSizeEqualToSize([UIScreen mainScreen].bounds.size, CGSizeMake(375, 812)) || CGSizeEqualToSize([UIScreen mainScreen].bounds.size, CGSizeMake(812, 375)) || CGSizeEqualToSize([UIScreen mainScreen].bounds.size, CGSizeMake(414, 896)) || CGSizeEqualToSize([UIScreen mainScreen].bounds.size, CGSizeMake(896, 414)))
 
@@ -51,14 +72,20 @@
 
 #define HX_IOS11_Later ([UIDevice currentDevice].systemVersion.floatValue >= 11.0f)
 
+#define HX_IOS10_Later ([UIDevice currentDevice].systemVersion.floatValue >= 10.0f)
+
 #define HX_IOS91Later ([UIDevice currentDevice].systemVersion.floatValue >= 9.1f)
 
 #define HX_IOS9Later ([UIDevice currentDevice].systemVersion.floatValue >= 9.0f)
 
 #define HX_IOS82Later ([UIDevice currentDevice].systemVersion.floatValue >= 8.2f)
 
+#define HX_IOS9Earlier ([UIDevice currentDevice].systemVersion.floatValue < 9.0f)
+
 // 弱引用
 #define HXWeakSelf __weak typeof(self) weakSelf = self;
+// 强引用
+#define HXStrongSelf __strong typeof(self) strongSelf = weakSelf;
 
 CG_INLINE UIAlertController * hx_showAlert(UIViewController *vc,
                                           NSString *title,
@@ -70,22 +97,47 @@ CG_INLINE UIAlertController * hx_showAlert(UIViewController *vc,
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
                                                                              message:message
                                                                       preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:buttonTitle1
-                                                           style:UIAlertActionStyleCancel
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        UIPopoverPresentationController *pop = [alertController popoverPresentationController];
+        pop.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        pop.sourceView = vc.view;
+        pop.sourceRect = vc.view.bounds;
+    }
+    
+    if (buttonTitle1) {
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:buttonTitle1
+                                                               style:UIAlertActionStyleCancel
+                                                             handler:^(UIAlertAction * _Nonnull action) {
+                                                                 if (buttonTitle1Handler) buttonTitle1Handler();
+                                                             }];
+        [alertController addAction:cancelAction];
+    }
+    if (buttonTitle2) {
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:buttonTitle2
+                                                           style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                             if (buttonTitle1Handler) buttonTitle1Handler();
+                                                             if (buttonTitle2Handler) buttonTitle2Handler();
                                                          }];
-    [alertController addAction:cancelAction];
-    
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:buttonTitle2
-                                                       style:UIAlertActionStyleDefault
-                                                     handler:^(UIAlertAction * _Nonnull action) {
-                                                         if (buttonTitle2Handler) buttonTitle2Handler();
-                                                     }];
-    [alertController addAction:okAction];
-    
+        [alertController addAction:okAction]; 
+    }
     [vc presentViewController:alertController animated:YES completion:nil];
     return alertController;
 }
+
+
+#define HXAlbumCameraRoll @"HXAlbumCameraRoll"
+#define HXAlbumPanoramas @"HXAlbumPanoramas"
+#define HXAlbumVideos @"HXAlbumVideos"
+#define HXAlbumFavorites @"HXAlbumFavorites"
+#define HXAlbumTimelapses @"HXAlbumTimelapses"
+#define HXAlbumRecentlyAdded @"HXAlbumRecentlyAdded"
+#define HXAlbumBursts @"HXAlbumBursts"
+#define HXAlbumSlomoVideos @"HXAlbumSlomoVideos"
+#define HXAlbumSelfPortraits @"HXAlbumSelfPortraits"
+#define HXAlbumScreenshots @"HXAlbumScreenshots"
+#define HXAlbumDepthEffect @"HXAlbumDepthEffect"
+#define HXAlbumLivePhotos @"HXAlbumLivePhotos"
+#define HXAlbumAnimated @"HXAlbumAnimated"
 
 #endif /* HXPhotoDefine_h */

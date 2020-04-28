@@ -104,6 +104,10 @@
             make.left.mas_equalTo(0);
         }];
     };
+//   NSString *redStr =@"*密码:";
+//    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:redStr attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20], NSForegroundColorAttributeName:Jh_titleColor}];
+//    [attributedTitle addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
+//    pwd.Jh_attributedTitle = attributedTitle;
     
     
     JhFormCellModel *cell4 = JhFormCellModel_AddInputCell(@"手机号:", @"XXX(可编辑)", YES, UIKeyboardTypePhonePad);
@@ -137,10 +141,15 @@
     picture.Jh_tipsInfoColor = [UIColor redColor];
     
     JhFormCellModel *urlPicture = JhFormCellModel_AddImageCell(@"加载网络图片:", NO);
-    urlPicture.Jh_noShowAddImgBtn=YES; urlPicture.Jh_defaultHeight = 164;
+//    urlPicture.Jh_noShowAddImgBtn=YES;
+//    urlPicture.Jh_hideDeleteButton = YES;
     urlPicture.Jh_imageArr =@[@"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_00.png",@"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_05.png",@"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.png"];
     
-    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,pwd,cell4,cell5,cell6,cell7,picture,urlPicture]];
+    JhFormCellModel *picture_noTitle = JhFormCellModel_AddImageCell(@"", NO);
+    picture_noTitle.Jh_maxImageCount = 2;
+
+    
+    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,pwd,cell4,cell5,cell6,cell7,picture,urlPicture,picture_noTitle]];
     
     JhFormSectionModel *section0 = JhSectionModel_Add(cellArr0);
     
@@ -171,7 +180,6 @@
         }];
         
     };
-    
     
 }
 

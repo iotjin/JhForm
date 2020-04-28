@@ -11,6 +11,9 @@
 #import "JhFormCellModel.h"
 #import "JhFormConst.h"
 
+#define itemLineCount  4 //图片一行几个
+#define itemH  (Kwidth - 15*2-3*3)/itemLineCount  //图片的高度
+
 
 @interface JhFormSelectImageCell()<HXPhotoViewDelegate>
 
@@ -18,7 +21,6 @@
 
 @property (strong, nonatomic) HXPhotoView *onePhotoView;
 @property (strong, nonatomic) HXPhotoManager *oneManager;
-@property (strong, nonatomic) HXDatePhotoToolManager *toolManager;
 /** 选中的图片数组 */
 @property (nonatomic, strong) NSArray *selectImgArr;
 
@@ -34,6 +36,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -93,23 +97,17 @@
         _oneManager.configuration.openCamera =NO;
         _oneManager.configuration.photoCanEdit =NO;
         _oneManager.configuration.showBottomPhotoDetail = NO;
+    
     }
     return _oneManager;
-}
-
-- (HXDatePhotoToolManager *)toolManager {
-    if (!_toolManager) {
-        _toolManager = [[HXDatePhotoToolManager alloc] init];
-    }
-    return _toolManager;
 }
 
 -(HXPhotoView *)onePhotoView{
     if (!_onePhotoView) {
         
-        _onePhotoView = [[HXPhotoView alloc] initWithFrame:CGRectMake(15,5, Kwidth - 15*2-3*3, 180) WithManager:self.oneManager];
+      _onePhotoView = [[HXPhotoView alloc] initWithFrame:CGRectMake(15, 5, Kwidth - 15*2-3*3, itemH) manager:self.oneManager];
         _onePhotoView.outerCamera = YES;
-        _onePhotoView.lineCount =4;
+        _onePhotoView.lineCount =itemLineCount;
         _onePhotoView.spacing =3;
         _onePhotoView.delegate = self;
         _onePhotoView.addImageName = Jh_AddIcon;
@@ -121,23 +119,25 @@
 - (void)photoView:(HXPhotoView *)photoView changeComplete:(NSArray<HXPhotoModel *> *)allList photos:(NSArray<HXPhotoModel *> *)photos videos:(NSArray<HXPhotoModel *> *)videos original:(BOOL)isOriginal {
     
     self.selectImgArr = allList;
-    NSSLog(@" 选择图片cell - allList %@",allList);
-   
-    //获取原图
-    [self.toolManager getSelectedImageList:self.selectImgArr requestType:HXDatePhotoToolManagerRequestTypeOriginal success:^(NSArray<UIImage *> *imageList) {
-        self.selectImgArr = imageList;
-        NSSLog(@" 选择图片cell - selectImgArr %@",self.selectImgArr);
+
+   //获取原图
+    [photos hx_requestImageWithOriginal:YES completion:^(NSArray<UIImage *> * _Nullable imageArray, NSArray<HXPhotoModel *> * _Nullable errorArray) {
+        self.selectImgArr = imageArray;
+//        NSSLog(@" 选择图片cell - selectImgArr %@",self.selectImgArr);
         self.data.Jh_imageArr = self.selectImgArr;
-        
-        
-    } failed:^{
-        
     }];
     
-    
    [self Jh_reloadData];
+
     
 }
+
+- (void)photoView:(HXPhotoView *)photoView updateFrame:(CGRect)frame {
+        
+    self.onePhotoView.frame = frame;
+    
+}
+
 
 #pragma mark -- 刷新当前图片数据
 - (void)Jh_reloadData {
@@ -199,39 +199,58 @@
             self.tipsLabel.textColor = data.Jh_tipsInfoColor;
         }
     }
+    
+    self.onePhotoView.hideDeleteButton = data.Jh_hideDeleteButton;
+    
     if (data.Jh_Cell_NoEdit == YES) {
         self.userInteractionEnabled = NO;
     }else{
         self.userInteractionEnabled = YES;
     }
+  
+
+
 
     
 }
+
 
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    //标题固定top
-    CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
-    self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, Jh_SCRREN_WIDTH - 2*Jh_EdgeMargin, Jh_TitleHeight);
-    
-    /********************************* 底部加线 ********************************/
-    
-    self.line1.frame= CGRectMake(Jh_LineEdgeMargin,CGRectGetMaxY(self.titleLabel.frame)+10, Jh_SCRREN_WIDTH - Jh_LineEdgeMargin, 1);
-    
-    /********************************* 底部加线 ********************************/
-    
-    self.BottomImageBgView.frame = CGRectMake(0, CGRectGetMaxY(_line1.frame)+10, Jh_SCRREN_WIDTH, self.bounds.size.height - CGRectGetMaxY(_line1.frame)-20);
-
-    if (_data.Jh_tipsInfo.length) {
-        self.tipsLabel.frame = CGRectMake(Jh_Margin_left, self.bounds.size.height-25, Jh_SCRREN_WIDTH-Jh_Margin_left*2, 15);
+    if (_data.Jh_title.length) {
+        //标题固定top
+        CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
+        self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, Jh_SCRREN_WIDTH - 2*Jh_EdgeMargin, Jh_TitleHeight);
+        self.line1.frame= CGRectMake(Jh_LineEdgeMargin,CGRectGetMaxY(self.titleLabel.frame)+Jh_EdgeMargin, Jh_SCRREN_WIDTH - Jh_LineEdgeMargin, 1);
+        self.BottomImageBgView.frame = CGRectMake(0, CGRectGetMaxY(_line1.frame)+10, Jh_SCRREN_WIDTH, CGRectGetHeight(self.onePhotoView.frame)+10);
+    }else{
+        self.BottomImageBgView.frame = CGRectMake(0,10, Jh_SCRREN_WIDTH, CGRectGetHeight(self.onePhotoView.frame)+10);
     }
     
+    if (_data.Jh_tipsInfo.length) {
+        self.tipsLabel.frame = CGRectMake(Jh_Margin_left, CGRectGetMaxY(self.BottomImageBgView.frame)+5, Jh_SCRREN_WIDTH-Jh_Margin_left*2, 15);
+    }
     
 }
 
 
+//高度自适应
++ (CGFloat)heightWithCellModelData:(JhFormCellModel *)data{
+    
+    NSInteger row =  data.Jh_imageArr.count/itemLineCount+1;
+    
+    row = row > 2?2: row ; //此处限制最多2行
+    
+    CGFloat titleHeight = data.Jh_title.length ? Jh_TitleHeight+1 +Jh_EdgeMargin*2 : 0 ;
+    CGFloat tipHeight = data.Jh_tipsInfo.length ? 25 : 0 ;
+    
+    CGFloat height = titleHeight+10+itemH*row +10+tipHeight+5;
+    
+    return height;
+    
+}
 
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

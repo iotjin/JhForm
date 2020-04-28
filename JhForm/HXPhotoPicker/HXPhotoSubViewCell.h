@@ -19,6 +19,10 @@
 #import <YYWebImage/YYWebImage.h>
 #elif __has_include("YYWebImage.h")
 #import "YYWebImage.h"
+#elif __has_include(<YYKit/YYKit.h>)
+#import <YYKit/YYKit.h>
+#elif __has_include("YYKit.h")
+#import "YYKit.h"
 #endif
 
 @protocol HXPhotoSubViewCellDelegate <NSObject>
@@ -31,15 +35,14 @@
 @property (weak, nonatomic) id<HXPhotoSubViewCellDelegate> delegate;
 @property (strong, nonatomic, readonly) UIImageView *imageView;
 
-
+@property (assign, nonatomic) BOOL canEdit;
+@property (strong, nonatomic) UIView *highlightMaskView;
 @property (strong, nonatomic) HXPhotoModel *model;
 /**  删除按钮图片  */
 @property (copy, nonatomic) NSString *deleteImageName;
 /**  隐藏cell上的删除按钮  */
 @property (assign, nonatomic) BOOL hideDeleteButton;
-/**
- 删除网络图片时是否显示Alert  
- */
+/**  删除网络图片时是否显示Alert  */
 @property (assign, nonatomic) BOOL showDeleteNetworkPhotoAlert;
 // 重新下载
 - (void)againDownload;

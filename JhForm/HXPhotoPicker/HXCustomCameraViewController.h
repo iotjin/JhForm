@@ -21,7 +21,15 @@ typedef void (^ HXCustomCameraViewControllerDidCancelBlock)(HXCustomCameraViewCo
 
 @protocol HXCustomCameraViewControllerDelegate <NSObject>
 @optional
-- (void)customCameraViewController:(HXCustomCameraViewController *)viewController didDone:(HXPhotoModel *)model;
+
+/// 拍照/录制完成
+/// @param viewController self
+/// @param model 资源模型
+- (void)customCameraViewController:(HXCustomCameraViewController *)viewController
+                           didDone:(HXPhotoModel *)model;
+
+/// 取消
+/// @param viewController self
 - (void)customCameraViewControllerDidCancel:(HXCustomCameraViewController *)viewController;
 @end
 
@@ -45,7 +53,7 @@ typedef void (^ HXCustomCameraViewControllerDidCancelBlock)(HXCustomCameraViewCo
 @property (assign ,nonatomic) BOOL animating;
 @property (assign, nonatomic) HXCustomCameraBottomViewMode mode;
 - (instancetype)initWithFrame:(CGRect)frame manager:(HXPhotoManager *)manager isOutside:(BOOL)isOutside;
-- (void)changeTime:(NSInteger)time;
+- (void)changeTime:(NSTimeInterval)time;
 - (void)startRecord;
 - (void)stopRecord;
 - (void)beganAnimate;

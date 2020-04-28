@@ -216,7 +216,18 @@
     
     
     
-    
+    if (@available(iOS 13.0, *)) {
+        
+        if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            headerV.backgroundColor = [UIColor systemBackgroundColor];
+            footerV.backgroundColor = [UIColor systemBackgroundColor];
+            headerV2.backgroundColor = [UIColor systemBackgroundColor];
+        }else {
+            headerV.backgroundColor = BaseBgWhiteColor;
+            footerV.backgroundColor = BaseBgWhiteColor;
+            headerV2.backgroundColor = BaseBgWhiteColor;
+        }
+    }
     
     
     

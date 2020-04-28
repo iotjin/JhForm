@@ -11,7 +11,6 @@
 #import "UIImage+HXExtension.h"
 #import "HXPhotoManager.h"
 #import <sys/utsname.h>
-#import "HXDatePhotoToolManager.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 @implementation HXPhotoTools
 
@@ -25,7 +24,7 @@
         }
     }];
     return geoCoder;
-//    __block NSMutableArray *placemarkArray = [NSMutableArray array];
+//    NSMutableArray *placemarkArray = [NSMutableArray array];
 //    NSInteger locationCount = 0;
 //    for (HXPhotoModel *subModel in model.photoModelArray) {
 //        if (subModel.asset.location) {
@@ -41,19 +40,21 @@
 //            locationCount++;
 //        }
 //    }
-}  
+}
+
 /**
  获取视频的时长
- */
-+ (NSString *)getNewTimeFromDurationSecond:(NSInteger)duration {
+ */  
++ (NSString *)transformVideoTimeToString:(NSTimeInterval)duration {
+    NSInteger time = roundf(duration);
     NSString *newTime;
-    if (duration < 10) {
-        newTime = [NSString stringWithFormat:@"00:0%zd",duration];
-    } else if (duration < 60) {
-        newTime = [NSString stringWithFormat:@"00:%zd",duration];
+    if (time < 10) {
+        newTime = [NSString stringWithFormat:@"00:0%zd",time];
+    } else if (time < 60) {
+        newTime = [NSString stringWithFormat:@"00:%zd",time];
     } else {
-        NSInteger min = duration / 60;
-        NSInteger sec = duration - (min * 60);
+        NSInteger min = roundf(time / 60);
+        NSInteger sec = time - (min * 60);
         if (sec < 10) {
             newTime = [NSString stringWithFormat:@"%zd:0%zd",min,sec];
         } else {
@@ -63,57 +64,25 @@
     return newTime;
 }
 
-/**
- 相册名称转换
- */
-+ (NSString *)transFormPhotoTitle:(NSString *)englishName {
-    NSString *photoName; 
-    if ([englishName isEqualToString:@"Bursts"]) {
-        photoName = @"连拍快照";
-    }else if([englishName isEqualToString:@"Recently Added"] ||
-             [englishName isEqualToString:@"最後に追加した項目"] ||
-             [englishName isEqualToString:@"최근 추가된 항목"] ){
-        photoName = @"最近添加";
-    }else if([englishName isEqualToString:@"Screenshots"] ||
-             [englishName isEqualToString:@"スクリーンショット"] ||
-             [englishName isEqualToString:@"스크린샷"] ){
-        photoName = @"屏幕快照";
-    }else if([englishName isEqualToString:@"Camera Roll"] ||
-             [englishName isEqualToString:@"カメラロール"] ||
-             [englishName isEqualToString:@"카메라 롤"] ){
-        photoName = @"相机胶卷";
-    }else if([englishName isEqualToString:@"Selfies"] ||
-             [englishName isEqualToString:@"셀카"] ){
-        photoName = @"自拍";
-    }else if([englishName isEqualToString:@"My Photo Stream"]){
-        photoName = @"我的照片流";
-    }else if([englishName isEqualToString:@"Videos"] ||
-             [englishName isEqualToString:@"ビデオ"] ){
-        photoName = @"视频";
-    }else if([englishName isEqualToString:@"All Photos"] ||
-             [englishName isEqualToString:@"すべての写真"] ||
-             [englishName isEqualToString:@"비디오"] ){
-        photoName = @"所有照片";
-    }else if([englishName isEqualToString:@"Slo-mo"] ||
-             [englishName isEqualToString:@"スローモーション"] ){
-        photoName = @"慢动作";
-    }else if([englishName isEqualToString:@"Recently Deleted"] ||
-             [englishName isEqualToString:@"最近削除した項目"] ){
-        photoName = @"最近删除";
-    }else if([englishName isEqualToString:@"Favorites"] ||
-             [englishName isEqualToString:@"お気に入り"] ||
-             [englishName isEqualToString:@"최근 삭제된 항목"] ){
-        photoName = @"个人收藏";
-    }else if([englishName isEqualToString:@"Panoramas"] ||
-             [englishName isEqualToString:@"パノラマ"] ||
-             [englishName isEqualToString:@"파노라마"] ){
-        photoName = @"全景照片";
-    }else {
-        photoName = englishName;
++ (BOOL)assetIsHEIF:(PHAsset *)asset {
+    if (!asset) return NO;
+    __block BOOL isHEIF = NO;
+    if (HX_IOS9Later) {
+        NSArray *resourceList = [PHAssetResource assetResourcesForAsset:asset];
+        [resourceList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            PHAssetResource *resource = obj;
+            NSString *UTI = resource.uniformTypeIdentifier;
+            if ([UTI isEqualToString:@"public.heif"] || [UTI isEqualToString:@"public.heic"]) {
+                isHEIF = YES;
+                *stop = YES;
+            }
+        }];
+    } else {
+        NSString *UTI = [asset valueForKey:@"uniformTypeIdentifier"];
+        isHEIF = [UTI isEqualToString:@"public.heif"] || [UTI isEqualToString:@"public.heic"];
     }
-    return photoName;
+    return isHEIF;
 }
-
 + (void)FetchPhotosBytes:(NSArray *)photos completion:(void (^)(NSString *))completion
 {
     __block NSInteger dataLength = 0;
@@ -161,47 +130,8 @@
             }
         }
     });
-}
-
-+ (void)getVideoEachFrameWithAsset:(AVAsset *)asset total:(NSInteger)total size:(CGSize)size complete:(void (^)(AVAsset *, NSArray<UIImage *> *))complete {
-    long duration = round(asset.duration.value) / asset.duration.timescale;
-    
-    NSTimeInterval average = (CGFloat)duration / (CGFloat)total;
-    
-    AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-    generator.maximumSize = size;
-    generator.appliesPreferredTrackTransform = YES;
-    generator.requestedTimeToleranceBefore = kCMTimeZero;
-    generator.requestedTimeToleranceAfter = kCMTimeZero;
-    
-    NSMutableArray *arr = [NSMutableArray array];
-    for (int i = 1; i <= total; i++) {
-        CMTime time = CMTimeMake((i * average) * asset.duration.timescale, asset.duration.timescale);
-        NSValue *value = [NSValue valueWithCMTime:time];
-        [arr addObject:value];
-    }
-    NSMutableArray *arrImages = [NSMutableArray array];
-    __block long count = 0;
-    [generator generateCGImagesAsynchronouslyForTimes:arr completionHandler:^(CMTime requestedTime, CGImageRef  _Nullable image, CMTime actualTime, AVAssetImageGeneratorResult result, NSError * _Nullable error) {
-        switch (result) {
-            case AVAssetImageGeneratorSucceeded:
-                [arrImages addObject:[UIImage imageWithCGImage:image]];
-                break;
-            case AVAssetImageGeneratorFailed:
-                
-                break;
-            case AVAssetImageGeneratorCancelled:
-                
-                break;
-        }
-        count++;
-        if (count == arr.count && complete) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                complete(asset, arrImages);
-            });
-        }
-    }];
-}
+} 
+ 
 
 + (void)requestAuthorization:(UIViewController *)viewController
                         handler:(void (^)(PHAuthorizationStatus status))handler {
@@ -210,6 +140,7 @@
         if (handler) handler(status);
     }else if (status == PHAuthorizationStatusDenied ||
               status == PHAuthorizationStatusRestricted) {
+                  if (handler) handler(status);
         [self showNoAuthorizedAlertWithViewController:viewController];
     }else {
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
@@ -217,6 +148,8 @@
                 if (handler) handler(status);
                 if (status != PHAuthorizationStatusAuthorized) {
                     [self showNoAuthorizedAlertWithViewController:viewController];
+                }else {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"HXPhotoRequestAuthorizationCompletion" object:nil];
                 }
             });
         }];
@@ -227,9 +160,55 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
     });
 }
-+ (NSString *)getBytesFromDataLength:(NSInteger)dataLength {
+
++ (void)exportEditVideoForAVAsset:(AVAsset *)asset
+                        timeRange:(CMTimeRange)timeRange
+                       presetName:(NSString *)presetName
+                          success:(void (^)(NSURL *))success
+                           failed:(void (^)(NSError *))failed {
+    
+    NSArray *presets = [AVAssetExportSession exportPresetsCompatibleWithAsset:asset];
+    if ([presets containsObject:presetName]) {
+        NSString *fileName = [[NSString hx_fileName] stringByAppendingString:@".mp4"];
+        NSString *fullPathToFile = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
+        NSURL *videoURL = [NSURL fileURLWithPath:fullPathToFile];
+        AVAssetExportSession *exportSession = [[AVAssetExportSession alloc] initWithAsset:asset presetName:presetName];
+        exportSession.outputURL = videoURL;
+        NSArray *supportedTypeArray = exportSession.supportedFileTypes;
+        if ([supportedTypeArray containsObject:AVFileTypeMPEG4]) {
+            exportSession.outputFileType = AVFileTypeMPEG4;
+        } else if (supportedTypeArray.count == 0) {
+            if (failed) {
+                failed([NSError errorWithDomain:@"不支持导入该类型视频" code:-222 userInfo:nil]);
+            }
+            return;
+        }else {
+            exportSession.outputFileType = [supportedTypeArray objectAtIndex:0];
+        }
+        exportSession.timeRange = timeRange;
+        
+        [exportSession exportAsynchronouslyWithCompletionHandler:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (exportSession.status == AVAssetExportSessionStatusCompleted) {
+                    if (success) {
+                        success(videoURL);
+                    }
+                }else {
+                    if (failed) {
+                        failed(exportSession.error);
+                    }
+                }
+            });
+        }];
+    }else {
+        if (failed) {
+            failed([NSError errorWithDomain:[NSString stringWithFormat:@"该设备不支持:%@",presetName] code:-111 userInfo:nil]); 
+        }
+    }
+}
++ (NSString *)getBytesFromDataLength:(NSUInteger)dataLength {
     NSString *bytes;
-    if (dataLength >= 0.1 * (1024 * 1024)) {
+    if (dataLength >= 0.5 * (1024 * 1024)) {
         bytes = [NSString stringWithFormat:@"%0.1fM",dataLength/1024/1024.0];
     } else if (dataLength >= 1024) {
         bytes = [NSString stringWithFormat:@"%0.0fK",dataLength/1024.0];
@@ -239,9 +218,9 @@
     return bytes;
 }
 
-
 + (void)saveVideoToCustomAlbumWithName:(NSString *)albumName
                               videoURL:(NSURL *)videoURL
+                              location:(CLLocation *)location
                               complete:(void (^)(HXPhotoModel *model, BOOL success))complete {
     if (!videoURL) {
         if (complete) {
@@ -264,6 +243,8 @@
                     UISaveVideoAtPathToSavedPhotosAlbum([videoURL path], nil, nil, nil);
                     if (complete) {
                         HXPhotoModel *photoModel = [HXPhotoModel photoModelWithVideoURL:videoURL];
+                        photoModel.creationDate = [NSDate date];
+                        photoModel.location = location;
                         complete(photoModel, YES);
                     }
                 }else {
@@ -277,7 +258,10 @@
             // 保存相片到相机胶卷
             __block PHObjectPlaceholder *createdAsset = nil;
             [[PHPhotoLibrary sharedPhotoLibrary] performChangesAndWait:^{
-                createdAsset = [PHAssetCreationRequest creationRequestForAssetFromVideoAtFileURL:videoURL].placeholderForCreatedAsset;
+                PHAssetCreationRequest *creationRequest = [PHAssetCreationRequest creationRequestForAssetFromVideoAtFileURL:videoURL];
+                creationRequest.creationDate = [NSDate date];
+                creationRequest.location = location;
+                createdAsset = creationRequest.placeholderForCreatedAsset;
             } error:&error];
             
             if (error) {
@@ -290,6 +274,7 @@
                 if (createdAsset.localIdentifier) {
                     if (complete) {
                         HXPhotoModel *photoModel = [HXPhotoModel photoModelWithPHAsset:[[PHAsset fetchAssetsWithLocalIdentifiers:@[createdAsset.localIdentifier] options:nil] firstObject]];
+                        photoModel.creationDate = [NSDate date];
                         complete(photoModel, YES);
                     }
                 }
@@ -316,9 +301,13 @@
 }
 
 + (void)saveVideoToCustomAlbumWithName:(NSString *)albumName videoURL:(NSURL *)videoURL {
-    [self saveVideoToCustomAlbumWithName:albumName videoURL:videoURL complete:nil];
+    [self saveVideoToCustomAlbumWithName:albumName videoURL:videoURL location:nil complete:nil];
 }
-+ (void)savePhotoToCustomAlbumWithName:(NSString *)albumName photo:(UIImage *)photo complete:(void (^)(HXPhotoModel *, BOOL))complete {
+
++ (void)savePhotoToCustomAlbumWithName:(NSString *)albumName
+                                 photo:(UIImage *)photo
+                              location:(CLLocation *)location
+                              complete:(void (^)(HXPhotoModel *model, BOOL success))complete {
     if (!photo) {
         if (complete) {
             complete(nil, NO);
@@ -337,6 +326,8 @@
                 UIImageWriteToSavedPhotosAlbum(tempImage, nil, nil, nil);
                 if (complete) {
                     HXPhotoModel *photoModel = [HXPhotoModel photoModelWithImage:tempImage];
+                    photoModel.creationDate = [NSDate date];
+                    photoModel.location = location;
                     complete(photoModel, YES);
                 }
                 return;
@@ -345,7 +336,10 @@
             // 保存相片到相机胶卷
             __block PHObjectPlaceholder *createdAsset = nil;
             [[PHPhotoLibrary sharedPhotoLibrary] performChangesAndWait:^{
-                createdAsset = [PHAssetCreationRequest creationRequestForAssetFromImage:photo].placeholderForCreatedAsset;
+                PHAssetCreationRequest *creationRequest = [PHAssetCreationRequest creationRequestForAssetFromImage:photo];
+                creationRequest.creationDate = [NSDate date];
+                creationRequest.location = location;
+                createdAsset = creationRequest.placeholderForCreatedAsset;
             } error:&error];
             
             if (error) {
@@ -357,6 +351,7 @@
             }else {
                 if (complete && createdAsset.localIdentifier) {
                     HXPhotoModel *photoModel = [HXPhotoModel photoModelWithPHAsset:[[PHAsset fetchAssetsWithLocalIdentifiers:@[createdAsset.localIdentifier] options:nil] firstObject]];
+                    photoModel.creationDate = [NSDate date];
                     complete(photoModel, YES);
                 }
             }
@@ -379,9 +374,9 @@
             }
         });
     }];
-}
+} 
 + (void)savePhotoToCustomAlbumWithName:(NSString *)albumName photo:(UIImage *)photo {
-    [self savePhotoToCustomAlbumWithName:albumName photo:photo complete:nil];
+    [self savePhotoToCustomAlbumWithName:albumName photo:photo location:nil complete:nil];
 }
 // 创建自己要创建的自定义相册
 + (PHAssetCollection * )createCollection:(NSString *)albumName {
@@ -462,365 +457,31 @@
         have = YES;
     } 
     return have;
-} 
- 
+}
 
-/********************分割线*********************/
-+ (NSString *)uploadFileName {
-    CFUUIDRef uuid = CFUUIDCreate(nil);
-    NSString *uuidString = (__bridge_transfer NSString*)CFUUIDCreateString(nil, uuid);
-    CFRelease(uuid);
-    NSString *uuidStr = [[uuidString stringByReplacingOccurrencesOfString:@"-" withString:@""] lowercaseString];
-    NSString *name = [NSString stringWithFormat:@"%@",uuidStr];
-    
-    NSString *fileName = @"";
-    NSDate *nowDate = [NSDate date];
-    NSString *dateStr = [NSString stringWithFormat:@"%ld", (long)[nowDate timeIntervalSince1970]];
-    NSString *numStr = [NSString stringWithFormat:@"%d",arc4random()%10000];
-    fileName = [fileName stringByAppendingString:@"hx"];
-    fileName = [fileName stringByAppendingString:dateStr];
-    fileName = [fileName stringByAppendingString:numStr];
-    
-    return [NSString stringWithFormat:@"%@%@",name,fileName];
-}
-+ (void)selectListWriteToTempPath:(NSArray *)selectList requestList:(void (^)(NSArray *imageRequestIds, NSArray *videoSessions))requestList completion:(void (^)(NSArray<NSURL *> *allUrl, NSArray<NSURL *> *imageUrls, NSArray<NSURL *> *videoUrls))completion error:(void (^)(void))error {
-    if (selectList.count == 0) {
-        if (HXShowLog) NSSLog(@"请选择后再写入");
-        if (error) {
-            error();
-        }
-        return;
++ (BOOL)FileExistsAtVideoURL:(NSURL *)videoURL {
+    if (!videoURL) {
+        return NO;
     }
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSMutableArray *allUrl = [NSMutableArray array];
-        NSMutableArray *imageUrls = [NSMutableArray array];
-        NSMutableArray *videoUrls = [NSMutableArray array];
-        for (HXPhotoModel *photoModel in selectList) {
-            if (photoModel.subType == HXPhotoModelMediaSubTypePhoto) {
-                NSString *suffix;
-                if (photoModel.asset) {
-                    if (photoModel.type == HXPhotoModelMediaTypePhotoGif) {
-                        suffix = @"gif";
-                    }else if ([[photoModel.asset valueForKey:@"filename"] hasSuffix:@"JPG"]) {
-                        suffix = @"jpeg";
-                    }else {
-                        suffix = @"png";
-                    }
-                }else {
-                    if (!photoModel.previewPhoto) {
-                        photoModel.previewPhoto = photoModel.thumbPhoto;
-                    }
-                    if (UIImagePNGRepresentation(photoModel.previewPhoto)) {
-                        suffix = @"png";
-                    }else {
-                        suffix = @"jpeg";
-                    }
-                }
-                NSString *fileName = [[self uploadFileName] stringByAppendingString:[NSString stringWithFormat:@".%@",suffix]];
-                NSString *fullPathToFile = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
-                photoModel.fullPathToFile = fullPathToFile;
-                [imageUrls addObject:[NSURL fileURLWithPath:fullPathToFile]];
-                [allUrl addObject:[NSURL fileURLWithPath:fullPathToFile]];
-            }else {
-                NSString *fileName = [[self uploadFileName] stringByAppendingString:@".mp4"];
-                NSString *fullPathToFile = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
-                photoModel.fullPathToFile = fullPathToFile;
-                [videoUrls addObject:[NSURL fileURLWithPath:fullPathToFile]];
-                [allUrl addObject:[NSURL fileURLWithPath:fullPathToFile]];
-            }
-        }
-        __block NSInteger i = 0 ,k = 0 , j = 0;
-        __block NSInteger imageCount = imageUrls.count , videoCount = videoUrls.count , count = selectList.count , requestIndex = 0;
-        __block BOOL writeError = NO;
-        __block NSMutableArray *requestIds = [NSMutableArray array];
-        __block NSMutableArray *videoSessions = [NSMutableArray array];
-        for (HXPhotoModel *photoModel in selectList) {
-            if (writeError) {
-                break;
-            }
-            if (photoModel.subType == HXPhotoModelMediaSubTypePhoto) {
-                [self writeOriginalImageToTempWith:photoModel requestId:^(PHImageRequestID requestId) {
-                    requestIndex++;
-                    [requestIds addObject:@(requestId)];
-                    if (requestIndex >= count) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            if (requestList) {
-                                requestList(requestIds,videoSessions);
-                            }
-                        });
-                    }
-                } iCloudRequestId:^(PHImageRequestID requestId) {
-                    [requestIds addObject:@(requestId)];
-                    if (requestIndex >= count) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            if (requestList) {
-                                requestList(requestIds,videoSessions);
-                            }
-                        });
-                    }
-                } success:^{
-                    i++;
-                    k++;
-                    if (k == imageCount && !writeError) {
-                        if (HXShowLog) NSSLog(@"图片写入成功");
-                    }
-                    if (i == count && !writeError) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            if (completion) {
-                                completion(allUrl,imageUrls,videoUrls);
-                            }
-                        });
-                    }
-                } failure:^{
-                    if (!writeError) {
-                        writeError = YES;
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            if (error) {
-                                error();
-                            }
-                        });
-                    }
-                }];
-            } else {
-                HXWeakSelf
-                if (photoModel.asset) {
-                    PHImageRequestID requestId = [photoModel requestAVAssetStartRequestICloud:^(PHImageRequestID iCloudRequestId, HXPhotoModel *model) {
-                        [requestIds addObject:@(iCloudRequestId)];
-                        if (requestIndex >= count) {
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                if (requestList) {
-                                    requestList(requestIds,videoSessions);
-                                }
-                            });
-                        }
-                    } progressHandler:nil success:^(AVAsset *avAsset, AVAudioMix *audioMix, HXPhotoModel *model, NSDictionary *info) {
-                        AVAssetExportSession * session = [weakSelf compressedVideoWithMediumQualityWriteToTemp:avAsset pathFile:model.fullPathToFile progress:^(float progress) {
-                            
-                        } success:^{
-                            i++;
-                            j++;
-                            if (j == videoCount && !writeError) {
-                                if (HXShowLog) NSSLog(@"视频写入成功");
-                            }
-                            if (i == count && !writeError) {
-                                dispatch_async(dispatch_get_main_queue(), ^{
-                                    if (completion) {
-                                        completion(allUrl,imageUrls,videoUrls);
-                                    }
-                                });
-                            }
-                        } failure:^{
-                            if (!writeError) {
-                                writeError = YES;
-                                dispatch_async(dispatch_get_main_queue(), ^{
-                                    if (error) {
-                                        error();
-                                    }
-                                });
-                            }
-                        }];
-                        requestIndex++;
-                        if (session) {
-                            [videoSessions addObject:session];
-                        }
-                        
-                        if (requestIndex >= count) {
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                if (requestList) {
-                                    requestList(requestIds,videoSessions);
-                                }
-                            });
-                        }
-                    } failed:^(NSDictionary *info, HXPhotoModel *model) {
-                        if (!writeError) {
-                            writeError = YES;
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                if (error) {
-                                    error();
-                                }
-                            });
-                        }
-                    }];
-                    requestIndex++;
-                    [requestIds addObject:@(requestId)];
-                    if (requestIndex >= count) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            if (requestList) {
-                                requestList(requestIds,videoSessions);
-                            }
-                        });
-                    }
-                }else {
-                    AVAssetExportSession * session = [self compressedVideoWithMediumQualityWriteToTemp:photoModel.videoURL pathFile:photoModel.fullPathToFile progress:^(float progress) {
-                        
-                    } success:^{
-                        i++;
-                        j++;
-                        if (j == videoCount && !writeError) {
-                            if (HXShowLog) NSSLog(@"视频写入成功");
-                        }
-                        if (i == count && !writeError) {
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                if (completion) {
-                                    completion(allUrl,imageUrls,videoUrls);
-                                }
-                            });
-                        }
-                    } failure:^{
-                        if (!writeError) {
-                            writeError = YES;
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                if (error) {
-                                    error();
-                                }
-                            });
-                        }
-                    }];
-                    requestIndex++;
-                    if (session) {
-                        [videoSessions addObject:session];
-                    }
-                    
-                    if (requestIndex >= count) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            if (requestList) {
-                                requestList(requestIds,videoSessions);
-                            }
-                        });
-                    }
-                }
-            }
-        }
-    });
-}
-+ (void)writeOriginalImageToTempWith:(HXPhotoModel *)model requestId:(void (^)(PHImageRequestID requestId))requestId iCloudRequestId:(void (^)(PHImageRequestID requestId))iCloudRequestId success:(void (^)(void))success failure:(void (^)(void))failure {
-    if (model.asset) { // asset有值说明是系统相册里的照片
-        if (model.type == HXPhotoModelMediaTypePhotoGif) {
-            // 根据asset获取imageData
-            PHImageRequestID request_Id = [model requestImageDataStartRequestICloud:^(PHImageRequestID iCloudRequestId1, HXPhotoModel *model) {
-                if (HXShowLog) NSSLog(@"正在请求下载iCloud");
-                if (iCloudRequestId) {
-                    iCloudRequestId(iCloudRequestId1);
-                }
-            } progressHandler:^(double progress, HXPhotoModel *model) {
-                if (HXShowLog) NSSLog(@"iCloud下载进度 %f ",progress);
-            } success:^(NSData *imageData, UIImageOrientation orientation, HXPhotoModel *model, NSDictionary *info) {
-                // 将imageData 写入临时目录
-                if ([imageData writeToFile:model.fullPathToFile atomically:YES]) {
-                    if (success) {
-                        success();
-                    }
-                } else {
-                    if (failure) {
-                        failure();
-                    }
-                }
-            } failed:^(NSDictionary *info, HXPhotoModel *model) {
-                if (failure) {
-                    failure();
-                }
-            }]; 
-            if (requestId) {
-                requestId(request_Id);
-            }
-        }else {
-            CGFloat width = [UIScreen mainScreen].bounds.size.width;
-            CGFloat height = [UIScreen mainScreen].bounds.size.height;
-            CGFloat imgWidth = model.imageSize.width;
-            CGFloat imgHeight = model.imageSize.height;
-            
-            CGSize size;
-            if (imgHeight > imgWidth / 9 * 17) {
-                size = CGSizeMake(width, height);
-            }else {
-                size = CGSizeMake(model.endImageSize.width * 1.5, model.endImageSize.height * 1.5);
-            }
-            PHImageRequestID request_Id = [model requestPreviewImageWithSize:size startRequestICloud:^(PHImageRequestID iCloudRequestId1, HXPhotoModel *model) {
-                if (HXShowLog) NSSLog(@"正在请求下载iCloud");
-                if (iCloudRequestId) {
-                    iCloudRequestId(iCloudRequestId1);
-                }
-            } progressHandler:^(double progress, HXPhotoModel *model) {
-                if (HXShowLog) NSSLog(@"iCloud下载进度 %f ",progress);
-            } success:^(UIImage *image, HXPhotoModel *model, NSDictionary *info) {
-                NSData *imageData;
-                if (image.imageOrientation != UIImageOrientationUp) {
-                    image = [image hx_normalizedImage];
-                }
-                imageData = UIImageJPEGRepresentation(image, 1.0);
-                if ([imageData writeToFile:model.fullPathToFile atomically:YES]) {
-                    if (success) {
-                        success();
-                    }
-                } else {
-                    if (failure) {
-                        failure();
-                    }
-                }
-            } failed:^(NSDictionary *info, HXPhotoModel *model) {
-                if (failure) {
-                    failure();
-                }
-            }];
-            if (requestId) {
-                requestId(request_Id);
-            }
-        }
+    NSString * downloadPath = HXPhotoPickerDownloadVideosPath;
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+    NSString *fullPathToFile = [self getVideoURLFilePath:videoURL];
+    if (![fileManager fileExistsAtPath:downloadPath]) {
+        [fileManager createDirectoryAtPath:downloadPath withIntermediateDirectories:YES attributes:nil error:nil];
     }else {
-        NSData *imageData;
-        imageData = UIImageJPEGRepresentation(model.previewPhoto, 0.8);
-        if ([imageData writeToFile:model.fullPathToFile atomically:YES]) {
-            if (success) {
-                success();
-            }
-        }else {
-            if (failure) {
-                failure();
-            }
+        if ([fileManager fileExistsAtPath:fullPathToFile]) {
+            return YES;
         }
     }
+    return NO;
 }
-+ (AVAssetExportSession *)compressedVideoWithMediumQualityWriteToTemp:(id)obj pathFile:(NSString *)pathFile progress:(void (^)(float progress))progress success:(void (^)(void))success failure:(void (^)(void))failure {
-    AVAsset *avAsset;
-    if ([obj isKindOfClass:[AVAsset class]]) {
-        avAsset = (AVAsset *)obj;
-    }else if ([obj isKindOfClass:[NSURL class]]){
-        avAsset = [AVURLAsset URLAssetWithURL:(NSURL *)obj options:nil];
-    }else {
-        if (failure) {
-            failure();
-        }
+
++ (NSString *)getVideoURLFilePath:(NSURL *)videoURL {
+    if (!videoURL) {
         return nil;
     }
-    NSArray *compatiblePresets = [AVAssetExportSession exportPresetsCompatibleWithAsset:avAsset];
-    if ([compatiblePresets containsObject:AVAssetExportPresetHighestQuality]) {
-        AVAssetExportSession *exportSession = [[AVAssetExportSession alloc] initWithAsset:avAsset presetName:AVAssetExportPresetMediumQuality];
-        exportSession.outputURL = [NSURL fileURLWithPath:pathFile];
-        exportSession.outputFileType = AVFileTypeMPEG4;
-        exportSession.shouldOptimizeForNetworkUse = YES;
-        
-        [exportSession exportAsynchronouslyWithCompletionHandler:^{
-            if ([exportSession status] == AVAssetExportSessionStatusCompleted) {
-                if (success) {
-                    success();
-                }
-            }else if ([exportSession status] == AVAssetExportSessionStatusFailed){
-                if (failure) {
-                    failure();
-                }
-            }else if ([exportSession status] == AVAssetExportSessionStatusCancelled) {
-                if (failure) {
-                    failure();
-                }
-            }
-        }];
-        return exportSession;
-    }else {
-        if (failure) {
-            failure();
-        }
-        
-        return nil;
-    }
+    NSString * fileName = [videoURL.absoluteString stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
+    NSString *fullPathToFile = [HXPhotoPickerDownloadVideosPath stringByAppendingPathComponent:fileName];
+    return fullPathToFile;
 }
 @end
