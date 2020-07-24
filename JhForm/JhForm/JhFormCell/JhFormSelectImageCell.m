@@ -239,7 +239,12 @@
 //高度自适应
 + (CGFloat)heightWithCellModelData:(JhFormCellModel *)data{
     
-    NSInteger row =  data.Jh_imageArr.count/itemLineCount+1;
+    NSInteger row = 1;
+    if (data.Jh_noShowAddImgBtn == YES) {
+        row = data.Jh_imageArr.count <= itemLineCount ? 1 : 2;
+    }else{
+        row = data.Jh_imageArr.count/itemLineCount+1;
+    }
     
     row = row > 2?2: row ; //此处限制最多2行
     

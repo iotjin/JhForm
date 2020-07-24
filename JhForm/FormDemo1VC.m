@@ -143,7 +143,9 @@
     JhFormCellModel *urlPicture = JhFormCellModel_AddImageCell(@"加载网络图片:", NO);
 //    urlPicture.Jh_noShowAddImgBtn=YES;
 //    urlPicture.Jh_hideDeleteButton = YES;
-    urlPicture.Jh_imageArr =@[@"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_00.png",@"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_05.png",@"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.png"];
+    urlPicture.Jh_imageArr =@[@"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_00.png",
+                              @"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_05.png",
+                              @"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.png"];
     
     JhFormCellModel *picture_noTitle = JhFormCellModel_AddImageCell(@"", NO);
     picture_noTitle.Jh_maxImageCount = 2;
