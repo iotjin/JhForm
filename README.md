@@ -18,6 +18,7 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
 
 ## 更新说明
 
+* 2020.07.24 - JhFormSelectImageCell高度自适应，无加号按钮 优化 <br>
 * 2020.04.28 - HXPhotoPicker更新至v2.4.2版本，JhFormSelectImageCell高度自适应 <br>
 * 2020.01.14 - 优化图片动态更新 <br>
 * 2019.10.16 - 适配iOS13暗黑模式(默认跟随系统自动切换,可控制某个页面一直处于light模式) <br>
