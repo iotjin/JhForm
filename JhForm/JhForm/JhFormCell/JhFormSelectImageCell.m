@@ -243,7 +243,7 @@
     if (data.Jh_noShowAddImgBtn == YES) {
         row = data.Jh_imageArr.count <= itemLineCount ? 1 : 2;
     }else{
-        row = data.Jh_imageArr.count/itemLineCount+1;
+        row = data.Jh_maxImageCount>itemLineCount && data.Jh_imageArr.count >= itemLineCount ?2:1;
     }
     
     row = row > 2?2: row ; //此处限制最多2行
