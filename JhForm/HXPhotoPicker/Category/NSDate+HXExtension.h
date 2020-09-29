@@ -1,6 +1,6 @@
 //
 //  NSDate+HXExtension.h
-//  照片选择器
+//  HXPhotoPicker-Demo
 //
 //  Created by 洪欣 on 2017/10/14.
 //  Copyright © 2017年 洪欣. All rights reserved.
@@ -48,11 +48,4 @@
  */
 - (NSString *)hx_dateStringWithFormat:(NSString *)format;
 
-/**
- 是否是同一天
-
- @param date 需要比较的NSDate
- @return yes or no
- */
-- (BOOL)hx_isSameDay:(NSDate*)date;
 @end

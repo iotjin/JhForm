@@ -1,54 +1,14 @@
 //
 //  HXPhotoConfiguration.h
-//  照片选择器
+//  HXPhotoPicker-Demo
 //
 //  Created by 洪欣 on 2017/11/21.
 //  Copyright © 2017年 洪欣. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "HXPhotoBottomConfiguration.h"
-
-
-/// 当使用了自定义相机类型时会过滤掉内部按 HXPhotoManagerSelectedType 来设置的逻辑，
-/// 将会使用自定义类型的逻辑进行设置
-typedef NS_ENUM(NSUInteger, HXPhotoCustomCameraType) {
-    HXPhotoCustomCameraTypeUnused = 0,      //!< 不使用自定义相机类型，按默认逻辑设置
-    HXPhotoCustomCameraTypePhoto = 1,       //!< 拍照
-    HXPhotoCustomCameraTypeVideo = 2,       //!< 录制
-    HXPhotoCustomCameraTypePhotoAndVideo    //!< 拍照和录制一起
-};
-
-typedef NS_ENUM(NSUInteger, HXPhotoConfigurationCameraType) {
-    HXPhotoConfigurationCameraTypePhoto = 0,        //!< 拍照
-    HXPhotoConfigurationCameraTypeVideo = 1,        //!< 录制
-    HXPhotoConfigurationCameraTypePhotoAndVideo     //!< 拍照和录制一起
-};
-
-typedef NS_ENUM(NSUInteger, HXPhotoAlbumShowMode) {
-    HXPhotoAlbumShowModeDefault = 0,    //!< 默认的
-    HXPhotoAlbumShowModePopup           //!< 弹窗
-};
-
-typedef NS_ENUM(NSUInteger, HXPhotoLanguageType) {
-    HXPhotoLanguageTypeSys = 0, //!< 跟随系统语言
-    HXPhotoLanguageTypeSc,      //!< 中文简体
-    HXPhotoLanguageTypeTc,      //!< 中文繁体
-    HXPhotoLanguageTypeJa,      //!< 日文
-    HXPhotoLanguageTypeKo,      //!< 韩文
-    HXPhotoLanguageTypeEn       //!< 英文
-};
-
-typedef NS_ENUM(NSUInteger, HXPhotoStyle) {
-    HXPhotoStyleDefault = 0,    //!< 默认
-    HXPhotoStyleDark            //!< 暗黑
-};
-
-typedef NS_ENUM(NSUInteger, HXVideoAutoPlayType) {
-    HXVideoAutoPlayTypeNormal = 0, //!< 不自动播放
-    HXVideoAutoPlayTypeWiFi,       //!< wifi网络下自动播放
-    HXVideoAutoPlayTypeAll         //!< 蜂窝移动和wifi网络下自动播放
-};
+#import "HXPhotoTypes.h"
+#import "HXPhotoEditConfiguration.h"
 
 @class
 HXPhotoBottomView,
@@ -59,6 +19,37 @@ HXPhotoPreviewViewController;
 
 @interface HXPhotoConfiguration : NSObject
 
+/// 配置类型
+/// 一键配置UI和选择逻辑
+@property (assign, nonatomic) HXConfigurationType type;
+
+/// 允许滑动的方式选择资源 - 默认允许
+/// 类似系统相册和QQ滑动选择逻辑
+@property (assign, nonatomic) BOOL allowSlidingSelection;
+
+/// 照片列表取消按钮的位置
+/// 只在 albumShowMode = HXPhotoAlbumShowModePopup 时有效
+@property (assign, nonatomic) HXPhotoListCancelButtonLocationType photoListCancelLocation;
+
+/// 照片编辑配置
+@property (strong, nonatomic) HXPhotoEditConfiguration *photoEditConfigur;
+
+/// 相机界面是否开启定位 默认 YES
+@property (assign, nonatomic) BOOL cameraCanLocation;
+
+/// 在系统相册删除资源时是否同步删除已选的同一资源
+//@property (assign, nonatomic) BOOL followSystemDeleteAssetToDeleteSelectAsset;
+
+/// 是否使用仿微信的照片编辑 默认YES
+@property (assign, nonatomic) BOOL useWxPhotoEdit;
+
+/// 选择网络视频时超出限制时长时是否裁剪 默认NO
+@property (assign, nonatomic) BOOL selectNetworkVideoCanEdit;
+
+/// 相机拍照点击完成之后是否跳转编辑界面进行编辑
+@property (assign, nonatomic) BOOL cameraPhotoJumpEdit;
+
+/// 旧版照片编辑才有效
 /// 照片编辑时底部比例选项
 /// 默认: @[@{@"原始值" : @"{0, 0}"},
 ///        @{@"正方形" : @"{1, 1}"},
@@ -69,17 +60,19 @@ HXPhotoPreviewViewController;
 @property (copy, nonatomic) NSArray *photoEditCustomRatios;
 
 /// 编辑后的照片/视频是否添加到系统相册中
+/// 只对旧版编辑有效
 /// 默认为NO
 @property (assign, nonatomic) BOOL editAssetSaveSystemAblum;
 
 /// 预览视频时是否先下载视频再播放
 /// 只有当项目有AFNetworking网络框架的时候才有用
+/// pod导入时为 HXPhotoPicker/SDWebImage_AF 或 HXPhotoPicker/YYWebImage_AF
 @property (assign, nonatomic) BOOL downloadNetworkVideo;
 
 /// 预览视频时是否自动播放
 @property (assign, nonatomic) HXVideoAutoPlayType videoAutoPlayType;
 
-/// 相机聚焦框颜色
+/// 相机聚焦框、完成按钮、录制进度的颜色
 @property (strong, nonatomic) UIColor *cameraFocusBoxColor;
 
 /// 选择视频时超出限制时长是否自动跳转编辑界面
@@ -106,11 +99,17 @@ HXPhotoPreviewViewController;
 @property (assign, nonatomic) BOOL defaultFrontCamera;
 
 /// 在照片列表选择照片完后点击完成时是否请求图片和视频地址
+/// 如果需要下载网络图片 [HXPhotoCommon photoCommon].requestNetworkAfter 设置为YES;
 /// 选中了原图则是原图，没选中则是高清图
 /// 并赋值给model的 thumbPhoto / previewPhoto / videoURL 属性
 /// 如果资源为视频 thumbPhoto 和 previewPhoto 就是视频封面
 /// model.videoURL 为视频地址
 @property (assign, nonatomic) BOOL requestImageAfterFinishingSelection;
+
+/// 当原图按钮隐藏时获取地址时是否请求原图
+/// 为YES时 requestImageAfterFinishingSelection 获取的原图
+/// 为NO时 requestImageAfterFinishingSelection 获取的不是原图
+@property (assign, nonatomic) BOOL requestOriginalImage;
 
 /// 当 requestImageAfterFinishingSelection = YES 并且选中的原图，导出的视频是否为最高质量
 /// 如果视频很大的话，导出高质量会很耗时
@@ -122,6 +121,9 @@ HXPhotoPreviewViewController;
 
 /// 跳转预览界面时动画起始的view，使用方法参考demo12里的外部预览功能
 @property (copy, nonatomic) UIView * (^customPreviewFromView)(NSInteger currentIndex);
+
+/// 跳转预览界面时动画起始的frame
+@property (copy, nonatomic) CGRect (^customPreviewFromRect)(NSInteger currentIndex);
 
 /// 跳转预览界面时展现动画的image，使用方法参考demo12里的外部预览功能
 @property (copy, nonatomic) UIImage * (^customPreviewFromImage)(NSInteger currentIndex);
@@ -188,11 +190,8 @@ HXPhotoPreviewViewController;
 @property (assign, nonatomic) BOOL restoreNavigationBar DEPRECATED_MSG_ATTRIBUTE("Invalid attribute");
 
 /// 照片列表是否按照片创建日期排序
-/// 如果按日期分隔显示时为YES
-/// 列表显示 默认NO
-/// 需要在 showDateSectionHeader set之后设置
 @property (assign, nonatomic) BOOL creationDateSort;
-
+ 
 /// 相册列表展示方式
 @property (assign, nonatomic) HXPhotoAlbumShowMode albumShowMode;
 
@@ -203,7 +202,7 @@ HXPhotoPreviewViewController;
 /// 只针对 照片、视频不能同时选并且视频只能选择1个的时候隐藏掉视频cell右上角的选择按钮
 @property (assign, nonatomic) BOOL specialModeNeedHideVideoSelectBtn;
 
-/// 视频是否可以编辑   default NO
+/// 视频是否可以编辑   default YES
 @property (assign, nonatomic) BOOL videoCanEdit;
 
 /// 是否替换照片编辑界面   default NO
@@ -233,32 +232,27 @@ HXPhotoPreviewViewController;
 /// push动画时长 default 0.45f
 @property (assign, nonatomic) NSTimeInterval pushTransitionDuration;
 
-/// po动画时长 default 0.35f
+/// pop动画时长 default 0.35f
 @property (assign, nonatomic) NSTimeInterval popTransitionDuration;
 
 /// 手势松开时返回的动画时长 default 0.35f
 @property (assign, nonatomic) NSTimeInterval popInteractiveTransitionDuration;
 
+/// 旧版照片编辑才有效
 /// 是否可移动的裁剪框
 @property (assign, nonatomic) BOOL movableCropBox;
 
-/**
- 可移动的裁剪框是否可以编辑大小
- */
+/// 旧版照片编辑才有效
+/// 可移动的裁剪框是否可以编辑大小
 @property (assign, nonatomic) BOOL movableCropBoxEditSize;
 
-/**
- 可移动裁剪框的比例 (w,h)
- 一定要是宽比高哦!!!
- 当 movableCropBox = YES && movableCropBoxEditSize = YES
- 如果不设置比例即可自由编辑大小
- */
+/// 旧版照片编辑才有效
+/// 可移动裁剪框的比例 (w,h) 一定要是宽比高哦!!!
+/// 当 movableCropBox = YES && movableCropBoxEditSize = YES 如果不设置比例即可自由编辑大小
 @property (assign, nonatomic) CGPoint movableCropBoxCustomRatio;
 
-/**
- 是否替换相机控制器
- 使用自己的相机时需要调用下面两个block
- */
+/// 是否替换相机控制器
+/// 使用自己的相机时需要调用下面两个block
 @property (assign, nonatomic) BOOL replaceCameraViewController;
 
 /**
@@ -273,10 +267,22 @@ HXPhotoPreviewViewController;
 @property (copy, nonatomic) void (^useCameraComplete)(HXPhotoModel *model);
 
 #pragma mark - < UI相关 >
+
+/// 照片列表上相机cell上的icon图标名
+@property (copy, nonatomic) NSString *photoListTakePhotoIcon;
+
+/// 未授权时界面上提示文字显示的颜色
+@property (strong, nonatomic) UIColor *authorizationTipColor;
+
 /**
  弹窗方式的相册列表竖屏时的高度
  */
 @property (assign, nonatomic) CGFloat popupTableViewHeight;
+
+/**
+ 弹窗方式的相册列表的背景颜色
+ */
+@property (strong, nonatomic) UIColor *popupTableViewBgColor;
 
 /**
  弹窗方式的相册列表横屏时的高度
@@ -287,6 +293,16 @@ HXPhotoPreviewViewController;
  弹窗方式的相册列表Cell选中的颜色
  */
 @property (strong, nonatomic) UIColor *popupTableViewCellSelectColor;
+
+/**
+ 弹窗方式的相册列表Cell选中时的图标颜色
+ */
+@property (strong, nonatomic) UIColor *popupTableViewCellSelectIconColor;
+
+/**
+ 弹窗方式的相册列表Cell高亮的颜色
+ */
+@property (strong, nonatomic) UIColor *popupTableViewCellHighlightedColor;
 
 /**
  弹窗方式的相册列表Cell底部线的颜色
@@ -359,78 +375,133 @@ HXPhotoPreviewViewController;
  */
 @property (strong, nonatomic) UIColor *selectedTitleColor;
 
-/**
- sectionHeader悬浮时的标题颜色 ios9以上才有效果
- */
-@property (strong, nonatomic) UIColor *sectionHeaderSuspensionTitleColor;
+/// 预览界面选择按钮的背景颜色
+@property (strong, nonatomic) UIColor *previewSelectedBtnBgColor;
 
-/**
- sectionHeader悬浮时的背景色 ios9以上才有效果
- */
-@property (strong, nonatomic) UIColor *sectionHeaderSuspensionBgColor;
+/// sectionHeader悬浮时的标题颜色
+/// 3.0.3之后的版本已移除此功能
+@property (strong, nonatomic) UIColor *sectionHeaderSuspensionTitleColor DEPRECATED_MSG_ATTRIBUTE("Invalid attribute");
 
-/**
- 导航栏标题颜色
- */
+/// sectionHeader悬浮时的背景色
+/// 3.0.3之后的版本已移除此功能
+@property (strong, nonatomic) UIColor *sectionHeaderSuspensionBgColor DEPRECATED_MSG_ATTRIBUTE("Invalid attribute");
+
+/// 导航栏标题颜色
 @property (strong, nonatomic) UIColor *navigationTitleColor;
 
-/**
- 导航栏是否半透明，默认YES
- */
+/// 照片列表导航栏标题箭头颜色
+@property (strong, nonatomic) UIColor *navigationTitleArrowColor;
+
+/// 暗黑模式下照片列表导航栏标题箭头颜色
+@property (strong, nonatomic) UIColor *navigationTitleArrowDarkColor;
+
+/// 导航栏是否半透明
 @property (assign, nonatomic) BOOL navBarTranslucent;
 
-/**
- 导航栏背景颜色
- */
+/// 导航栏背景颜色
 @property (strong, nonatomic) UIColor *navBarBackgroudColor;
 
-/**
- 导航栏背景图片
- */
+/// 导航栏样式
+@property(nonatomic,assign) UIBarStyle navBarStyle;
+
+/// 导航栏背景图片
 @property (strong, nonatomic) UIImage *navBarBackgroundImage;
 
-/**
- headerSection 半透明毛玻璃效果  默认YES  ios9以上才有效果
- */
-@property (assign, nonatomic) BOOL sectionHeaderTranslucent;
+#pragma mark - < 自定义titleView >
+/// 自定义照片列表导航栏titleView
+/// albumShowMode == HXPhotoAlbumShowModePopup 时才有效
+@property (copy, nonatomic) UIView *(^ photoListTitleView)(NSString *title);
 
-/**
- 导航栏标题颜色是否与主题色同步  默认NO;
- - 同步会过滤掉手动设置的导航栏标题颜色
- */
+/// 更新照片列表导航栏title
+@property (copy, nonatomic) void (^ updatePhotoListTitle)(NSString *title);
+
+/// 照片列表改变titleView选中状态
+@property (copy, nonatomic) void (^ photoListChangeTitleViewSelected)(BOOL selected);
+
+/// 获取照片列表导航栏titleView的选中状态
+@property (copy, nonatomic) BOOL (^ photoListTitleViewSelected)(void);
+
+/// 照片列表titleView点击事件
+@property (copy, nonatomic) void (^ photoListTitleViewAction)(BOOL selected);
+
+/// 照片列表背景颜色
+@property (strong, nonatomic) UIColor *photoListViewBgColor;
+
+/// 照片列表底部照片数量文字颜色
+@property (strong, nonatomic) UIColor *photoListBottomPhotoCountTextColor;
+
+/// 预览照片界面背景颜色
+@property (strong, nonatomic) UIColor *previewPhotoViewBgColor;
+
+/// 相册列表背景颜色
+@property (strong, nonatomic) UIColor *albumListViewBgColor;
+
+/// 相册列表cell背景颜色
+@property (strong, nonatomic) UIColor *albumListViewCellBgColor;
+
+/// 相册列表cell上文字颜色
+@property (strong, nonatomic) UIColor *albumListViewCellTextColor;
+
+/// 相册列表cell选中颜色
+@property (strong, nonatomic) UIColor *albumListViewCellSelectBgColor;
+
+/// 相册列表cell底部线颜色
+@property (strong, nonatomic) UIColor *albumListViewCellLineColor;
+
+/// 3.0.3之后的版本已移除此功能
+@property (assign, nonatomic) BOOL sectionHeaderTranslucent DEPRECATED_MSG_ATTRIBUTE("Invalid attribute");
+
+/// 导航栏标题颜色是否与主题色同步  默认NO
+/// 同步会过滤掉手动设置的导航栏标题颜色
 @property (assign, nonatomic) BOOL navigationTitleSynchColor;
 
 /// 底部视图的背景颜色
 @property (strong, nonatomic) UIColor *bottomViewBgColor;
 
+/// 底部视图的样式
+@property(nonatomic,assign) UIBarStyle bottomViewBarStyle;
+
+/// 底部完成按钮背景颜色
+@property (strong, nonatomic) UIColor *bottomDoneBtnBgColor;
+
+/// 底部完成按钮暗黑模式下的背景颜色
+@property (strong, nonatomic) UIColor *bottomDoneBtnDarkBgColor;
+
+/// 底部完成按钮禁用状态下的背景颜色
+@property (strong, nonatomic) UIColor *bottomDoneBtnEnabledBgColor;
+
+/// 底部完成按钮文字颜色
+@property (strong, nonatomic) UIColor *bottomDoneBtnTitleColor;
+
 /// 底部视图是否半透明效果 默认YES
 @property (assign, nonatomic) BOOL bottomViewTranslucent;
 
 /// 主题颜色  默认 tintColor
-/// 改变主题颜色后建议也改下原图按钮的图标
 @property (strong, nonatomic) UIColor *themeColor;
 
-/**
- 原图按钮普通状态下的按钮图标名
- - 改变主题颜色后建议也改下原图按钮的图标
- */
+/// 预览界面底部已选照片的选中颜色
+@property (strong, nonatomic) UIColor *previewBottomSelectColor;
+
+/// 是否可以改变原图按钮的tinColor
+@property (assign, nonatomic) BOOL changeOriginalTinColor;
+
+/// 原图按钮普通状态下的按钮图标名
+/// 改变主题颜色后建议也改下原图按钮的图标
 @property (copy, nonatomic) NSString *originalNormalImageName;
 
-/**
- 原图按钮选中状态下的按钮图标名
- - 改变主题颜色后建议也改下原图按钮的图标
- */
+/// 原图按钮图片的tintColor,设置这个颜色可改变图片的颜色
+@property (strong, nonatomic) UIColor *originalBtnImageTintColor;
+
+/// 原图按钮选中状态下的按钮图标名
+/// 改变主题颜色后建议也改下原图按钮的图标
 @property (copy, nonatomic) NSString *originalSelectedImageName;
 
-/**
- 是否隐藏原图按钮  默认 NO
- */
+/// 是否隐藏原图按钮 默认 NO
 @property (assign, nonatomic) BOOL hideOriginalBtn;
 
-/**
- sectionHeader 是否显示照片的位置信息 默认 5、6不显示，其余的显示
- */
-@property (assign, nonatomic) BOOL sectionHeaderShowPhotoLocation;
+/// sectionHeader 是否显示照片的位置信息
+/// 3.0.3之后的版本已移除此功能
+@property (assign, nonatomic) BOOL sectionHeaderShowPhotoLocation DEPRECATED_MSG_ATTRIBUTE("Invalid attribute");
 
 /**
  相机cell是否显示预览
@@ -454,9 +525,7 @@ HXPhotoPreviewViewController;
  */
 @property (assign, nonatomic) BOOL showDateSectionHeader;
 
-/**
- 照片列表倒序 默认 NO
- */
+/// 照片列表倒序
 @property (assign, nonatomic) BOOL reverseDate;
 
 #pragma mark - < 基本配置 >
@@ -470,7 +539,7 @@ HXPhotoPreviewViewController;
  如果照片最大数和视频最大数都为0时，则可以混合添加
     当照片选了1张时 视频就还可以选择9个
     当照片选了5张时 视频就还可以选择5个
-    视频一样
+    视频同理
  */
 @property (assign, nonatomic) NSUInteger maxNum;
 
@@ -512,6 +581,11 @@ HXPhotoPreviewViewController;
 @property (assign, nonatomic) NSTimeInterval videoMaximumDuration;
 
 /**
+ 相机视频录制最小秒数  -  默认3s
+ */
+@property (assign, nonatomic) NSTimeInterval videoMinimumDuration;
+
+/**
  *  删除临时的照片/视频 -
  注:相机拍摄的照片并没有保存到系统相册 或 是本地图片
  如果当这样的照片都没有被选中时会清空这些照片 有一张选中了就不会删..
@@ -525,11 +599,12 @@ HXPhotoPreviewViewController;
  */
 @property (assign, nonatomic) BOOL saveSystemAblum;
 
-/// 拍摄的照片/视频保存到指定相册的名称  默认 BundleName
+/// 拍摄的照片/视频保存到指定相册的名称  默认 DisplayName
 /// 需9.0以上系统才可以保存到自定义相册 , 以下的系统只保存到相机胶卷...
 @property (copy, nonatomic) NSString *customAlbumName;
 
 /// 视频能选择的最大秒数  -  默认 3分钟/180秒
+/// 当视频超过能选的最大时长，如果视频可以编辑那么在列表选择的时候会自动跳转视频裁剪界面
 @property (assign, nonatomic) NSInteger videoMaximumSelectDuration;
 
 /// 视频能选择的最小秒数  -  默认 0秒 - 不限制
@@ -544,16 +619,16 @@ HXPhotoPreviewViewController;
 /// 是否开启3DTouch预览功能 默认 YES
 @property (assign, nonatomic) BOOL open3DTouchPreview;
 
-/// 下载iCloud上的资源  默认YES
-@property (assign, nonatomic) BOOL downloadICloudAsset;
+/// 下载iCloud上的资源
+/// 3.0.3 之后的版本已无效
+@property (assign, nonatomic) BOOL downloadICloudAsset DEPRECATED_MSG_ATTRIBUTE("Invalid attribute");
 
-/// 是否过滤iCloud上的资源 默认NO
-@property (assign, nonatomic) BOOL filtrationICloudAsset;
+/// 是否过滤iCloud上的资源
+/// 3.0.3 之后的版本已无效
+@property (assign, nonatomic) BOOL filtrationICloudAsset DEPRECATED_MSG_ATTRIBUTE("Invalid attribute");
 
 /// 小图照片清晰度 越大越清晰、越消耗性能
 /// 设置太大的话获取图片资源时耗时长且内存消耗大可能会引起界面卡顿
-/// default：[UIScreen mainScreen].bounds.size.width
-/// 320    ->  0.8  |  375    ->  1.4  |  x      ->  3.0  |  other  ->  1.7
 @property (assign, nonatomic) CGFloat clarityScale;
 
 #pragma mark - < block返回的视图 >
@@ -586,6 +661,4 @@ HXPhotoPreviewViewController;
 /// 旋转屏幕时也会调用
 @property (copy, nonatomic) void (^previewCollectionView)(UICollectionView *collectionView);
 
-
-@property (assign, nonatomic) BOOL changeAlbumListContentView;
 @end

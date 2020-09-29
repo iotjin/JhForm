@@ -185,7 +185,7 @@
             }
             [mUrlArr addObject:model];
         }
-        [self.oneManager addModelArray:mUrlArr];
+        [self.oneManager addLocalModels:mUrlArr];
         [self.onePhotoView refreshView];
     }
     

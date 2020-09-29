@@ -1,6 +1,6 @@
 //
 //  UIView+HXExtension.m
-//  照片选择器
+//  HXPhotoPicker-Demo
 //
 //  Created by 洪欣 on 17/2/16.
 //  Copyright © 2017年 洪欣. All rights reserved.
@@ -177,7 +177,7 @@
         hud.transform = CGAffineTransformIdentity;
     } completion:nil];
     [UIView cancelPreviousPerformRequestsWithTarget:self];
-    [self performSelector:@selector(handleGraceTimer) withObject:nil afterDelay:1.75f inModes:@[NSRunLoopCommonModes]];
+    [self performSelector:@selector(hx_handleGraceTimer) withObject:nil afterDelay:1.75f inModes:@[NSRunLoopCommonModes]];
 } 
 
 - (void)hx_immediatelyShowLoadingHudWithText:(NSString *)text {
@@ -244,29 +244,133 @@
         }
     }
 }
-- (void)hx_handleImageWithDelay:(NSTimeInterval)delay {
-    if (delay) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self handleGraceTimer];
-        });
-    }else {
-        [self handleGraceTimer];
-    }
-}
-- (void)handleGraceTimer {
+- (void)hx_handleImageWithAnimation:(BOOL)animation {
     [UIView cancelPreviousPerformRequestsWithTarget:self];
     for (UIView *view in self.subviews) {
         if ([view isKindOfClass:[HXHUD class]] && [(HXHUD *)view isImage]) {
-            [UIView animateWithDuration:0.25f animations:^{
-                view.alpha = 0;
-                view.transform = CGAffineTransformMakeScale(0.5, 0.5);
-            } completion:^(BOOL finished) {
+            if (animation) {
+                [UIView animateWithDuration:0.25f animations:^{
+                    view.alpha = 0;
+                    view.transform = CGAffineTransformMakeScale(0.5, 0.5);
+                } completion:^(BOOL finished) {
+                    [view removeFromSuperview];
+                }];
+            }else {
                 [view removeFromSuperview];
-            }];
+            }
         }
     }
 }
+- (void)hx_handleImageWithDelay:(NSTimeInterval)delay {
+    if (delay) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self hx_handleGraceTimer];
+        });
+    }else {
+        [self hx_handleGraceTimer];
+    }
+}
+- (void)hx_handleGraceTimer {
+    [self hx_handleImageWithAnimation:YES];
+}
+/**
+ 圆角
+ 使用自动布局，需要在layoutsubviews 中使用
+ @param radius 圆角尺寸
+ @param corner 圆角位置
+ */
+- (void)hx_radiusWithRadius:(CGFloat)radius corner:(UIRectCorner)corner {
+#ifdef __IPHONE_11_0
+    if (@available(iOS 11.0, *)) {
+        self.layer.cornerRadius = radius;
+        self.layer.maskedCorners = (CACornerMask)corner;
+#else
+    if ((NO)) {
+#endif
+    } else {
+        UIBezierPath * path = [UIBezierPath bezierPathWithRoundedRect:self.bounds byRoundingCorners:corner cornerRadii:CGSizeMake(radius, radius)];
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = self.bounds;
+        maskLayer.path = path.CGPath;
+        self.layer.mask = maskLayer;
+    }
+}
 
+- (UIImage *)hx_captureImageAtFrame:(CGRect)rect {
+    
+    UIImage* image = nil;
+    
+    if (/* DISABLES CODE */ (YES)) {
+        CGSize size = self.bounds.size;
+        CGPoint point = self.bounds.origin;
+        if (!CGRectEqualToRect(CGRectZero, rect)) {
+            size = rect.size;
+            point = CGPointMake(-rect.origin.x, -rect.origin.y);
+        }
+        @autoreleasepool {
+            UIGraphicsBeginImageContextWithOptions(size, NO, 0.0);
+            [self drawViewHierarchyInRect:(CGRect){point, self.bounds.size} afterScreenUpdates:YES];
+            image = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+        }
+        
+    } else {
+        
+            BOOL translateCTM = !CGRectEqualToRect(CGRectZero, rect);
+        
+            if (!translateCTM) {
+                rect = self.frame;
+            }
+        
+            /** 参数取整，否则可能会出现1像素偏差 */
+            /** 有小数部分才调整差值 */
+#define lfme_fixDecimal(d) ((fmod(d, (int)d)) > 0.59f ? ((int)(d+0.5)*1.f) : (((fmod(d, (int)d)) < 0.59f && (fmod(d, (int)d)) > 0.1f) ? ((int)(d)*1.f+0.5f) : (int)(d)*1.f))
+            rect.origin.x = lfme_fixDecimal(rect.origin.x);
+            rect.origin.y = lfme_fixDecimal(rect.origin.y);
+            rect.size.width = lfme_fixDecimal(rect.size.width);
+            rect.size.height = lfme_fixDecimal(rect.size.height);
+#undef lfme_fixDecimal
+            CGSize size = rect.size;
+        
+        @autoreleasepool {
+            //1.开启上下文
+            UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
+            
+            CGContextRef context = UIGraphicsGetCurrentContext();
+            
+            if (translateCTM) {
+                /** 移动上下文 */
+                CGContextTranslateCTM(context, -rect.origin.x, -rect.origin.y);
+            }
+            //2.绘制图层
+            [self.layer renderInContext: context];
+            
+            //3.从上下文中获取新图片
+            image = UIGraphicsGetImageFromCurrentImageContext();
+            
+            //4.关闭图形上下文
+            UIGraphicsEndImageContext();
+        }
+    }
+    return image;
+}
+
+- (UIColor *)hx_colorOfPoint:(CGPoint)point {
+    unsigned char pixel[4] = {0};
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(pixel, 1, 1, 8, 4, colorSpace, kCGImageAlphaPremultipliedLast);
+    
+    CGContextTranslateCTM(context, -point.x, -point.y);
+    
+    [self.layer renderInContext:context];
+    
+    CGContextRelease(context);
+    CGColorSpaceRelease(colorSpace);
+    
+    UIColor *color = [UIColor colorWithRed:pixel[0]/255.0 green:pixel[1]/255.0 blue:pixel[2]/255.0 alpha:pixel[3]/255.0];
+    
+    return color;
+}
 @end
 
 @interface HXHUD ()

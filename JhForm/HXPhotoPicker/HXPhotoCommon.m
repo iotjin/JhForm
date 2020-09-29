@@ -1,6 +1,6 @@
 //
 //  HXPhotoCommon.m
-//  照片选择器
+//  HXPhotoPicker-Demo
 //
 //  Created by 洪欣 on 2019/1/8.
 //  Copyright © 2019年 洪欣. All rights reserved.
@@ -17,9 +17,6 @@ static id instance;
 #if HasAFNetworking
 @property (strong, nonatomic) AFURLSessionManager *sessionManager;
 #endif
-@property (strong, nonatomic) NSURLConnection *urlFileLengthConnection;
-@property (copy, nonatomic) HXPhotoCommonGetUrlFileLengthSuccess fileLengthSuccessBlock;
-@property (copy, nonatomic) HXPhotoCommonGetUrlFileLengthFailure fileLengthFailureBlock;
 @property (assign, nonatomic) BOOL hasAuthorization;
 @end
 
@@ -46,53 +43,104 @@ static id instance;
     self = [super init];
     if (self) {
         self.isVCBasedStatusBarAppearance = [[[NSBundle mainBundle]objectForInfoDictionaryKey:@"UIViewControllerBasedStatusBarAppearance"] boolValue];
+        
 #if HasAFNetworking
         self.sessionManager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         [self listenNetWorkStatus];
 #endif
-        NSData *imageData = [[NSUserDefaults standardUserDefaults] objectForKey:HXCameraImageKey];
-        if (imageData) {
-            self.cameraImage = [NSKeyedUnarchiver unarchiveObjectWithData:imageData];
+        NSURL *imageURL = [[NSUserDefaults standardUserDefaults] URLForKey:HXCameraImageKey];
+        if (imageURL) {
+            self.cameraImageURL = imageURL;
         }
-
-        if ([PHPhotoLibrary authorizationStatus] == PHAuthorizationStatusAuthorized) {
+        self.cameraRollLocalIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:@"HXCameraRollLocalIdentifier"];
+        
+        PHAuthorizationStatus status = [HXPhotoTools authorizationStatus];
+        if (status == PHAuthorizationStatusAuthorized) {
             [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
-        }else {
+        }
+#ifdef __IPHONE_14_0
+        else if (@available(iOS 14, *)) {
+            if (status == PHAuthorizationStatusLimited) {
+                self.cameraRollLocalIdentifier = nil;
+                self.cameraRollResult = nil;
+                [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
+            }else {
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestAuthorizationCompletion) name:@"HXPhotoRequestAuthorizationCompletion" object:nil];
+            }
+        }
+#endif
+        else {
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestAuthorizationCompletion) name:@"HXPhotoRequestAuthorizationCompletion" object:nil];
         }
     }
     return self;
 }
+- (void)setCameraRollLocalIdentifier:(NSString *)cameraRollLocalIdentifier {
+    _cameraRollLocalIdentifier = cameraRollLocalIdentifier;
+    if (cameraRollLocalIdentifier) {
+        [[NSUserDefaults standardUserDefaults] setObject:cameraRollLocalIdentifier forKey:@"HXCameraRollLocalIdentifier"];
+    }
+}
 - (void)requestAuthorizationCompletion {
-    if (!self.hasAuthorization && [PHPhotoLibrary authorizationStatus] == PHAuthorizationStatusAuthorized) {
-        self.hasAuthorization = YES;
-        [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
+    if (!self.hasAuthorization) {
+        PHAuthorizationStatus status = [HXPhotoTools authorizationStatus];
+        if (status == PHAuthorizationStatusAuthorized) {
+            self.hasAuthorization = YES;
+            [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
+        }
+#ifdef __IPHONE_14_0
+        else if (@available(iOS 14, *)) {
+            if (status == PHAuthorizationStatusLimited) {
+                self.cameraRollLocalIdentifier = nil;
+                self.cameraRollResult = nil;
+                self.hasAuthorization = YES;
+                [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
+            }
+        }
+#endif
     }
 }
 
 #pragma mark - < PHPhotoLibraryChangeObserver >
 - (void)photoLibraryDidChange:(PHChange *)changeInstance {
-    PHFetchResultChangeDetails *collectionChanges = [changeInstance changeDetailsForFetchResult:self.cameraRollAlbumModel.result];
+//    if (!self.cameraRollResult) {
+//        [self photoListReload];
+//        return;
+//    }
+    PHFetchResultChangeDetails *collectionChanges = [changeInstance changeDetailsForFetchResult:self.cameraRollResult];
     if (collectionChanges) {
         if ([collectionChanges hasIncrementalChanges]) {
+            if (collectionChanges.insertedObjects.count > 0 ||
+                collectionChanges.removedObjects.count > 0 ||
+                collectionChanges.changedObjects.count > 0 ||
+                [collectionChanges hasMoves]) {
+                PHFetchResult *result = collectionChanges.fetchResultAfterChanges;
+                self.cameraRollResult = result;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"HXPhotoViewNeedReloadNotification" object:nil];
+                });
+            }
+        }else {
             PHFetchResult *result = collectionChanges.fetchResultAfterChanges;
-            self.cameraRollAlbumModel.result = result;
-            self.cameraRollAlbumModel.count = result.count;
-            if (collectionChanges.insertedObjects.count > 0) {
-                // 添加照片了
-            }
-            if (collectionChanges.removedObjects.count > 0) {
-                // 删除照片了
-                
-            }
-            if (collectionChanges.changedObjects.count > 0) {
-                // 改变照片了
-            }
-            if ([collectionChanges hasMoves]) {
-                // 移动照片了
-            }
+            self.cameraRollResult = result;
+            [self photoListReload];
         }
     }
+}
+- (void)photoListReload {
+    dispatch_async(dispatch_get_main_queue(), ^{
+#ifdef __IPHONE_14_0
+        if (@available(iOS 14, *)) {
+            PHAuthorizationStatus status = [HXPhotoTools authorizationStatus];
+            if (status == PHAuthorizationStatusLimited) {
+                if (self.photoLibraryDidChange) {
+                    self.photoLibraryDidChange();
+                }
+            }
+        }
+#endif
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"HXPhotoViewNeedReloadNotification" object:nil];
+    });
 }
 - (NSBundle *)languageBundle {
     if (!_languageBundle) {
@@ -140,6 +188,12 @@ static id instance;
     }
     return _languageBundle;
 }
+- (NSString *)UUIDString {
+    if (!_UUIDString) {
+        _UUIDString = [[NSUUID UUID] UUIDString];
+    }
+    return _UUIDString;
+}
 - (BOOL)isDark {
     if (self.photoStyle == HXPhotoStyleDark) {
         return YES;
@@ -155,37 +209,32 @@ static id instance;
 }
 - (void)saveCamerImage {
     if (self.cameraImage) {
-        NSData *imageData = [NSKeyedArchiver archivedDataWithRootObject:self.cameraImage];
-        [[NSUserDefaults standardUserDefaults] setObject:imageData forKey:HXCameraImageKey];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSData *imageData;
+            NSString *suffix;
+            if (UIImagePNGRepresentation(self.cameraImage)) {
+                //返回为png图像。
+                imageData = UIImagePNGRepresentation(self.cameraImage);
+                suffix = @"png";
+            }else {
+                //返回为JPEG图像。
+                imageData = UIImageJPEGRepresentation(self.cameraImage, 0.5);
+                suffix = @"jpeg";
+            }
+            NSString *fileName = [HXCameraImageKey stringByAppendingString:[NSString stringWithFormat:@".%@",suffix]];
+            NSArray *array = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *fullPathToFile = [array.firstObject stringByAppendingPathComponent:fileName];
+            
+            if ([imageData writeToFile:fullPathToFile atomically:YES]) {
+                NSURL *imageURL = [NSURL fileURLWithPath:fullPathToFile];
+                [[NSUserDefaults standardUserDefaults] setURL:imageURL forKey:HXCameraImageKey];
+            }
+            self.cameraImage = nil;
+        });
     }
 }
 - (void)setCameraImage:(UIImage *)cameraImage {
-    _cameraImage = cameraImage;
-}
-
-- (void)getURLFileLengthWithURL:(NSURL *)url success:(HXPhotoCommonGetUrlFileLengthSuccess)success failure:(HXPhotoCommonGetUrlFileLengthFailure)failure {
-    if (self.urlFileLengthConnection) {
-        [self.urlFileLengthConnection cancel];
-    }
-    NSMutableURLRequest *mURLRequest = [NSMutableURLRequest requestWithURL:url];
-    [mURLRequest setHTTPMethod:@"HEAD"];
-    mURLRequest.timeoutInterval = 5.0;
-    self.urlFileLengthConnection = [NSURLConnection connectionWithRequest:mURLRequest delegate:self];
-    [self.urlFileLengthConnection start];
-}
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    NSDictionary *dict = [(NSHTTPURLResponse *)response allHeaderFields];
-    NSNumber *length = [dict objectForKey:@"Content-Length"];
-    [connection cancel];
-    if (self.fileLengthSuccessBlock) {
-        self.fileLengthSuccessBlock(length.unsignedIntegerValue);
-    }
-}
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    [connection cancel];
-    if (self.fileLengthFailureBlock) {
-        self.fileLengthFailureBlock();
-    }
+    _cameraImage = [cameraImage hx_scaleImagetoScale:0.4];
 }
 /** 初始化并监听网络变化 */
 - (void)listenNetWorkStatus {
@@ -210,7 +259,7 @@ static id instance;
     NSString *videoFilePath = [HXPhotoTools getVideoURLFilePath:videoURL];
     
     NSURL *videoFileURL = [NSURL fileURLWithPath:videoFilePath];
-    if ([HXPhotoTools FileExistsAtVideoURL:videoURL]) {
+    if ([HXPhotoTools fileExistsAtVideoURL:videoURL]) {
         if (success) {
             success(videoFileURL, videoURL);
         }
@@ -225,7 +274,6 @@ static id instance;
             progress(downloadProgress.fractionCompleted, downloadProgress.completedUnitCount, downloadProgress.totalUnitCount, videoURL);
             }
         });
-//        NSLog(@"下载进度：%.0f％", downloadProgress.fractionCompleted * 100);
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         return videoFileURL;
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
@@ -235,12 +283,12 @@ static id instance;
                     success(filePath, videoURL);
                 }
             }else {
+                [[NSFileManager defaultManager] removeItemAtURL:videoFileURL error:nil];
                 if (failure) {
                     failure(error, videoURL);
                 }
             }
         });
-//        NSLog(@"下载完成");
     }];
     [downloadTask resume];
     return downloadTask;
@@ -255,8 +303,6 @@ static id instance;
     instance = nil;
 }
 - (void)dealloc {
-//    NSSLog(@"dealloc");
-    
     [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"HXPhotoRequestAuthorizationCompletion" object:nil];
 #if HasAFNetworking
