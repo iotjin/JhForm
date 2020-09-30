@@ -1,6 +1,6 @@
 //
 //  HXPhotoViewPresentTransition.m
-//  HXPhotoPicker-Demo
+//  照片选择器
 //
 //  Created by 洪欣 on 2017/10/28.
 //  Copyright © 2017年 洪欣. All rights reserved.
@@ -12,7 +12,6 @@
 #import "HXPhotoView.h"
 #import "HXPhotoPreviewViewController.h"
 #import "HXPhotoPreviewBottomView.h"
-#import "HXPhotoEdit.h"
 
 @interface HXPhotoViewPresentTransition ()
 @property (strong, nonatomic) HXPhotoView *photoView ;
@@ -53,8 +52,7 @@
     }
 }
 - (void)presentAnim:(id<UIViewControllerContextTransitioning>)transitionContext Image:(UIImage *)image Model:(HXPhotoModel *)model FromVC:(UIViewController *)fromVC ToVC:(HXPhotoPreviewViewController *)toVC cell:(HXPhotoSubViewCell *)cell{
-    if ((!image || (model.networkPhotoUrl && (model.downloadError || !model.downloadComplete))) &&
-        toVC.manager.configuration.customPreviewFromImage) {
+    if ((!image || (model.networkPhotoUrl && (model.downloadError || !model.downloadComplete))) && toVC.manager.configuration.customPreviewFromImage) {
         image = toVC.manager.configuration.customPreviewFromImage(toVC.currentModelIndex);
     }
     model.tempImage = image;
@@ -67,15 +65,9 @@
     if (!image) {
         tempView.image = cell.imageView.image;
     }
-    if (!cell) {
-        if (toVC.manager.configuration.customPreviewFromView) {
-            cell = (id)toVC.manager.configuration.customPreviewFromView(toVC.currentModelIndex);
-        }
-        if (toVC.manager.configuration.customPreviewFromRect) {
-            tempView.frame = toVC.manager.configuration.customPreviewFromRect(toVC.currentModelIndex);
-        }else {
-            tempView.frame = [cell convertRect:cell.bounds toView:containerView];
-        }
+    if (!cell && toVC.manager.configuration.customPreviewFromView) {
+        cell = (id)toVC.manager.configuration.customPreviewFromView(toVC.currentModelIndex);
+        tempView.frame = [cell convertRect:cell.bounds toView:containerView];
     }
     [tempBgView addSubview:tempView];
     self.tempView = tempView;
@@ -146,8 +138,7 @@
     if (!model && toVC.currentModelIndex >= 0 && toVC.modelArray.count > 0 && toVC.currentModelIndex < toVC.modelArray.count) {
         model = toVC.modelArray[toVC.currentModelIndex];
     }
-    UIImage *image = model.photoEdit ? model.photoEdit.editPreviewImage : model.thumbPhoto;
-    [self presentAnim:transitionContext Image:image Model:model FromVC:fromVC ToVC:toVC cell:cell];
+    [self presentAnim:transitionContext Image:model.thumbPhoto Model:model FromVC:fromVC ToVC:toVC cell:cell];
 }
 
 /**
@@ -170,8 +161,7 @@
     HXPhotoPreviewViewCell *fromCell = [fromVC currentPreviewCell:model];
     UIImageView *tempView;
     if (model.type == HXPhotoModelMediaTypeCameraPhoto) {
-        UIImage *image = model.photoEdit ? model.photoEdit.editPosterImage : model.thumbPhoto;
-        tempView = [[UIImageView alloc] initWithImage:image];
+        tempView = [[UIImageView alloc] initWithImage:model.thumbPhoto];
     }else {
         tempView = [[UIImageView alloc] initWithImage:fromCell.previewContentView.image];
     }

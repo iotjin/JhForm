@@ -19,7 +19,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 
@@ -27,7 +26,6 @@
 
 -(UIView *)CustumALLView{
     if (!_CustumALLView) {
-        
         _CustumALLView = [[UIView alloc]init];
         _CustumALLView.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:_CustumALLView];
@@ -39,7 +37,6 @@
 
 -(void)setData:(JhFormCellModel *)data{
     _data= data;
-    
     if(data.Jh_cellBgColor){
         self.backgroundColor = data.Jh_cellBgColor;
     }
@@ -48,15 +45,12 @@
     }else{
         self.userInteractionEnabled = YES;
     }
-
-    
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
     self.CustumALLView.frame =CGRectMake(Jh_Margin_left,0, Jh_SCRREN_WIDTH -Jh_Margin_left-Jh_EdgeMargin, self.data.Jh_defaultHeight);
-    
 }
 
 
@@ -67,8 +61,7 @@
 
 @implementation UITableView (JhFormCustumALLViewCell)
 
-- (JhFormCustumALLViewCell *)CustumALLCellWithId:(NSString *)cellId
-{
+- (JhFormCustumALLViewCell *)CustumALLCellWithId:(NSString *)cellId {
     JhFormCustumALLViewCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
         cell = [[JhFormCustumALLViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];

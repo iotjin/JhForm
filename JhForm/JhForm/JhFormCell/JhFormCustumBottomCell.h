@@ -12,9 +12,7 @@
 
 @interface JhFormCustumBottomCell : JhFormBaseCell
 
-/**
- 自定义视图
- */
+/** 自定义视图 */
 @property (nonatomic, strong) UIView *CustumBottomView;
 
 @property (nonatomic, strong) JhFormCellModel *data;

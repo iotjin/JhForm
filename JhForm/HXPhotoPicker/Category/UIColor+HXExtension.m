@@ -1,6 +1,6 @@
 //
 //  UIColor+HXExtension.m
-//  HXPhotoPicker-Demo
+//  照片选择器
 //
 //  Created by 洪欣 on 2019/12/3.
 //  Copyright © 2019 洪欣. All rights reserved.
@@ -44,15 +44,5 @@
     } else {
         return @"";
     }
-}
-- (BOOL)hx_colorIsWhite {
-    CGFloat red = 0;
-    CGFloat green = 0;
-    CGFloat blue = 0;
-    [self getRed:&red green:&green blue:&blue alpha:NULL];
-    if (red >= 0.99 && green >= 0.99 & blue >= 0.99) {
-        return YES;
-    }
-    return NO;
 }
 @end

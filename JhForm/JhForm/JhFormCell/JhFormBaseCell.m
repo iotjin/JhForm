@@ -21,7 +21,6 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 
@@ -57,7 +56,6 @@
         [self.contentView addSubview:_rightTextView];
         
         if (@available(iOS 13.0, *)) {
-            
             _rightTextView.placeholderTextColor = UIColor.placeholderTextColor;
             if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
                 _rightTextView.textColor = UIColor.labelColor;
@@ -65,41 +63,30 @@
                 _rightTextView.textColor = Jh_rightTextViewTextColor;
             }
         }
-               
-        
     }
     return _rightTextView;
 }
 
-
-
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
-    
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
             [self configureIOS13Theme];
         }
     }
-    
 }
 
 -(void)configureIOS13Theme{
-    
     if (@available(iOS 13.0, *)) {
-        
         _titleLabel.textColor = UIColor.labelColor;
         _rightTextView.placeholderTextColor = UIColor.placeholderTextColor;
-        
         if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
             _rightTextView.textColor = UIColor.labelColor;
         }else {
             _rightTextView.textColor = Jh_rightTextViewTextColor;
         }
-        
         [self.baseTableView reloadData];
     }
-    
 }
 
 

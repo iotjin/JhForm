@@ -21,23 +21,17 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 
-
-
 -(UIView *)CustumRightView{
     if (!_CustumRightView) {
-        
         _CustumRightView = [[UIView alloc]init];
         _CustumRightView.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:_CustumRightView];
-        
     }
     return _CustumRightView;
 }
-
 
 -(void)setData:(JhFormCellModel *)data{
     _data= data;
@@ -46,9 +40,7 @@
         self.titleLabel.adjustsFontSizeToFitWidth = NO;
         self.titleLabel.numberOfLines = 0;
     }
-    
     self.titleLabel.attributedText = data.Jh_attributedTitle;
-    
     if(data.Jh_custumRightCellShowArrow == YES){
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
@@ -60,20 +52,16 @@
     }else{
         self.userInteractionEnabled = YES;
     }
-
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
     if (!_data.Jh_title.length) {
-        
         self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset+5, Jh_TitleHeight);
         self.CustumRightView.frame =CGRectMake(Jh_Margin_left+3, 0, Jh_SCRREN_WIDTH-Jh_Margin_left-Jh_EdgeMargin-3, self.bounds.size.height);
-        
     }else{
-        
-         /********************************* 左侧标题换行 ********************************/
+        /********************************* 左侧标题换行 ********************************/
         CGFloat titleHeight = _data.Jh_titleHeight;
         CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
         self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, self.data.Jh_titleWidth, titleHeight);
@@ -85,23 +73,17 @@
             }
         }
         /********************************* 左侧标题换行 ********************************/
-  
+        
         self.CustumRightView.frame =CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, 0, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 2*Jh_EdgeMargin) - Jh_CustumRightView_rightEdgeMargin, self.bounds.size.height);
-        
-        
     }
-    
-    
 }
-
 
 
 @end
 
 @implementation UITableView (JhFormCustumRightCell)
 
-- (JhFormCustumRightCell *)CustumRightCellWithId:(NSString *)cellId
-{
+- (JhFormCustumRightCell *)CustumRightCellWithId:(NSString *)cellId {
     JhFormCustumRightCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
         cell = [[JhFormCustumRightCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];

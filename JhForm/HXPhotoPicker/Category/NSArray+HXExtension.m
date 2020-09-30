@@ -1,6 +1,6 @@
 //
 //  NSArray+HXExtension.m
-//  HXPhotoPicker-Demo
+//  照片选择器
 //
 //  Created by 洪欣 on 2019/1/7.
 //  Copyright © 2019年 洪欣. All rights reserved.
@@ -8,7 +8,6 @@
 
 #import "NSArray+HXExtension.h"
 #import "HXPhotoModel.h"
-#import "HXPhotoEdit.h"
 #import "HXPhotoManager.h"
 
 @implementation NSArray (HXExtension)
@@ -27,17 +26,45 @@
     }
     return YES;
 }
+- (void)hx_requestURLWithOriginal:(BOOL)original presetName:(NSString *)presetName completion:(void (^)(NSArray<NSURL *> * _Nullable, NSArray<HXPhotoModel *> * _Nullable))completion {
+    if (![self hx_detection] || !self.count) {
+        if (completion) {
+            completion(nil, self);
+        }
+        if (HXShowLog) NSSLog(@"数组里装的不是HXPhotoModel对象或者为空");
+        return;
+    }
+//    __block NSInteger index = 0;
+//    NSInteger count = self.count;
+//    __block NSMutableArray *errorArray;
+    for (HXPhotoModel *model in self) {
+        if (model.subType == HXPhotoModelMediaSubTypePhoto) {
+            
+        }else if (model.subType == HXPhotoModelMediaSubTypeVideo) {
+            
+//            [model exportVideoWithPresetName:presetName startRequestICloud:nil iCloudProgressHandler:nil exportProgressHandler:nil success:^(NSURL *videoURL, HXPhotoModel *model) {
+//                [dict setObject:videoURL forKey:model.selectIndexStr];
+//                index++;
+//                if (index == count) {
+//                    if (completion) {
+//                        completion([NSArray hx_dictHandler:dict]);
+//                    }
+//                }
+//            } failed:^(NSDictionary *info, HXPhotoModel *model) {
+//                index++;
+//                if (HXShowLog) NSSLog(@"一个获取失败!");
+//                if (index == count) {
+//                    if (completion) {
+//                        completion([NSArray hx_dictHandler:dict]);
+//                    }
+//                }
+//            }];
+        }
+    }
+}
 + (NSArray *)hx_dictHandler:(NSDictionary *)dict {
     NSMutableArray *dataArray = [NSMutableArray array];
-    NSArray *keys = [dict.allKeys sortedArrayUsingComparator:^NSComparisonResult(NSString * obj1, NSString * obj2) {
-        if (obj1.integerValue > obj2.integerValue) {
-            return NSOrderedDescending;
-        }else if (obj1.integerValue < obj2.integerValue) {
-            return NSOrderedAscending;
-        }else {
-            return NSOrderedSame;
-        }
-    }];
+    NSArray *keys = [dict.allKeys sortedArrayUsingSelector:@selector(compare:)];
     for (NSString *key in keys) {
         if ([dict[key] isKindOfClass:[NSError class]]) {
             continue;
@@ -66,9 +93,6 @@
     }else {
         NSData *imageData = [NSData dataWithContentsOfFile:path];
         UIImage *image = [UIImage imageWithData:imageData];
-        if (!image) {
-            image = [UIImage imageWithContentsOfFile:path];
-        }
         return image;
     }
 }
@@ -91,7 +115,6 @@
     for (HXPhotoModel *model in self) {
         [self requestImageWithOriginal:original photoModel:model successful:^(UIImage * _Nullable image, NSURL * _Nullable imagePath, HXPhotoModel *photoModel) {
             if (image) {
-                // 如果photoModel 为nil可能是数组里的模型被移除了
                 [dict setObject:image forKey:photoModel.selectIndexStr];
             }else if (imagePath) {
                 UIImage *hImage = [NSArray hx_disposeHEICWithPath:imagePath.relativePath];
@@ -182,36 +205,23 @@
     }];
 }
 - (void)requestImageWithOriginal:(BOOL)original photoModel:(HXPhotoModel *)photoModel successful:(void (^)(UIImage * _Nullable image, NSURL * _Nullable imagePath, HXPhotoModel *photoModel))successful failure:(void (^)(HXPhotoModel *photoModel))failure {
-    if (photoModel.photoEdit) {
-        UIImage *image = photoModel.photoEdit.editPreviewImage;
-        if (successful) {
-            successful(image, nil, photoModel);
-        }
-        return;
-    }
     if (photoModel.type == HXPhotoModelMediaTypeCameraPhoto) {
         if (photoModel.networkPhotoUrl) {
-            if ([HXPhotoCommon photoCommon].requestNetworkAfter) {
-                // 网络图片
-                [HXPhotoModel requestImageWithURL:photoModel.networkPhotoUrl progress:nil completion:^(UIImage * _Nullable image, NSURL * _Nullable url, NSError * _Nullable error) {
-                    if (image) {
-                        photoModel.thumbPhoto = image;
-                        photoModel.previewPhoto = image;
-                        if (successful) {
-                            successful(image, nil, photoModel);
-                        }
-                    }else {
-                        if (failure) {
-                            failure(photoModel);
-                        }
-                        if (HXShowLog) NSSLog(@"网络图片获取失败!");
+            // 网络图片
+            [HXPhotoModel requestImageWithURL:photoModel.networkPhotoUrl progress:nil completion:^(UIImage * _Nullable image, NSURL * _Nullable url, NSError * _Nullable error) {
+                if (image) {
+                    photoModel.thumbPhoto = image;
+                    photoModel.previewPhoto = image;
+                    if (successful) {
+                        successful(image, nil, photoModel);
                     }
-                }];
-            }else {
-                if (successful) {
-                    successful(photoModel.thumbPhoto, nil, photoModel);
+                }else {
+                    if (failure) {
+                        failure(photoModel);
+                    }
+                    if (HXShowLog) NSSLog(@"网络图片获取失败!");
                 }
-            }
+            }];
         }else {
             // 本地图片
             if (successful) {
@@ -313,6 +323,79 @@
             }else {
                 [dict setObject:imageData forKey:model.selectIndexStr];
             }
+            index++;
+            if (index == count) {
+                if (completion) {
+                    completion([NSArray hx_dictHandler:dict]);
+                }
+            }
+        } failed:^(NSDictionary *info, HXPhotoModel *model) {
+            index++;
+            if (HXShowLog) NSSLog(@"一个获取失败!");
+            if (index == count) {
+                if (completion) {
+                    completion([NSArray hx_dictHandler:dict]);
+                }
+            }
+        }];
+    }
+}
+
+- (void)hx_requestAVAssetWithCompletion:(void (^)(NSArray<AVAsset *> * _Nullable assetArray))completion {
+    if (![self hx_detection] || !self.count) {
+        if (completion) {
+            completion(nil);
+        }
+        if (HXShowLog) NSSLog(@"数组里装的不是HXPhotoModel对象或者为空");
+        return;
+    }
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    for (int i = 0 ; i < self.count; i++) {
+        HXPhotoModel *model = self[i];
+        [dict setValue:[NSError errorWithDomain:@"获取失败" code:99999 userInfo:nil] forKey:model.selectIndexStr];
+    }
+    __block NSInteger index = 0;
+    NSInteger count = self.count;
+    for (HXPhotoModel *model in self) {
+        [model requestAVAssetStartRequestICloud:nil progressHandler:nil success:^(AVAsset *avAsset, AVAudioMix *audioMix, HXPhotoModel *model, NSDictionary *info) {
+            [dict setObject:avAsset forKey:model.selectIndexStr];
+            index++;
+            if (index == count) {
+                if (completion) {
+                    completion([NSArray hx_dictHandler:dict]);
+                }
+            }
+        } failed:^(NSDictionary *info, HXPhotoModel *model) {
+            index++;
+            if (HXShowLog) NSSLog(@"一个获取失败!");
+            if (index == count) {
+                if (completion) {
+                    completion([NSArray hx_dictHandler:dict]);
+                }
+            }
+        }];
+    }
+}
+
+- (void)hx_requestVideoURLWithPresetName:(NSString *)presetName completion:(void (^)(NSArray<NSURL *> * _Nullable videoURLArray))completion {
+    if (![self hx_detection] || !self.count) {
+        if (completion) {
+            completion(nil);
+        }
+        if (HXShowLog) NSSLog(@"数组里装的不是HXPhotoModel对象或者为空");
+        return;
+    }
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    for (int i = 0 ; i < self.count; i++) {
+        HXPhotoModel *model = self[i];
+        [dict setValue:[NSError errorWithDomain:@"获取失败" code:99999 userInfo:nil] forKey:model.selectIndexStr];
+    }
+    __block NSInteger index = 0;
+    NSInteger count = self.count;
+    for (HXPhotoModel *model in self) {
+        // AVAssetExportPresetHighestQuality
+        [model exportVideoWithPresetName:presetName startRequestICloud:nil iCloudProgressHandler:nil exportProgressHandler:nil success:^(NSURL *videoURL, HXPhotoModel *model) {
+            [dict setObject:videoURL forKey:model.selectIndexStr];
             index++;
             if (index == count) {
                 if (completion) {

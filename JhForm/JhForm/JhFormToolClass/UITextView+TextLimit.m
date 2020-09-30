@@ -14,7 +14,6 @@
     NSString *toBeString = self.text;
     NSArray *inputModes = [UITextInputMode activeInputModes];
     UITextInputMode *currentMode = [inputModes firstObject];
-    
     // 输入内容中文校验
     if ([currentMode.primaryLanguage isEqualToString:@"zh-Hans"]) {
         UITextRange *selectedRange = [self markedTextRange];

@@ -7,7 +7,6 @@
 //
 
 #import "JhFormCenterTextCell.h"
-
 #import "JhFormCellModel.h"
 #import "JhFormConst.h"
 
@@ -20,32 +19,27 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 
-
 -(void)setData:(JhFormCellModel *)data{
     _data= data;
-    
     self.titleLabel.attributedText = data.Jh_attributedTitle;
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.textColor = [UIColor blackColor];
     self.titleLabel.font = [UIFont systemFontOfSize:20];
     if(data.Jh_cellBgColor){
-       self.backgroundColor = data.Jh_cellBgColor;
+        self.backgroundColor = data.Jh_cellBgColor;
     }
     if (data.Jh_Cell_NoEdit == YES) {
         self.userInteractionEnabled = NO;
     }else{
         self.userInteractionEnabled = YES;
     }
-    
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
     //标题居中
     self.titleLabel.frame = CGRectMake((Jh_SCRREN_WIDTH-self.data.Jh_titleWidth)/2, (self.data.Jh_defaultHeight - Jh_TitleHeight)/2, self.data.Jh_titleWidth, Jh_TitleHeight);
     
@@ -60,14 +54,12 @@
 
 @implementation UITableView (JhFormCenterTextCell)
 
-- (JhFormCenterTextCell *)CenterTextWithId:(NSString *)cellId
-{
+- (JhFormCenterTextCell *)CenterTextWithId:(NSString *)cellId {
     JhFormCenterTextCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
         cell = [[JhFormCenterTextCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.baseTableView = self;
-        
     }
     return cell;
 }

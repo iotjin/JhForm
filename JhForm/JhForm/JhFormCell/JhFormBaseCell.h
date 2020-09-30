@@ -14,14 +14,10 @@
 
 @property (nonatomic, strong) SelwynExpandableTextView *rightTextView;
 
-/**
- 表单标题
- */
+/** 表单标题 */
 @property (nonatomic, strong) UILabel *titleLabel;
 
-/**
- 表单条目所在的tableView
- */
+/** 表单条目所在的tableView */
 @property (nonatomic, weak) UITableView *baseTableView;
 
 @end

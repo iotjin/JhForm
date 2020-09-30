@@ -1,6 +1,6 @@
 //
 //  HXPhotoEditTransition.h
-//  HXPhotoPicker-Demo
+//  照片选择器
 //
 //  Created by 洪欣 on 2019/1/20.
 //  Copyright © 2019年 洪欣. All rights reserved.
@@ -16,7 +16,7 @@ typedef NS_ENUM(NSUInteger, HXPhotoEditTransitionType) {
 };
 @class HXPhotoModel;
 @interface HXPhotoEditTransition : NSObject<UIViewControllerAnimatedTransitioning>
-+ (instancetype)transitionWithType:(HXPhotoEditTransitionType)type model:(HXPhotoModel *)model;
++ (instancetype)transitionWithType:(HXPhotoEditTransitionType)type model:(HXPhotoModel *)model ;
 @end
 
 NS_ASSUME_NONNULL_END

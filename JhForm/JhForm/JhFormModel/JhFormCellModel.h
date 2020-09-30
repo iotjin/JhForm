@@ -88,7 +88,7 @@ typedef NS_ENUM(NSInteger, JhFormCellInfoTextAlignmentStyle)
     /** 居左 离初始位置默认10 */
     JhFormCellInfoTextAlignmentLeft = 0,
     /** 居右 离初始位置默认10 */
-    JhFormCellInfoTextAlignmentRight,           
+    JhFormCellInfoTextAlignmentRight,
 };
 
 /**
@@ -110,7 +110,7 @@ typedef NS_ENUM(NSInteger, JhTitleShowType) {
      标题后部加红色*，如: 标题*
      */
     JhTitleShowTypeRedStarBack,
-  
+    
 };
 
 
@@ -134,7 +134,6 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 @interface JhFormCellModel : NSObject
 
 
-
 /** inputCell最右侧设置自定义View,需要先设置Jh_intputCellRightViewWidth */
 @property (nonatomic, copy, nullable) JhCellIntputCellRightViewBlock Jh_intputCellRightViewBlock;
 /** 右侧自定义视图的Block (左默认120 ,右 5,高是cell的高) */
@@ -151,7 +150,6 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 /** 点击居中文本的block */
 @property (nonatomic, copy) void(^JhCellClickCenterTextBlock)(void);
 
-
 /** 获取输入内容 和 输入状态(是否输入完成) block */
 @property (nonatomic, copy) JhInputBlock JhInputBlock;
 
@@ -159,7 +157,6 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
  表单条目点击选择事件block
  */
 @property (nonatomic, copy, nullable) JhCellSelectCellBlock Jh_CellSelectCellBlock;
-
 
 /**
  表单条目缺省高度，缺省值为44.0f, 可根据需求设置(如果设置底部自定义view 最好设置view的高度+60 )
@@ -176,13 +173,11 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
  */
 @property (nonatomic, assign) JhTitleShowType Jh_titleShowType;
 
-
 /** title的宽度,默认100 ,若标题太长,不想牺牲字体大小,可设置宽度 */
 @property (nonatomic, assign) CGFloat Jh_titleWidth;
 
 /** 左侧title高度(一般不用设置) */
 @property (nonatomic, assign) CGFloat Jh_titleHeight;
-
 
 /**
  表单条目标题，表单标题为单行显示，尽可能简短，若标题太长，会牺牲字体大小以达到显示完全的效果 (左侧标题)
@@ -196,7 +191,6 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
  (可生效的cell:JhFormInputCell,JhFormPwdCell,JhFormSelectCell,JhFormCustumRightCell)
  */
 @property (nonatomic, assign) BOOL  Jh_titleMultiLineShow;
-
 
 /**
  表单条目详情 (右侧Text)
@@ -212,19 +206,19 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
  表单条目占位字符 (右侧占位字符)
  */
 @property (nonatomic, copy, nullable) NSString *Jh_placeholder;
+
 @property (nonatomic, strong, nullable) NSAttributedString *Jh_attributedPlaceholder;
 
 /** 表单条目占位字符 字体大小(默认15) */
 @property (assign, nonatomic) CGFloat  Jh_placeholderFont;
 
 /**
-  表单条目右侧文本 的排列方式, (居左,居右 ,默认居左,只在选择和输入样式下生效)
+ 表单条目右侧文本 的排列方式, (居左,居右 ,默认居左,只在选择和输入样式下生效)
  */
 @property (assign, nonatomic) JhFormCellInfoTextAlignmentStyle Jh_InfoTextAlignment;
 
 /** 显示右侧的箭头     (只在CustumRightCell样式下生效,默认不显示) */
 @property (assign, nonatomic) BOOL  Jh_custumRightCellShowArrow;
-
 
 /**
  Jh_intputCell 右侧自定义view的宽度,和Jh_intputCellRightViewBlock配合使用
@@ -232,15 +226,16 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
  */
 @property (nonatomic, assign) CGFloat  Jh_intputCellRightViewWidth;
 
-
 /**
-  表单条目右侧 SwitchBtn 开关状态
+ 表单条目右侧 SwitchBtn 开关状态
  */
 @property (nonatomic, assign) BOOL Jh_switchBtn_on;
+
 /**
  表单条目右侧 SwitchBtn 开关处于开启状态时的颜色
  */
 @property (strong, nonatomic) UIColor  *Jh_switchOnTintColor;
+
 /**
  表单条目右侧 SwitchBtn 开关处于关闭状态时边框的颜色(注意这边是边框的颜色)
  */
@@ -251,7 +246,6 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
  */
 @property (nonatomic, assign) BOOL Jh_showPlaceholder;
 
-
 /**
  图片附件条目图片数组，支持UIImage、NSURL、NSString(图片URLString)类型元素
  */
@@ -259,6 +253,7 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 
 /** 是否显示添加图片按钮  (默认显示NO)  */
 @property (nonatomic, assign) BOOL Jh_noShowAddImgBtn;
+
 /** 是否显示图片右上角的删除按钮  (默认显示  NO)  */
 @property (nonatomic, assign) BOOL Jh_hideDeleteButton;
 
@@ -281,8 +276,6 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
  表单条目是否必填(必选) YES:必填(必选) NO:可填(可选)
  */
 @property (nonatomic, assign) BOOL Jh_required;
-
-
 
 /**
  JhFormCellTypeInput 以及 JhFormCellTypeTextViewInput 类别中表示最大输入字数 (默认50)
@@ -330,7 +323,12 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 
 @property (nonatomic, strong) UIColor *Jh_titleTextColor;
 
-
+/** 设置单个界面的cell文字垂直居中 ，JhFormCellTypeInput，JhFormCellTypeSelect 样式生效
+ 
+ ( 默认false，JhFormConst文件的Jh_CellTextVerticalStyle可全局设置居中或居上  )
+ 
+ */
+@property (nonatomic, assign) BOOL  Jh_cellTextVerticalCenter;
 
 
 /** 添加一些备用字段 */

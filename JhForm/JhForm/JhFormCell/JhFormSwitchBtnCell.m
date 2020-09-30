@@ -15,17 +15,15 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 
 
--(UISwitch *)switchBtn{
+-(UISwitch *)switchBtn {
     if (!_switchBtn) {
         _switchBtn = [[UISwitch alloc]init];
         _switchBtn.backgroundColor = [UIColor clearColor];
@@ -35,21 +33,18 @@
     return _switchBtn;
 }
 
--(void)switchBtnChange:(id)sender
-{
+-(void)switchBtnChange:(id)sender {
     UISwitch *mySwitch = (UISwitch *)sender;
     self.data.Jh_switchBtn_on = mySwitch.on;
-    
     if (self.data.Jh_switchBtnBlock) {
         self.data.Jh_switchBtnBlock(mySwitch.on,mySwitch);
     }
 }
 
--(void)setData:(JhFormCellModel *)data{
+-(void)setData:(JhFormCellModel *)data {
     _data= data;
     
     self.titleLabel.attributedText = data.Jh_attributedTitle;
-    
     //设置右侧显示一个switchBtn
     self.accessoryView = self.switchBtn;
     self.switchBtn.on = data.Jh_switchBtn_on;
@@ -64,8 +59,6 @@
     }else{
         self.userInteractionEnabled = YES;
     }
-
-    
 }
 
 - (void)layoutSubviews {
@@ -73,7 +66,6 @@
     
     CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
     self.titleLabel.frame = CGRectMake(titleLabel_X, (self.data.Jh_defaultHeight - Jh_TitleHeight)/2, self.data.Jh_titleWidth, Jh_TitleHeight);
-    
 }
 
 
@@ -82,8 +74,7 @@
 
 @implementation UITableView (JhFormSwitchBtnCell)
 
-- (JhFormSwitchBtnCell *)SwitchBtnCellWithId:(NSString *)cellId
-{
+- (JhFormSwitchBtnCell *)SwitchBtnCellWithId:(NSString *)cellId {
     JhFormSwitchBtnCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
         cell = [[JhFormSwitchBtnCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];

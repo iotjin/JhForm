@@ -13,9 +13,7 @@
 
 @interface JhFormCenterTextCell : JhFormBaseCell
 
-
 @property (nonatomic, strong) JhFormCellModel *data;
-
 
 @end
 

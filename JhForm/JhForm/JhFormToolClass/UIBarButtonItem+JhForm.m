@@ -21,8 +21,7 @@
  @return 生成的UIBarButtonItem
  */
 
-+ (instancetype)itemWithImage:(NSString *)image highImage:(NSString *)highImage target:(id)target action:(SEL)action
-{
++ (instancetype)itemWithImage:(NSString *)image highImage:(NSString *)highImage target:(id)target action:(SEL)action {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
     [button setImage:[UIImage imageNamed:highImage] forState:UIControlStateHighlighted];
@@ -43,12 +42,9 @@
 + (UIBarButtonItem *)itemWithTitle:(NSString *)title
                         titleColor:(UIColor *)titleColor
                             target:(id)target
-                            action:(SEL)action{
-    
+                            action:(SEL)action {
     return [self customItemWithTitle:title titleColor:titleColor imageName:@"" target:target action:action contentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
-    
 }
-
 
 /**
  通过自定义的方法，快速初始化一个UIBarButtonItem，内部是按钮
@@ -66,7 +62,7 @@
                                imageName:(NSString *)imageName
                                   target:(id)target
                                   action:(SEL)action
-              contentHorizontalAlignment:(UIControlContentHorizontalAlignment)contentHorizontalAlignment{
+              contentHorizontalAlignment:(UIControlContentHorizontalAlignment)contentHorizontalAlignment {
     UIButton *item = [[UIButton alloc] init];
     titleColor = titleColor?titleColor:[UIColor whiteColor];
     [item setTitle:title forState:UIControlStateNormal];

@@ -26,7 +26,6 @@ typedef void(^JhInputCompletion)(NSString *text);
 @interface JhFormInputCell : JhFormBaseCell
 
 
-
 /**
  条目配置参数
  */
@@ -34,12 +33,10 @@ typedef void(^JhInputCompletion)(NSString *text);
 
 @property (nonatomic, copy) JhInputCompletion inputCompletion;
 
-
 /**
  右侧自定义视图
  */
 @property (nonatomic, strong) UIView *RightView;
-
 
 /**
  获取条目高度

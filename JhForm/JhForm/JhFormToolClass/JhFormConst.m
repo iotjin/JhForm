@@ -70,5 +70,8 @@ NSString *const Jh_SelectCell_rightArrow = @"JhForm.bundle/Jh_SelectCell_rightAr
 
 
 
-
+//主题设置为light
 JhThemeType const Jh_ThemeType = JhThemeTypeLight;
+
+//cell文字垂直样式设置为居上
+JhCellTextVerticalStyle const Jh_CellTextVerticalStyle = JhCellTextVerticalStyleTop;

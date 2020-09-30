@@ -1,6 +1,6 @@
 //
 //  HXPhotoPersentInteractiveTransition.m
-//  HXPhotoPicker-Demo
+//  照片选择器
 //
 //  Created by 洪欣 on 2018/9/8.
 //  Copyright © 2018年 洪欣. All rights reserved.
@@ -15,14 +15,14 @@
 @interface HXPhotoPersentInteractiveTransition () <UIGestureRecognizerDelegate>
 @property (nonatomic, weak) id<UIViewControllerContextTransitioning> transitionContext;
 @property (nonatomic, weak) UIViewController *vc;
-@property (weak, nonatomic) HXPreviewContentView *contentView;
+@property (strong, nonatomic) HXPreviewContentView *contentView;
 @property (strong, nonatomic) UIView *bgView;
 @property (weak, nonatomic) HXPhotoSubViewCell *tempCell;
 @property (weak, nonatomic) HXPhotoPreviewViewCell *fromCell;
 @property (nonatomic, assign) CGPoint transitionImgViewCenter;
 @property (nonatomic, assign) CGFloat beginX;
 @property (nonatomic, assign) CGFloat beginY;
-@property (weak, nonatomic) HXPhotoView *photoView;
+@property (strong, nonatomic) HXPhotoView *photoView;
 @property (assign, nonatomic) BOOL isPanGesture;
 
 
@@ -42,8 +42,7 @@
     if ([viewController isKindOfClass:[HXPhotoPreviewViewController class]]) {
         HXPhotoPreviewViewController *previewVC = (HXPhotoPreviewViewController *)self.vc;
         HXWeakSelf
-        previewVC.currentCellScrollViewDidScroll = ^(UIScrollView *scrollView) {
-            CGFloat offsetY = scrollView.contentOffset.y;
+        previewVC.currentCellScrollViewDidScroll = ^(CGFloat offsetY) {
             if (offsetY < 0) {
                 weakSelf.atFirstPan = YES;
             }else if (offsetY == 0) {
@@ -57,6 +56,15 @@
     }
     self.photoView = photoView;
     [viewController.view addGestureRecognizer:self.panGesture];
+//    UIPinchGestureRecognizer *pinchGestureRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchView:)];
+//    pinchGestureRecognizer.delegate = self;
+//    [viewController.view addGestureRecognizer:pinchGestureRecognizer];
+
+//    UIRotationGestureRecognizer *rotaitonGest = [[UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(rotationView:)];
+//    rotaitonGest.delegate =self;
+//    [viewController.view addGestureRecognizer:rotaitonGest];
+    
+//    [viewController.view setMultipleTouchEnabled:YES];
 }
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     if ([otherGestureRecognizer.view isKindOfClass:[UICollectionView class]]) {
@@ -81,6 +89,63 @@
     }
     [viewCell.scrollView setContentOffset:viewCell.scrollView.contentOffset animated:NO];
     return YES;
+}
+- (void)rotationView:(UIRotationGestureRecognizer *)rotationGest {
+    
+    CGFloat rotation = rotationGest.rotation;
+    NSSLog(@"旋转   %f",rotation);
+    self.contentView.transform = CGAffineTransformMakeRotation(rotation);
+    
+}
+- (void)pinchView:(UIPinchGestureRecognizer *)pinchGestureRecognizer {
+    CGFloat scale = pinchGestureRecognizer.scale;
+    NSLog(@"%f",scale);
+    switch (pinchGestureRecognizer.state) {
+        case UIGestureRecognizerStateBegan: {
+            if (scale > 1) {
+                
+                return;
+            }
+            self.isPanGesture = NO;
+            HXPhotoPreviewViewController *previewVC = (HXPhotoPreviewViewController *)self.vc; 
+            if (![previewVC bottomView].userInteractionEnabled) {
+                [[UIApplication sharedApplication] setStatusBarHidden:NO];
+            }
+            [previewVC setStopCancel:YES];
+            self.interation = YES;
+            [self.vc dismissViewControllerAnimated:YES completion:nil];
+        }   break;
+        case UIGestureRecognizerStateChanged:
+            if (self.interation) {
+                
+                self.contentView.transform = CGAffineTransformMakeScale(scale, scale);
+                
+                [self updateInterPercent:1 - scale];
+                
+                [self updateInteractiveTransition:scale];
+            }
+            break;
+        case UIGestureRecognizerStateEnded:
+            if (self.interation) {
+                
+                self.interation = NO;
+                if (scale > 0.7f){
+                    [self cancelInteractiveTransition];
+                    [self interPercentCancel];
+                }else {
+                    [self finishInteractiveTransition];
+                    [self interPercentFinish];
+                }
+            }
+            break;
+        default:
+            if (self.interation) {
+                self.interation = NO;
+                [self cancelInteractiveTransition];
+                [self interPercentCancel];
+            }
+            break;
+    }
 }
 - (void)gestureRecognizeDidUpdate:(UIPanGestureRecognizer *)gestureRecognizer {
     CGFloat scale = 0;
@@ -212,7 +277,7 @@
         if (fromVC.exteriorPreviewStyle == HXPhotoViewPreViewShowStyleDark) {
             self.bgView.backgroundColor = [UIColor blackColor];
         }else {
-            self.bgView.backgroundColor = [HXPhotoCommon photoCommon].isDark ? [UIColor blackColor] : fromVC.manager.configuration.previewPhotoViewBgColor;
+            self.bgView.backgroundColor = [HXPhotoCommon photoCommon].isDark ? [UIColor blackColor] : [UIColor whiteColor];
         }
     }
     fromVC.collectionView.hidden = YES;
@@ -258,7 +323,7 @@
                 if (fromVC.exteriorPreviewStyle == HXPhotoViewPreViewShowStyleDark) {
                     fromVC.view.backgroundColor = [UIColor blackColor];
                 }else {
-                    fromVC.view.backgroundColor = [HXPhotoCommon photoCommon].isDark ? [UIColor blackColor] : fromVC.manager.configuration.previewPhotoViewBgColor;
+                    fromVC.view.backgroundColor = [HXPhotoCommon photoCommon].isDark ? [UIColor blackColor] : [UIColor whiteColor];
                 }
             }
             self.tempCell.hidden = NO;

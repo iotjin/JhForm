@@ -51,15 +51,14 @@
         self.navigationItem.rightBarButtonItems =  @[rightItem];
     }
 }
+
 -(void)setJh_navRightImage:(NSString *)Jh_navRightImage{
     _Jh_navRightImage = Jh_navRightImage;
     if (Jh_navRightImage.length) {
         UIBarButtonItem *rightItem = [UIBarButtonItem itemWithImage:Jh_navRightImage highImage:Jh_navRightImage target:self action:@selector(ClickRightItem)];
         self.navigationItem.rightBarButtonItems =  @[rightItem];
     }
-    
 }
-
 
 -(void)ClickRightItem{
     if (self.JhClickNavRightItemBlock) {
@@ -67,41 +66,32 @@
     }
 }
 
-
 -(void)setJh_submitStr:(NSString *)Jh_submitStr{
     _Jh_submitStr = Jh_submitStr;
     [_okBtn setTitle:Jh_submitStr forState:UIControlStateNormal];
 }
 
-
 -(NSMutableArray *)Jh_formModelArr{
     if (!_Jh_formModelArr) {
         _Jh_formModelArr = [NSMutableArray array];
-        
     }
     return _Jh_formModelArr;
 }
 
 -(void)setJh_hiddenDefaultFooterView:(BOOL)Jh_hiddenDefaultFooterView{
-    
     _Jh_hiddenDefaultFooterView = Jh_hiddenDefaultFooterView;
     self.FooterView.hidden = Jh_hiddenDefaultFooterView;
 }
 
-
 #pragma mark - 点击提交按钮
 -(void)ClickOkBtn{
-
     if (self.Jh_formSubmitBlock) {
         self.Jh_formSubmitBlock();
     }
-    
 }
-
 
 -(UIView *)FooterView{
     if (!_FooterView) {
-        
         UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0, Kwidth, 80)];
         footerView.backgroundColor = [UIColor clearColor];
         UIButton *btn = [[UIButton alloc] init];
@@ -115,29 +105,22 @@
         [footerView addSubview:btn];
         
         _FooterView = footerView;
-//        btn.lee_theme.LeeConfigBackgroundColor(Common_ThemeColor);
-
+        //        btn.lee_theme.LeeConfigBackgroundColor(Common_ThemeColor);
         _okBtn =btn;
-        
     }
     return _FooterView;
 }
 
-
 -(UITableView *)Jh_formTableView{
     if (!_Jh_formTableView) {
-
         UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavHeight, Kwidth, Kheight-kNavHeight-kBottomSafeHeight)];
-        
         tableView.showsVerticalScrollIndicator = NO;
         tableView.dataSource=self;
         tableView.delegate=self;
         tableView.backgroundColor =  BaseBgWhiteColor;
-//       tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0,0,0,15)];
+        //       tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0,0,0,15)];
         tableView.tableFooterView = [self FooterView];
-        
         tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, CGFLOAT_MIN)];
-
         [self.view addSubview:tableView];
         
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
@@ -145,19 +128,15 @@
         singleTap.cancelsTouchesInView = NO;
         [tableView addGestureRecognizer:singleTap];
         
-        
         _Jh_formTableView =tableView;
-        
     }
     return _Jh_formTableView;
 }
 
 - (void)configureIOS11{
-
     /// 适配 iOS 11.0 ,iOS11以后，控制器的automaticallyAdjustsScrollViewInsets已经废弃，所以默认就会是YES
     /// iOS 11新增：adjustContentInset 和 contentInsetAdjustmentBehavior 来处理滚动区域
     if (@available(iOS 11.0, *)) {
-
         _Jh_formTableView.estimatedRowHeight = 0;
         _Jh_formTableView.estimatedSectionHeaderHeight = 0;
         _Jh_formTableView.estimatedSectionFooterHeight = 0;
@@ -166,25 +145,19 @@
     }else{
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
-    
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
             [self configureIOS13Theme];
         }
     }
-
 }
 
-
 - (void)configureIOS13Theme{
-    
     if (@available(iOS 13.0, *)) {
-        
         switch (Jh_ThemeType) {
             case JhThemeTypeAuto:
             {
@@ -206,7 +179,6 @@
                 break;
         }
     }
-    
 }
 
 
@@ -219,23 +191,18 @@
     
     [self configureIOS11];
     
-    
     [self configureIOS13Theme];
     
 }
 
-
-
-
 #pragma mark - 单击手势点击事件
 -(void)tapClick:(UITapGestureRecognizer *)tap{
-     [self.view endEditing:YES];
+    [self.view endEditing:YES];
 }
 
 #pragma mark -- TableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.Jh_formModelArr.count;
-    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -261,103 +228,97 @@
     if(self.Jh_useLightTheme ==YES){
         if(@available(iOS 13.0,*)){
             self.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
-            
         }
     }
     
-    
-     // 表单条目类别判断
-       if (cellModel.Jh_cellType == JhFormCellTypeTextViewInput) {
-           NSString *cell_id = [NSString stringWithFormat:@"textViewInput_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
-           JhFormTextViewInputCell *cell = [tableView textViewInputCellWithId:cell_id];
-           cell.data = cellModel;
-           cell.data.Jh_titleWidth = LeftTitleWidth;
-           cell.textViewInputCompletion = ^(NSString *text) {
-               [weakSelf updateTextViewInputWithText:text indexPath:indexPath];
-           };
-           return cell;
-           
-       }else if (cellModel.Jh_cellType == JhFormCellTypeSelect) {
-           NSString *cell_id = [NSString stringWithFormat:@"select_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
-           JhFormSelectCell *cell = [tableView selectCellWithId:cell_id];
-           cell.data = cellModel;
-           cell.data.Jh_titleWidth = LeftTitleWidth;
-           return cell;
-           
-       }else if (cellModel.Jh_cellType == JhFormCellTypeCustumRight) {
-           NSString *cell_id = [NSString stringWithFormat:@"custumRight_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
-           JhFormCustumRightCell *cell = [tableView CustumRightCellWithId:cell_id];
-           cell.data = cellModel;
-           cell.data.Jh_titleWidth = LeftTitleWidth;
-           if (cellModel.Jh_custumRightViewBlock) {
-               cellModel.Jh_custumRightViewBlock(cell.CustumRightView);
-           }
-           return cell;
-       }else if (cellModel.Jh_cellType == JhFormCellTypeCustumBottom) {
-           NSString *cell_id = [NSString stringWithFormat:@"custumBottom_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
-           JhFormCustumBottomCell *cell = [tableView CustumBottomCellWithId:cell_id];
-           cell.data = cellModel;
-           cell.data.Jh_titleWidth = LeftTitleWidth;
-           if (cellModel.Jh_custumBottomViewBlock) {
-               cellModel.Jh_custumBottomViewBlock(cell.CustumBottomView);
-           }
-           return cell;
-       }else if (cellModel.Jh_cellType == JhFormCellTypeSelectImage) {
-           NSString *cell_id = [NSString stringWithFormat:@"custumBottom_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
-           JhFormSelectImageCell *cell = [tableView SelectImageCellWithId:cell_id];
-           cell.data = cellModel;
-           cell.data.Jh_titleWidth = LeftTitleWidth;
-           cell.JhImageSelectBlock = ^(NSArray *imageArr) {
-               [weakSelf updateImageWithImages:imageArr indexPath:indexPath];
-           };
-           return cell;
-       }
-       else if (cellModel.Jh_cellType == JhFormCellTypeRightSwitchBtn) {
-           NSString *cell_id = [NSString stringWithFormat:@"SwitchBtn_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
-           JhFormSwitchBtnCell *cell = [tableView SwitchBtnCellWithId:cell_id];
-           cell.data = cellModel;
-           cell.data.Jh_titleWidth = LeftTitleWidth;
-           return cell;
-       }
-       else if (cellModel.Jh_cellType == JhFormCellTypeCenterTextCell) {
-           NSString *cell_id = [NSString stringWithFormat:@"CenterText_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
-           JhFormCenterTextCell *cell = [tableView CenterTextWithId:cell_id];
-           cell.data = cellModel;
-           cell.data.Jh_titleWidth = LeftTitleWidth;
-           return cell;
-       }
-       else if (cellModel.Jh_cellType == JhFormCellTypePwdInput) {
-           NSString *cell_id = [NSString stringWithFormat:@"PwdInput_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
-           JhFormPwdCell *cell = [tableView PwdCellWithId:cell_id];
-           cell.data = cellModel;
-           cell.data.Jh_titleWidth = LeftTitleWidth;
-           cell.Jh_pwdInputCompletion = ^(NSString *text) {
-               [weakSelf updatePwdInputWithText:text indexPath:indexPath];
-           };
-           return cell;
-       }
-       else if (cellModel.Jh_cellType == JhFormCellTypeCustumALLView) {
-           NSString *cell_id = [NSString stringWithFormat:@"CustumALLView_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
-           JhFormCustumALLViewCell *cell = [tableView CustumALLCellWithId:cell_id];
-           cell.data = cellModel;
-           cell.data.Jh_titleWidth = LeftTitleWidth;
-           if (cellModel.Jh_custumALLViewBlock) {
-               cellModel.Jh_custumALLViewBlock(cell.CustumALLView);
-           }
-           return cell;
-       }
-       
-       else {
-           NSString *cell_id = [NSString stringWithFormat:@"input_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
-           JhFormInputCell *cell = [tableView inputCellWithId:cell_id];
-           cell.data = cellModel;
-           cell.data.Jh_titleWidth = LeftTitleWidth;
-           cell.inputCompletion = ^(NSString *text) {
-               [weakSelf updateInputWithText:text indexPath:indexPath];
-           };
-           return cell;
-       }
-    
+    // 表单条目类别判断
+    if (cellModel.Jh_cellType == JhFormCellTypeTextViewInput) {
+        NSString *cell_id = [NSString stringWithFormat:@"textViewInput_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
+        JhFormTextViewInputCell *cell = [tableView textViewInputCellWithId:cell_id];
+        cell.data = cellModel;
+        cell.data.Jh_titleWidth = LeftTitleWidth;
+        cell.textViewInputCompletion = ^(NSString *text) {
+            [weakSelf updateTextViewInputWithText:text indexPath:indexPath];
+        };
+        return cell;
+    }else if (cellModel.Jh_cellType == JhFormCellTypeSelect) {
+        NSString *cell_id = [NSString stringWithFormat:@"select_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
+        JhFormSelectCell *cell = [tableView selectCellWithId:cell_id];
+        cell.data = cellModel;
+        cell.data.Jh_titleWidth = LeftTitleWidth;
+        return cell;
+    }else if (cellModel.Jh_cellType == JhFormCellTypeCustumRight) {
+        NSString *cell_id = [NSString stringWithFormat:@"custumRight_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
+        JhFormCustumRightCell *cell = [tableView CustumRightCellWithId:cell_id];
+        cell.data = cellModel;
+        cell.data.Jh_titleWidth = LeftTitleWidth;
+        if (cellModel.Jh_custumRightViewBlock) {
+            cellModel.Jh_custumRightViewBlock(cell.CustumRightView);
+        }
+        return cell;
+    }else if (cellModel.Jh_cellType == JhFormCellTypeCustumBottom) {
+        NSString *cell_id = [NSString stringWithFormat:@"custumBottom_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
+        JhFormCustumBottomCell *cell = [tableView CustumBottomCellWithId:cell_id];
+        cell.data = cellModel;
+        cell.data.Jh_titleWidth = LeftTitleWidth;
+        if (cellModel.Jh_custumBottomViewBlock) {
+            cellModel.Jh_custumBottomViewBlock(cell.CustumBottomView);
+        }
+        return cell;
+    }else if (cellModel.Jh_cellType == JhFormCellTypeSelectImage) {
+        NSString *cell_id = [NSString stringWithFormat:@"custumBottom_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
+        JhFormSelectImageCell *cell = [tableView SelectImageCellWithId:cell_id];
+        cell.data = cellModel;
+        cell.data.Jh_titleWidth = LeftTitleWidth;
+        cell.JhImageSelectBlock = ^(NSArray *imageArr) {
+            [weakSelf updateImageWithImages:imageArr indexPath:indexPath];
+        };
+        return cell;
+    }
+    else if (cellModel.Jh_cellType == JhFormCellTypeRightSwitchBtn) {
+        NSString *cell_id = [NSString stringWithFormat:@"SwitchBtn_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
+        JhFormSwitchBtnCell *cell = [tableView SwitchBtnCellWithId:cell_id];
+        cell.data = cellModel;
+        cell.data.Jh_titleWidth = LeftTitleWidth;
+        return cell;
+    }
+    else if (cellModel.Jh_cellType == JhFormCellTypeCenterTextCell) {
+        NSString *cell_id = [NSString stringWithFormat:@"CenterText_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
+        JhFormCenterTextCell *cell = [tableView CenterTextWithId:cell_id];
+        cell.data = cellModel;
+        cell.data.Jh_titleWidth = LeftTitleWidth;
+        return cell;
+    }
+    else if (cellModel.Jh_cellType == JhFormCellTypePwdInput) {
+        NSString *cell_id = [NSString stringWithFormat:@"PwdInput_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
+        JhFormPwdCell *cell = [tableView PwdCellWithId:cell_id];
+        cell.data = cellModel;
+        cell.data.Jh_titleWidth = LeftTitleWidth;
+        cell.Jh_pwdInputCompletion = ^(NSString *text) {
+            [weakSelf updatePwdInputWithText:text indexPath:indexPath];
+        };
+        return cell;
+    }
+    else if (cellModel.Jh_cellType == JhFormCellTypeCustumALLView) {
+        NSString *cell_id = [NSString stringWithFormat:@"CustumALLView_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
+        JhFormCustumALLViewCell *cell = [tableView CustumALLCellWithId:cell_id];
+        cell.data = cellModel;
+        cell.data.Jh_titleWidth = LeftTitleWidth;
+        if (cellModel.Jh_custumALLViewBlock) {
+            cellModel.Jh_custumALLViewBlock(cell.CustumALLView);
+        }
+        return cell;
+    }
+    else {
+        NSString *cell_id = [NSString stringWithFormat:@"input_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
+        JhFormInputCell *cell = [tableView inputCellWithId:cell_id];
+        cell.data = cellModel;
+        cell.data.Jh_titleWidth = LeftTitleWidth;
+        cell.inputCompletion = ^(NSString *text) {
+            [weakSelf updateInputWithText:text indexPath:indexPath];
+        };
+        return cell;
+    }
 }
 
 
@@ -380,8 +341,6 @@
     else {
         return [JhFormInputCell heightWithCellModelData:cellModel];
     }
-    
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -391,12 +350,9 @@
     if (cellModel.Jh_cellType == JhFormCellTypeSelect && cellModel.Jh_CellSelectCellBlock) {
         cellModel.Jh_CellSelectCellBlock(cellModel);
     }
-    
     if(cellModel.Jh_cellType == JhFormCellTypeCenterTextCell && cellModel.JhCellClickCenterTextBlock){
         cellModel.JhCellClickCenterTextBlock();
     }
-    
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -448,13 +404,12 @@
 }
 
 //- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    // 不用系统自带的箭头
+// 不用系统自带的箭头
 //    if (cell.accessoryType == UITableViewCellAccessoryDisclosureIndicator) {
 //        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:Jh_SelectCell_rightArrow]];
 //        cell.accessoryView = imageView;
 //    }
 //}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

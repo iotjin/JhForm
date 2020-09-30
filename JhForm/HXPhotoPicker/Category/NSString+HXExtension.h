@@ -1,6 +1,6 @@
 //
 //  NSString+HXExtension.h
-//  HXPhotoPicker-Demo
+//  照片选择器
 //
 //  Created by 洪欣 on 2019/1/10.
 //  Copyright © 2019年 洪欣. All rights reserved.

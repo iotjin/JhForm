@@ -1,6 +1,6 @@
 //
 //  NSBundle+HXPhotopicker.m
-//  HXPhotoPicker-Demo
+//  照片选择器
 //
 //  Created by 洪欣 on 2017/7/25.
 //  Copyright © 2017年 洪欣. All rights reserved.
@@ -13,19 +13,11 @@
 + (instancetype)hx_photoPickerBundle {
     static NSBundle *hxBundle = nil;
     if (hxBundle == nil) {
-        NSBundle *bundle = [NSBundle bundleForClass:NSClassFromString(@"HXPhotoPicker")];
-        NSString *path = [bundle pathForResource:@"HXPhotoPicker" ofType:@"bundle"];
-        //使用framework形式
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"HXPhotoPicker" ofType:@"bundle"];
         if (!path) {
-            NSURL *associateBundleURL = [[NSBundle mainBundle] URLForResource:@"Frameworks" withExtension:nil];
-            if (associateBundleURL) {
-                associateBundleURL = [associateBundleURL URLByAppendingPathComponent:@"HXPhotoPicker"];
-                associateBundleURL = [associateBundleURL URLByAppendingPathExtension:@"framework"];
-                NSBundle *associateBunle = [NSBundle bundleWithURL:associateBundleURL];
-                path = [associateBunle pathForResource:@"HXPhotoPicker" ofType:@"bundle"];
-            }
+            path = [[NSBundle mainBundle] pathForResource:@"HXPhotoPicker" ofType:@"bundle" inDirectory:@"Frameworks/HXPhotoPicker.framework/"];
         }
-        hxBundle = path ? [NSBundle bundleWithPath:path]: [NSBundle mainBundle];
+        hxBundle = [NSBundle bundleWithPath:path];
     }
     return hxBundle;
 }
@@ -35,9 +27,6 @@
 + (NSString *)hx_localizedStringForKey:(NSString *)key value:(NSString *)value {
     NSBundle *bundle = [HXPhotoCommon photoCommon].languageBundle;
     value = [bundle localizedStringForKey:key value:value table:nil];
-    if (!value) {
-        value = key;
-    }
-    return value;
+    return [[NSBundle mainBundle] localizedStringForKey:key value:value table:nil];
 }
 @end

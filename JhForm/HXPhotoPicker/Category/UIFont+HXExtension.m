@@ -1,6 +1,6 @@
 //
 //  UIFont+HXExtension.m
-//  HXPhotoPicker-Demo
+//  照片选择器
 //
 //  Created by 洪欣 on 2017/10/14.
 //  Copyright © 2017年 洪欣. All rights reserved.
@@ -34,9 +34,8 @@
     return font ? font : [UIFont systemFontOfSize:size];
 }
 + (instancetype)hx_mediumSFUITextOfSize:(CGFloat)size {
-    return [self hx_mediumPingFangOfSize:size];
-//    UIFont *font = [self fontWithName:@".SFUIText-Medium" size:size];
-//    return font ? font : [UIFont systemFontOfSize:size];
+    UIFont *font = [self fontWithName:@".SFUIText-Medium" size:size];
+    return font ? font : [UIFont systemFontOfSize:size];
 }
 
 @end

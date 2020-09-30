@@ -7,7 +7,6 @@
 //
 
 #import "JhFormSelectImageCell.h"
-
 #import "JhFormCellModel.h"
 #import "JhFormConst.h"
 
@@ -18,12 +17,10 @@
 @interface JhFormSelectImageCell()<HXPhotoViewDelegate>
 
 @property (nonatomic, strong) UIView *line1;
-
 @property (strong, nonatomic) HXPhotoView *onePhotoView;
 @property (strong, nonatomic) HXPhotoManager *oneManager;
 /** 选中的图片数组 */
 @property (nonatomic, strong) NSArray *selectImgArr;
-
 /** 图片背景View */
 @property (nonatomic, strong) UIView *BottomImageBgView;
 
@@ -36,25 +33,20 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    
-
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 
 -(UILabel *)tipsLabel{
     if (!_tipsLabel) {
-        
         _tipsLabel =[[UILabel alloc]init];
         _tipsLabel.font = [UIFont systemFontOfSize:13];
         _tipsLabel.textColor = [UIColor colorWithRed:119/255.0 green:119/255.0 blue:119/255.0 alpha:1/1.0];
         _tipsLabel.numberOfLines = 0;
         [self.contentView addSubview:_tipsLabel];
- 
     }
     return _tipsLabel;
 }
@@ -64,30 +56,23 @@
         _line1=[[UIView alloc]init];
         _line1.backgroundColor=BaselineColor;
         [self.contentView addSubview:_line1];
-        
         [self configureIOS13Theme];
-        
     }
     return _line1;
 }
 
-
 -(UIView *)BottomImageBgView{
     if (!_BottomImageBgView) {
-        
         _BottomImageBgView = [[UIView alloc]init];
         _BottomImageBgView.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:_BottomImageBgView];
-        
         [_BottomImageBgView addSubview:self.onePhotoView];
-        
     }
     return _BottomImageBgView;
 }
 
 - (HXPhotoManager *)oneManager {
     if (!_oneManager) {
-        
         NSInteger maxNum = Jh_GlobalMaxImages;
         _oneManager = [[HXPhotoManager alloc] initWithType:HXPhotoManagerSelectedTypePhoto];
         _oneManager.configuration.photoMaxNum = maxNum;
@@ -97,15 +82,13 @@
         _oneManager.configuration.openCamera =NO;
         _oneManager.configuration.photoCanEdit =NO;
         _oneManager.configuration.showBottomPhotoDetail = NO;
-    
     }
     return _oneManager;
 }
 
 -(HXPhotoView *)onePhotoView{
     if (!_onePhotoView) {
-        
-      _onePhotoView = [[HXPhotoView alloc] initWithFrame:CGRectMake(15, 5, Kwidth - 15*2-3*3, itemH) manager:self.oneManager];
+        _onePhotoView = [[HXPhotoView alloc] initWithFrame:CGRectMake(15, 5, Kwidth - 15*2-3*3, itemH) manager:self.oneManager];
         _onePhotoView.outerCamera = YES;
         _onePhotoView.lineCount =itemLineCount;
         _onePhotoView.spacing =3;
@@ -119,25 +102,19 @@
 - (void)photoView:(HXPhotoView *)photoView changeComplete:(NSArray<HXPhotoModel *> *)allList photos:(NSArray<HXPhotoModel *> *)photos videos:(NSArray<HXPhotoModel *> *)videos original:(BOOL)isOriginal {
     
     self.selectImgArr = allList;
-
-   //获取原图
+    //获取原图
     [photos hx_requestImageWithOriginal:YES completion:^(NSArray<UIImage *> * _Nullable imageArray, NSArray<HXPhotoModel *> * _Nullable errorArray) {
         self.selectImgArr = imageArray;
 //        NSSLog(@" 选择图片cell - selectImgArr %@",self.selectImgArr);
         self.data.Jh_imageArr = self.selectImgArr;
     }];
-    
-   [self Jh_reloadData];
-
-    
+    [self Jh_reloadData];
 }
 
 - (void)photoView:(HXPhotoView *)photoView updateFrame:(CGRect)frame {
-        
     self.onePhotoView.frame = frame;
-    
+    [self layoutSubviews];
 }
-
 
 #pragma mark -- 刷新当前图片数据
 - (void)Jh_reloadData {
@@ -155,18 +132,14 @@
     _data= data;
     
     self.titleLabel.attributedText = data.Jh_attributedTitle;
-    
     if(data.Jh_maxImageCount){
         self.oneManager.configuration.maxNum = data.Jh_maxImageCount;
         self.oneManager.configuration.photoMaxNum = data.Jh_maxImageCount;
     }
-    
     if (data.Jh_noShowAddImgBtn==YES) {
         self.onePhotoView.showAddCell = NO;
     }
-    
     if(data.Jh_imageArr.count){
-
         [self.oneManager clearSelectedList];
         NSMutableArray *mUrlArr = @[].mutableCopy;
         for (id img in data.Jh_imageArr) {
@@ -185,21 +158,19 @@
             }
             [mUrlArr addObject:model];
         }
-        [self.oneManager addLocalModels:mUrlArr];
+        [self.oneManager addModelArray:mUrlArr];
         [self.onePhotoView refreshView];
     }
     
     if(data.Jh_cellBgColor){
         self.backgroundColor = data.Jh_cellBgColor;
     }
-    
     if (data.Jh_tipsInfo.length) {
         self.tipsLabel.text = data.Jh_tipsInfo;
         if (data.Jh_tipsInfoColor) {
             self.tipsLabel.textColor = data.Jh_tipsInfoColor;
         }
     }
-    
     self.onePhotoView.hideDeleteButton = data.Jh_hideDeleteButton;
     
     if (data.Jh_Cell_NoEdit == YES) {
@@ -207,11 +178,6 @@
     }else{
         self.userInteractionEnabled = YES;
     }
-  
-
-
-
-    
 }
 
 
@@ -235,67 +201,47 @@
     
 }
 
-
 //高度自适应
-+ (CGFloat)heightWithCellModelData:(JhFormCellModel *)data{
-    
++ (CGFloat)heightWithCellModelData:(JhFormCellModel *)data {
     NSInteger row = 1;
     if (data.Jh_noShowAddImgBtn == YES) {
         row = data.Jh_imageArr.count <= itemLineCount ? 1 : 2;
     }else{
         row = data.Jh_maxImageCount>itemLineCount && data.Jh_imageArr.count >= itemLineCount ?2:1;
     }
-    
     row = row > 2?2: row ; //此处限制最多2行
-    
     CGFloat titleHeight = data.Jh_title.length ? Jh_TitleHeight+1 +Jh_EdgeMargin*2 : 0 ;
     CGFloat tipHeight = data.Jh_tipsInfo.length ? 25 : 0 ;
-    
     CGFloat height = titleHeight+10+itemH*row +10+tipHeight+5;
-    
     return height;
-    
 }
-
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
-    
     if (@available(iOS 13.0, *)) {
-        
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
             [self configureIOS13Theme];
         }
     }
-
 }
 
-
-
--(void)configureIOS13Theme{
-    
+-(void)configureIOS13Theme {
     if (@available(iOS 13.0, *)) {
         if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
             self.line1.backgroundColor = [UIColor separatorColor];
         }else {
             self.line1.backgroundColor = BaselineColor;
         }
-        
     }
-    
-    
 }
 
 
 @end
 
 
-
-
 @implementation UITableView (JhFormCustumBottomCell)
 
-- (JhFormSelectImageCell *)SelectImageCellWithId:(NSString *)cellId
-{
+- (JhFormSelectImageCell *)SelectImageCellWithId:(NSString *)cellId {
     JhFormSelectImageCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
         cell = [[JhFormSelectImageCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];

@@ -1,6 +1,6 @@
 //
 //  UIImage+HXExtension.m
-//  HXPhotoPicker-Demo
+//  照片选择器
 //
 //  Created by 洪欣 on 17/2/15.
 //  Copyright © 2017年 洪欣. All rights reserved.
@@ -9,41 +9,25 @@
 #import "UIImage+HXExtension.h"
 #import "HXPhotoTools.h"
 #import <ImageIO/ImageIO.h>
-#import <Accelerate/Accelerate.h>
-
 @implementation UIImage (HXExtension)
 + (UIImage *)hx_imageNamed:(NSString *)imageName {
     if (!imageName) {
         return nil;
     }
-    UIImage *image;
-    NSBundle *bundle = [NSBundle hx_photoPickerBundle];
-    if (bundle) {
-        NSString *path = [bundle pathForResource:@"images" ofType:nil];
-        path = [path stringByAppendingPathComponent:imageName];
-        image = [UIImage imageNamed:path];
-    }
-    if (!image) {
+    UIImage *image = [self imageNamed:imageName];;
+    if (image) return image;
+    NSBundle *myBundle = [NSBundle hx_photoPickerBundle];
+    imageName = [imageName stringByAppendingString:@"@2x"];
+    NSString *imagePath = [myBundle pathForResource:imageName ofType:@"png"];
+    image = [self imageWithContentsOfFile:imagePath];
+    if (image) {
+        return image;
+    } else {
+        imageName = [imageName stringByReplacingOccurrencesOfString:@"@2x" withString:@""];
         image = [self imageNamed:imageName];
+        return image;
     }
-    return image;
-}
-+ (UIImage *)hx_imageContentsOfFile:(NSString *)imageName {
-    if (!imageName) {
-        return nil;
-    }
-    UIImage *image;
-    NSBundle *bundle = [NSBundle hx_photoPickerBundle];
-    if (bundle) {
-        NSString *path = [bundle pathForResource:@"images" ofType:nil];
-        path = [path stringByAppendingPathComponent:imageName];
-        image = [UIImage imageWithContentsOfFile:path];
-    }
-    if (!image) {
-        image = [self imageNamed:imageName];
-    }
-    return image;
-}
+} 
 + (UIImage *)hx_thumbnailImageForVideo:(NSURL *)videoURL atTime:(NSTimeInterval)time {
     AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];
     if (!asset) {
@@ -142,6 +126,37 @@
     return frameDuration;
 }
 
+- (UIImage *)hx_animatedImageByScalingAndCroppingToSize:(CGSize)size {
+    if (CGSizeEqualToSize(self.size, size) || CGSizeEqualToSize(size, CGSizeZero)) {
+        return self;
+    }
+    CGSize scaledSize = size;
+    CGPoint thumbnailPoint = CGPointZero;
+    //获取较大的缩放比例值,宽高等比缩放
+    CGFloat widthFactor = size.width / self.size.width;
+    CGFloat heightFactor = size.height / self.size.height;
+    CGFloat scaleFactor = (widthFactor > heightFactor) ? widthFactor : heightFactor;
+    scaledSize.width = self.size.width * scaleFactor;
+    scaledSize.height = self.size.height * scaleFactor;
+    //调整位置,使缩放后的图居中
+    if (widthFactor > heightFactor) {
+        thumbnailPoint.y = (size.height - scaledSize.height) * 0.5;
+    }
+    else if (widthFactor < heightFactor) {
+        thumbnailPoint.x = (size.width - scaledSize.width) * 0.5;
+    }
+    //遍历self.images, 将图片缩放后导出放入数组
+    NSMutableArray *scaledImages = [NSMutableArray array];
+    for (UIImage *image in self.images) {
+        UIGraphicsBeginImageContextWithOptions(size, NO, 0.0);
+        [image drawInRect:CGRectMake(thumbnailPoint.x, thumbnailPoint.y, scaledSize.width, scaledSize.height)];
+        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+        [scaledImages addObject:newImage];
+        UIGraphicsEndImageContext();
+    }
+    return [UIImage animatedImageWithImages:scaledImages duration:self.duration];
+}
+
 - (UIImage *)hx_normalizedImage {
     if (self.imageOrientation == UIImageOrientationUp) return self;
     
@@ -150,6 +165,98 @@
     UIImage *normalizedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return normalizedImage;
+}
+- (UIImage *)hx_fullNormalizedImage {
+    if (self.imageOrientation == UIImageOrientationUp) return self;
+    
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    
+    switch (self.imageOrientation) {
+        case UIImageOrientationDown:
+        case UIImageOrientationDownMirrored: transform = CGAffineTransformTranslate(transform, self.size.width, self.size.height); transform = CGAffineTransformRotate(transform, M_PI); break;
+            
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+            transform = CGAffineTransformTranslate(transform, self.size.width, 0);
+            transform = CGAffineTransformRotate(transform, M_PI_2);
+            break;
+            
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, 0, self.size.height);
+            transform = CGAffineTransformRotate(transform, -M_PI_2);
+            break;
+        default:
+            break;
+    }
+    
+    switch (self.imageOrientation) { case UIImageOrientationUpMirrored: case UIImageOrientationDownMirrored: transform = CGAffineTransformTranslate(transform, self.size.width, 0); transform = CGAffineTransformScale(transform, -1, 1); break;
+            
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, self.size.height, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+        default:
+            break;
+    }
+    
+    CGContextRef ctx = CGBitmapContextCreate(NULL, self.size.width, self.size.height, CGImageGetBitsPerComponent(self.CGImage), 0, CGImageGetColorSpace(self.CGImage), CGImageGetBitmapInfo(self.CGImage));
+    CGContextConcatCTM(ctx, transform);
+    switch (self.imageOrientation) {
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            
+            CGContextDrawImage(ctx, CGRectMake(0,0,self.size.height,self.size.width), self.CGImage);
+            break;
+            
+        default:
+            CGContextDrawImage(ctx, CGRectMake(0,0,self.size.width,self.size.height), self.CGImage);
+            break;
+    }
+    
+    CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
+    UIImage *img = [UIImage imageWithCGImage:cgimg];
+    CGContextRelease(ctx);
+    CGImageRelease(cgimg);
+    return img;
+}
+
+- (UIImage *)hx_clipImage:(CGFloat)scale {
+    CGFloat width = self.size.width;
+    CGFloat height = self.size.height;
+    
+    CGRect rect = CGRectMake((width - width / scale) / 2, height / 2 - width / scale / 2, width / scale, width / scale);
+    CGImageRef imageRef = self.CGImage;
+    CGImageRef imagePartRef = CGImageCreateWithImageInRect(imageRef, rect);
+    UIImage *image = [UIImage imageWithCGImage:imagePartRef];
+    CGImageRelease(imagePartRef);
+    return image;
+}
+- (UIImage *)hx_clipLeftOrRightImage:(CGFloat)scale {
+    CGFloat width = self.size.width;
+    CGFloat height = self.size.height;
+    
+    CGRect rect = CGRectMake((width - height / scale) / 2, height / 2 - height / scale / 2, height / scale, height / scale);
+    CGImageRef imageRef = self.CGImage;
+    CGImageRef imagePartRef = CGImageCreateWithImageInRect(imageRef, rect);
+    UIImage *image = [UIImage imageWithCGImage:imagePartRef];
+    CGImageRelease(imagePartRef);
+    return image;
+}
+
+- (UIImage *)hx_clipNormalizedImage:(CGFloat)scale {
+    CGFloat width = self.size.width;
+    CGFloat height = self.size.height;
+    
+    CGRect rect = CGRectMake((width - width / scale) / 2, height / 2 - height / scale / 2, width / scale, height / scale);
+    CGImageRef imageRef = self.CGImage;
+    CGImageRef imagePartRef = CGImageCreateWithImageInRect(imageRef, rect);
+    UIImage *image = [UIImage imageWithCGImage:imagePartRef];
+    CGImageRelease(imagePartRef);
+    return image;
 }
 
 - (UIImage *)hx_scaleImagetoScale:(float)scaleSize {
@@ -171,10 +278,10 @@
     CGRect rect = CGRectZero;
     CGAffineTransform tran = CGAffineTransformIdentity;
     
-    rect.size.width = CGImageGetWidth(imag) * self.scale;
-    rect.size.height = CGImageGetHeight(imag) * self.scale;
+    rect.size.width = CGImageGetWidth(imag);
+    rect.size.height = CGImageGetHeight(imag);
     
-    while (rect.size.width * rect.size.height > 3 * 1000 * 1000) {
+    while (rect.size.width * rect.size.height > 4 * 1000 * 1000) {
         rect.size.width /= 2;
         rect.size.height /= 2;
     }
@@ -281,157 +388,5 @@ static CGRect swapWidthAndHeight(CGRect rect) {
     UIGraphicsEndImageContext();
     
     return image;
-}
-- (UIImage *)hx_cropInRect:(CGRect)rect {
-    if (CGPointEqualToPoint(CGPointZero, rect.origin) && CGSizeEqualToSize(self.size, rect.size)) {
-        return self;
-    }
-    UIImage *smallImage = nil;
-    CGImageRef sourceImageRef = [self CGImage];
-    CGImageRef newImageRef = CGImageCreateWithImageInRect(sourceImageRef, rect);
-    if (newImageRef) {
-        smallImage = [UIImage imageWithCGImage:newImageRef scale:self.scale orientation:self.imageOrientation];
-        CGImageRelease(newImageRef);
-    }
-
-    return smallImage;
-}
-
-- (UIImage *)hx_scaleToFillSize:(CGSize)size {
-    if (CGSizeEqualToSize(self.size, size)) {
-        return self;
-    }
-    
-    // 创建一个context
-    // 并把它设置成为当前正在使用的context
-    UIGraphicsBeginImageContextWithOptions(size, NO, self.scale);
-    
-    // 绘制改变大小的图片
-    [self drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    
-    // 从当前context中创建一个改变大小后的图片
-    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    // 使当前的context出堆栈
-    UIGraphicsEndImageContext();
-    
-    // 返回新的改变大小后的图片
-    return scaledImage;
-}
-/** 合并图片（图片大小一致） */
-- (UIImage *)hx_mergeimages:(NSArray <UIImage *>*)images {
-    CGSize size = self.size;
-    while (size.width * size.height > 3 * 1000 * 1000) {
-        size.width /= 2;
-        size.height /= 2;
-    }
-    UIGraphicsBeginImageContextWithOptions(size ,NO, 0);
-    [self drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    for (UIImage *image in images) {
-        size = image.size;
-        while (size.width * size.height > 3 * 1000 * 1000) {
-            size.width /= 2;
-            size.height /= 2;
-        }
-        [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    }
-    UIImage *mergeImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return mergeImage;
-}
-/** 合并图片(图片大小以第一张为准) */
-+ (UIImage *)hx_mergeimages:(NSArray <UIImage *>*)images {
-    UIGraphicsBeginImageContextWithOptions(images.firstObject.size ,NO, 0);
-    for (UIImage *image in images) {
-        [image drawInRect:CGRectMake(0, 0, image.size.width, image.size.height)];
-    }
-    UIImage *mergeImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return mergeImage;
-}
-+ (CGSize)hx_scaleImageSizeBySize:(CGSize)imageSize targetSize:(CGSize)size isBoth:(BOOL)isBoth {
-    
-    /** 原图片大小为0 不再往后处理 */
-    if (CGSizeEqualToSize(imageSize, CGSizeZero)) {
-        return imageSize;
-    }
-    
-    CGFloat width = imageSize.width;
-    CGFloat height = imageSize.height;
-    CGFloat targetWidth = size.width;
-    CGFloat targetHeight = size.height;
-    CGFloat scaleFactor = 0.0;
-    CGFloat scaledWidth = targetWidth;
-    CGFloat scaledHeight = targetHeight;
-    CGPoint thumbnailPoint = CGPointMake(0.0, 0.0);
-    if(CGSizeEqualToSize(imageSize, size) == NO){
-        CGFloat widthFactor = targetWidth / width;
-        CGFloat heightFactor = targetHeight / height;
-        if (isBoth) {
-            if(widthFactor > heightFactor){
-                scaleFactor = widthFactor;
-            }
-            else{
-                scaleFactor = heightFactor;
-            }
-        } else {
-            if(widthFactor > heightFactor){
-                scaleFactor = heightFactor;
-            }
-            else{
-                scaleFactor = widthFactor;
-            }
-        }
-        scaledWidth = width * scaleFactor;
-        scaledHeight = height * scaleFactor;
-        if(widthFactor > heightFactor){
-            thumbnailPoint.y = (targetHeight - scaledHeight) * 0.5;
-        }else if(widthFactor < heightFactor){
-            thumbnailPoint.x = (targetWidth - scaledWidth) * 0.5;
-        }
-    }
-    return CGSizeMake(ceilf(scaledWidth), ceilf(scaledHeight));
-}
-- (UIImage*)hx_scaleToFitSize:(CGSize)size {
-    if (CGSizeEqualToSize(self.size, size)) {
-        return self;
-    }
-    CGFloat width = CGImageGetWidth(self.CGImage);
-    CGFloat height = CGImageGetHeight(self.CGImage);
-    
-    float verticalRadio = size.height*1.0/height;
-    float horizontalRadio = size.width*1.0/width;
-    
-    float radio = 1;
-    if(verticalRadio>1 && horizontalRadio>1)
-    {
-        radio = verticalRadio > horizontalRadio ? horizontalRadio : verticalRadio;
-    }
-    else
-    {
-        radio = verticalRadio < horizontalRadio ? verticalRadio : horizontalRadio;
-    }
-    
-    width = roundf(width*radio);
-    height = roundf(height*radio);
-    
-    int xPos = (size.width - width)/2;
-    int yPos = (size.height-height)/2;
-    
-    // 创建一个context
-    // 并把它设置成为当前正在使用的context
-    UIGraphicsBeginImageContextWithOptions(size, NO, self.scale);
-    
-    // 绘制改变大小的图片
-    [self drawInRect:CGRectMake(xPos, yPos, width, height)];
-    
-    // 从当前context中创建一个改变大小后的图片
-    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    // 使当前的context出堆栈
-    UIGraphicsEndImageContext();
-    
-    // 返回新的改变大小后的图片
-    return scaledImage;
 }
 @end

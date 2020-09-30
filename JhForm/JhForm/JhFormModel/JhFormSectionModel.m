@@ -15,15 +15,13 @@
 @end
 
 inline JhFormSectionModel *JhSectionModel_Add(NSArray * _Nonnull Jh_sectionModelArr) {
-    
     return [JhFormSectionModel Jh_sectionModelArr:Jh_sectionModelArr];
 }
 
 @implementation JhFormSectionModel
 
 
-+ (instancetype)Jh_sectionModelArr:(NSArray *)modelArr{
-    
++ (instancetype)Jh_sectionModelArr:(NSArray *)modelArr {
     return [[self alloc]initWithModelArr:modelArr];
 }
 

@@ -139,4 +139,18 @@ iOS13 生效  主题默认light
 extern JhThemeType const Jh_ThemeType;
 
 
+/**
+ title 垂直展示样式，居中或居上
+*/
+typedef NS_ENUM(NSInteger, JhCellTextVerticalStyle)
+{
+    JhCellTextVerticalStyleTop = 0,
+    JhCellTextVerticalStyleCenter ,
+};
+
+/**
+ cell中文字 垂直展示样式，默认居上
+*/
+extern JhCellTextVerticalStyle const Jh_CellTextVerticalStyle;
+
 

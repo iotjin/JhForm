@@ -1,6 +1,6 @@
 //
 //  HXPhotoInteractiveTransition.m
-//  HXPhotoPicker-Demo
+//  照片选择器
 //
 //  Created by 洪欣 on 2017/10/28.
 //  Copyright © 2017年 洪欣. All rights reserved.
@@ -13,7 +13,7 @@
 @interface HXPhotoInteractiveTransition ()<UIGestureRecognizerDelegate>
 @property (nonatomic, weak) id<UIViewControllerContextTransitioning> transitionContext;
 @property (nonatomic, weak) UIViewController *vc;
-@property (weak, nonatomic) HXPreviewContentView *contentView;
+@property (strong, nonatomic) HXPreviewContentView *contentView;
 @property (strong, nonatomic) UIView *bgView;
 @property (weak, nonatomic) HXPhotoViewCell *tempCell;
 @property (weak, nonatomic) HXPhotoPreviewViewCell *fromCell;
@@ -30,15 +30,14 @@
 @end
 
 @implementation HXPhotoInteractiveTransition
-- (void)addPanGestureForViewController:(UIViewController *)viewController {
+- (void)addPanGestureForViewController:(UIViewController *)viewController{
     self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizeDidUpdate:)];
     self.panGesture.delegate = self;
     self.vc = viewController;
     if ([viewController isKindOfClass:[HXPhotoPreviewViewController class]]) {
         HXPhotoPreviewViewController *previewVC = (HXPhotoPreviewViewController *)self.vc;
         HXWeakSelf
-        previewVC.currentCellScrollViewDidScroll = ^(UIScrollView *scrollView) {
-            CGFloat offsetY = scrollView.contentOffset.y;
+        previewVC.currentCellScrollViewDidScroll = ^(CGFloat offsetY) {
             if (offsetY < 0) {
                 weakSelf.atFirstPan = YES;
             }else if (offsetY == 0) {
@@ -59,22 +58,22 @@
         UIScrollView *scrollView = (UIScrollView *)otherGestureRecognizer.view;
         if (scrollView.contentOffset.y <= 0 &&
             !scrollView.zooming &&
-            !scrollView.isZoomBouncing &&
-            self.atFirstPan) {
+            !scrollView.isZoomBouncing && self.atFirstPan) {
             return YES;
         }
     }
     return NO;
 }
+
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     HXPhotoPreviewViewController *previewVC = (HXPhotoPreviewViewController *)self.vc;
     HXPhotoPreviewViewCell *viewCell = [previewVC currentPreviewCell:previewVC.modelArray[previewVC.currentModelIndex]];
     if (viewCell.scrollView.zooming ||
         viewCell.scrollView.zoomScale < 1.0f ||
         viewCell.scrollView.isZoomBouncing) {
-
+        
         return NO;
-    }
+    } 
     [viewCell.scrollView setContentOffset:viewCell.scrollView.contentOffset animated:NO];
     return YES;
 }
@@ -190,7 +189,7 @@
         toCell = [toVC currentPreviewCell:model];
     }
     self.bgView = [[UIView alloc] initWithFrame:containerView.bounds];
-    self.bgView.backgroundColor = [HXPhotoCommon photoCommon].isDark ? [UIColor blackColor] : fromVC.manager.configuration.previewPhotoViewBgColor;
+    self.bgView.backgroundColor = [HXPhotoCommon photoCommon].isDark ? [UIColor blackColor] : [UIColor whiteColor];
     CGFloat scaleX;
     CGFloat scaleY;
     if (self.beginX < tempImageViewFrame.origin.x) {
@@ -255,7 +254,7 @@
         toVC.bottomView.alpha = 0;
     }else {
         toVC.bottomView.alpha = 1;
-        self.bgView.backgroundColor = [HXPhotoCommon photoCommon].isDark ? [UIColor blackColor] : fromVC.manager.configuration.previewPhotoViewBgColor;
+        self.bgView.backgroundColor = [HXPhotoCommon photoCommon].isDark ? [UIColor blackColor] : [UIColor whiteColor];
     }
     toVC.navigationController.navigationBar.userInteractionEnabled = NO;
     fromVC.collectionView.hidden = YES;
@@ -317,7 +316,7 @@
                     [toVC.navigationController setNavigationBarHidden:YES];
                 }
             }else {
-                fromVC.view.backgroundColor = [HXPhotoCommon photoCommon].isDark ? [UIColor blackColor] : fromVC.manager.configuration.previewPhotoViewBgColor;
+                fromVC.view.backgroundColor = [HXPhotoCommon photoCommon].isDark ? [UIColor blackColor] : [UIColor whiteColor];
             }
             self.tempCell.hidden = NO;
             self.tempCell = nil;

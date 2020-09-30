@@ -12,10 +12,7 @@
 
 @interface JhFormSwitchBtnCell : JhFormBaseCell
 
-
-/**
- 右侧 switchBtn
- */
+/** 右侧 switchBtn */
 @property (strong, nonatomic) UISwitch  *switchBtn;
 
 @property (strong, nonatomic) JhFormCellModel *data;
