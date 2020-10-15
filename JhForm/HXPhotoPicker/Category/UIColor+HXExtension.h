@@ -1,6 +1,6 @@
 //
 //  UIColor+HXExtension.h
-//  照片选择器
+//  HXPhotoPicker-Demo
 //
 //  Created by 洪欣 on 2019/12/3.
 //  Copyright © 2019 洪欣. All rights reserved.
@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIColor *)hx_colorWithHexStr:(NSString *)string alpha:(CGFloat)alpha;
 + (UIColor *)hx_colorWithR:(CGFloat)red g:(CGFloat)green b:(CGFloat)blue a:(CGFloat)alpha;
 + (NSString *)hx_hexStringWithColor:(UIColor *)color;
+- (BOOL)hx_colorIsWhite;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -12,18 +12,22 @@
 #import <UIKit/UIKit.h>
 
 
+/**
+ 版本号（20201015）
+ */
+#define kVersion @"1.0.0"
 
 /** 表单条目标题颜色 */
-#define Jh_titleColor [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1/1.0]
+#define Jh_titleColor JhGrayColor(51)
 
 /** 表单条目 右侧文本颜色 */
-#define Jh_rightTextViewTextColor [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1/1.0]
+#define Jh_rightTextViewTextColor JhGrayColor(51)
 
 /** 表单条目输入框占位符字体颜色  */
-#define Jh_PlaceholderColor [UIColor colorWithRed:187/255.0 green:187/255.0 blue:187/255.0 alpha:1/1.0]
+#define Jh_PlaceholderColor JhGrayColor(187)
 
 /** JhFormCellModelTypeTextViewInput 类别 TextView 背景颜色  */
-#define Jh_textView_BackgroundColor [UIColor colorWithRed:250/255.0 green:250/255.0 blue:250/255.0 alpha:1/1.0]
+#define Jh_textView_BackgroundColor JhGrayColor(250)
 
 
 // 表单右侧自定义view的左间距 (默认120)  如果设置 self.Jh_leftTitleWidth ,会变小
@@ -35,6 +39,8 @@
 /** 获取屏幕宽度  */
 #define Jh_SCRREN_WIDTH [UIScreen mainScreen].bounds.size.width
 
+#define JhColor(r, g, b)     [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+#define JhGrayColor(v) JhColor((v), (v), (v))
 
 /**
  表单标题字体大小，缺省为15

@@ -133,7 +133,7 @@
     return _Jh_formTableView;
 }
 
-- (void)configureIOS11{
+- (void)Jh_configureIOS11{
     /// 适配 iOS 11.0 ,iOS11以后，控制器的automaticallyAdjustsScrollViewInsets已经废弃，所以默认就会是YES
     /// iOS 11新增：adjustContentInset 和 contentInsetAdjustmentBehavior 来处理滚动区域
     if (@available(iOS 11.0, *)) {
@@ -151,12 +151,12 @@
     [super traitCollectionDidChange:previousTraitCollection];
     if (@available(iOS 13.0, *)) {
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self configureIOS13Theme];
+            [self Jh_configureIOS13Theme];
         }
     }
 }
 
-- (void)configureIOS13Theme{
+- (void)Jh_configureIOS13Theme{
     if (@available(iOS 13.0, *)) {
         switch (Jh_ThemeType) {
             case JhThemeTypeAuto:
@@ -189,9 +189,9 @@
     
     [self Jh_formTableView];
     
-    [self configureIOS11];
+    [self Jh_configureIOS11];
     
-    [self configureIOS13Theme];
+    [self Jh_configureIOS13Theme];
     
 }
 

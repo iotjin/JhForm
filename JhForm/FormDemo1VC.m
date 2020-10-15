@@ -31,6 +31,19 @@
         _passWordTextField.secureTextEntry=YES;
         _passWordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _passWordTextField.font = [UIFont systemFontOfSize:15];
+        if (@available(iOS 13.0, *)) {
+            UIColor *dyColor = [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull trainCollection) {
+                if ([trainCollection userInterfaceStyle] == UIUserInterfaceStyleLight) {
+                    return Jh_PlaceholderColor;
+                } else {
+                    return Jh_PlaceholderColor;
+                }
+            }];
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            dict[NSForegroundColorAttributeName] = dyColor;
+            NSAttributedString *attribute = [[NSAttributedString alloc] initWithString:self.passWordTextField.placeholder attributes:dict];
+            [self.passWordTextField setAttributedPlaceholder:attribute];
+        }
     }
     return _passWordTextField;
 }

@@ -20,6 +20,10 @@
 //@property (nonatomic, strong) JhPositionButton *btn1;
 //@property (nonatomic, strong) JhPositionButton *btn2;
 
+@property (nonatomic, strong) JhBaseHeaderView *headerV;
+@property (nonatomic, strong) JhBaseHeaderView *footerV;
+@property (nonatomic, strong) JhBaseHeaderView *headerV2;
+
 @end
 
 @implementation FormDemo2VC
@@ -75,8 +79,6 @@
     button.selected = !button.selected;
 }
 
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -86,17 +88,9 @@
     
 }
 
-
-
-
-
-
 #pragma mark - initModel
 -(void)initModel{
-    
-    
     __weak typeof(self) weakSelf = self;
-    
     
     //第一组
     NSMutableArray *cellArr0 = [NSMutableArray array];
@@ -105,7 +99,6 @@
     UIView *rightView = [[UIView alloc]init];
     rightView.backgroundColor = JhRandomColor;
 
-    
     JhFormCellModel *cell0 = JhFormCellModel_AddCustumRightCell(@"右侧自定义:");
     cell0.Jh_defaultHeight = 60;
     cell0.Jh_custumRightViewBlock = ^(UIView *RightView) {
@@ -140,18 +133,16 @@
     JhFormSectionModel *section0 = JhSectionModel_Add(cellArr0);
     
     JhBaseHeaderView *headerV = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, Kwidth, 44)];
-    headerV.backgroundColor = BaseBgWhiteColor;
     headerV.Jh_leftTitle = @"第一组头部";
     section0.Jh_headerView = headerV;
     section0.Jh_headerHeight= headerV.bounds.size.height;
+    self.headerV = headerV;
     
     JhBaseHeaderView *footerV = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, Kwidth, 44)];
-    footerV.backgroundColor = BaseBgWhiteColor;
     footerV.Jh_leftTitle = @"第一组尾部";
     section0.Jh_footerView = footerV;
     section0.Jh_footerHeight= footerV.bounds.size.height;
-    
-    
+    self.footerV = footerV;
     
     //第二组
     NSMutableArray *cellArr1 = [NSMutableArray array];
@@ -190,10 +181,7 @@
     [cellArr1 addObjectsFromArray: @[Section1_cell0,Section1_cell1,Section1_cell2]];
     JhFormSectionModel *section1 = JhSectionModel_Add(cellArr1);
     
-
-    
     JhBaseHeaderView *headerV2 = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, Kwidth, 44)];
-    headerV2.backgroundColor = BaseBgWhiteColor;
     headerV2.Jh_leftTitle = @"第二组头部";
     headerV2.Jh_rightBtnTitle = @"更多";
     headerV2.JhHeaderClickRightBtnBlock = ^{
@@ -202,6 +190,7 @@
     };
     section1.Jh_headerView = headerV2;
     section1.Jh_headerHeight= headerV2.bounds.size.height;
+    self.headerV2 = headerV2;
     
         
     [self.Jh_formModelArr addObject:section0];
@@ -214,24 +203,32 @@
 //         [JhProgressHUD showText:@"点击提交按钮"];
     };
     
+    [self configureIOS13Theme];
     
-    
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
     if (@available(iOS 13.0, *)) {
-        
-        if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-            headerV.backgroundColor = [UIColor systemBackgroundColor];
-            footerV.backgroundColor = [UIColor systemBackgroundColor];
-            headerV2.backgroundColor = [UIColor systemBackgroundColor];
-        }else {
-            headerV.backgroundColor = BaseBgWhiteColor;
-            footerV.backgroundColor = BaseBgWhiteColor;
-            headerV2.backgroundColor = BaseBgWhiteColor;
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self configureIOS13Theme];
         }
     }
-    
-    
-    
-    
+}
+
+-(void)configureIOS13Theme{
+    if (@available(iOS 13.0, *)) {
+        if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            self.headerV.backgroundColor = UIColor.systemBackgroundColor;
+            self.headerV2.backgroundColor = UIColor.systemBackgroundColor;
+            self.footerV.backgroundColor = UIColor.systemBackgroundColor;
+        }else {
+            self.headerV.backgroundColor = BaseBgWhiteColor;
+            self.headerV2.backgroundColor = BaseBgWhiteColor;
+            self.footerV.backgroundColor = BaseBgWhiteColor;
+        }
+        [self.Jh_formTableView reloadData];
+    }
 }
 
 #pragma mark - 提交请求

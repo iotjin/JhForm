@@ -82,6 +82,7 @@
         _oneManager.configuration.openCamera =NO;
         _oneManager.configuration.photoCanEdit =NO;
         _oneManager.configuration.showBottomPhotoDetail = NO;
+        [HXPhotoCommon photoCommon].requestNetworkAfter= YES;
     }
     return _oneManager;
 }
@@ -158,7 +159,7 @@
             }
             [mUrlArr addObject:model];
         }
-        [self.oneManager addModelArray:mUrlArr];
+        [self.oneManager addLocalModels:mUrlArr];
         [self.onePhotoView refreshView];
     }
     

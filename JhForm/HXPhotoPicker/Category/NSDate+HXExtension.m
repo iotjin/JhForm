@@ -1,6 +1,6 @@
 //
 //  NSDate+HXExtension.m
-//  照片选择器
+//  HXPhotoPicker-Demo
 //
 //  Created by 洪欣 on 2017/10/14.
 //  Copyright © 2017年 洪欣. All rights reserved.
@@ -195,17 +195,5 @@
         [formater setLocale:locale];
     }
     return [formater stringFromDate:self];
-}
-
-- (BOOL)hx_isSameDay:(NSDate*)date {
-    NSCalendar* calendar = [NSCalendar currentCalendar];
-    
-    unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay;
-    NSDateComponents* comp1 = [calendar components:unitFlags fromDate:self];
-    NSDateComponents* comp2 = [calendar components:unitFlags fromDate:date];
-    
-    return [comp1 day]   == [comp2 day] &&
-    [comp1 month] == [comp2 month] &&
-    [comp1 year]  == [comp2 year];
 }
 @end

@@ -272,18 +272,19 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
     NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:title attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:Jh_TitleFont], NSForegroundColorAttributeName:TitleColor}];
     
     if (@available(iOS 13.0, *)) {
-        if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-            if (self.Jh_titleTextColor) {
-                TitleColor = self.Jh_titleTextColor;
-            }else{
-                TitleColor = [UIColor labelColor];
-            }
-            [attributedTitle  addAttribute:NSForegroundColorAttributeName value:TitleColor range:NSMakeRange(0, title.length)];
+        if (self.Jh_titleTextColor) {
+            TitleColor = self.Jh_titleTextColor;
+        } else {
+            UIColor *dyColor = [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull trainCollection) {
+                if ([trainCollection userInterfaceStyle] == UIUserInterfaceStyleLight) {
+                    return [UIColor labelColor];
+                } else {
+                    return [UIColor labelColor];
+                }
+            }];
+            TitleColor = dyColor;
         }
-        else {
-            [attributedTitle  addAttribute:NSForegroundColorAttributeName value:TitleColor range:NSMakeRange(0, title.length)];
-        }
-        
+        [attributedTitle  addAttribute:NSForegroundColorAttributeName value:TitleColor range:NSMakeRange(0, title.length)];
     }
     
     if (required) {
