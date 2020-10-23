@@ -8,6 +8,28 @@
 
 #import "JhFormConst.h"
 
+
+// 表单提交按钮 上下间距   默认25（上25，下25）
+CGFloat const Jh_SubmitBtn_TBSpace = 25.0f;
+
+// 表单提交按钮 左右间距   默认15（左15，右15）
+CGFloat const Jh_SubmitBtn_LRSpace = 15.0f;
+
+// 表单提交按钮 圆角   默认5
+CGFloat const Jh_SubmitBtn_CornerRadius = 5.0f;
+
+//表单提交按钮 高度   默认40
+CGFloat const Jh_SubmitBtn_Height = 40.0f;
+
+//表单提交按钮 文字大小 默认17
+CGFloat const Jh_SubmitBtn_TextFontSize = 17.0f;
+
+//表单提交按钮 文字  默认 ：提 交
+NSString *const Jh_SubmitBtn_Text = @"提 交";
+
+
+
+
 // 表单标题字体大小
 CGFloat const Jh_TitleFont = 15.0f;
 

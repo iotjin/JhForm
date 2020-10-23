@@ -13,27 +13,9 @@
 
 
 /**
- 版本号（20201015）
+ 版本号（20201023）
  */
-#define kVersion @"1.0.0"
-
-/** 表单条目标题颜色 */
-#define Jh_titleColor JhGrayColor(51)
-
-/** 表单条目 右侧文本颜色 */
-#define Jh_rightTextViewTextColor JhGrayColor(51)
-
-/** 表单条目输入框占位符字体颜色  */
-#define Jh_PlaceholderColor JhGrayColor(187)
-
-/** JhFormCellModelTypeTextViewInput 类别 TextView 背景颜色  */
-#define Jh_textView_BackgroundColor JhGrayColor(250)
-
-
-// 表单右侧自定义view的左间距 (默认120)  如果设置 self.Jh_leftTitleWidth ,会变小
-
-// 表单右侧自定义view的右间距
-#define  Jh_CustumRightView_rightEdgeMargin   5.0f
+#define kVersion @"1.1.0"
 
 
 /** 获取屏幕宽度  */
@@ -41,6 +23,70 @@
 
 #define JhColor(r, g, b)     [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 #define JhGrayColor(v) JhColor((v), (v), (v))
+
+
+/** 主题色 */
+#define BaseThemeColor JhColor(46, 150, 213)
+
+/** 背景色 */
+#define BaseBgWhiteColor JhColor(248, 248, 248)
+#define BaseBgWhiteColor_dark JhColor(10, 10, 10)
+
+/** line背景色 */
+#define BaselineColor JhColor(230, 230, 230)
+
+/** 表单条目    标题颜色 */
+#define Jh_titleColor JhGrayColor(51)
+
+/** 表单条目    右侧文本颜色 */
+#define Jh_rightTextViewTextColor JhGrayColor(51)
+
+/** 表单条目    输入框占位符字体颜色  */
+#define Jh_PlaceholderColor JhGrayColor(187)
+
+/** JhFormCellModelTypeTextViewInput 类别 TextView 背景颜色  */
+#define Jh_textView_BackgroundColor JhGrayColor(250)
+
+// 表单右侧自定义view的左间距 (默认120)  如果设置 self.Jh_leftTitleWidth ,会变小
+
+// 表单右侧自定义view的右间距
+#define  Jh_CustumRightView_rightEdgeMargin   5.0f
+
+
+
+/** 表单提交按钮 文字颜色，默认白色 */
+#define Jh_SubmitBtn_TextColor [UIColor whiteColor]
+
+/**
+ 表单提交按钮 上下间距   默认25（上25，下25）
+ */
+extern CGFloat const Jh_SubmitBtn_TBSpace;
+
+/**
+ 表单提交按钮 左右间距   默认15（左15，右15）
+ */
+extern CGFloat const Jh_SubmitBtn_LRSpace;
+
+/**
+ 表单提交按钮 圆角   默认5
+ */
+extern CGFloat const Jh_SubmitBtn_CornerRadius;
+
+/**
+ 表单提交按钮 高度   默认40
+ */
+extern CGFloat const Jh_SubmitBtn_Height;
+
+/**
+ 表单提交按钮 文字大小 默认17
+ */
+extern CGFloat const Jh_SubmitBtn_TextFontSize;
+
+/**
+ 表单提交按钮 文字  默认 ：提 交
+ */
+extern NSString *const Jh_SubmitBtn_Text;
+
 
 /**
  表单标题字体大小，缺省为15

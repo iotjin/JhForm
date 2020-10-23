@@ -196,8 +196,21 @@
     [self.Jh_formModelArr addObject:section0];
     [self.Jh_formModelArr addObject:section1];
     
-    
+    //提交按钮相关设置（当个页面），全局配置在JhFormConst文件中修改
+    self.Jh_submitBtnBgColor = [UIColor redColor]; //全局配置背景色要去修改BaseThemeColor
+    self.Jh_submitBtnTBSpace = 30;
+    self.Jh_submitBtnLRSpace = 100;
+    self.Jh_submitBtnHeight = 50;
+    self.Jh_submitBtnTextColor = [UIColor yellowColor];
+    self.Jh_submitBtnCornerRadius = 25.0;
+    self.Jh_submitBtnTextFontSize = 22;
+    //粗体
+    self.Jh_submitBtn.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold"size:30];
+    //边框
+    self.Jh_submitBtn.layer.borderWidth = 2;
+    self.Jh_submitBtn.layer.borderColor = [[UIColor grayColor] CGColor];
     self.Jh_submitStr = @"提 交";
+    
     self.Jh_formSubmitBlock = ^{
         NSLog(@" 点击提交按钮 ");
 //         [JhProgressHUD showText:@"点击提交按钮"];

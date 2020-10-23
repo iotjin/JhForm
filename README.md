@@ -18,6 +18,7 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
 ## 更新说明
 
 
+* 2020.10.23 - HXPhotoPicker更新至v3.1.2版本(iPhone12适配)，增加提交按钮相关属性<br>
 * 2020.10.15 - 添加版本号v1.0.0，HXPhotoPicker更新至v3.1.1版本,处理iOS14图片异常<br>
 * 2020.09.30 - 添加cell文字居中效果 <br>
 * 2020.08.05 - JhFormSelectImageCell优化 <br>
@@ -226,12 +227,12 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
    
      //隐藏默认的footerView
     self.Jh_defaultFooterViewHidden = YES;
-    
-    
+
+
     可隐藏整个页面的红星按只有标题显示
     self.Jh_leftTitleHiddenRedStar =YES;
-    
-    
+
+
     //暗黑模式切换: JhFormConst 中 Jh_ThemeType类型控制
  
     
@@ -245,6 +246,22 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
     };
     
 }
+
+
+//提交按钮相关设置（当个页面），全局配置在JhFormConst文件中修改
+self.Jh_submitBtnBgColor = [UIColor redColor]; //全局配置背景色要去修改BaseThemeColor
+self.Jh_submitBtnTBSpace = 30;
+self.Jh_submitBtnLRSpace = 100;
+self.Jh_submitBtnHeight = 50;
+self.Jh_submitBtnTextColor = [UIColor yellowColor];
+self.Jh_submitBtnCornerRadius = 25.0;
+self.Jh_submitBtnTextFontSize = 22;
+//粗体
+self.Jh_submitBtn.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold"size:30];
+//边框
+self.Jh_submitBtn.layer.borderWidth = 2;
+self.Jh_submitBtn.layer.borderColor = [[UIColor grayColor] CGColor];
+self.Jh_submitStr = @"提 交";
 
 
     

@@ -11,15 +11,6 @@
 
 #import "HXPhotoPicker.h"
 
-#define JhColor(r, g, b)     [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
-/** 主题色 */
-#define BaseThemeColor JhColor(46, 150, 213)
-/** 背景色 */
-#define BaseBgWhiteColor JhColor(248, 248, 248)
-#define BaseBgWhiteColor_dark JhColor(10, 10, 10)
-/** line背景色 */
-#define BaselineColor JhColor(230, 230, 230)
-
 #define Kwidth  [UIScreen mainScreen].bounds.size.width
 #define Kheight  [UIScreen mainScreen].bounds.size.height
 

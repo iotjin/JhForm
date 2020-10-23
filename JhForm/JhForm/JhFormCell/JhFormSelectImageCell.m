@@ -157,7 +157,9 @@
             if ([img isKindOfClass:[HXPhotoModel class]]) {
                 model =img;
             }
-            [mUrlArr addObject:model];
+            if(model){
+                [mUrlArr addObject:model];
+            }
         }
         [self.oneManager addLocalModels:mUrlArr];
         [self.onePhotoView refreshView];

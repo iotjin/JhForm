@@ -23,13 +23,11 @@
 
 @interface JhFormTableViewVC ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (strong, nonatomic) UIView  *FooterView;
-@property (strong, nonatomic) UIButton  *okBtn;
+@property (strong, nonatomic) UIView *FooterView;
 
 @end
 
 @implementation JhFormTableViewVC
-
 
 -(void)dealloc{
     NSLog(@" JhFormTableViewVC - dealloc ");
@@ -68,8 +66,55 @@
 
 -(void)setJh_submitStr:(NSString *)Jh_submitStr{
     _Jh_submitStr = Jh_submitStr;
-    [_okBtn setTitle:Jh_submitStr forState:UIControlStateNormal];
+    [self.Jh_submitBtn setTitle:Jh_submitStr forState:UIControlStateNormal];
 }
+
+- (void)setJh_submitBtnBgColor:(UIColor *)Jh_submitBtnBgColor{
+    _Jh_submitBtnBgColor = Jh_submitBtnBgColor;
+    self.Jh_submitBtn.backgroundColor = Jh_submitBtnBgColor;
+}
+
+-(void)setJh_submitBtnTBSpace:(CGFloat)Jh_submitBtnTBSpace{
+    _Jh_submitBtnTBSpace = Jh_submitBtnTBSpace;
+    self.Jh_submitBtn.hx_y = Jh_submitBtnTBSpace;
+    if (self.Jh_submitBtnHeight) {
+        self.FooterView.hx_h = self.Jh_submitBtnHeight + Jh_submitBtnTBSpace*2;
+    }else{
+        self.FooterView.hx_h = Jh_SubmitBtn_Height + Jh_submitBtnTBSpace*2;
+    }
+}
+
+-(void)setJh_submitBtnLRSpace:(CGFloat)Jh_submitBtnLRSpace{
+    _Jh_submitBtnLRSpace = Jh_submitBtnLRSpace;
+    self.Jh_submitBtn.hx_x = Jh_submitBtnLRSpace;
+    self.Jh_submitBtn.hx_w = self.FooterView.bounds.size.width - Jh_submitBtnLRSpace*2;
+}
+
+-(void)setJh_submitBtnCornerRadius:(CGFloat)Jh_submitBtnCornerRadius{
+    _Jh_submitBtnCornerRadius = Jh_submitBtnCornerRadius;
+    self.Jh_submitBtn.layer.cornerRadius = Jh_submitBtnCornerRadius;
+}
+
+-(void)setJh_submitBtnHeight:(CGFloat)Jh_submitBtnHeight{
+    _Jh_submitBtnHeight = Jh_submitBtnHeight;
+    self.Jh_submitBtn.hx_h = Jh_submitBtnHeight;
+    if (self.Jh_submitBtnTBSpace>0) {
+        self.FooterView.hx_h = Jh_submitBtnHeight + self.Jh_submitBtnTBSpace*2;
+    }else{
+        self.FooterView.hx_h = Jh_submitBtnHeight + Jh_SubmitBtn_TBSpace*2;
+    }
+}
+
+-(void)setJh_submitBtnTextFontSize:(CGFloat)Jh_submitBtnTextFontSize{
+    _Jh_submitBtnTextFontSize = Jh_submitBtnTextFontSize;
+    self.Jh_submitBtn.titleLabel.font = [UIFont systemFontOfSize:Jh_submitBtnTextFontSize];
+}
+
+-(void)setJh_submitBtnTextColor:(UIColor *)Jh_submitBtnTextColor{
+    _Jh_submitBtnTextColor = Jh_submitBtnTextColor;
+    [self.Jh_submitBtn setTitleColor:Jh_submitBtnTextColor forState:UIControlStateNormal];
+}
+
 
 -(NSMutableArray *)Jh_formModelArr{
     if (!_Jh_formModelArr) {
@@ -92,21 +137,21 @@
 
 -(UIView *)FooterView{
     if (!_FooterView) {
-        UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0, Kwidth, 80)];
+        UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0, Kwidth, Jh_SubmitBtn_Height+Jh_SubmitBtn_TBSpace*2)];
         footerView.backgroundColor = [UIColor clearColor];
         UIButton *btn = [[UIButton alloc] init];
-        btn.frame = CGRectMake(15, 25, footerView.bounds.size.width - 15*2, 40);
-        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        btn.frame = CGRectMake(Jh_SubmitBtn_LRSpace, Jh_SubmitBtn_TBSpace, footerView.bounds.size.width - Jh_SubmitBtn_LRSpace*2, Jh_SubmitBtn_Height);
+        [btn setTitleColor:Jh_SubmitBtn_TextColor forState:UIControlStateNormal];
         btn.backgroundColor = BaseThemeColor;
-        btn.titleLabel.font = [UIFont systemFontOfSize:17];
-        [btn.layer setCornerRadius:5];
+        btn.titleLabel.font = [UIFont systemFontOfSize:Jh_SubmitBtn_TextFontSize];
+        [btn.layer setCornerRadius:Jh_SubmitBtn_CornerRadius];
         [btn addTarget:self action:@selector(ClickOkBtn) forControlEvents:UIControlEventTouchUpInside];
-        [btn setTitle:@"提 交" forState:UIControlStateNormal];
+        [btn setTitle:Jh_SubmitBtn_Text forState:UIControlStateNormal];
         [footerView addSubview:btn];
         
         _FooterView = footerView;
         //        btn.lee_theme.LeeConfigBackgroundColor(Common_ThemeColor);
-        _okBtn =btn;
+        self.Jh_submitBtn = btn;
     }
     return _FooterView;
 }
@@ -320,7 +365,6 @@
         return cell;
     }
 }
-
 
 #pragma mark -- TableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
