@@ -32,10 +32,11 @@ static NSString *const JhUnitMillion = @"万元";
 /** 密码输入类型的cell(默认样式,居左,可编辑) */
 + (instancetype)Jh_pwdInputCellWithTitle:(NSString *)title info:(NSString *)info required: (BOOL)required;
 
-
-/** 完全自定义类型的cell*/
+/** 完全自定义类型的cell */
 + (instancetype)Jh_custumALLViewCellWithCellHeight:(CGFloat)cellHeight;
 
+/** 按钮单选或多选的cell  */
++ (instancetype)Jh_selectBtnWithTitle:(NSString *)title editable:(BOOL)editable required:(BOOL)required;
 
 /********************************* 以下方法快速创建本文居右的cell ********************************/
 /** 右侧text 不可编辑的cell */
@@ -95,6 +96,11 @@ inline JhFormCellModel *JhFormCellModel_AddCenterTextCell(NSString * _Nonnull ti
     return [JhFormCellModel Jh_cellWithTitle:title info:nil cellType:JhFormCellTypeCenterTextCell];
 }
 
+/** 快捷添加一个按钮单选或多选的cell */
+inline JhFormCellModel *JhFormCellModel_AddSelectBtnCell(NSString * _Nonnull title,BOOL editable, BOOL required) {
+    return [JhFormCellModel Jh_selectBtnWithTitle:title editable:editable required:required];
+}
+
 
 /********************************* 以下方法快速创建本文居右的cell ********************************/
 
@@ -149,6 +155,11 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
     JhFormCellModel *model = [[self alloc]initWithTitle:@"" info:@"" cellType:JhFormCellTypeCustumALLView editable:NO required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
     model.Jh_defaultHeight = cellHeight;
     return model;
+}
+
+/** 按钮单选或多选的cell  */
++ (instancetype)Jh_selectBtnWithTitle:(NSString *)title editable:(BOOL)editable required:(BOOL)required {
+    return [[self alloc]initWithTitle:title info:@"" cellType:JhFormCellTypeSelectBtn editable:editable required:required keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
 }
 
 

@@ -11,7 +11,7 @@
 #import "JhFormConst.h"
 
 #define itemLineCount  4 //图片一行几个
-#define itemH  (Kwidth - 15*2-3*3)/itemLineCount  //图片的高度
+#define itemH  (kWidth - 15*2-3*3)/itemLineCount  //图片的高度
 
 
 @interface JhFormSelectImageCell()<HXPhotoViewDelegate>
@@ -89,7 +89,7 @@
 
 -(HXPhotoView *)onePhotoView{
     if (!_onePhotoView) {
-        _onePhotoView = [[HXPhotoView alloc] initWithFrame:CGRectMake(15, 5, Kwidth - 15*2-3*3, itemH) manager:self.oneManager];
+        _onePhotoView = [[HXPhotoView alloc] initWithFrame:CGRectMake(15, 5, kWidth - 15*2-3*3, itemH) manager:self.oneManager];
         _onePhotoView.outerCamera = YES;
         _onePhotoView.lineCount =itemLineCount;
         _onePhotoView.spacing =3;

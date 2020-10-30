@@ -68,6 +68,8 @@
 		E9FD215F2238D2A3002C67E6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E9FD21532238D2A3002C67E6 /* README.md */; };
 		E9FD21632238D36B002C67E6 /* JhBaseHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9FD21602238D36A002C67E6 /* JhBaseHeaderView.m */; };
 		E9FD21642238D36B002C67E6 /* JhBaseHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9FD21612238D36A002C67E6 /* JhBaseHeaderView.xib */; };
+		ED48C3012547BAFB002B4237 /* JhFormSelectBtnCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ED48C2FF2547BAFB002B4237 /* JhFormSelectBtnCell.m */; };
+		ED48C30A2547C0DE002B4237 /* FormDemo9VC.m in Sources */ = {isa = PBXBuildFile; fileRef = ED48C3092547C0DE002B4237 /* FormDemo9VC.m */; };
 		ED52950D2537EDF80059775C /* SDImageHEICCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = ED5293C32537EDF70059775C /* SDImageHEICCoder.m */; };
 		ED52950E2537EDF80059775C /* NSImage+Compatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = ED5293C52537EDF70059775C /* NSImage+Compatibility.m */; };
 		ED52950F2537EDF80059775C /* SDAnimatedImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = ED5293C72537EDF70059775C /* SDAnimatedImageView+WebCache.m */; };
@@ -139,6 +141,8 @@
 		ED5295512537EDF80059775C /* SDAssociatedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = ED52944F2537EDF80059775C /* SDAssociatedObject.m */; };
 		ED70D10825233E8600F403E3 /* FormDemo8VC.m in Sources */ = {isa = PBXBuildFile; fileRef = ED70D10725233E8600F403E3 /* FormDemo8VC.m */; };
 		ED70DA0C252488C500F403E3 /* form_demo_08.png in Resources */ = {isa = PBXBuildFile; fileRef = ED70DA0B252488C500F403E3 /* form_demo_08.png */; };
+		ED77CF3A254AB79E003795F3 /* UIImage+JhFormImage.m in Sources */ = {isa = PBXBuildFile; fileRef = ED77CF39254AB79E003795F3 /* UIImage+JhFormImage.m */; };
+		ED77CF42254C0ABC003795F3 /* form_demo_09.png in Resources */ = {isa = PBXBuildFile; fileRef = ED77CF41254C0ABC003795F3 /* form_demo_09.png */; };
 		EDDF4F1525428BE6000C2A95 /* HXPhotoConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = EDDF4E5925428BE6000C2A95 /* HXPhotoConfiguration.m */; };
 		EDDF4F1625428BE6000C2A95 /* HXPhotoEditTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = EDDF4E5C25428BE6000C2A95 /* HXPhotoEditTransition.m */; };
 		EDDF4F1725428BE6000C2A95 /* HXPhotoInteractiveTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = EDDF4E5D25428BE6000C2A95 /* HXPhotoInteractiveTransition.m */; };
@@ -359,6 +363,10 @@
 		E9FD21602238D36A002C67E6 /* JhBaseHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhBaseHeaderView.m; sourceTree = "<group>"; };
 		E9FD21612238D36A002C67E6 /* JhBaseHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JhBaseHeaderView.xib; sourceTree = "<group>"; };
 		E9FD21622238D36B002C67E6 /* JhBaseHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhBaseHeaderView.h; sourceTree = "<group>"; };
+		ED48C2FF2547BAFB002B4237 /* JhFormSelectBtnCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JhFormSelectBtnCell.m; sourceTree = "<group>"; };
+		ED48C3002547BAFB002B4237 /* JhFormSelectBtnCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JhFormSelectBtnCell.h; sourceTree = "<group>"; };
+		ED48C3082547C0DE002B4237 /* FormDemo9VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormDemo9VC.h; sourceTree = "<group>"; };
+		ED48C3092547C0DE002B4237 /* FormDemo9VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FormDemo9VC.m; sourceTree = "<group>"; };
 		ED5293C22537EDF70059775C /* UIImage+ExtendedCacheData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ExtendedCacheData.h"; sourceTree = "<group>"; };
 		ED5293C32537EDF70059775C /* SDImageHEICCoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDImageHEICCoder.m; sourceTree = "<group>"; };
 		ED5293C42537EDF70059775C /* SDAnimatedImageRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDAnimatedImageRep.h; sourceTree = "<group>"; };
@@ -503,6 +511,9 @@
 		ED70D10625233E8600F403E3 /* FormDemo8VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormDemo8VC.h; sourceTree = "<group>"; };
 		ED70D10725233E8600F403E3 /* FormDemo8VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FormDemo8VC.m; sourceTree = "<group>"; };
 		ED70DA0B252488C500F403E3 /* form_demo_08.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_demo_08.png; sourceTree = "<group>"; };
+		ED77CF38254AB79E003795F3 /* UIImage+JhFormImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+JhFormImage.h"; sourceTree = "<group>"; };
+		ED77CF39254AB79E003795F3 /* UIImage+JhFormImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+JhFormImage.m"; sourceTree = "<group>"; };
+		ED77CF41254C0ABC003795F3 /* form_demo_09.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = form_demo_09.png; sourceTree = "<group>"; };
 		EDDF4E5925428BE6000C2A95 /* HXPhotoConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HXPhotoConfiguration.m; sourceTree = "<group>"; };
 		EDDF4E5B25428BE6000C2A95 /* HXPhotoViewTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HXPhotoViewTransition.h; sourceTree = "<group>"; };
 		EDDF4E5C25428BE6000C2A95 /* HXPhotoEditTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HXPhotoEditTransition.m; sourceTree = "<group>"; };
@@ -757,6 +768,8 @@
 				E92D45322341F7470089F1C0 /* FormDemo7VC.m */,
 				ED70D10625233E8600F403E3 /* FormDemo8VC.h */,
 				ED70D10725233E8600F403E3 /* FormDemo8VC.m */,
+				ED48C3082547C0DE002B4237 /* FormDemo9VC.h */,
+				ED48C3092547C0DE002B4237 /* FormDemo9VC.m */,
 				E9FD21622238D36B002C67E6 /* JhBaseHeaderView.h */,
 				E9FD21602238D36A002C67E6 /* JhBaseHeaderView.m */,
 				E9FD21612238D36A002C67E6 /* JhBaseHeaderView.xib */,
@@ -790,6 +803,7 @@
 		E93D40EA21E5C01C003DC702 /* screenshots */ = {
 			isa = PBXGroup;
 			children = (
+				ED77CF41254C0ABC003795F3 /* form_demo_09.png */,
 				EDF516392457F46B00FDC6A6 /* form_demo_01_dark.png */,
 				E9B3E1E82328B650001F1780 /* form_demo_00.png */,
 				E9B3E1E32328B64F001F1780 /* form_demo_01_1.png */,
@@ -838,6 +852,8 @@
 				E9FD21082238CF20002C67E6 /* JhFormBaseCell.m */,
 				E9FD21022238CF20002C67E6 /* JhFormCenterTextCell.h */,
 				E9FD210C2238CF20002C67E6 /* JhFormCenterTextCell.m */,
+				E96B13ED22EAAB4F00DDF432 /* JhFormCustumALLViewCell.h */,
+				E96B13EE22EAAB4F00DDF432 /* JhFormCustumALLViewCell.m */,
 				E9FD21012238CF20002C67E6 /* JhFormCustumBottomCell.h */,
 				E9FD210D2238CF20002C67E6 /* JhFormCustumBottomCell.m */,
 				E9FD20FE2238CF20002C67E6 /* JhFormCustumRightCell.h */,
@@ -846,6 +862,8 @@
 				E9FD21042238CF20002C67E6 /* JhFormInputCell.m */,
 				E93159F122BC85A800074665 /* JhFormPwdCell.h */,
 				E93159F022BC85A800074665 /* JhFormPwdCell.m */,
+				ED48C3002547BAFB002B4237 /* JhFormSelectBtnCell.h */,
+				ED48C2FF2547BAFB002B4237 /* JhFormSelectBtnCell.m */,
 				E9FD210E2238CF20002C67E6 /* JhFormSelectCell.h */,
 				E9FD21052238CF20002C67E6 /* JhFormSelectCell.m */,
 				E9FD21002238CF20002C67E6 /* JhFormSelectImageCell.h */,
@@ -854,8 +872,6 @@
 				E9FD21032238CF20002C67E6 /* JhFormSwitchBtnCell.m */,
 				E9FD21062238CF20002C67E6 /* JhFormTextViewInputCell.h */,
 				E9FD20FF2238CF20002C67E6 /* JhFormTextViewInputCell.m */,
-				E96B13ED22EAAB4F00DDF432 /* JhFormCustumALLViewCell.h */,
-				E96B13EE22EAAB4F00DDF432 /* JhFormCustumALLViewCell.m */,
 			);
 			path = JhFormCell;
 			sourceTree = "<group>";
@@ -875,6 +891,8 @@
 				E9FD21132238CF20002C67E6 /* UITextView+TextLimit.m */,
 				E947A74122446FA600BE50FC /* UIBarButtonItem+JhForm.h */,
 				E947A74222446FA600BE50FC /* UIBarButtonItem+JhForm.m */,
+				ED77CF38254AB79E003795F3 /* UIImage+JhFormImage.h */,
+				ED77CF39254AB79E003795F3 /* UIImage+JhFormImage.m */,
 			);
 			path = JhFormToolClass;
 			sourceTree = "<group>";
@@ -1130,32 +1148,32 @@
 		EDDF4E6525428BE6000C2A95 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				EDDF4E6625428BE6000C2A95 /* NSString+HXExtension.m */,
-				EDDF4E6725428BE6000C2A95 /* UIViewController+HXExtension.m */,
+				EDDF4E7325428BE6000C2A95 /* NSArray+HXExtension.h */,
 				EDDF4E6825428BE6000C2A95 /* NSArray+HXExtension.m */,
+				EDDF4E7A25428BE6000C2A95 /* NSBundle+HXPhotoPicker.h */,
 				EDDF4E6925428BE6000C2A95 /* NSBundle+HXPhotoPicker.m */,
-				EDDF4E6A25428BE6000C2A95 /* NSTimer+HXExtension.h */,
-				EDDF4E6B25428BE6000C2A95 /* UIColor+HXExtension.h */,
 				EDDF4E6C25428BE6000C2A95 /* NSDate+HXExtension.h */,
+				EDDF4E7725428BE6000C2A95 /* NSDate+HXExtension.m */,
+				EDDF4E7525428BE6000C2A95 /* NSString+HXExtension.h */,
+				EDDF4E6625428BE6000C2A95 /* NSString+HXExtension.m */,
+				EDDF4E6A25428BE6000C2A95 /* NSTimer+HXExtension.h */,
+				EDDF4E7925428BE6000C2A95 /* NSTimer+HXExtension.m */,
+				EDDF4E7125428BE6000C2A95 /* UIButton+HXExtension.h */,
+				EDDF4E7C25428BE6000C2A95 /* UIButton+HXExtension.m */,
+				EDDF4E6B25428BE6000C2A95 /* UIColor+HXExtension.h */,
+				EDDF4E7825428BE6000C2A95 /* UIColor+HXExtension.m */,
+				EDDF4E7D25428BE6000C2A95 /* UIFont+HXExtension.h */,
+				EDDF4E7025428BE6000C2A95 /* UIFont+HXExtension.m */,
 				EDDF4E6D25428BE6000C2A95 /* UIImage+HXExtension.h */,
+				EDDF4E7625428BE6000C2A95 /* UIImage+HXExtension.m */,
+				EDDF4E7E25428BE6000C2A95 /* UIImageView+HXExtension.h */,
 				EDDF4E6E25428BE6000C2A95 /* UIImageView+HXExtension.m */,
 				EDDF4E6F25428BE6000C2A95 /* UILabel+HXExtension.h */,
-				EDDF4E7025428BE6000C2A95 /* UIFont+HXExtension.m */,
-				EDDF4E7125428BE6000C2A95 /* UIButton+HXExtension.h */,
-				EDDF4E7225428BE6000C2A95 /* UIView+HXExtension.m */,
-				EDDF4E7325428BE6000C2A95 /* NSArray+HXExtension.h */,
-				EDDF4E7425428BE6000C2A95 /* UIViewController+HXExtension.h */,
-				EDDF4E7525428BE6000C2A95 /* NSString+HXExtension.h */,
-				EDDF4E7625428BE6000C2A95 /* UIImage+HXExtension.m */,
-				EDDF4E7725428BE6000C2A95 /* NSDate+HXExtension.m */,
-				EDDF4E7825428BE6000C2A95 /* UIColor+HXExtension.m */,
-				EDDF4E7925428BE6000C2A95 /* NSTimer+HXExtension.m */,
-				EDDF4E7A25428BE6000C2A95 /* NSBundle+HXPhotoPicker.h */,
-				EDDF4E7B25428BE6000C2A95 /* UIView+HXExtension.h */,
-				EDDF4E7C25428BE6000C2A95 /* UIButton+HXExtension.m */,
-				EDDF4E7D25428BE6000C2A95 /* UIFont+HXExtension.h */,
-				EDDF4E7E25428BE6000C2A95 /* UIImageView+HXExtension.h */,
 				EDDF4E7F25428BE6000C2A95 /* UILabel+HXExtension.m */,
+				EDDF4E7B25428BE6000C2A95 /* UIView+HXExtension.h */,
+				EDDF4E7225428BE6000C2A95 /* UIView+HXExtension.m */,
+				EDDF4E7425428BE6000C2A95 /* UIViewController+HXExtension.h */,
+				EDDF4E6725428BE6000C2A95 /* UIViewController+HXExtension.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -1171,23 +1189,23 @@
 		EDDF4E8725428BE6000C2A95 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				EDDF4E8825428BE6000C2A95 /* HXCustomCameraViewController.m */,
-				EDDF4E8925428BE6000C2A95 /* HXCustomCameraController.h */,
-				EDDF4E8A25428BE6000C2A95 /* HXPhoto3DTouchViewController.m */,
-				EDDF4E8B25428BE6000C2A95 /* HXCustomNavigationController.h */,
+				EDDF4E9625428BE6000C2A95 /* HXAlbumListViewController.h */,
 				EDDF4E8C25428BE6000C2A95 /* HXAlbumListViewController.m */,
-				EDDF4E8D25428BE6000C2A95 /* HXPhotoPreviewViewController.m */,
-				EDDF4E8E25428BE6000C2A95 /* HXVideoEditViewController.h */,
-				EDDF4E8F25428BE6000C2A95 /* HXPhotoViewController.m */,
-				EDDF4E9025428BE6000C2A95 /* HXPhotoEditViewController.h */,
+				EDDF4E8925428BE6000C2A95 /* HXCustomCameraController.h */,
 				EDDF4E9125428BE6000C2A95 /* HXCustomCameraController.m */,
 				EDDF4E9225428BE6000C2A95 /* HXCustomCameraViewController.h */,
+				EDDF4E8825428BE6000C2A95 /* HXCustomCameraViewController.m */,
+				EDDF4E8B25428BE6000C2A95 /* HXCustomNavigationController.h */,
 				EDDF4E9325428BE6000C2A95 /* HXCustomNavigationController.m */,
 				EDDF4E9425428BE6000C2A95 /* HXPhoto3DTouchViewController.h */,
-				EDDF4E9525428BE6000C2A95 /* HXPhotoPreviewViewController.h */,
-				EDDF4E9625428BE6000C2A95 /* HXAlbumListViewController.h */,
+				EDDF4E8A25428BE6000C2A95 /* HXPhoto3DTouchViewController.m */,
+				EDDF4E9025428BE6000C2A95 /* HXPhotoEditViewController.h */,
 				EDDF4E9725428BE6000C2A95 /* HXPhotoEditViewController.m */,
+				EDDF4E9525428BE6000C2A95 /* HXPhotoPreviewViewController.h */,
+				EDDF4E8D25428BE6000C2A95 /* HXPhotoPreviewViewController.m */,
 				EDDF4E9825428BE6000C2A95 /* HXPhotoViewController.h */,
+				EDDF4E8F25428BE6000C2A95 /* HXPhotoViewController.m */,
+				EDDF4E8E25428BE6000C2A95 /* HXVideoEditViewController.h */,
 				EDDF4E9925428BE6000C2A95 /* HXVideoEditViewController.m */,
 			);
 			path = Controller;
@@ -1454,6 +1472,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9B3E1EE2328B650001F1780 /* form_demo_03.gif in Resources */,
+				ED77CF42254C0ABC003795F3 /* form_demo_09.png in Resources */,
 				EDDF4F2925428BE6000C2A95 /* HXPhotoPicker.bundle in Resources */,
 				EDF5163A2457F46B00FDC6A6 /* form_demo_01_dark.png in Resources */,
 				E9FD21542238D2A3002C67E6 /* LICENSE in Resources */,
@@ -1502,6 +1521,7 @@
 				E9FD212D2238CF20002C67E6 /* JhFormHandler.m in Sources */,
 				E9FD215A2238D2A3002C67E6 /* NSArray+MASAdditions.m in Sources */,
 				EDDF4F5525428BE6000C2A95 /* HXPhotoEditImageView.m in Sources */,
+				ED48C30A2547C0DE002B4237 /* FormDemo9VC.m in Sources */,
 				EDDF4F2025428BE6000C2A95 /* UIFont+HXExtension.m in Sources */,
 				E9FD215D2238D2A3002C67E6 /* MASViewConstraint.m in Sources */,
 				EDDF4F4025428BE6000C2A95 /* HXPreviewContentView.m in Sources */,
@@ -1522,6 +1542,7 @@
 				EDDF4F6825428BE6000C2A95 /* HXPhotoEditGraffitiColorView.m in Sources */,
 				E9FD215B2238D2A3002C67E6 /* View+MASAdditions.m in Sources */,
 				ED5295312537EDF80059775C /* SDImageCache.m in Sources */,
+				ED48C3012547BAFB002B4237 /* JhFormSelectBtnCell.m in Sources */,
 				ED52952C2537EDF80059775C /* SDImageIOCoder.m in Sources */,
 				E9FD215C2238D2A3002C67E6 /* MASConstraint.m in Sources */,
 				ED52950D2537EDF80059775C /* SDImageHEICCoder.m in Sources */,
@@ -1661,6 +1682,7 @@
 				E9FD21562238D2A3002C67E6 /* ViewController+MASAdditions.m in Sources */,
 				EDDF4F2825428BE6000C2A95 /* HXPhotoCommon.m in Sources */,
 				E9FD212B2238CF20002C67E6 /* SelwynExpandableTextView.m in Sources */,
+				ED77CF3A254AB79E003795F3 /* UIImage+JhFormImage.m in Sources */,
 				ED5295492537EDF80059775C /* SDImageAssetManager.m in Sources */,
 				EDDF4F2125428BE6000C2A95 /* UIView+HXExtension.m in Sources */,
 				ED5295362537EDF80059775C /* SDImageCachesManager.m in Sources */,
@@ -1873,7 +1895,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Jh.JhForm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1892,7 +1914,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Jh.JhForm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

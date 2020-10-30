@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class SelwynExpandableTextView;
 
 @interface JhFormBaseCell : UITableViewCell
@@ -22,3 +24,4 @@
 
 @end
 
+NS_ASSUME_NONNULL_END

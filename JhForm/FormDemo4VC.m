@@ -56,7 +56,7 @@
         UILabel *label = [[UILabel alloc]init];
         label.backgroundColor =JhRandomColor;
         label.text =@"这是一个可以完全自定义的cell";
-        label.frame=CGRectMake(0, 30, Kwidth-30, 20);
+        label.frame=CGRectMake(0, 30, kWidth-30, 20);
         [AllView addSubview:label];
         
     };
@@ -65,7 +65,7 @@
     cell5.Jh_custumALLViewBlock = ^(UIView * _Nonnull AllView) {
         AllView.backgroundColor = JhRandomColor;
         
-        JhBaseHeaderView *headerV = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 7, Kwidth-30, 30)];
+        JhBaseHeaderView *headerV = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 7, kWidth-30, 30)];
         headerV.backgroundColor =JhRandomColor;
         headerV.Jh_leftTitle = @"这是一个自定义view";
         headerV.Jh_rightBtnTitle = @"右侧文字";

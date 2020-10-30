@@ -4,12 +4,13 @@
 //
 //  Created by Jh on 2019/1/7.
 //  Copyright © 2019 Jh. All rights reserved.
-//  自己cell,左侧title,右侧自定义View
+//  表单右侧自定义Cell，标题居左，右侧自定义View。支持标题隐藏。
 
 #import "JhFormBaseCell.h"
 
-@class JhFormCellModel;
+NS_ASSUME_NONNULL_BEGIN
 
+@class JhFormCellModel;
 
 @interface JhFormCustumRightCell : JhFormBaseCell
 
@@ -30,3 +31,4 @@
 @end
 
 
+NS_ASSUME_NONNULL_END

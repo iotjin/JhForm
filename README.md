@@ -10,14 +10,40 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
 <img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_00.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01_1.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01.gif" width="208" height="404">
 <img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_02.gif" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_03_1.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_03.gif" width="208" height="404">
 <img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_04.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_05.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.png" width="208" height="404">
-<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.gif" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_07.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01_dark.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_08.png" width="208" height="404">
+<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.gif" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_07.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01_dark.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_08.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_09.png" width="208" height="404">
 
 
 
+
+## 支持的Cell及实现的一些效果
+
+* 表单标题居中Cell
+* 表单完全自定义Cell。自定义添加视图
+* 表单底部自定义Cell，标题居上，底部自定义View。支持标题隐藏。
+* 表单右侧自定义Cell，标题居左，右侧自定义View。支持标题隐藏。
+* 表单输入Cell，标题居左，详情居右。标题换行与居中展示，标题隐藏。详情长度限制，支持单行与多行输入，实时录入监听，键盘切换，详情居左居右，添加右侧自定义view等
+* 表单输入密码Cell，标题居左，密码居右。标题换行与居中展示，标题隐藏。详情长度限制，详情居左居右，添加右侧自定义view等
+* 表单选择按钮Cell，左标题右按钮或上标题下按钮。支持单选和多选，按钮宽度自适应，设置默认选中按钮，按钮颜色设置，切换按钮图标
+* 表单选择Cell，标题居左，详情居右带箭头。标题换行与居中展示，标题隐藏。详情长度限制，支持单行与多行展示，详情居左居右等
+* 表单图片选择Cell，上标题，下图片选择器。支持相机和图库选择。支持本地图片与网络图片，可设置默认选择图片，最大选择数，底部提示文字
+* 表单Switch按钮Cell，左标题，右按钮。设置Switch按钮颜色
+* 表单TextView输入Cell，标题居上，详情居下，支持单行与多行输入，实时录入监听。标题隐藏。详情长度限制，支持单行与多行输入，键盘切换，录入长度/总长度展示
+
+* 提交按钮和导航条相关配置
+* 标题单位设置（默认小红星）
+* 标题垂直居中或居上
+* Cell高度设置
+* 支持暗黑模式
+
+
+
+
+* UI相关
 
 ## 更新说明
 
 
+* 2020.10.30 - 新增JhFormSelectBtnCell <br>
 * 2020.10.23 - HXPhotoPicker更新至v3.1.2版本(iPhone12适配)，增加提交按钮相关属性<br>
 * 2020.10.15 - 添加版本号v1.0.0，HXPhotoPicker更新至v3.1.1版本,处理iOS14图片异常<br>
 * 2020.09.30 - 添加cell文字居中效果 <br>
@@ -219,7 +245,80 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
     cell6.Jh_titleMultiLineShow =YES; //标题换行展示
     cell6.Jh_maxInputLength = 18;
 ```
+* 13 - 标题换行展示
+```
+    //单选一个选项，必填，默认样式
+    JhFormCellModel *cell0 = JhFormCellModel_AddSelectBtnCell(@"单选1选项", YES, YES);
+    cell0.Jh_selectBtnCell_btnTitleArr = @[@"选项一"];
 
+    //单选，2个选项
+    JhFormCellModel *cell1 = JhFormCellModel_AddSelectBtnCell(@"单选2选项", YES, YES);
+    cell1.Jh_selectBtnCell_btnTitleArr = @[@"男",@"女"];
+    cell1.Jh_selectBtnCell_btnHorizontalMargin = 40;
+
+    //单选，3个选项，设置图标
+    JhFormCellModel *cell2 = JhFormCellModel_AddSelectBtnCell(@"单选3选项", YES, YES);
+    cell2.Jh_selectBtnCell_btnTitleArr = @[@"上午",@"下午",@"晚上"];
+    cell2.Jh_selectBtnCell_unSelectIcon=kIcon_CheckBoxNormal;
+    cell2.Jh_selectBtnCell_selectIcon=kIcon_CheckBoxSelect;
+
+    //单选，多个选项，设置一些间距
+    JhFormCellModel *cell3 = JhFormCellModel_AddSelectBtnCell(@"单选多选项", YES, YES);
+    cell3.Jh_selectBtnCell_btnHorizontalMargin =60;
+    cell3.Jh_selectBtnCell_btnVerticalMargin =30;
+    cell3.Jh_cellTextVerticalCenter =YES;
+    cell3.Jh_selectBtnCell_btnTitleArr = @[@"春",@"夏",@"秋",@"冬"];
+    cell3.Jh_selectBtnCell_selectTitleArr = @[@"秋"];
+    cell3.Jh_selectBtnCell_isUseBlackSelectIcon = YES;
+
+    //单选，不可编辑，设置一个选项一行
+    JhFormCellModel *cell4 = JhFormCellModel_AddSelectBtnCell(@"不可编辑", NO, NO);
+    cell4.Jh_selectBtnCell_btnTitleArr = @[@"选项一",@"选项二",@"选项三"];
+    cell4.Jh_Cell_NoEdit = YES;
+    cell4.Jh_selectBtnCell_selectTitleArr = @[@"选项二"];
+    cell4.Jh_selectBtnCell_isSingleLineDisplay = YES;
+    cell4.Jh_cellTextVerticalCenter =YES;
+
+    //单选，设置上标题下选项，一个选项一行
+    JhFormCellModel *cell5 = JhFormCellModel_AddSelectBtnCell(@"单选，一选项一行：", YES, YES);
+    cell5.Jh_selectBtnCell_btnIconSpace = 40;
+    cell5.Jh_selectBtnCell_btnTitleArr = @[@"2020年1月-3月",@"2020年4月-6月",@"2020年7月-9月"];
+    cell5.Jh_selectBtnCell_isSingleLineDisplay = YES;
+    cell5.Jh_selectBtnCell_isTopTitleBottomOption = YES;
+
+    //多选，2个选项
+    JhFormCellModel *cell6 = JhFormCellModel_AddSelectBtnCell(@"多选2选项", YES, YES);
+    cell6.Jh_selectBtnCell_isMultiSelect=YES;
+    cell6.Jh_selectBtnCell_btnTitleArr = @[@"选项一",@"选项二"];
+    //多选，3个选项
+    JhFormCellModel *cell7 = JhFormCellModel_AddSelectBtnCell(@"多选3选项", YES, YES);
+    cell7.Jh_selectBtnCell_isMultiSelect=YES;
+    cell7.Jh_selectBtnCell_btnTitleArr = @[@"上午",@"下午",@"晚上"];
+    cell7.Jh_selectBtnCell_selectTitleArr = @[@"晚上"];
+
+    //多选，多个选项，设置图标颜色
+    JhFormCellModel *cell8 = JhFormCellModel_AddSelectBtnCell(@"多选多选项", YES, YES);
+    cell8.Jh_selectBtnCell_isMultiSelect=YES;
+    cell8.Jh_selectBtnCell_btnTitleArr = @[@"星期一",@"星期二",@"星期三",@"星期四",@"星期五",];
+    cell8.Jh_selectBtnCell_btnUnSelectIconColor = [UIColor blueColor];
+    cell8.Jh_selectBtnCell_btnSelectIconColor = [UIColor redColor];
+    cell8.Jh_selectBtnCell_selectTitleArr = @[@"星期二",@"星期三",@"星期四"];
+
+
+    JhFormCellModel *cell9 = JhFormCellModel_AddSelectBtnCell(@"其它", YES, YES);
+    NSArray *arr = @[@"希望是本无所谓有",@"无所谓无的",@"这正如地上的路",@"其实地上本没有路",@"走的人多了",@"也便成了路",@"抱歉！",@"我是周树人，我为自己代言"];
+    cell9.Jh_selectBtnCell_btnTitleArr = arr;
+    cell9.Jh_selectBtnCell_isMultiSelect =YES;
+    cell9.Jh_selectBtnCell_hiddenLeftIcon =YES;
+    cell9.Jh_selectBtnCell_btnBgColor = [UIColor orangeColor];
+    cell9.Jh_selectBtnCell_btnSelectBgColor = [UIColor redColor];
+    cell9.Jh_selectBtnCell_btnTitleColor = [UIColor whiteColor];
+    cell9.Jh_selectBtnCell_btnTitleSelectColor = [UIColor yellowColor];
+    cell9.Jh_selectBtnCell_btnCornerRadius = 10;
+    cell9.Jh_selectBtnCell_btnBorderWidth = 1;
+    cell9.Jh_selectBtnCell_btnBorderColor = [UIColor purpleColor];
+    
+```
 
 
 *  一些其他的设置

@@ -132,13 +132,13 @@
     
     JhFormSectionModel *section0 = JhSectionModel_Add(cellArr0);
     
-    JhBaseHeaderView *headerV = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, Kwidth, 44)];
+    JhBaseHeaderView *headerV = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, kWidth, 44)];
     headerV.Jh_leftTitle = @"第一组头部";
     section0.Jh_headerView = headerV;
     section0.Jh_headerHeight= headerV.bounds.size.height;
     self.headerV = headerV;
     
-    JhBaseHeaderView *footerV = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, Kwidth, 44)];
+    JhBaseHeaderView *footerV = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, kWidth, 44)];
     footerV.Jh_leftTitle = @"第一组尾部";
     section0.Jh_footerView = footerV;
     section0.Jh_footerHeight= footerV.bounds.size.height;
@@ -181,7 +181,7 @@
     [cellArr1 addObjectsFromArray: @[Section1_cell0,Section1_cell1,Section1_cell2]];
     JhFormSectionModel *section1 = JhSectionModel_Add(cellArr1);
     
-    JhBaseHeaderView *headerV2 = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, Kwidth, 44)];
+    JhBaseHeaderView *headerV2 = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, kWidth, 44)];
     headerV2.Jh_leftTitle = @"第二组头部";
     headerV2.Jh_rightBtnTitle = @"更多";
     headerV2.JhHeaderClickRightBtnBlock = ^{

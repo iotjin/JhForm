@@ -15,6 +15,7 @@
 #import "FormDemo6VC.h"
 #import "FormDemo7VC.h"
 #import "FormDemo8VC.h"
+#import "FormDemo9VC.h"
 
 @interface ViewController ()
 @end
@@ -93,7 +94,13 @@
         [weakSelf.navigationController pushViewController:jumpVC animated:YES];
     };
     
-    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,cell5,cell6,cell7,cell8]];
+    JhFormCellModel *cell9 = JhFormCellModel_AddRightArrowCell(@"单选、多选按钮", nil);
+    cell9.Jh_CellSelectCellBlock = ^(JhFormCellModel *cellModel) {
+        FormDemo9VC *jumpVC= [[FormDemo9VC alloc]init];
+        [weakSelf.navigationController pushViewController:jumpVC animated:YES];
+    };
+    
+    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,cell5,cell6,cell7,cell8,cell9]];
     
     JhFormSectionModel *section0= JhSectionModel_Add(cellArr0);
     

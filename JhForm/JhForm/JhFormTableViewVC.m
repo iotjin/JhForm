@@ -20,6 +20,7 @@
 #import "JhFormCenterTextCell.h"
 #import "JhFormPwdCell.h"
 #import "JhFormCustumALLViewCell.h"
+#import "JhFormSelectBtnCell.h"
 
 @interface JhFormTableViewVC ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -137,7 +138,7 @@
 
 -(UIView *)FooterView{
     if (!_FooterView) {
-        UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0, Kwidth, Jh_SubmitBtn_Height+Jh_SubmitBtn_TBSpace*2)];
+        UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0, kWidth, Jh_SubmitBtn_Height+Jh_SubmitBtn_TBSpace*2)];
         footerView.backgroundColor = [UIColor clearColor];
         UIButton *btn = [[UIButton alloc] init];
         btn.frame = CGRectMake(Jh_SubmitBtn_LRSpace, Jh_SubmitBtn_TBSpace, footerView.bounds.size.width - Jh_SubmitBtn_LRSpace*2, Jh_SubmitBtn_Height);
@@ -158,7 +159,7 @@
 
 -(UITableView *)Jh_formTableView{
     if (!_Jh_formTableView) {
-        UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavHeight, Kwidth, Kheight-kNavHeight-kBottomSafeHeight)];
+        UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavHeight, kWidth, kHeight-kNavHeight-kBottomSafeHeight)];
         tableView.showsVerticalScrollIndicator = NO;
         tableView.dataSource=self;
         tableView.delegate=self;
@@ -354,6 +355,13 @@
         }
         return cell;
     }
+    else if (cellModel.Jh_cellType == JhFormCellTypeSelectBtn) {
+        NSString *cell_id = [NSString stringWithFormat:@"SelectBtn_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
+        JhFormSelectBtnCell *cell = [tableView SelectBtnCellWithId:cell_id];
+        cell.data = cellModel;
+        cell.data.Jh_titleWidth = LeftTitleWidth;
+        return cell;
+    }
     else {
         NSString *cell_id = [NSString stringWithFormat:@"input_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
         JhFormInputCell *cell = [tableView inputCellWithId:cell_id];
@@ -381,6 +389,9 @@
     }
     else if (cellModel.Jh_cellType  == JhFormCellTypeSelectImage) {
         return [JhFormSelectImageCell heightWithCellModelData:cellModel];
+    }
+    else if (cellModel.Jh_cellType  == JhFormCellTypeSelectBtn) {
+        return [JhFormSelectBtnCell heightWithCellModelData:cellModel];
     }
     else {
         return [JhFormInputCell heightWithCellModelData:cellModel];

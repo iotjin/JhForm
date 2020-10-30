@@ -11,8 +11,8 @@
 
 #import "HXPhotoPicker.h"
 
-#define Kwidth  [UIScreen mainScreen].bounds.size.width
-#define Kheight  [UIScreen mainScreen].bounds.size.height
+#define kWidth  [UIScreen mainScreen].bounds.size.width
+#define kHeight  [UIScreen mainScreen].bounds.size.height
 
 /** X是44,其他是20 */
 #define kStatusBarHeight [[UIApplication sharedApplication] statusBarFrame].size.height
@@ -20,6 +20,13 @@
 #define kTabBarHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?83:49)
 #define kNavHeight (kStatusBarHeight + kContentNavBarHeight)
 #define kBottomSafeHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?34:0)
+
+/** 图标  CheckBox   未选中 */
+#define kIcon_CheckBoxNormal @"JhForm.bundle/ic_checkbox_normal"
+/** 图标  CheckBox   选中 */
+#define kIcon_CheckBoxSelect @"JhForm.bundle/ic_checkbox_select"
+/** 图标  CheckBox   选中2 */
+#define kIcon_CheckBoxSelect2 @"JhForm.bundle/ic_checkbox_select2"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -57,6 +64,8 @@ typedef NS_ENUM(NSInteger, JhFormCellType) {
     /**  完全自定义样式  */
     JhFormCellTypeCustumALLView,
     
+    /**  表单按钮单选、多选  */
+    JhFormCellTypeSelectBtn,
     
 };
 
@@ -144,25 +153,59 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 /** 获取输入内容 和 输入状态(是否输入完成) block */
 @property (nonatomic, copy) JhInputBlock JhInputBlock;
 
-/**
- 表单条目点击选择事件block
- */
+/** 表单条目点击选择事件block */
 @property (nonatomic, copy, nullable) JhCellSelectCellBlock Jh_CellSelectCellBlock;
 
-/**
- 表单条目缺省高度，缺省值为44.0f, 可根据需求设置(如果设置底部自定义view 最好设置view的高度+60 )
- */
+
+
+/** 表单条目缺省高度，缺省值为44.0f, 可根据需求设置(如果设置底部自定义view 最好设置view的高度+60 ) */
 @property (nonatomic, assign) CGFloat Jh_defaultHeight;
 
-/**
- 表单条目类型
- */
+/** 表单条目类型 */
 @property (nonatomic, assign) JhFormCellType Jh_cellType;
 
-/**
- 必选条目标题呈现形式类别(默认标题前加红星,Jh_leftTitleHiddenRedStar 可隐藏整个页面的红星按只有标题显示)
- */
+/** 必选条目标题呈现形式类别(默认标题前加红星,Jh_leftTitleHiddenRedStar 可隐藏整个页面的红星按只有标题显示) */
 @property (nonatomic, assign) JhTitleShowType Jh_titleShowType;
+
+/** 表单条目键盘类型 */
+@property (nonatomic, assign) UIKeyboardType Jh_keyboardType;
+
+/** 表单条目是否可编辑 YES:可编辑 NO:不可编辑 */
+@property (nonatomic, assign) BOOL Jh_editable;
+
+/** 表单条目是否必填(必选) YES:必填(必选) NO:可填(可选) */
+@property (nonatomic, assign) BOOL Jh_required;
+
+/** 条目附带单位 */
+@property (nonatomic, copy, nullable) NSString *Jh_unit;
+
+/** 表单条目单位类别 */
+@property (nonatomic, assign) JhFormCellUnitType Jh_cellUnitType;
+
+@property (nonatomic, strong) UIColor *Jh_cellBgColor;
+
+/** 隐藏左侧小红星(把JhTitleShowType 改为默认) */
+@property (nonatomic, assign) BOOL Jh_titleHiddenRedStar;
+
+/** 设置为YES ,整个cell不可编辑 */
+@property (nonatomic, assign) BOOL  Jh_Cell_NoEdit;
+
+
+/** 设置单个界面的cell文字垂直居中 ，JhFormCellTypeInput，JhFormCellTypeSelect ，JhFormCellTypeSelectBtn 样式生效
+ 
+ ( 默认false，JhFormConst文件的Jh_CellTextVerticalStyle可全局设置居中或居上  )
+ 
+ */
+@property (nonatomic, assign) BOOL  Jh_cellTextVerticalCenter;
+
+/**
+ 标题换行展示 (默认NO,单行展示)
+ (可生效的cell:JhFormInputCell,JhFormPwdCell,JhFormSelectCell,JhFormCustumRightCell)
+ */
+@property (nonatomic, assign) BOOL  Jh_titleMultiLineShow;
+
+
+#pragma mark - 标题相关
 
 /** title的宽度,默认100 ,若标题太长,不想牺牲字体大小,可设置宽度 */
 @property (nonatomic, assign) CGFloat Jh_titleWidth;
@@ -177,25 +220,22 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 @property (nonatomic, copy, nonnull) NSString *Jh_title;
 @property (nonatomic, strong, nonnull) NSAttributedString *Jh_attributedTitle;
 
-/**
- 标题换行展示 (默认NO,单行展示)
- (可生效的cell:JhFormInputCell,JhFormPwdCell,JhFormSelectCell,JhFormCustumRightCell)
- */
-@property (nonatomic, assign) BOOL  Jh_titleMultiLineShow;
+/** 标题文字颜色 */
+@property (nonatomic, strong) UIColor *Jh_titleTextColor;
 
-/**
- 表单条目详情 (右侧Text)
- */
+
+#pragma mark - info相关
+
+/** 表单条目详情 (右侧Text) */
 @property (nonatomic, copy, nullable) NSString *Jh_info;
 
-/**
- 表单条目详情 (右侧Text对应的IdStr)
- */
+/** 表单条目详情 (右侧Text对应的IdStr) */
 @property (nonatomic, copy) NSString *Jh_info_idStr;
 
-/**
- 表单条目占位字符 (右侧占位字符)
- */
+/** 是否显示表单条目占位字符 YES:显示 NO:不显示 --- 新增 default is YES；详情 default is NO */
+@property (nonatomic, assign) BOOL Jh_showPlaceholder;
+
+/** 表单条目占位字符 (右侧占位字符) */
 @property (nonatomic, copy, nullable) NSString *Jh_placeholder;
 
 @property (nonatomic, strong, nullable) NSAttributedString *Jh_attributedPlaceholder;
@@ -203,9 +243,7 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 /** 表单条目占位字符 字体大小(默认15) */
 @property (assign, nonatomic) CGFloat  Jh_placeholderFont;
 
-/**
- 表单条目右侧文本 的排列方式, (居左,居右 ,默认居左,只在选择和输入样式下生效)
- */
+/** 表单条目右侧文本 的排列方式, (居左,居右 ,默认居左,只在选择和输入样式下生效) */
 @property (assign, nonatomic) JhFormCellInfoTextAlignmentStyle Jh_InfoTextAlignment;
 
 /** 显示右侧的箭头     (只在CustumRightCell样式下生效,默认不显示) */
@@ -218,28 +256,30 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 @property (nonatomic, assign) CGFloat  Jh_intputCellRightViewWidth;
 
 /**
- 表单条目右侧 SwitchBtn 开关状态
+ JhFormCellTypeInput 以及 JhFormCellTypeTextViewInput 类别中表示最大输入字数 (默认50)
+ 0 表示无限制
  */
+@property (nonatomic, assign) NSUInteger Jh_maxInputLength;
+
+/** 设置为YES ,隐藏右侧箭头(只对选择样式cell起作用) */
+@property (nonatomic, assign) BOOL  Jh_hiddenArrow;
+
+
+#pragma mark - SwitchBtnCell
+
+/** 表单条目右侧 SwitchBtn 开关状态 */
 @property (nonatomic, assign) BOOL Jh_switchBtn_on;
 
-/**
- 表单条目右侧 SwitchBtn 开关处于开启状态时的颜色
- */
+/** 表单条目右侧 SwitchBtn 开关处于开启状态时的颜色 */
 @property (strong, nonatomic) UIColor  *Jh_switchOnTintColor;
 
-/**
- 表单条目右侧 SwitchBtn 开关处于关闭状态时边框的颜色(注意这边是边框的颜色)
- */
+/** 表单条目右侧 SwitchBtn 开关处于关闭状态时边框的颜色(注意这边是边框的颜色) */
 @property (strong, nonatomic) UIColor  *Jh_switchTintColor;
 
-/**
- 是否显示表单条目占位字符 YES:显示 NO:不显示 --- 新增 default is YES；详情 default is NO
- */
-@property (nonatomic, assign) BOOL Jh_showPlaceholder;
 
-/**
- 图片附件条目图片数组，支持UIImage、NSURL、NSString(图片URLString)类型元素
- */
+#pragma mark - SelectImageCell
+
+/** 图片附件条目图片数组，支持UIImage、NSURL、NSString(图片URLString)类型元素 */
 @property (nonatomic, strong, nullable) NSArray *Jh_imageArr;
 
 /** 是否显示添加图片按钮  (默认显示NO)  */
@@ -248,52 +288,20 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 /** 是否显示图片右上角的删除按钮  (默认显示  NO)  */
 @property (nonatomic, assign) BOOL Jh_hideDeleteButton;
 
-/**
- images 图片数组中类型筛选出为UIImage的数组子集，以实现图片上传筛选
- */
+/** images 图片数组中类型筛选出为UIImage的数组子集，以实现图片上传筛选 */
 @property (nonatomic, strong, readonly) NSArray *Jh_selectImageArr;
 
-/**
- 表单条目键盘类型
- */
-@property (nonatomic, assign) UIKeyboardType Jh_keyboardType;
-
-/**
- 表单条目是否可编辑 YES:可编辑 NO:不可编辑
- */
-@property (nonatomic, assign) BOOL Jh_editable;
-
-/**
- 表单条目是否必填(必选) YES:必填(必选) NO:可填(可选)
- */
-@property (nonatomic, assign) BOOL Jh_required;
-
-/**
- JhFormCellTypeInput 以及 JhFormCellTypeTextViewInput 类别中表示最大输入字数 (默认50)
- 0 表示无限制
- */
-@property (nonatomic, assign) NSUInteger Jh_maxInputLength;
-
-/**
- JhFormCellTypeImage 类别中表示最大选择图片数 (默认8)
- */
+/** JhFormCellTypeImage 类别中表示最大选择图片数 (默认8)  */
 @property (nonatomic, assign) NSUInteger Jh_maxImageCount;
 
-/** 选择图片底部提示文字 (默认不设置,显示图片cell左下角 )*/
+/** 选择图片底部提示文字 (默认不设置,显示图片cell左下角 ) */
 @property (nonatomic, strong) NSString *Jh_tipsInfo;
 
 /** 选择图片底部提示文字颜色 */
 @property (nonatomic, strong) UIColor *Jh_tipsInfoColor;
 
-/**
- 条目附带单位
- */
-@property (nonatomic, copy, nullable) NSString *Jh_unit;
 
-/**
- 表单条目单位类别
- */
-@property (nonatomic, assign) JhFormCellUnitType Jh_cellUnitType;
+#pragma mark - TextViewInputCell
 
 /**
  是否显示当前字数 (默认不显示)
@@ -301,27 +309,67 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
  */
 @property (nonatomic, assign) BOOL Jh_showLength;
 
-@property (nonatomic, strong) UIColor *Jh_cellBgColor;
 
-/** 设置为YES ,隐藏右侧箭头(只对选择样式cell起作用) */
-@property (nonatomic, assign) BOOL  Jh_hiddenArrow;
+#pragma mark - 选择按钮Cell
 
-/** 隐藏左侧小红星(把JhTitleShowType 改为默认) */
-@property (nonatomic, assign) BOOL Jh_titleHiddenRedStar;
+/** 选择按钮Cell    是否多选，默认单选*/
+@property (nonatomic, assign) BOOL  Jh_selectBtnCell_isMultiSelect;
+/** 选择按钮Cell    是否单行展示（一个选项一行），默认自适应 */
+@property (nonatomic, assign) BOOL  Jh_selectBtnCell_isSingleLineDisplay;
+/** 选择按钮Cell    是否按上标题下选项排列展示，默认左右 */
+@property (nonatomic, assign) BOOL  Jh_selectBtnCell_isTopTitleBottomOption;
 
-/** 设置为YES ,整个cell不可编辑 */
-@property (nonatomic, assign) BOOL  Jh_Cell_NoEdit;
+/** 选择按钮Cell    标题数组  */
+@property (nonatomic, strong) NSArray *Jh_selectBtnCell_btnTitleArr;
+/** 选择按钮Cell    选中title数组，如需初始化时设置选中，使用此参数 ，不设置默认选中第一个 */
+@property (nonatomic, strong) NSArray *Jh_selectBtnCell_selectTitleArr;
+/** 选择按钮Cell    选中index数组，如需初始化时设置选中，使用title数组  */
+@property (nonatomic, strong) NSArray *Jh_selectBtnCell_selectIndexArr;
+/** 选择按钮Cell    是否隐藏左侧图标 */
+@property (nonatomic, assign) BOOL  Jh_selectBtnCell_hiddenLeftIcon;
 
-@property (nonatomic, strong) UIColor *Jh_titleTextColor;
+/** 选择按钮Cell    按钮左间距，默认10 */
+@property (nonatomic, assign) CGFloat Jh_selectBtnCell_leftMargin;
+/** 选择按钮Cell    按钮水平间距，默认10 */
+@property (nonatomic, assign) CGFloat Jh_selectBtnCell_btnHorizontalMargin;
+/** 选择按钮Cell    按钮垂直间距，默认10 */
+@property (nonatomic, assign) CGFloat Jh_selectBtnCell_btnVerticalMargin;
+/** 选择按钮Cell    按钮高度，默认24 */
+@property (nonatomic, assign) CGFloat Jh_selectBtnCell_btnHeight;
+/** 选择按钮Cell    按钮title左右空白大小 ，默认10*/
+@property (nonatomic, assign) CGFloat Jh_selectBtnCell_btnTitleBlank;
+/** 选择按钮Cell    按钮图标和文字间距，默认10 */
+@property (nonatomic, assign) CGFloat Jh_selectBtnCell_btnIconSpace;
+/** 选择按钮Cell    按钮圆角，默认0 */
+@property (nonatomic, assign) CGFloat Jh_selectBtnCell_btnCornerRadius;
+/** 选择按钮Cell    按钮边框宽度，默认0 */
+@property (nonatomic, assign) CGFloat Jh_selectBtnCell_btnBorderWidth;
+/** 选择按钮Cell    按钮标题颜色，默认Jh_rightTextViewTextColor */
+@property (nonatomic, strong) UIColor *Jh_selectBtnCell_btnTitleColor;
+/** 选择按钮Cell    按钮标题选中颜色 ，默认Jh_rightTextViewTextColor  */
+@property (nonatomic, strong) UIColor *Jh_selectBtnCell_btnTitleSelectColor;
+/** 选择按钮Cell    按钮边框颜色，默认grayColor */
+@property (nonatomic, strong) UIColor *Jh_selectBtnCell_btnBorderColor;
+/** 选择按钮Cell    按钮默认背景颜色，默认whiteColor */
+@property (nonatomic, strong) UIColor *Jh_selectBtnCell_btnBgColor;
+/** 选择按钮Cell    按钮选中背景颜色，默认whiteColor */
+@property (nonatomic, strong) UIColor *Jh_selectBtnCell_btnSelectBgColor;
 
-/** 设置单个界面的cell文字垂直居中 ，JhFormCellTypeInput，JhFormCellTypeSelect 样式生效
- 
- ( 默认false，JhFormConst文件的Jh_CellTextVerticalStyle可全局设置居中或居上  )
- 
- */
-@property (nonatomic, assign) BOOL  Jh_cellTextVerticalCenter;
+/** 选择按钮Cell    选中图标 */
+@property (nonatomic, strong) NSString *Jh_selectBtnCell_selectIcon;
+/** 选择按钮Cell    未选中图标 */
+@property (nonatomic, strong) NSString *Jh_selectBtnCell_unSelectIcon;
+/** 选择按钮Cell    是否使用黑色选中图标 ，默认no */
+@property (nonatomic, assign) BOOL  Jh_selectBtnCell_isUseBlackSelectIcon;
+
+/** 选择按钮Cell    未选中图标 颜色*/
+@property (nonatomic, strong) UIColor *Jh_selectBtnCell_btnUnSelectIconColor;
+/** 选择按钮Cell    选中图标 颜色*/
+@property (nonatomic, strong) UIColor *Jh_selectBtnCell_btnSelectIconColor;
 
 
+
+#pragma mark - 备用字段
 /** 添加一些备用字段 */
 @property (nonatomic, strong) NSString  *Jh_temp1;
 @property (nonatomic, strong) NSString  *Jh_temp2;
@@ -381,6 +429,8 @@ FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddPwdInputCell(NSString * _N
 /** 快捷添加一个完全自定义View的cell */
 FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddCustumALLViewCell(CGFloat cellHeight);
 
+/** 快捷添加一个按钮单选或多选的cell */
+FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddSelectBtnCell(NSString * _Nonnull title,BOOL editable, BOOL required);
 
 
 /********************************* 以下方法快捷创建的cell 不是必选 的,需要必须的话再设置 required 为YES ********************************/

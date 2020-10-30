@@ -4,11 +4,12 @@
 //
 //  Created by Jh on 2019/1/4.
 //  Copyright © 2019 Jh. All rights reserved.
-//  表单输入条目，标题居左，详情居右，支持单行与多行输入
+//  表单输入Cell，标题居左，详情居右。标题换行与居中展示，标题隐藏。详情长度限制，支持单行与多行输入，实时录入监听，键盘切换，详情居左居右，添加右侧自定义view等
 
 #import "JhFormBaseCell.h"
 #import "JhFormCellModel.h"
 
+NS_ASSUME_NONNULL_BEGIN
 
 @class JhFormCellModel;
 
@@ -57,3 +58,5 @@ typedef void(^JhInputCompletion)(NSString *text);
 
 @end
 
+
+NS_ASSUME_NONNULL_END
