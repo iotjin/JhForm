@@ -64,8 +64,8 @@
     JhFormCellModel *cell1 = JhFormCellModel_AddPwdInputCell(@"密码", @"", YES);
     cell1.Jh_placeholder =@"请输入16位数字、字母组合";
     cell1.Jh_maxInputLength = 16;
-    cell1.Jh_intputCellRightViewWidth = 60; //右侧自定义view 可添加显示密码按钮
-    cell1.Jh_intputCellRightViewBlock = ^(UIView * _Nonnull RightView) {
+    cell1.Jh_rightViewWidth = 60; //右侧自定义view 可添加显示密码按钮
+    cell1.Jh_rightViewBlock = ^(UIView * _Nonnull RightView) {
         RightView.backgroundColor =JhRandomColor;
     };
     

@@ -60,7 +60,7 @@
     JhFormCellModel *cell0 = JhFormCellModel_AddInputCell(@"cell0", @"", NO, 0);
     cell0.Jh_placeholder =@"不设置右侧自定义view";
     cell0.Jh_maxInputLength=50;
-    cell0.Jh_intputCellRightViewBlock = ^(UIView * _Nonnull RightView) {
+    cell0.Jh_rightViewBlock = ^(UIView * _Nonnull RightView) {
         RightView.backgroundColor =JhRandomColor;
     };
     
@@ -68,16 +68,16 @@
     JhFormCellModel *cell1 = JhFormCellModel_AddInputCell(@"cell1", @"", YES, UIKeyboardTypeNumberPad);
     cell1.Jh_placeholder =@"请输入验证码";
     cell1.Jh_maxInputLength = 6;
-    cell1.Jh_intputCellRightViewWidth = 120; //右侧自定义view 可添加倒计时按钮
-    cell1.Jh_intputCellRightViewBlock = ^(UIView * _Nonnull RightView) {
+    cell1.Jh_rightViewWidth = 120; //右侧自定义view 可添加倒计时按钮
+    cell1.Jh_rightViewBlock = ^(UIView * _Nonnull RightView) {
         RightView.backgroundColor =JhRandomColor;
     };
     
     JhFormCellModel *cell2 = JhFormCellModel_AddInputCell(@"cell2", @"", NO, 0);
     cell2.Jh_placeholder =@"可换行";
     cell2.Jh_maxInputLength = 500;
-    cell2.Jh_intputCellRightViewWidth = 80; //右侧自定义view 可添加倒计时按钮
-    cell2.Jh_intputCellRightViewBlock = ^(UIView * _Nonnull RightView) {
+    cell2.Jh_rightViewWidth = 80; //右侧自定义view 可添加倒计时按钮
+    cell2.Jh_rightViewBlock = ^(UIView * _Nonnull RightView) {
         RightView.backgroundColor =JhRandomColor;
     };
     
@@ -85,8 +85,8 @@
     JhFormCellModel *verifyCode = JhFormCellModel_AddInputCell(@"验证码", @"", YES, UIKeyboardTypeNumberPad);
     verifyCode.Jh_placeholder = @"请输入验证码";
     verifyCode.Jh_maxInputLength = 6;
-    verifyCode.Jh_intputCellRightViewWidth = 120; //右侧自定义view 可添加倒计时按钮
-    verifyCode.Jh_intputCellRightViewBlock = ^(UIView * _Nonnull RightView) {
+    verifyCode.Jh_rightViewWidth = 120; //右侧自定义view 可添加倒计时按钮
+    verifyCode.Jh_rightViewBlock = ^(UIView * _Nonnull RightView) {
         [RightView addSubview:weakSelf.countDownBtn];
         [weakSelf.countDownBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.mas_equalTo(RightView);

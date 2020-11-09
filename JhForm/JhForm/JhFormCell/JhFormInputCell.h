@@ -35,11 +35,6 @@ typedef void(^JhInputCompletion)(NSString *text);
 @property (nonatomic, copy) JhInputCompletion inputCompletion;
 
 /**
- 右侧自定义视图
- */
-@property (nonatomic, strong) UIView *RightView;
-
-/**
  获取条目高度
  */
 + (CGFloat)heightWithCellModelData:(JhFormCellModel *)data;

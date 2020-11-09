@@ -115,7 +115,7 @@ typedef NS_ENUM(NSInteger, JhTitleShowType) {
 
 
 
-typedef void(^JhCellIntputCellRightViewBlock)(UIView *RightView);
+typedef void(^JhCellRightViewBlock)(UIView *RightView);
 
 typedef void(^JhCellSelectCellBlock)(JhFormCellModel *cellModel);
 
@@ -134,18 +134,18 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 @interface JhFormCellModel : NSObject
 
 
-/** inputCell最右侧设置自定义View,需要先设置Jh_intputCellRightViewWidth */
-@property (nonatomic, copy, nullable) JhCellIntputCellRightViewBlock Jh_intputCellRightViewBlock;
+/** 右侧设置自定义View,需要先设置Jh_rightViewWidth */
+@property (nonatomic, copy, nullable) JhCellRightViewBlock Jh_rightViewBlock;
+
 /** 右侧自定义视图的Block (左默认120 ,右 5,高是cell的高) */
 @property (nonatomic, copy, nullable) JhCellCustumRightViewBlock Jh_custumRightViewBlock;
 /** 底部自定义视图的Block (左0 ,右0,高默认240)*/
 @property (nonatomic, copy, nullable) JhCellCustumBottomViewBlock Jh_custumBottomViewBlock;
-
 /** 完全自定义视图的Block (左15 ,右15,高需要设置)*/
 @property (nonatomic, copy, nullable) JhCellCustumALLViewBlock Jh_custumALLViewBlock;
 
 /** SwitchBtn Block  */
-@property (copy, nonatomic) JhCellSwitchBtnBlock Jh_switchBtnBlock;
+@property (nonatomic, copy) JhCellSwitchBtnBlock Jh_switchBtnBlock;
 
 /** 点击居中文本的block */
 @property (nonatomic, copy) void(^JhCellClickCenterTextBlock)(void);
@@ -241,19 +241,20 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 @property (nonatomic, strong, nullable) NSAttributedString *Jh_attributedPlaceholder;
 
 /** 表单条目占位字符 字体大小(默认15) */
-@property (assign, nonatomic) CGFloat  Jh_placeholderFont;
+@property (nonatomic, assign) CGFloat  Jh_placeholderFont;
 
 /** 表单条目右侧文本 的排列方式, (居左,居右 ,默认居左,只在选择和输入样式下生效) */
-@property (assign, nonatomic) JhFormCellInfoTextAlignmentStyle Jh_InfoTextAlignment;
+@property (nonatomic, assign) JhFormCellInfoTextAlignmentStyle Jh_InfoTextAlignment;
 
 /** 显示右侧的箭头     (只在CustumRightCell样式下生效,默认不显示) */
-@property (assign, nonatomic) BOOL  Jh_custumRightCellShowArrow;
+@property (nonatomic, assign) BOOL  Jh_custumRightCellShowArrow;
 
 /**
- Jh_intputCell 右侧自定义view的宽度,和Jh_intputCellRightViewBlock配合使用
- Jh_intputCellRightViewBlock 使用之前要先设置宽度
+ 右侧自定义view的宽度,和Jh_rightViewBlock配合使用
+ Jh_rightViewBlock 使用之前要先设置宽度
+ JhFormInputCell，JhFormPwdCell，JhFormSelectCell，生效
  */
-@property (nonatomic, assign) CGFloat  Jh_intputCellRightViewWidth;
+@property (nonatomic, assign) CGFloat  Jh_rightViewWidth;
 
 /**
  JhFormCellTypeInput 以及 JhFormCellTypeTextViewInput 类别中表示最大输入字数 (默认50)
@@ -261,9 +262,23 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
  */
 @property (nonatomic, assign) NSUInteger Jh_maxInputLength;
 
+#pragma mark - SelectCell
+
 /** 设置为YES ,隐藏右侧箭头(只对选择样式cell起作用) */
 @property (nonatomic, assign) BOOL  Jh_hiddenArrow;
 
+/** 选择Cell  左侧图片宽高，默认Jh_LeftImgWH配置（24）  */
+@property (nonatomic, assign) CGFloat  Jh_leftImgWH;
+/** 选择Cell  左侧图片名称  */
+@property (nonatomic, strong) NSString *Jh_leftImgName;
+/** 选择Cell  左侧图片右侧间距 默认Jh_LeftImgRightMargin配置（10）  */
+@property (nonatomic, assign) CGFloat  Jh_leftImgRightMargin;
+/** 选择Cell  表单条目右侧文字颜色，SelectCell 生效*/
+@property (nonatomic, strong) UIColor *Jh_infoTextColor;
+/** 选择Cell  下划线左间距  */
+@property (nonatomic, assign) CGFloat Jh_lineLeftMargin;
+/** 隐藏下划线（选择Cell  和  完全自定义Cell生效） */
+@property (nonatomic, assign) BOOL  Jh_hiddenLine;
 
 #pragma mark - SwitchBtnCell
 
@@ -271,10 +286,10 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 @property (nonatomic, assign) BOOL Jh_switchBtn_on;
 
 /** 表单条目右侧 SwitchBtn 开关处于开启状态时的颜色 */
-@property (strong, nonatomic) UIColor  *Jh_switchOnTintColor;
+@property (nonatomic, strong) UIColor  *Jh_switchOnTintColor;
 
 /** 表单条目右侧 SwitchBtn 开关处于关闭状态时边框的颜色(注意这边是边框的颜色) */
-@property (strong, nonatomic) UIColor  *Jh_switchTintColor;
+@property (nonatomic, strong) UIColor  *Jh_switchTintColor;
 
 
 #pragma mark - SelectImageCell

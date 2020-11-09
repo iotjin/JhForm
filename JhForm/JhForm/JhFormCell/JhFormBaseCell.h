@@ -16,11 +16,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) SelwynExpandableTextView *rightTextView;
 
+/** 左侧图片 */
+@property (nonatomic, strong) UIImageView *leftImgView;
+
 /** 表单标题 */
 @property (nonatomic, strong) UILabel *titleLabel;
 
 /** 表单条目所在的tableView */
-@property (nonatomic, weak) UITableView *baseTableView;
+@property (nonatomic,   weak) UITableView *baseTableView;
+
+/** 右侧自定义视图 */
+@property (nonatomic, strong) UIView *rightView;
 
 @end
 

@@ -312,7 +312,7 @@
         }
         return cell;
     }else if (cellModel.Jh_cellType == JhFormCellTypeSelectImage) {
-        NSString *cell_id = [NSString stringWithFormat:@"custumBottom_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
+        NSString *cell_id = [NSString stringWithFormat:@"selectImage_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
         JhFormSelectImageCell *cell = [tableView SelectImageCellWithId:cell_id];
         cell.data = cellModel;
         cell.data.Jh_titleWidth = LeftTitleWidth;

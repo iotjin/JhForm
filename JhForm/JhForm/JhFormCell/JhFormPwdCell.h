@@ -24,9 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** 密码样式cell 输入完成 */
 @property (nonatomic,   copy) void(^Jh_pwdInputCompletion )(NSString *text);
 
-/** 右侧自定义视图 */
-@property (nonatomic, strong) UIView *RightView;
-
 
 @end
 

@@ -99,6 +99,13 @@ NSString *const Jh_AddIcon = @"JhForm.bundle/compose_picture_add";
 // 表单选择cell右侧箭头
 NSString *const Jh_SelectCell_rightArrow = @"JhForm.bundle/Jh_SelectCell_rightArrow";
 
+// 表单选择cell左侧图片宽高，默认24
+CGFloat const Jh_LeftImgWH = 24;
+
+// 表单选择cell左侧图片右侧间距， 默认10
+CGFloat const Jh_LeftImgRightMargin = 10;
+
+
 #pragma mark - 选择按钮Cell
 
 // 表单选择按钮cell 未选中图片

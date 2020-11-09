@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "IQKeyboardManager.h"
 
 @interface AppDelegate ()
 
@@ -31,12 +32,21 @@
     [self.window makeKeyAndVisible];
     
     
-    
-    
-
-    
+    [self configIQKeyboardManager];
     
     return YES;
+}
+
+#pragma mark - 键盘处理
+- (void)configIQKeyboardManager{
+    [IQKeyboardManager sharedManager].enable = YES;
+    //工具条
+    [IQKeyboardManager sharedManager].enableAutoToolbar = YES;
+    //点击背景收回键盘
+    [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
+    [IQKeyboardManager sharedManager].toolbarDoneBarButtonItemText = @"完成";
+    [IQKeyboardManager sharedManager].toolbarTintColor=[UIColor lightGrayColor];
+    [IQKeyboardManager sharedManager].keyboardDistanceFromTextField = 5.0f;
 }
 
 

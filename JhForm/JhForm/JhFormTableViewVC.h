@@ -27,6 +27,17 @@ typedef void(^JhFormSubmitBlock)(void);
  */
 @property (nonatomic, strong) UITableView *Jh_formTableView;
 
+/** 表单数据源，数据源格式应为 @[JhFormSection..]，否则断言会直接崩溃 */
+@property (nonatomic, strong) NSMutableArray *Jh_formModelArr;
+
+/** 提交操作事件block，包含提交操作表单页面提交按钮点击事件实现回调 */
+@property (nonatomic,   copy) JhFormSubmitBlock Jh_formSubmitBlock;
+
+/** 隐藏默认的footerView */
+@property (nonatomic, assign) BOOL Jh_hiddenDefaultFooterView;
+
+#pragma mark - 导航条
+
 /** 标题 */
 @property (nonatomic, strong) NSString *Jh_navTitle;
 
@@ -38,6 +49,8 @@ typedef void(^JhFormSubmitBlock)(void);
 
 /** 点击导航栏右侧item Block */
 @property (nonatomic,   copy) void(^JhClickNavRightItemBlock)(void);
+
+#pragma mark - 提交
 
 /** 提交按钮 */
 @property (nonatomic, strong) UIButton *Jh_submitBtn;
@@ -66,14 +79,7 @@ typedef void(^JhFormSubmitBlock)(void);
 /** 表单提交按钮 文字颜色，默认白色 */
 @property (nonatomic, strong) UIColor *Jh_submitBtnTextColor;
 
-/** 表单数据源，数据源格式应为 @[JhFormSection..]，否则断言会直接崩溃 */
-@property (nonatomic, strong) NSMutableArray *Jh_formModelArr;
-
-/** 提交操作事件block，包含提交操作表单页面提交按钮点击事件实现回调 */
-@property (nonatomic,   copy) JhFormSubmitBlock Jh_formSubmitBlock;
-
-/** 隐藏默认的footerView */
-@property (nonatomic, assign) BOOL Jh_hiddenDefaultFooterView;
+#pragma mark - 单个页面的统一配置
 
 /** 统一配置cell左侧title的宽度(默认100) */
 @property (nonatomic, assign) CGFloat Jh_leftTitleWidth;

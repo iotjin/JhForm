@@ -24,6 +24,14 @@
     // Configure the view for the selected state
 }
 
+-(UIImageView *)leftImgView{
+    if (!_leftImgView) {
+        _leftImgView = [[UIImageView alloc]init];
+        [self.contentView addSubview:_leftImgView];
+    }
+    return _leftImgView;
+}
+
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc]init];
@@ -65,6 +73,15 @@
         }
     }
     return _rightTextView;
+}
+
+-(UIView *)rightView{
+    if (!_rightView) {
+        _rightView = [[UIView alloc]init];
+        _rightView.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:_rightView];
+    }
+    return _rightView;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

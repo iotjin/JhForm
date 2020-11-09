@@ -2,7 +2,7 @@
 //  FormDemo8VC.m
 //  JhForm
 //
-//  Created by lanTongMac on 2020/9/29.
+//  Created by Jh on 2020/9/29.
 //  Copyright © 2020 Jh. All rights reserved.
 //
 
@@ -40,7 +40,7 @@
     JhFormCellModel *cell0 = JhFormCellModel_AddInputCell(@"InputCell", @"", NO, 0);
     cell0.Jh_placeholder =@"输入时左侧自动居中";
     cell0.Jh_maxInputLength=500;
-    cell0.Jh_intputCellRightViewBlock = ^(UIView * _Nonnull RightView) {
+    cell0.Jh_rightViewBlock = ^(UIView * _Nonnull RightView) {
         RightView.backgroundColor =JhRandomColor;
     };
     
@@ -50,8 +50,8 @@
     
     NSString *info2 = @"这是可编辑的，这是可编辑的，这是可编辑的，这是可编辑的，这是可编辑的，这是可编辑的，这是可编辑的，这是可编辑的";
     JhFormCellModel *cell2 = JhFormCellModel_AddInputCell(@"InputCell", info2, NO, 0);
-    cell2.Jh_intputCellRightViewWidth = 80; //右侧自定义view 可添加倒计时按钮
-    cell2.Jh_intputCellRightViewBlock = ^(UIView * _Nonnull RightView) {
+    cell2.Jh_rightViewWidth = 80; //右侧自定义view 可添加倒计时按钮
+    cell2.Jh_rightViewBlock = ^(UIView * _Nonnull RightView) {
         RightView.backgroundColor =JhRandomColor;
     };
     
@@ -74,9 +74,9 @@
     _cell6 = JhFormCellModel_AddSelectCell(@"SelectCell", @"选项一选项一选项一选项一选项一选项一选项一选项一选项一选项一选项一", NO);
     _cell6.Jh_titleMultiLineShow =YES;
     _cell6.Jh_CellSelectCellBlock = ^(JhFormCellModel * _Nonnull cellModel) {
-//        [weakSelf show:@[@"选项一选项一选项一选项一选项一选项一选项一选项一选项一选项一选项一",
-//                         @"选项二",
-//                         @"选项三选项三选项三选项三"]];
+        [weakSelf show:@[@"选项一选项一选项一选项一选项一选项一选项一选项一选项一选项一选项一",
+                         @"选项二",
+                         @"选项三选项三选项三选项三"]];
     };
     
     
@@ -102,41 +102,41 @@
     
 }
 
-//- (void)show:(NSArray *)titleArr{
-//    if (!titleArr.count) {
-//        [self.view hx_showImageHUDText:@"暂无选项"];
-//        return;
-//    }
-//    
-//    NSMutableArray *models = [NSMutableArray new];
-//    for (NSString *title in titleArr) {
-//        HXPhotoBottomViewModel *model = [HXPhotoBottomViewModel new];
-//        model.title = title;
-//        [models addObject:model];
-//    }
-//    
-//    HXWeakSelf
-//    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 40)];
-//    titleLb.backgroundColor = [UIColor whiteColor];
-//    titleLb.text = @"请选择";
-//    titleLb.textColor = [UIColor lightGrayColor];
-//    titleLb.textAlignment = NSTextAlignmentCenter;
-//    titleLb.font = [UIFont hx_pingFangFontOfSize:14];
-//    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 39.5, titleLb.hx_w, 0.5)];
-//    lineView.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.93 alpha:1];
-//    [titleLb addSubview:lineView];
-//    [HXPhotoBottomSelectView showSelectViewWithModels:models
-//                                           headerView:titleLb
-//                                      showTopLineView:YES
-//                                          cancelTitle:nil
-//                                     selectCompletion:^(NSInteger index, HXPhotoBottomViewModel * _Nonnull model) {
-//        [weakSelf.view hx_showImageHUDText:[NSString stringWithFormat:@"选择了第%d项", index + 1]];
-//        weakSelf.cell6.Jh_info = titleArr[index];
-//        [weakSelf.Jh_formTableView reloadData];
-//    }
-//                                          cancelClick:^{
-//        [weakSelf.view hx_showImageHUDText:@"取消选择"];
-//    }];
-//}
+- (void)show:(NSArray *)titleArr{
+    if (!titleArr.count) {
+        [self.view hx_showImageHUDText:@"暂无选项"];
+        return;
+    }
+    
+    NSMutableArray *models = [NSMutableArray new];
+    for (NSString *title in titleArr) {
+        HXPhotoBottomViewModel *model = [HXPhotoBottomViewModel new];
+        model.title = title;
+        [models addObject:model];
+    }
+    
+    HXWeakSelf
+    UILabel *titleLb = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 40)];
+    titleLb.backgroundColor = [UIColor whiteColor];
+    titleLb.text = @"请选择";
+    titleLb.textColor = [UIColor lightGrayColor];
+    titleLb.textAlignment = NSTextAlignmentCenter;
+    titleLb.font = [UIFont hx_pingFangFontOfSize:14];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 39.5, titleLb.hx_w, 0.5)];
+    lineView.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue:0.93 alpha:1];
+    [titleLb addSubview:lineView];
+    [HXPhotoBottomSelectView showSelectViewWithModels:models
+                                           headerView:titleLb
+                                      showTopLineView:YES
+                                          cancelTitle:nil
+                                     selectCompletion:^(NSInteger index, HXPhotoBottomViewModel * _Nonnull model) {
+        [weakSelf.view hx_showImageHUDText:[NSString stringWithFormat:@"选择了第%ld项", index + 1]];
+        weakSelf.cell6.Jh_info = titleArr[index];
+        [weakSelf.Jh_formTableView reloadData];
+    }
+                                          cancelClick:^{
+        [weakSelf.view hx_showImageHUDText:@"取消选择"];
+    }];
+}
 
 @end

@@ -29,15 +29,6 @@
     // Configure the view for the selected state
 }
 
--(UIView *)RightView{
-    if (!_RightView) {
-        _RightView = [[UIView alloc]init];
-        _RightView.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:_RightView];
-    }
-    return _RightView;
-}
-
 -(UITextField *)Jh_pwdTextField{
     if (!_Jh_pwdTextField) {
         UITextField *textField = [[UITextField alloc]init];
@@ -77,8 +68,8 @@
     if(data.Jh_cellBgColor){
         self.backgroundColor = data.Jh_cellBgColor;
     }
-    if(data.Jh_intputCellRightViewWidth>0 && data.Jh_intputCellRightViewBlock){
-        data.Jh_intputCellRightViewBlock(self.RightView);
+    if(data.Jh_rightViewWidth>0 && data.Jh_rightViewBlock){
+        data.Jh_rightViewBlock(self.rightView);
     }
     if (data.Jh_Cell_NoEdit == YES) {
         self.userInteractionEnabled = NO;
@@ -92,9 +83,9 @@
     
     if (!_data.Jh_title.length) {
         self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset+5, Jh_TitleHeight);
-        if(_data.Jh_intputCellRightViewWidth>0){
-            self.Jh_pwdTextField.frame =CGRectMake(Jh_Margin_left+3, 0, Jh_SCRREN_WIDTH - 2*Jh_Margin_left - _data.Jh_intputCellRightViewWidth-3, self.bounds.size.height);
-            self.RightView.frame =CGRectMake(CGRectGetMaxX(self.Jh_pwdTextField.frame), 0, _data.Jh_intputCellRightViewWidth, self.bounds.size.height);
+        if(_data.Jh_rightViewWidth>0){
+            self.Jh_pwdTextField.frame =CGRectMake(Jh_Margin_left+3, 0, Jh_SCRREN_WIDTH - 2*Jh_Margin_left - _data.Jh_rightViewWidth-3, self.bounds.size.height);
+            self.rightView.frame =CGRectMake(CGRectGetMaxX(self.Jh_pwdTextField.frame), 0, _data.Jh_rightViewWidth, self.bounds.size.height);
         }else{
             self.Jh_pwdTextField.frame =CGRectMake(Jh_Margin_left+3, 0, Jh_SCRREN_WIDTH - 2*Jh_Margin_left-3, self.bounds.size.height);
         }
@@ -111,9 +102,9 @@
         }
         /********************************* 左侧标题换行 ********************************/
         
-        if(_data.Jh_intputCellRightViewWidth>0){
-            self.Jh_pwdTextField.frame =CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, 0, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 3*Jh_EdgeMargin)-_data.Jh_intputCellRightViewWidth, self.bounds.size.height);
-            self.RightView.frame =CGRectMake(CGRectGetMaxX(self.Jh_pwdTextField.frame), 0, _data.Jh_intputCellRightViewWidth, self.bounds.size.height);
+        if(_data.Jh_rightViewWidth>0){
+            self.Jh_pwdTextField.frame =CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, 0, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 3*Jh_EdgeMargin)-_data.Jh_rightViewWidth, self.bounds.size.height);
+            self.rightView.frame =CGRectMake(CGRectGetMaxX(self.Jh_pwdTextField.frame), 0, _data.Jh_rightViewWidth, self.bounds.size.height);
         }else{
             self.Jh_pwdTextField.frame =CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, 0, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 3*Jh_EdgeMargin), self.bounds.size.height);
         }

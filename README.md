@@ -10,7 +10,7 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
 <img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_00.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01_1.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01.gif" width="208" height="404">
 <img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_02.gif" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_03_1.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_03.gif" width="208" height="404">
 <img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_04.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_05.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.png" width="208" height="404">
-<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.gif" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_07.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01_dark.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_08.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_09.png" width="208" height="404">
+<img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.gif" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_07.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_01_dark.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_08.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_09.png" width="208" height="404"><img src="https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_10.png" width="208" height="404">
 
 
 
@@ -33,7 +33,7 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
 ## 实现的一些效果
 
 * 文字排版：左标题右详情，或者上标题下详情
-* 标题：支持隐藏、换行，垂直居中或居上展示，标题单位设置（默认小红星）和宽度、字体、颜色设置
+* 标题：支持隐藏、换行，垂直居中或居上展示，标题单位设置（默认小红星）和宽度、字体、颜色设置，标题左侧可加图片
 * 详情文字：支持单行与多行录入文字，实时录入监听，键盘切换，录入长度/总长度展示，详情居左居右，箭头显示隐藏，添加右侧自定义view等
 * 按钮选择样式：支持单选和多选，按钮宽度自适应，设置默认选中按钮，按钮颜色设置，切换按钮图标等
 * 图片选择样式：支持相机和图库选择。支持本地图片与网络图片，可设置默认选择图片，最大选择数，底部提示文字
@@ -41,6 +41,8 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
 * 支持提交按钮和导航条相关配置
 * 支持暗黑模式，设置自动切换或light
 * Cell高度设置
+* 设置样式
+
 
 注：<br>
 
@@ -52,6 +54,7 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
 ## 更新说明
 
 
+* 2020.11.09 - 添加设置样式 <br>
 * 2020.10.30 - 新增JhFormSelectBtnCell <br>
 * 2020.10.23 - HXPhotoPicker更新至v3.1.2版本(iPhone12适配)，增加提交按钮相关属性<br>
 * 2020.10.15 - 添加版本号v1.0.0，HXPhotoPicker更新至v3.1.1版本,处理iOS14图片异常<br>
@@ -229,32 +232,28 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
 
 * 样式12 - 完全自定义样式
 ```
-   
      JhFormCellModel *cell_allcustum = JhFormCellModel_AddCustumALLViewCell(80);
      cell_allcustum.Jh_cellBgColor = JhRandomColor; //完全自定义样式的cell 只有高度和背景颜色可以设置
       cell_allcustum.Jh_custumALLViewBlock = ^(UIView * _Nonnull AllView) {
         AllView.backgroundColor =[UIColor yellowColor];
-        
         UILabel *label = [[UILabel alloc]init];
         label.backgroundColor =JhRandomColor;
         label.text =@"这是一个可以完全自定义的cell";
         label.frame=CGRectMake(0, 30, Kwidth-30, 20);
         [AllView addSubview:label];
-        
     };
-
 ```
 
 * 13 - 标题换行展示
 ```
-
     NSString *title= @"统一社会\n 信用代码";
     JhFormCellModel *cell6 = JhFormCellModel_AddInputCell(title, @"", YES, 0);
     cell6.Jh_placeholder = @"请输入18位统一社会信用代码";
     cell6.Jh_titleMultiLineShow =YES; //标题换行展示
     cell6.Jh_maxInputLength = 18;
 ```
-* 13 - 标题换行展示
+
+* 14 - 单选、多选按钮
 ```
     //单选一个选项，必填，默认样式
     JhFormCellModel *cell0 = JhFormCellModel_AddSelectBtnCell(@"单选1选项", YES, YES);
@@ -328,6 +327,31 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
     cell9.Jh_selectBtnCell_btnBorderColor = [UIColor purpleColor];
     
 ```
+*  设置样式
+```
+    JhFormCellModel *cell0 = JhFormCellModel_AddRightArrowCell(@"支付", @"");
+    cell0.Jh_leftImgName = @"ic_wallet";
+    cell0.Jh_leftImgWH = 30;
+    cell0.Jh_hiddenLine = YES;
+    cell0.Jh_leftImgRightMargin = 12;
+    
+    JhFormCellModel *cell7 = JhFormCellModel_AddRightArrowCell(@"自定义2", @"");
+    cell7.Jh_leftImgName = @"ic_settings";
+    cell7.Jh_rightViewWidth = kWidth - cell7.Jh_titleWidth;
+    cell7.Jh_rightViewBlock = ^(UIView * _Nonnull RightView) {
+        UIView *bgView = [[UIView alloc]init];
+        bgView.backgroundColor = JhRandomColor;
+        [RightView addSubview:bgView];
+        [bgView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(0);
+            make.left.mas_equalTo(0);
+            make.bottom.mas_equalTo(0);
+            make.right.mas_equalTo(0);
+        }];
+    };
+
+
+```
 
 
 *  一些其他的设置
@@ -344,32 +368,30 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
     //暗黑模式切换: JhFormConst 中 Jh_ThemeType类型控制
  
     
-#pragma mark - 设置导航条title和右侧文字
--(void)setNav{
-    
-    self.Jh_navTitle = @"表单Demo1 - 默认";
-    self.Jh_navRightTitle =@"文字";
-    self.JhClickNavRightItemBlock = ^{
-        NSLog(@" 点击跳转 ");
-    };
-    
-}
+    #pragma mark - 设置导航条title和右侧文字
+    -(void)setNav{
+        self.Jh_navTitle = @"表单Demo1 - 默认";
+        self.Jh_navRightTitle =@"文字";
+        self.JhClickNavRightItemBlock = ^{
+            NSLog(@" 点击跳转 ");
+        };
+    }
 
 
-//提交按钮相关设置（当个页面），全局配置在JhFormConst文件中修改
-self.Jh_submitBtnBgColor = [UIColor redColor]; //全局配置背景色要去修改BaseThemeColor
-self.Jh_submitBtnTBSpace = 30;
-self.Jh_submitBtnLRSpace = 100;
-self.Jh_submitBtnHeight = 50;
-self.Jh_submitBtnTextColor = [UIColor yellowColor];
-self.Jh_submitBtnCornerRadius = 25.0;
-self.Jh_submitBtnTextFontSize = 22;
-//粗体
-self.Jh_submitBtn.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold"size:30];
-//边框
-self.Jh_submitBtn.layer.borderWidth = 2;
-self.Jh_submitBtn.layer.borderColor = [[UIColor grayColor] CGColor];
-self.Jh_submitStr = @"提 交";
+    //提交按钮相关设置（当个页面），全局配置在JhFormConst文件中修改
+    self.Jh_submitBtnBgColor = [UIColor redColor]; //全局配置背景色要去修改BaseThemeColor
+    self.Jh_submitBtnTBSpace = 30;
+    self.Jh_submitBtnLRSpace = 100;
+    self.Jh_submitBtnHeight = 50;
+    self.Jh_submitBtnTextColor = [UIColor yellowColor];
+    self.Jh_submitBtnCornerRadius = 25.0;
+    self.Jh_submitBtnTextFontSize = 22;
+    //粗体
+    self.Jh_submitBtn.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold"size:30];
+    //边框
+    self.Jh_submitBtn.layer.borderWidth = 2;
+    self.Jh_submitBtn.layer.borderColor = [[UIColor grayColor] CGColor];
+    self.Jh_submitStr = @"提 交";
 
 
     

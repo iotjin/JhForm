@@ -45,6 +45,10 @@
     }else{
         self.userInteractionEnabled = YES;
     }
+    
+    if (self.data.Jh_hiddenLine == YES) {
+        self.separatorInset=UIEdgeInsetsMake(0,0,0,MAXFLOAT);
+    }
 }
 
 - (void)layoutSubviews {

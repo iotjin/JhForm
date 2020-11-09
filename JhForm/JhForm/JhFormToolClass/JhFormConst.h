@@ -13,9 +13,9 @@
 
 
 /**
- 版本号（20201030）
+ 版本号（20201109）
  */
-#define kVersion @"1.2.0"
+#define kVersion @"1.3.0"
 
 
 /** 获取屏幕宽度  */
@@ -167,6 +167,12 @@ extern NSString *const Jh_AddIcon;
 
 /** 表单选择cell 右侧箭头图标 */
 extern NSString *const Jh_SelectCell_rightArrow;
+
+/** 表单选择cell左侧图片宽高，默认24  */
+extern CGFloat const Jh_LeftImgWH;
+
+/** 表单选择cell左侧图片右侧间距， 默认10    */
+extern CGFloat const Jh_LeftImgRightMargin;
 
 
 #pragma mark - 选择按钮Cell
