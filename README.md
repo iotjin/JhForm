@@ -36,7 +36,7 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
 * 标题：支持隐藏、换行，垂直居中或居上展示，标题单位设置（默认小红星）和宽度、字体、颜色设置，标题左侧可加图片
 * 详情文字：支持单行与多行录入文字，实时录入监听，键盘切换，录入长度/总长度展示，详情居左居右，箭头显示隐藏，添加右侧自定义view等
 * 按钮选择样式：支持单选和多选，按钮宽度自适应，设置默认选中按钮，按钮颜色设置，切换按钮图标等
-* 图片选择样式：支持相机和图库选择。支持本地图片与网络图片，可设置默认选择图片，最大选择数，底部提示文字
+* 图片选择样式：支持相机和图库选择。支持本地图片与网络图片，本地视频和网络视频，可设置默认选择图片、视频，最大选择数，底部提示文字
 * 自定义样式：支持右侧自定义、底部自定义、完全自定义
 * 支持提交按钮和导航条相关配置
 * 支持暗黑模式，设置自动切换或light
@@ -54,6 +54,7 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
 ## 更新说明
 
 
+* 2020.11.13 - 添加视频选择效果，支持本地和网络视频选择与展示 <br>
 * 2020.11.09 - 添加设置样式 <br>
 * 2020.10.30 - 新增JhFormSelectBtnCell <br>
 * 2020.10.23 - HXPhotoPicker更新至v3.1.2版本(iPhone12适配)，增加提交按钮相关属性<br>
@@ -125,6 +126,13 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
 * 样式4 - 默认选择图片样式
 ```
       JhFormCellModel *cell7 = JhFormCellModel_AddImageCell(@"选择图片:", NO);
+      
+      JhFormCellModel *urlPicture = JhFormCellModel_AddImageCell(@"加载网络图片:", NO);
+  //    urlPicture.Jh_noShowAddImgBtn=YES;
+  //    urlPicture.Jh_hideDeleteButton = YES;
+      urlPicture.Jh_imageArr =@[@"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_00.png",
+                                @"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_05.png",
+                                @"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.png"];
 
 ```
 
@@ -327,7 +335,7 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
     cell9.Jh_selectBtnCell_btnBorderColor = [UIColor purpleColor];
     
 ```
-*  设置样式
+*  15 - 设置样式
 ```
     JhFormCellModel *cell0 = JhFormCellModel_AddRightArrowCell(@"支付", @"");
     cell0.Jh_leftImgName = @"ic_wallet";
@@ -350,6 +358,32 @@ JhForm - 自定义表单工具类,可以更加简单,快捷的创建表单<br>
         }];
     };
 
+
+```
+
+*  16 - 视频选择与展示
+```
+    JhFormCellModel *video = JhFormCellModel_AddImageCell(@"选择视频:", NO);
+    video.Jh_maxImageCount = 2;
+    video.Jh_tipsInfo =@"这是一条可设置颜色的提示信息";
+    video.Jh_tipsInfoColor = [UIColor redColor];
+    video.Jh_selectImageType = JhSelectImageTypeVideo;
+    video.Jh_videoMinimumDuration = 1;
+
+    JhFormCellModel *urlVideo = JhFormCellModel_AddImageCell(@"加载网络视频:", NO);
+    //    urlVideo.Jh_noShowAddImgBtn=YES;
+    //    urlVideo.Jh_hideDeleteButton = YES;
+
+    HXCustomAssetModel *assetModel1 = [HXCustomAssetModel assetWithNetworkImageURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539156872167&di=93cd047350dfc7a60fa9e89e30079b25&imgtype=0&src=http%3A%2F%2Fpic.9ht.com%2Fup%2F2018-5%2F15252310743961744.gif"] networkThumbURL:[NSURL URLWithString:@"https://goss.veer.com/creative/vcg/veer/1600water/veer-129342703.jpg"] selected:YES];
+
+    HXCustomAssetModel *assetModel2 = [HXCustomAssetModel livePhotoAssetWithNetworkImageURL:[NSURL URLWithString:@"http://oss-cn-hangzhou.aliyuncs.com/tsnrhapp/5ed15ef7-3411-4f5e-839b-10664d796919.jpg"] networkVideoURL:[NSURL URLWithString:@"http://tsnrhapp.oss-cn-hangzhou.aliyuncs.com/chartle/fufeiduanpian.mp4"] selected:YES];
+
+    HXCustomAssetModel *assetModel3 = [HXCustomAssetModel assetWithNetworkImageURL:[NSURL URLWithString:@"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3935625616,3616422245&fm=27&gp=0.jpg"] selected:YES];
+
+    HXCustomAssetModel *assetModel4 = [HXCustomAssetModel assetWithNetworkVideoURL:[NSURL URLWithString:@"http://oss-cn-hangzhou.aliyuncs.com/tsnrhapp/fff42798-8025-4170-a36d-3257be267f29.mp4"] videoCoverURL:[NSURL URLWithString:@"http://oss-cn-hangzhou.aliyuncs.com/tsnrhapp/d3c3bbe6-02ce-4f17-a75b-3387d52b0a4a.jpg"] videoDuration:13 selected:YES];
+
+    urlVideo.Jh_initImageArr =@[assetModel1,assetModel2,assetModel3,assetModel4];
+    urlVideo.Jh_selectImageType = JhSelectImageTypeAll;
 
 ```
 

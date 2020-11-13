@@ -76,12 +76,14 @@
         NSInteger maxNum = Jh_GlobalMaxImages;
         _oneManager = [[HXPhotoManager alloc] initWithType:HXPhotoManagerSelectedTypePhoto];
         _oneManager.configuration.photoMaxNum = maxNum;
+        _oneManager.configuration.videoMaxNum = 0;
         _oneManager.configuration.selectTogether = NO;
         _oneManager.configuration.maxNum = maxNum;
         _oneManager.configuration.cameraCellShowPreview = NO;
         _oneManager.configuration.openCamera =NO;
         _oneManager.configuration.photoCanEdit =NO;
         _oneManager.configuration.showBottomPhotoDetail = NO;
+        _oneManager.configuration.saveSystemAblum = YES;
         [HXPhotoCommon photoCommon].requestNetworkAfter= YES;
     }
     return _oneManager;
@@ -99,22 +101,51 @@
     return _onePhotoView;
 }
 
-#pragma mark -  根据photoView来判断是哪一个选择器
-- (void)photoView:(HXPhotoView *)photoView changeComplete:(NSArray<HXPhotoModel *> *)allList photos:(NSArray<HXPhotoModel *> *)photos videos:(NSArray<HXPhotoModel *> *)videos original:(BOOL)isOriginal {
-    
-    self.selectImgArr = allList;
-    //获取原图
-    [photos hx_requestImageWithOriginal:YES completion:^(NSArray<UIImage *> * _Nullable imageArray, NSArray<HXPhotoModel *> * _Nullable errorArray) {
-        self.selectImgArr = imageArray;
-//        NSSLog(@" 选择图片cell - selectImgArr %@",self.selectImgArr);
-        self.data.Jh_imageArr = self.selectImgArr;
-    }];
-    [self Jh_reloadData];
-}
-
 - (void)photoView:(HXPhotoView *)photoView updateFrame:(CGRect)frame {
     self.onePhotoView.frame = frame;
     [self layoutSubviews];
+}
+
+#pragma mark -  根据photoView来判断是哪一个选择器
+- (void)photoView:(HXPhotoView *)photoView changeComplete:(NSArray<HXPhotoModel *> *)allList photos:(NSArray<HXPhotoModel *> *)photos videos:(NSArray<HXPhotoModel *> *)videos original:(BOOL)isOriginal {    
+//    NSSLog(@" 选择图片cell - allList %@",allList);
+    self.data.Jh_imageAllList = allList;
+    if (self.data.Jh_selectImageType == JhSelectImageTypeImage) {
+        [self getOriginalImage:photos original:isOriginal];
+    }else if (self.data.Jh_selectImageType == JhSelectImageTypeVideo) {
+        [self getVideo:videos];
+    }else {
+        [self getOriginalImage:photos original:isOriginal];
+        [self getVideo:videos];
+    }
+    [self Jh_reloadData];
+}
+
+//获取原图
+-(void)getOriginalImage:(NSArray<HXPhotoModel *> *)photos original:(BOOL)isOriginal{
+    //获取原图
+    [photos hx_requestImageWithOriginal:isOriginal completion:^(NSArray<UIImage *> * _Nullable imageArray, NSArray<HXPhotoModel *> * _Nullable errorArray) {
+        self.selectImgArr = imageArray;
+//      NSSLog(@" 选择图片cell - selectImgArr %@",self.selectImgArr);
+        self.data.Jh_imageArr = self.selectImgArr;
+    }];
+}
+
+//获取视频
+-(void)getVideo:(NSArray<HXPhotoModel *> *)videos{
+    NSMutableArray *mArr = [NSMutableArray array];
+    //导出视频地址
+    for (int i=0; i< videos.count; i++) {
+        HXPhotoModel *model = videos[i];
+        // presetName 导出视频的质量，自己根据需求设置
+        [model exportVideoWithPresetName:AVAssetExportPresetMediumQuality startRequestICloud:nil iCloudProgressHandler:nil exportProgressHandler:^(float progress, HXPhotoModel * _Nullable model) {
+        } success:^(NSURL * _Nullable videoURL, HXPhotoModel * _Nullable model) {
+            // 导出完成, videoURL
+            //NSLog(@" videoURL %@ ",videoURL);
+            [mArr addObject:videoURL];
+            self.data.Jh_selectVideoArr = [mArr copy];
+        } failed:nil];
+    }
 }
 
 #pragma mark -- 刷新当前图片数据
@@ -137,32 +168,61 @@
         self.oneManager.configuration.maxNum = data.Jh_maxImageCount;
         self.oneManager.configuration.photoMaxNum = data.Jh_maxImageCount;
     }
+    
+    if (data.Jh_selectImageType == JhSelectImageTypeAll) {
+        self.oneManager.configuration.selectTogether = YES;
+    }else{
+        self.oneManager.configuration.selectTogether = NO;
+    }
+    
+    if (data.Jh_selectImageType) {
+        self.oneManager.type = data.Jh_selectImageType;
+    }
+    
+    if (data.Jh_imageNoSaveAblum){
+        self.oneManager.configuration.saveSystemAblum = !data.Jh_imageNoSaveAblum;
+    }
+    if (data.Jh_videoMinimumDuration) {
+        self.oneManager.configuration.videoMinimumDuration = data.Jh_videoMinimumDuration;
+    }
+    
     if (data.Jh_noShowAddImgBtn==YES) {
         self.onePhotoView.showAddCell = NO;
+        self.onePhotoView.editEnabled = NO;
     }
-    if(data.Jh_imageArr.count){
-        [self.oneManager clearSelectedList];
-        NSMutableArray *mUrlArr = @[].mutableCopy;
-        for (id img in data.Jh_imageArr) {
-            HXPhotoModel *model ;
-            if([img isKindOfClass:[UIImage class]]){
-                model = [HXPhotoModel photoModelWithImage:img];
+    
+    if (data.Jh_selectImageType == JhSelectImageTypeImage) {
+        if(data.Jh_imageArr.count){
+            [self.oneManager clearSelectedList];
+            NSMutableArray *mUrlArr = @[].mutableCopy;
+            for (id img in data.Jh_imageArr) {
+                HXPhotoModel *model ;
+                if([img isKindOfClass:[UIImage class]]){
+                    model = [HXPhotoModel photoModelWithImage:img];
+                }
+                if([img isKindOfClass:[NSString class]]){
+                    model = [HXPhotoModel photoModelWithImageURL:[NSURL URLWithString:img]];
+                }
+                if([img isKindOfClass:[NSURL class]]){
+                    model = [HXPhotoModel photoModelWithImageURL:img];
+                }
+                if ([img isKindOfClass:[HXPhotoModel class]]) {
+                    model =img;
+                }
+                if(model){
+                    [mUrlArr addObject:model];
+                }
             }
-            if([img isKindOfClass:[NSString class]]){
-                model = [HXPhotoModel photoModelWithImageURL:[NSURL URLWithString:img]];
-            }
-            if([img isKindOfClass:[NSURL class]]){
-                model = [HXPhotoModel photoModelWithImageURL:img];
-            }
-            if ([img isKindOfClass:[HXPhotoModel class]]) {
-                model =img;
-            }
-            if(model){
-                [mUrlArr addObject:model];
-            }
+            [self.oneManager addLocalModels:mUrlArr];
+            [self.onePhotoView refreshView];
         }
-        [self.oneManager addLocalModels:mUrlArr];
-        [self.onePhotoView refreshView];
+    }
+    if (data.Jh_selectImageType != JhSelectImageTypeImage) {
+        if(data.Jh_initImageArr.count){
+            [self.oneManager clearSelectedList];
+            [self.oneManager addCustomAssetModel:data.Jh_initImageArr];
+            [self.onePhotoView refreshView];
+        }
     }
     
     if(data.Jh_cellBgColor){
@@ -208,9 +268,9 @@
 + (CGFloat)heightWithCellModelData:(JhFormCellModel *)data {
     NSInteger row = 1;
     if (data.Jh_noShowAddImgBtn == YES) {
-        row = data.Jh_imageArr.count <= itemLineCount ? 1 : 2;
+        row = data.Jh_imageAllList.count <= itemLineCount ? 1 : 2;
     }else{
-        row = data.Jh_maxImageCount>itemLineCount && data.Jh_imageArr.count >= itemLineCount ?2:1;
+        row = data.Jh_maxImageCount>itemLineCount && data.Jh_imageAllList.count >= itemLineCount ?2:1;
     }
     row = row > 2?2: row ; //此处限制最多2行
     CGFloat titleHeight = data.Jh_title.length ? Jh_TitleHeight+1 +Jh_EdgeMargin*2 : 0 ;

@@ -133,11 +133,8 @@
     
     __weak typeof(cell5) weakCell5 = cell5;
     cell5.Jh_CellSelectCellBlock = ^(JhFormCellModel *cellModel) {
-        
         //1.使用自己熟悉的选择弹框 ,选择完成对 Jh_info 赋值 (需要对应ID的话对Jh_info_idStr 赋值 )
         //2. 刷新 [weakSelf.Jh_formTableView reloadData];
-        
-        
     };
     
     JhFormCellModel *cell6 = JhFormCellModel_Add(@"备注:", @"默认备注", JhFormCellTypeTextViewInput, YES, YES, UIKeyboardTypeDefault);
@@ -145,13 +142,15 @@
     cell6.Jh_showLength = YES;//默认不显示
     cell6.Jh_maxInputLength = 50;
     
-    JhFormCellModel *cell7 = JhFormCellModel_AddImageCell(@"选择图片:", NO);
-    cell7.Jh_tipsInfo =@"这是一条默认颜色的提示信息(不设置不显示)";
+    JhFormCellModel *picture = JhFormCellModel_AddImageCell(@"选择图片:", NO);
+    picture.Jh_tipsInfo =@"这是一条默认颜色的提示信息(不设置不显示)";
     
-    JhFormCellModel *picture = JhFormCellModel_AddImageCell(@"选择图片2:", NO);
-    picture.Jh_maxImageCount = 2;
-    picture.Jh_tipsInfo =@"这是一条可设置颜色的提示信息";
-    picture.Jh_tipsInfoColor = [UIColor redColor];
+    JhFormCellModel *video = JhFormCellModel_AddImageCell(@"选择视频:", NO);
+    video.Jh_maxImageCount = 2;
+    video.Jh_tipsInfo =@"这是一条可设置颜色的提示信息";
+    video.Jh_tipsInfoColor = [UIColor redColor];
+    video.Jh_selectImageType = JhSelectImageTypeVideo;
+    video.Jh_videoMinimumDuration = 1;
     
     JhFormCellModel *urlPicture = JhFormCellModel_AddImageCell(@"加载网络图片:", NO);
 //    urlPicture.Jh_noShowAddImgBtn=YES;
@@ -160,11 +159,26 @@
                               @"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_05.png",
                               @"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.png"];
     
+    JhFormCellModel *urlVideo = JhFormCellModel_AddImageCell(@"加载网络视频:", NO);
+//    urlVideo.Jh_noShowAddImgBtn=YES;
+//    urlVideo.Jh_hideDeleteButton = YES;
+
+    HXCustomAssetModel *assetModel1 = [HXCustomAssetModel assetWithNetworkImageURL:[NSURL URLWithString:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539156872167&di=93cd047350dfc7a60fa9e89e30079b25&imgtype=0&src=http%3A%2F%2Fpic.9ht.com%2Fup%2F2018-5%2F15252310743961744.gif"] networkThumbURL:[NSURL URLWithString:@"https://goss.veer.com/creative/vcg/veer/1600water/veer-129342703.jpg"] selected:YES];
+    
+    HXCustomAssetModel *assetModel2 = [HXCustomAssetModel livePhotoAssetWithNetworkImageURL:[NSURL URLWithString:@"http://oss-cn-hangzhou.aliyuncs.com/tsnrhapp/5ed15ef7-3411-4f5e-839b-10664d796919.jpg"] networkVideoURL:[NSURL URLWithString:@"http://tsnrhapp.oss-cn-hangzhou.aliyuncs.com/chartle/fufeiduanpian.mp4"] selected:YES];
+    
+    HXCustomAssetModel *assetModel3 = [HXCustomAssetModel assetWithNetworkImageURL:[NSURL URLWithString:@"https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3935625616,3616422245&fm=27&gp=0.jpg"] selected:YES];
+    
+    HXCustomAssetModel *assetModel4 = [HXCustomAssetModel assetWithNetworkVideoURL:[NSURL URLWithString:@"http://oss-cn-hangzhou.aliyuncs.com/tsnrhapp/fff42798-8025-4170-a36d-3257be267f29.mp4"] videoCoverURL:[NSURL URLWithString:@"http://oss-cn-hangzhou.aliyuncs.com/tsnrhapp/d3c3bbe6-02ce-4f17-a75b-3387d52b0a4a.jpg"] videoDuration:13 selected:YES];
+    
+    urlVideo.Jh_initImageArr =@[assetModel1,assetModel2,assetModel3,assetModel4];
+    urlVideo.Jh_selectImageType = JhSelectImageTypeAll;
+    
     JhFormCellModel *picture_noTitle = JhFormCellModel_AddImageCell(@"", NO);
     picture_noTitle.Jh_maxImageCount = 2;
 
     
-    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,pwd,cell4,cell5,cell6,cell7,picture,urlPicture,picture_noTitle]];
+    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,pwd,cell4,cell5,cell6,picture,video,urlPicture,urlVideo,picture_noTitle]];
     
     JhFormSectionModel *section0 = JhSectionModel_Add(cellArr0);
     
@@ -181,8 +195,12 @@
         NSLog(@" cell4.Jh_info - %@", cell4.Jh_info);
         NSLog(@" cell5.Jh_info - %@", cell5.Jh_info);
         NSLog(@" cell6.Jh_info - %@", cell6.Jh_info);
-        NSLog(@" 选择图片类 - Jh_selectImageArr: %@ ",cell7.Jh_selectImageArr);
-        NSLog(@" 选择图片类 - urlPicture- Jh_selectImageArr: %@ ",urlPicture.Jh_selectImageArr);
+        
+        NSLog(@" 选择图片类 - picture : %@ ",picture.Jh_selectImageArr);
+        NSLog(@" 选择图片类 - video : %@ ",video.Jh_selectVideoArr);
+        NSLog(@" 选择图片类 - urlPicture : %@ ",urlPicture.Jh_selectImageArr);
+        NSLog(@" 选择图片类 - urlVideo : 视频:\n%@\n 图片:\n%@",urlVideo.Jh_selectVideoArr,urlVideo.Jh_selectImageArr);
+        NSLog(@" 选择图片类 - urlVideo - allList  : %@",urlVideo.Jh_imageAllList);
         
         // 这里只是简单描述校验逻辑，可根据自身需求封装数据校验逻辑
         [JhFormHandler Jh_checkFormNullDataWithWithDatas:weakSelf.Jh_formModelArr success:^{

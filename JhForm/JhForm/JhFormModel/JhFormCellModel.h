@@ -113,7 +113,17 @@ typedef NS_ENUM(NSInteger, JhTitleShowType) {
     
 };
 
-
+/**
+ 选择图片类型
+ */
+typedef NS_ENUM(NSInteger, JhSelectImageType) {
+    /** 图片 */
+    JhSelectImageTypeImage = 0,
+    /** 视频 */
+    JhSelectImageTypeVideo,
+    /** 图片和视频 */
+    JhSelectImageTypeAll,
+};
 
 typedef void(^JhCellRightViewBlock)(UIView *RightView);
 
@@ -294,13 +304,16 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 
 #pragma mark - SelectImageCell
 
-/** 图片附件条目图片数组，支持UIImage、NSURL、NSString(图片URLString)类型元素 */
+/**
+ 图片选择Cell  图片数组，支持UIImage、NSURL、NSString(图片URLString)类型元素
+ Jh_selectImageType == JhSelectImageTypeImage 时使用此参数
+ */
 @property (nonatomic, strong, nullable) NSArray *Jh_imageArr;
 
-/** 是否显示添加图片按钮  (默认显示NO)  */
+/** 是否不显示添加图片按钮  (默认显示)  */
 @property (nonatomic, assign) BOOL Jh_noShowAddImgBtn;
 
-/** 是否显示图片右上角的删除按钮  (默认显示  NO)  */
+/** 是否不显示图片右上角的删除按钮  (默认显示)  */
 @property (nonatomic, assign) BOOL Jh_hideDeleteButton;
 
 /** images 图片数组中类型筛选出为UIImage的数组子集，以实现图片上传筛选 */
@@ -314,6 +327,29 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 
 /** 选择图片底部提示文字颜色 */
 @property (nonatomic, strong) UIColor *Jh_tipsInfoColor;
+
+/**
+ 选择图片类型（默认仅选图片，可设置仅选视频，或都选 ）
+ 仅选图片，使用Jh_imageArr或Jh_selectImageArr 可获取图片资源
+ 仅选视频，使用Jh_selectVideoArr获取视频URL
+ 选图片和视频，使用Jh_imageArr和Jh_selectVideoArr分别获取数据，或使用Jh_imageAllList自定义获取所有资源
+ */
+@property (nonatomic, assign) JhSelectImageType Jh_selectImageType;
+
+/** 图片选择Cell   所有的图片model数组 */
+@property (nonatomic, strong) NSArray<HXPhotoModel *> *Jh_imageAllList;
+
+/** 图片选择Cell   选择的视频数组，NSURL格式（ Jh_selectImageType == JhSelectImageTypeVideo 时此参数生效） */
+@property (nonatomic, strong) NSArray *Jh_selectVideoArr;
+
+/** 图片选择Cell  混合资源数组 初始化时使用，可展示在线图片或视频资源（Jh_imageArr也可初始化网络图片，此参数优先级高于Jh_imageArr ） */
+@property (nonatomic, strong) NSArray<HXCustomAssetModel*> *Jh_initImageArr;
+
+/** 拍摄的 照片/视频 是否不保存到系统相册  默认保存*/
+@property (nonatomic, assign) BOOL Jh_imageNoSaveAblum;
+
+/** 相机视频录制最小秒数  -  默认3s  */
+@property (nonatomic, assign) NSTimeInterval Jh_videoMinimumDuration;
 
 
 #pragma mark - TextViewInputCell
