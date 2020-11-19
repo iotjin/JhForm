@@ -20,12 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 typedef void(^JhInputCompletion)(NSString *text);
 
-
 /**
  JhFormInputCell 表单输入条目，标题居左，详情居右，支持单行与多行输入
  */
 @interface JhFormInputCell : JhFormBaseCell
-
 
 /**
  条目配置参数
@@ -39,9 +37,7 @@ typedef void(^JhInputCompletion)(NSString *text);
  */
 + (CGFloat)heightWithCellModelData:(JhFormCellModel *)data;
 
-
 @end
-
 
 /**
  JhFormInputCell 对于UITableView的分类，实现JhFormInputCell初始化
@@ -50,8 +46,6 @@ typedef void(^JhInputCompletion)(NSString *text);
 
 - (JhFormInputCell *)inputCellWithId:(NSString *)cellId;
 
-
 @end
-
 
 NS_ASSUME_NONNULL_END

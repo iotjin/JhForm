@@ -41,8 +41,6 @@
 ////按钮选中背景颜色
 //#define kBtnSelectBgColor [UIColor whiteColor]
 
-
-
 @interface JhFormSelectBtnCell()
 
 @property (nonatomic, strong) UIView *CustumRightView;
@@ -157,7 +155,7 @@
         CGFloat btnWidth = btnTextWidth+kBtnTitleBlank*2 + (self.data.Jh_selectBtnCell_hiddenLeftIcon ? 0:kBtnIconW);
         
         //判断是否换行（宽度计算得知当前行不够放置时换行计算累加Y值）
-        CGFloat rightViewWidth = kWidth - self.data.Jh_titleWidth -Jh_CustumRightView_rightEdgeMargin;
+        CGFloat rightViewWidth = Jh_SCRREN_WIDTH - self.data.Jh_titleWidth -Jh_CustumRightView_rightEdgeMargin;
         if (self.data.Jh_selectBtnCell_isSingleLineDisplay) {
             btnX = kBtnStartX;
             if (i!=0) {
@@ -384,7 +382,7 @@
         //按钮文字左右加空白
         CGFloat btnWidth = btnTextWidth+kBtnTitleBlank*2 + (data.Jh_selectBtnCell_hiddenLeftIcon ? 0:kBtnIconW);
         //判断是否换行（宽度计算得知当前行不够放置时换行计算累加Y值）
-        CGFloat rightViewWidth = kWidth - data.Jh_titleWidth -Jh_CustumRightView_rightEdgeMargin;
+        CGFloat rightViewWidth = Jh_SCRREN_WIDTH - data.Jh_titleWidth -Jh_CustumRightView_rightEdgeMargin;
         if (data.Jh_selectBtnCell_isSingleLineDisplay) {
             btnX = kBtnStartX;
             if (i!=0) {

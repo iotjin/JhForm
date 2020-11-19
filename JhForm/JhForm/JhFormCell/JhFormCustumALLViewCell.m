@@ -12,28 +12,14 @@
 
 @implementation JhFormCustumALLViewCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
-}
-
-
-
 -(UIView *)CustumALLView{
     if (!_CustumALLView) {
         _CustumALLView = [[UIView alloc]init];
         _CustumALLView.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:_CustumALLView];
-        
     }
     return _CustumALLView;
 }
-
 
 -(void)setData:(JhFormCellModel *)data{
     _data= data;
@@ -57,11 +43,7 @@
     self.CustumALLView.frame =CGRectMake(Jh_Margin_left,0, Jh_SCRREN_WIDTH -Jh_Margin_left-Jh_EdgeMargin, self.data.Jh_defaultHeight);
 }
 
-
-
 @end
-
-
 
 @implementation UITableView (JhFormCustumALLViewCell)
 

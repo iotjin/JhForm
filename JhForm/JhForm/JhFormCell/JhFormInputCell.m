@@ -18,19 +18,10 @@
 
 @implementation JhFormInputCell
 
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-}
-
 -(void)setData:(JhFormCellModel *)data{
     _data= data;
     
-    if (data.Jh_titleMultiLineShow==YES) {
+    if (data.Jh_titleMultiLineShow) {
         self.titleLabel.adjustsFontSizeToFitWidth = NO;
         self.titleLabel.numberOfLines = 0;
     }
@@ -47,18 +38,14 @@
     if (data.Jh_InfoTextAlignment == JhFormCellInfoTextAlignmentRight) {
         self.rightTextView.textAlignment = NSTextAlignmentRight;
     }
-    if(data.Jh_cellBgColor){
+    if (data.Jh_cellBgColor) {
         self.backgroundColor = data.Jh_cellBgColor;
     }
-    if(data.Jh_rightViewWidth>0 && data.Jh_rightViewBlock){
+    if (data.Jh_rightViewWidth>0 && data.Jh_rightViewBlock){
         data.Jh_rightViewBlock(self.rightView);
     }
-    if (data.Jh_Cell_NoEdit == YES) {
-        self.userInteractionEnabled = NO;
-    }else{
-        self.userInteractionEnabled = YES;
-    }
-    
+
+    self.userInteractionEnabled = !data.Jh_Cell_NoEdit;
 }
 
 - (void)layoutSubviews {
@@ -68,21 +55,21 @@
         self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset+5, Jh_TitleHeight);
         CGFloat newHeight = [JhFormInputCell heightWithCellModelData:self.data];
         
-        if(_data.Jh_rightViewWidth>0){
+        if (_data.Jh_rightViewWidth > 0) {
             self.rightTextView.frame = CGRectMake(Jh_Margin_left+3, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - 2*Jh_Margin_left - _data.Jh_rightViewWidth-3, newHeight - 2*Jh_EdgeMargin);
-            self.rightView.frame =CGRectMake(CGRectGetMaxX(self.rightTextView.frame), 0, _data.Jh_rightViewWidth, self.bounds.size.height);
-        }else{
+            self.rightView.frame = CGRectMake(CGRectGetMaxX(self.rightTextView.frame), 0, _data.Jh_rightViewWidth, self.bounds.size.height);
+        } else {
             self.rightTextView.frame = CGRectMake(Jh_Margin_left+3, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - 2*Jh_Margin_left-3, newHeight - 2*Jh_EdgeMargin);
         }
-    }else{
+    } else {
         /********************************* 左侧标题换行 ********************************/
         CGFloat titleHeight = _data.Jh_titleHeight;
-        CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
+        CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
         self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, self.data.Jh_titleWidth, titleHeight);
 
-        if (_data.Jh_titleMultiLineShow==YES) {
-            if (titleHeight >(_data.Jh_defaultHeight-Jh_EdgeMargin*2)){
-                _data.Jh_defaultHeight = titleHeight+Jh_EdgeMargin*2;
+        if (_data.Jh_titleMultiLineShow) {
+            if (titleHeight > (_data.Jh_defaultHeight-Jh_EdgeMargin*2)){
+                _data.Jh_defaultHeight = titleHeight + Jh_EdgeMargin*2;
                 [self.baseTableView reloadData];
             }
         }
@@ -130,7 +117,6 @@
     }];
 }
 
-
 - (void)textViewDidEndEditing:(UITextView *)textView {
     self.rightTextView.text = [self.data.Jh_info addUnit:self.data.Jh_unit];
     if (_data.JhInputBlock) {
@@ -160,16 +146,14 @@
     return infoHeight;
 }
 
-
 @end
-
 
 @implementation UITableView (JhFormInputCell)
 
 - (JhFormInputCell *)inputCellWithId:(NSString *)cellId {
     JhFormInputCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
-        cell = [[JhFormInputCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell = [[JhFormInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.baseTableView = self;
     }

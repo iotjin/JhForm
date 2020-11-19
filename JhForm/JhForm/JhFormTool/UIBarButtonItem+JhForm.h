@@ -13,21 +13,22 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UIBarButtonItem (JhForm)
 
 /**
-  导航栏添加图片和高亮图片
- 
+ 导航栏添加图片和高亮图片
+
  @param image iamge
  @param highImage highImage
  @param target target对象
  @param action 响应方法
  @return 生成的UIBarButtonItem
  */
-+ (instancetype)itemWithImage:(NSString *)image highImage:(NSString *)highImage target:(id)target action:(SEL)action;
-
-
++ (instancetype)itemWithImage:(NSString *)image
+                    highImage:(NSString *)highImage
+                       target:(id)target
+                       action:(SEL)action;
 
 /**
-  根据文字生成UIBarButtonItem
- 
+ 根据文字生成 UIBarButtonItem
+
  @param title title
  @param titleColor titleColor
  @param target target对象
@@ -35,14 +36,13 @@ NS_ASSUME_NONNULL_BEGIN
  @return 生成的UIBarButtonItem
  */
 + (UIBarButtonItem *)itemWithTitle:(NSString *)title
-                           titleColor:(UIColor *)titleColor
-                               target:(id)target
-                               action:(SEL)action;
-
+                        titleColor:(UIColor *)titleColor
+                            target:(id)target
+                            action:(SEL)action;
 
 /**
- 通过自定义的方法，快速初始化一个UIBarButtonItem，内部是按钮
- 
+ 通过自定义的方法，快速初始化一个 UIBarButtonItem，内部是按钮
+
  @param title 显示的文字，例如'完成'、'取消'
  @param titleColor title的颜色，if nil ，The Color is [UIColor whiteColor]
  @param imageName 图片名称
@@ -52,12 +52,11 @@ NS_ASSUME_NONNULL_BEGIN
  @return UIBarButtonItem
  */
 + (UIBarButtonItem *)customItemWithTitle:(NSString *)title
-                                 titleColor:(UIColor *)titleColor
-                                  imageName:(NSString *)imageName
-                                     target:(id)target
-                                     action:(SEL)action
-                 contentHorizontalAlignment:(UIControlContentHorizontalAlignment)contentHorizontalAlignment;
-
+                              titleColor:(UIColor *)titleColor
+                               imageName:(NSString *)imageName
+                                  target:(id)target
+                                  action:(SEL)action
+              contentHorizontalAlignment:(UIControlContentHorizontalAlignment)contentHorizontalAlignment;
 
 @end
 

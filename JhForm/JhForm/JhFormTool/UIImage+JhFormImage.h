@@ -12,13 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIImage (JhFormImage)
 
-/**
- *  纯色图重绘颜色
- *
- *  @param tintColor 目标颜色
- *
- *  @return 重绘颜色后的Image
- */
+/// 纯色图重绘颜色
+/// @param tintColor 目标颜色
 - (UIImage * _Nonnull)Jh_imageWithTintColor:(UIColor * _Nonnull)tintColor;
 
 @end

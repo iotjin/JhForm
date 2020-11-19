@@ -14,28 +14,18 @@
 #define JhLog(...)
 #endif
 
-
-
-@interface FormDemo9VC ()
-
-@end
-
 @implementation FormDemo9VC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self configFormModel];
+    self.Jh_navTitle = @"单选、多选按钮";
+    [self initializeForm];
 }
 
-#pragma mark - configFormModel
--(void)configFormModel{
-    
-    self.Jh_navTitle = @"单选、多选按钮";
-
+- (void)initializeForm {
     __weak typeof(self) weakSelf = self;
-    NSMutableArray *cellModelArr = [NSMutableArray array];
-    
+
     //单选一个选项，必填，默认样式
     JhFormCellModel *cell0 = JhFormCellModel_AddSelectBtnCell(@"单选1选项", YES, YES);
     cell0.Jh_selectBtnCell_btnTitleArr = @[@"选项一"];
@@ -79,6 +69,7 @@
     JhFormCellModel *cell6 = JhFormCellModel_AddSelectBtnCell(@"多选2选项", YES, YES);
     cell6.Jh_selectBtnCell_isMultiSelect=YES;
     cell6.Jh_selectBtnCell_btnTitleArr = @[@"选项一",@"选项二"];
+    
     //多选，3个选项
     JhFormCellModel *cell7 = JhFormCellModel_AddSelectBtnCell(@"多选3选项", YES, YES);
     cell7.Jh_selectBtnCell_isMultiSelect=YES;
@@ -107,11 +98,10 @@
     cell9.Jh_selectBtnCell_btnBorderWidth = 1;
     cell9.Jh_selectBtnCell_btnBorderColor = [UIColor purpleColor];
     
-    [cellModelArr addObjectsFromArray: @[cell0,cell1,cell2,cell3,cell4,cell5,cell6,cell7,cell8,cell9]];
-    
-    JhFormSectionModel *section0 = JhSectionModel_Add(cellModelArr);
-    
+    NSArray *cells = @[cell0,cell1,cell2,cell3,cell4,cell5,cell6,cell7,cell8,cell9];
+    JhFormSectionModel *section0 = JhSectionModel_Add(cells);
     [self.Jh_formModelArr addObject:section0];
+    
     self.Jh_formSubmitBlock = ^{
         NSLog(@" 点击提交按钮 ");
         
@@ -136,18 +126,14 @@
         NSLog(@" 其它---------------------------------- ");
         JhLog(@" cell9 - selectIndexArr%@ -- selectTitleArr%@ ",cell9.Jh_selectBtnCell_selectIndexArr,cell9.Jh_selectBtnCell_selectTitleArr);
 
-
         [weakSelf SubmitRequest];
     };
-    
 };
 
+#pragma mark - Actions
 
-#pragma mark - SubmitRequest
--(void)SubmitRequest{
-    
+- (void)SubmitRequest {
+
 }
-
-
 
 @end

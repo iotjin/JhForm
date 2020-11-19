@@ -12,17 +12,6 @@
 
 @implementation JhFormSwitchBtnCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
-}
-
-
 -(UISwitch *)switchBtn {
     if (!_switchBtn) {
         _switchBtn = [[UISwitch alloc]init];
@@ -68,9 +57,7 @@
     self.titleLabel.frame = CGRectMake(titleLabel_X, (self.data.Jh_defaultHeight - Jh_TitleHeight)/2, self.data.Jh_titleWidth, Jh_TitleHeight);
 }
 
-
 @end
-
 
 @implementation UITableView (JhFormSwitchBtnCell)
 

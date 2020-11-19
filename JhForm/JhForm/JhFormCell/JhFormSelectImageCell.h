@@ -19,7 +19,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 typedef void(^JhImageSelectBlock)(NSArray *imageArr);
 
-
 @interface JhFormSelectImageCell : JhFormBaseCell
 
 @property (nonatomic, strong) JhFormCellModel *data;
@@ -29,7 +28,6 @@ typedef void(^JhImageSelectBlock)(NSArray *imageArr);
 + (CGFloat)heightWithCellModelData:(JhFormCellModel *)data;
 
 @end
-
 
 @interface UITableView (JhFormSelectImageCell)
 

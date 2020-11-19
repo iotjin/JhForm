@@ -19,16 +19,6 @@
 
 @implementation JhFormCustumBottomCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
-}
-
 -(UIView *)line1{
     if (!_line1) {
         _line1=[[UIView alloc]init];

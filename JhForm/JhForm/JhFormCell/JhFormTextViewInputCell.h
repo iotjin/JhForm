@@ -26,7 +26,6 @@ typedef void(^JhTextViewInputCompletion)(NSString *text);
 
 @end
 
-
 @interface UITableView (JhFormTextViewInputCell)
 
 - (JhFormTextViewInputCell *)textViewInputCellWithId:(NSString *)cellId;

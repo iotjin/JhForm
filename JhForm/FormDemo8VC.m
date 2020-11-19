@@ -14,35 +14,24 @@
 #define JhRandomColor JhColor(arc4random_uniform(255), arc4random_uniform(255), arc4random_uniform(255))
 
 @interface FormDemo8VC ()
-
 @property (nonatomic, strong) JhFormCellModel *cell6;
-
 @end
 
 @implementation FormDemo8VC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    [self configFormModel];
-    
-}
-
-#pragma mark - configFormModel
--(void)configFormModel{
     
     self.Jh_navTitle = @"cell文字居中";
-    
+    [self initializeForm];
+}
+
+- (void)initializeForm {
     __weak typeof(self) weakSelf = self;
-    NSMutableArray *cellModelArr = [NSMutableArray array];
     
     JhFormCellModel *cell0 = JhFormCellModel_AddInputCell(@"InputCell", @"", NO, 0);
-    cell0.Jh_placeholder =@"输入时左侧自动居中";
-    cell0.Jh_maxInputLength=500;
-    cell0.Jh_rightViewBlock = ^(UIView * _Nonnull RightView) {
-        RightView.backgroundColor =JhRandomColor;
-    };
+    cell0.Jh_placeholder = @"输入时左侧自动居中";
+    cell0.Jh_maxInputLength = 500;
     
     NSString *info = @"这是不可编辑的，这是不可编辑的，这是不可编辑的，这是不可编辑的，这是不可编辑的，这是不可编辑的，这是不可编辑的，这是不可编辑的";
     JhFormCellModel *cell1 = JhFormCellModel_AddInputCell(@"InputCell", info, NO, 0);
@@ -58,18 +47,18 @@
     NSString *title= @"统一社会\n 信用代码";
     JhFormCellModel *cell3 = JhFormCellModel_AddInputCell(title, @"", YES, 0);
     cell3.Jh_placeholder = @"请输入18位统一社会信用代码";
-    cell3.Jh_titleMultiLineShow =YES;
+    cell3.Jh_titleMultiLineShow = YES;
     cell3.Jh_maxInputLength = 18;
     
     NSString *numStr = @"123123131313213213213213213131321321321321321332131321321313213213213132";
     JhFormCellModel *cell4 = JhFormCellModel_AddInputCell(@"左侧统一社会信用代码", numStr, NO, 0);
     cell4.Jh_placeholder = @"可换行";
-    cell4.Jh_titleMultiLineShow =YES;
-    cell4.Jh_maxInputLength=500;
+    cell4.Jh_titleMultiLineShow = YES;
+    cell4.Jh_maxInputLength = 500;
     
     JhFormCellModel *cell5 = JhFormCellModel_AddSelectCell(@"这是一个选择样式的cell", @"", NO);
     cell5.Jh_placeholder = @"请选择性别";
-    cell5.Jh_titleMultiLineShow =YES;
+    cell5.Jh_titleMultiLineShow = YES;
     
     _cell6 = JhFormCellModel_AddSelectCell(@"SelectCell", @"选项一选项一选项一选项一选项一选项一选项一选项一选项一选项一选项一", NO);
     _cell6.Jh_titleMultiLineShow =YES;
@@ -79,8 +68,7 @@
                          @"选项三选项三选项三选项三"]];
     };
     
-    
-    //这里是单个设置cell文字居中，如项目表单样式都需要居中效果，可修改JhFormConst文件的Jh_CellTextVerticalStyle设置居中或居上
+    // 这里是单个设置cell文字居中，如项目表单样式都需要居中效果，可修改JhFormConst文件的Jh_CellTextVerticalStyle设置居中或居上
     cell0.Jh_cellTextVerticalCenter=YES;
     cell1.Jh_cellTextVerticalCenter=YES;
     cell2.Jh_cellTextVerticalCenter=YES;
@@ -89,26 +77,25 @@
     cell5.Jh_cellTextVerticalCenter=YES;
     _cell6.Jh_cellTextVerticalCenter=YES;
     
-    [cellModelArr addObjectsFromArray: @[cell0,cell1,cell2,cell3,cell4,cell5,_cell6]];
-    
-    JhFormSectionModel *section0 = JhSectionModel_Add(cellModelArr);
-    
+    NSArray *cells = @[cell0,cell1,cell2,cell3,cell4,cell5,_cell6];
+    JhFormSectionModel *section0 = JhSectionModel_Add(cells);
     [self.Jh_formModelArr addObject:section0];
 };
 
-
 #pragma mark - SubmitRequest
--(void)SubmitRequest{
+
+-(void)SubmitRequest {
     
 }
 
-- (void)show:(NSArray *)titleArr{
+// 使用 HXPhotoPicker 框架中的 HXPhotoBottomSelectView 实现弹窗效果
+- (void)show:(NSArray *)titleArr {
     if (!titleArr.count) {
         [self.view hx_showImageHUDText:@"暂无选项"];
         return;
     }
     
-    NSMutableArray *models = [NSMutableArray new];
+    NSMutableArray *models = [NSMutableArray arrayWithCapacity:titleArr.count];
     for (NSString *title in titleArr) {
         HXPhotoBottomViewModel *model = [HXPhotoBottomViewModel new];
         model.title = title;

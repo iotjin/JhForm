@@ -11,23 +11,11 @@
 #import "JhFormConst.h"
 #import "NSString+JhForm.h"
 
-
 @interface JhFormPwdCell ()<UITextFieldDelegate>
-
 
 @end
 
 @implementation JhFormPwdCell
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
-}
 
 -(UITextField *)Jh_pwdTextField{
     if (!_Jh_pwdTextField) {

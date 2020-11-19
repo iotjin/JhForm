@@ -11,8 +11,7 @@
 #import "JhFormConst.h"
 
 #define itemLineCount  4 //图片一行几个
-#define itemH  (kWidth - 15*2-3*3)/itemLineCount  //图片的高度
-
+#define itemH  (Jh_SCRREN_WIDTH - 15*2-3*3)/itemLineCount  //图片的高度
 
 @interface JhFormSelectImageCell()<HXPhotoViewDelegate>
 
@@ -29,16 +28,6 @@
 @end
 
 @implementation JhFormSelectImageCell
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
-}
 
 -(UILabel *)tipsLabel{
     if (!_tipsLabel) {
@@ -91,7 +80,7 @@
 
 -(HXPhotoView *)onePhotoView{
     if (!_onePhotoView) {
-        _onePhotoView = [[HXPhotoView alloc] initWithFrame:CGRectMake(15, 5, kWidth - 15*2-3*3, itemH) manager:self.oneManager];
+        _onePhotoView = [[HXPhotoView alloc] initWithFrame:CGRectMake(15, 5, Jh_SCRREN_WIDTH - 15*2-3*3, itemH) manager:self.oneManager];
         _onePhotoView.outerCamera = YES;
         _onePhotoView.lineCount =itemLineCount;
         _onePhotoView.spacing =3;

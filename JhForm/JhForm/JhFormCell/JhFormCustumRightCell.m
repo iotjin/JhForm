@@ -11,18 +11,7 @@
 #import "JhFormCellModel.h"
 #import "JhFormConst.h"
 
-
 @implementation JhFormCustumRightCell
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
-}
 
 -(UIView *)CustumRightView{
     if (!_CustumRightView) {
@@ -77,7 +66,6 @@
         self.CustumRightView.frame =CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, 0, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 2*Jh_EdgeMargin) - Jh_CustumRightView_rightEdgeMargin, self.bounds.size.height);
     }
 }
-
 
 @end
 

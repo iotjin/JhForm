@@ -879,7 +879,7 @@
 				E9FD210F2238CF20002C67E6 /* JhForm.bundle */,
 				E9FD20FC2238CF20002C67E6 /* JhFormCell */,
 				E9FD20F72238CF20002C67E6 /* JhFormModel */,
-				E9FD21112238CF20002C67E6 /* JhFormToolClass */,
+				E9FD21112238CF20002C67E6 /* JhFormTool */,
 			);
 			path = JhForm;
 			sourceTree = "<group>";
@@ -926,7 +926,7 @@
 			path = JhFormCell;
 			sourceTree = "<group>";
 		};
-		E9FD21112238CF20002C67E6 /* JhFormToolClass */ = {
+		E9FD21112238CF20002C67E6 /* JhFormTool */ = {
 			isa = PBXGroup;
 			children = (
 				E9FD21192238CF20002C67E6 /* JhFormConst.h */,
@@ -944,7 +944,7 @@
 				ED77CF38254AB79E003795F3 /* UIImage+JhFormImage.h */,
 				ED77CF39254AB79E003795F3 /* UIImage+JhFormImage.m */,
 			);
-			path = JhFormToolClass;
+			path = JhFormTool;
 			sourceTree = "<group>";
 		};
 		E9FD21372238D2A3002C67E6 /* Masonry */ = {
@@ -1547,7 +1547,7 @@
 		E93D3F7221E58DD9003DC702 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = Jh;
 				TargetAttributes = {
 					E93D3F7921E58DD9003DC702 = {
@@ -1929,6 +1929,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1988,6 +1989,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -2020,9 +2022,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = A28X2T458G;
+				DEVELOPMENT_TEAM = A8F7U6DN75;
 				INFOPLIST_FILE = JhForm/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2039,9 +2041,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = A28X2T458G;
+				DEVELOPMENT_TEAM = A8F7U6DN75;
 				INFOPLIST_FILE = JhForm/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

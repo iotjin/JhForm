@@ -20,31 +20,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self configFormModel];
+
+    self.Jh_navTitle = @"设置样式";
+    [self initializeForm];
 }
 
-#pragma mark - configFormModel
--(void)configFormModel{
+- (void)initializeForm {
     
     UIColor * bgColor = JhGrayColor(240);
     
     if (@available(iOS 13.0, *)) {
         UIColor *dyColor = [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull trainCollection) {
-            if ([trainCollection userInterfaceStyle] == UIUserInterfaceStyleLight) {
-                return JhGrayColor(240);
-            } else {
-                return JhGrayColor(17);
-            }
+            BOOL isDarkMode = ([trainCollection userInterfaceStyle] == UIUserInterfaceStyleLight);
+            return (isDarkMode ? JhGrayColor(240) : JhGrayColor(17));
         }];
         bgColor = dyColor;
     }
-    
-    self.Jh_navTitle = @"设置样式";
-    
-    __weak typeof(self) weakSelf = self;
-    
-    NSMutableArray *cellModelArr = [NSMutableArray array];
     
     JhFormCellModel *cell0 = JhFormCellModel_AddRightArrowCell(@"支付", @"");
     cell0.Jh_leftImgName = @"ic_wallet";
@@ -55,7 +46,6 @@
     JhFormCellModel *cell1 = JhFormCellModel_AddRightArrowCell(@"收藏", @"");
     cell1.Jh_leftImgName = @"ic_collections";
     cell1.Jh_lineLeftMargin = 50;
-    
     
     JhFormCellModel *cell_line = JhFormCellModel_AddCustumALLViewCell(10);
     cell_line.Jh_cellBgColor = bgColor;
@@ -95,7 +85,7 @@
     
     JhFormCellModel *cell7 = JhFormCellModel_AddRightArrowCell(@"自定义2", @"");
     cell7.Jh_leftImgName = @"ic_settings";
-    cell7.Jh_rightViewWidth = kWidth - cell7.Jh_titleWidth;
+    cell7.Jh_rightViewWidth = Jh_SCRREN_WIDTH - cell7.Jh_titleWidth;
     cell7.Jh_rightViewBlock = ^(UIView * _Nonnull RightView) {
         UIView *bgView = [[UIView alloc]init];
         bgView.backgroundColor = JhRandomColor;
@@ -108,7 +98,6 @@
         }];
     };
     
-    
     CGFloat cellH = 55;
     cell0.Jh_defaultHeight=cellH;
     cell1.Jh_defaultHeight=cellH;
@@ -119,14 +108,11 @@
     cell6.Jh_defaultHeight=cellH;
     cell7.Jh_defaultHeight=cellH;
     
-    [cellModelArr addObjectsFromArray: @[cell_line,cell0,cell_line,cell1,cell2,cell3,cell4,cell_line,cell5,cell6,cell7]];
-    
-    JhFormSectionModel *section0 = JhSectionModel_Add(cellModelArr);
-    
+    NSArray *cells = @[cell_line, cell0, cell_line, cell1, cell2, cell3, cell4, cell_line, cell5, cell6, cell7];
+    JhFormSectionModel *section0 = JhSectionModel_Add(cells);
     [self.Jh_formModelArr addObject:section0];
+    
     self.Jh_hiddenDefaultFooterView =YES;
-    
-    
 }
 
 @end

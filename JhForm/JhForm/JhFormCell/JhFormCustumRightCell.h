@@ -19,16 +19,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) JhFormCellModel *data;
 
-
 @end
-
-
 
 @interface UITableView (JhFormCustumRightCell)
 
 - (JhFormCustumRightCell *)CustumRightCellWithId:(NSString *)cellId;
 
 @end
-
 
 NS_ASSUME_NONNULL_END

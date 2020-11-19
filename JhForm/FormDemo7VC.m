@@ -11,30 +11,16 @@
 #define JhColor(r, g, b)     [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 #define JhRandomColor JhColor(arc4random_uniform(255), arc4random_uniform(255), arc4random_uniform(255))
 
-@interface FormDemo7VC ()
-
-@end
-
 @implementation FormDemo7VC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self configFormModel];
-    
-    
+    self.Jh_navTitle = @"设置title字体颜色";
+    [self initializeForm];
 }
 
-#pragma mark - configFormModel
--(void)configFormModel{
-    
-    
-    self.Jh_navTitle = @"设置title字体颜色";
-    
-    __weak typeof(self) weakSelf = self;
-    
-    NSMutableArray *cellModelArr = [NSMutableArray array];
-    
+- (void)initializeForm {
     JhFormCellModel *cell0 = JhFormCellModel_AddInputCell(@"设置标题颜色0", @"", YES, 0);
     cell0.Jh_titleTextColor = JhRandomColor;
     
@@ -55,17 +41,11 @@
     JhFormCellModel *cell4 = JhFormCellModel_AddSelectCell(@"隐藏箭头", @"", YES);
     cell4.Jh_hiddenArrow =YES;
     
-    
-    [cellModelArr addObjectsFromArray: @[cell0,cell1,cell2,cell3,cell4]];
-    
-    JhFormSectionModel *section0 = JhSectionModel_Add(cellModelArr);
-    
+    NSArray *cells = @[cell0,cell1,cell2,cell3,cell4];
+    JhFormSectionModel *section0 = JhSectionModel_Add(cells);
     [self.Jh_formModelArr addObject:section0];
     
-    
     self.Jh_useLightTheme = YES;
-    
-    
 }
 
 @end

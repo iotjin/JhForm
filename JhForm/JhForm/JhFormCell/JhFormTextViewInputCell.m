@@ -13,7 +13,6 @@
 #import "NSString+JhForm.h"
 #import "UITextView+TextLimit.h"
 
-
 @interface JhFormTextViewInputCell()<UITextViewDelegate>
 
 @property (nonatomic, strong) UIView *line1;
@@ -21,16 +20,6 @@
 @end
 
 @implementation JhFormTextViewInputCell
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
-}
 
 -(UIView *)line1 {
     if (!_line1) {
@@ -42,7 +31,6 @@
     }
     return _line1;
 }
-
 
 -(void)setData:(JhFormCellModel *)data{
     _data= data;
@@ -137,8 +125,6 @@
         }
     }
 }
-
-
 
 @end
 

@@ -10,96 +10,78 @@
 #import "Masonry.h"
 
 @interface FormDemo1VC ()
-
 @property (strong, nonatomic)  UITextField *passWordTextField;
-
 @end
 
 @implementation FormDemo1VC
 
+#pragma mark - View life cycle
 
--(void)dealloc{
-    NSLog(@" FormDemo1VC - dealloc ");
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self setupNavigation];
+    [self initializeForm];
 }
 
+#pragma mark - Custom Accessors
 
--(UITextField *)passWordTextField{
+- (UITextField *)passWordTextField {
     if (!_passWordTextField) {
-        _passWordTextField=[[UITextField alloc]init];
+        _passWordTextField = [[UITextField alloc] init];
         _passWordTextField.textAlignment = NSTextAlignmentLeft;
-        _passWordTextField.placeholder =@"请输入密码";
-        _passWordTextField.secureTextEntry=YES;
+        _passWordTextField.placeholder = @"请输入密码";
+        _passWordTextField.secureTextEntry = YES;
         _passWordTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
         _passWordTextField.font = [UIFont systemFontOfSize:15];
+        
         if (@available(iOS 13.0, *)) {
-            UIColor *dyColor = [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull trainCollection) {
-                if ([trainCollection userInterfaceStyle] == UIUserInterfaceStyleLight) {
-                    return Jh_PlaceholderColor;
-                } else {
-                    return Jh_PlaceholderColor;
-                }
+            UIColor *dynamicColor = [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull trainCollection) {
+                BOOL isDarkMode = ([trainCollection userInterfaceStyle] == UIUserInterfaceStyleLight);
+                return isDarkMode ? Jh_PlaceholderColor : Jh_PlaceholderColor;
             }];
-            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-            dict[NSForegroundColorAttributeName] = dyColor;
-            NSAttributedString *attribute = [[NSAttributedString alloc] initWithString:self.passWordTextField.placeholder attributes:dict];
-            [self.passWordTextField setAttributedPlaceholder:attribute];
+            NSDictionary *attributes = @{ NSForegroundColorAttributeName: dynamicColor };
+            NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:_passWordTextField.placeholder attributes:attributes];
+            _passWordTextField.attributedPlaceholder = attributedString;
         }
     }
     return _passWordTextField;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    
-    
-    [self initModel];
-    
-    [self setNav];
-    
-}
+#pragma mark - Private
 
-#pragma mark - setNav
--(void)setNav{
-    
+- (void)setupNavigation {
     self.Jh_navTitle = @"表单Demo1 - 默认";
-    self.Jh_navRightTitle =@"文字"; //也可以设置图片
-    self.JhClickNavRightItemBlock = ^{
-        NSLog(@" 点击跳转 ");
+    self.Jh_navRightTitle = @"文字"; // 也可以设置图片
+    self.Jh_clickNavRightItemBlock = ^{
+        NSLog(@"点击导航栏按钮");
     };
-    
 }
 
-
-
-#pragma mark - initModel
--(void)initModel{
-    
+- (void)initializeForm {
     
     __weak typeof(self) weakSelf = self;
     
-    NSMutableArray *cellArr0 = [NSMutableArray array];
-    
-    //居右
+    // 添加一个左标题，右文字(居右)、不可编辑的 cell
     JhFormCellModel *cell0 = JhFormCellModel_AddRightTextCell(@"左标题:", @"右信息(不可编辑,居右)");
+    
+    /// 添加一个左标题，右文字(居右)、带右箭头的可选择 cell
     JhFormCellModel *cell1 = JhFormCellModel_AddRightArrowCell(@"左标题:", @"右信息(居右,带箭头)");
     
-    
+    /// 添加一个左标题，右侧为 Switch 开关的 cell
     JhFormCellModel *cell2 = JhFormCellModel_AddSwitchBtnCell(@"左标题:", YES);
     cell2.Jh_switchTintColor = [UIColor orangeColor];
     
-    //可以不通过block获取开关状态
-    __weak typeof(cell2) weakCell2 = cell2;
+    // 可以不通过 block 获取开关状态
     cell2.Jh_switchBtnBlock = ^(BOOL switchBtn_on, UISwitch *switchBtn) {
-        NSLog(@"switchBtn_on %@", switchBtn_on ? @"YES" : @"NO");
-//        weakCell2.Jh_switchOnTintColor = JhRandomColor;
+        NSLog(@"Switch Button State: %@", switchBtn_on ? @"YES" : @"NO");
         [weakSelf.Jh_formTableView reloadData];
     };
     
-    //默认文本居左可编辑
+    // 默认文本居左可编辑
 //    JhFormCellModel *cell3 = JhFormCellModel_Add(@"姓名:", @"", JhFormCellTypeInput, YES, YES, UIKeyboardTypeDefault);
     
-    //默认文本居左可编辑
+    // MARK: 姓名输入框
     JhFormCellModel *cell3 = JhFormCellModel_AddInputCell(@"姓名:", @"", YES, UIKeyboardTypeDefault);
     cell3.Jh_placeholder = @"请输入姓名(必选)";
     cell3.JhInputBlock = ^(NSString *text, BOOL isInputCompletion) {
@@ -108,7 +90,10 @@
         NSLog(@"是否输入完成%@", boolValue ? @"YES" : @"NO");
     };
     
+    // MARK: 密码输入框
+    // 快捷添加右侧自定义视图 cell
     JhFormCellModel *pwd = JhFormCellModel_AddCustumRightCell(@"密码:");
+    // 在右侧自定义视图中添加一个密码输入框
     pwd.Jh_custumRightViewBlock = ^(UIView *RightView) {
         [RightView addSubview:weakSelf.passWordTextField];
         [weakSelf.passWordTextField mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -117,34 +102,37 @@
             make.left.mas_equalTo(0);
         }];
     };
+    
 //   NSString *redStr =@"*密码:";
 //    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:redStr attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20], NSForegroundColorAttributeName:Jh_titleColor}];
 //    [attributedTitle addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
 //    pwd.Jh_attributedTitle = attributedTitle;
     
-    
+    // MARK: 输入手机号码
     JhFormCellModel *cell4 = JhFormCellModel_AddInputCell(@"手机号:", @"XXX(可编辑)", YES, UIKeyboardTypePhonePad);
     cell4.Jh_placeholder = @"请输入手机号(最长11位,必选)";
     cell4.Jh_maxInputLength = 11;
     
-    
+    // MARK: 选择性别
     JhFormCellModel *cell5 = JhFormCellModel_AddSelectCell(@"性别:", @"文本居左(可选择)", YES);
     cell5.Jh_placeholder = @"请选择性别";
     
-    __weak typeof(cell5) weakCell5 = cell5;
     cell5.Jh_CellSelectCellBlock = ^(JhFormCellModel *cellModel) {
-        //1.使用自己熟悉的选择弹框 ,选择完成对 Jh_info 赋值 (需要对应ID的话对Jh_info_idStr 赋值 )
+        //1.使用自己熟悉的选择弹框 ,选择完成后将值赋到 Jh_info 属性 (需要对应 ID 则对 Jh_info_idStr 赋值 )
         //2. 刷新 [weakSelf.Jh_formTableView reloadData];
     };
     
+    // MARK: 多行输入文本框
     JhFormCellModel *cell6 = JhFormCellModel_Add(@"备注:", @"默认备注", JhFormCellTypeTextViewInput, YES, YES, UIKeyboardTypeDefault);
     cell6.Jh_placeholder = @"请输入备注(最多50字)";
-    cell6.Jh_showLength = YES;//默认不显示
+    cell6.Jh_showLength = YES; // 字数统计，默认不显示
     cell6.Jh_maxInputLength = 50;
     
+    // MARK: 选择图片
     JhFormCellModel *picture = JhFormCellModel_AddImageCell(@"选择图片:", NO);
     picture.Jh_tipsInfo =@"这是一条默认颜色的提示信息(不设置不显示)";
     
+    // MARK: 选择视频
     JhFormCellModel *video = JhFormCellModel_AddImageCell(@"选择视频:", NO);
     video.Jh_maxImageCount = 2;
     video.Jh_tipsInfo =@"这是一条可设置颜色的提示信息";
@@ -152,13 +140,16 @@
     video.Jh_selectImageType = JhSelectImageTypeVideo;
     video.Jh_videoMinimumDuration = 1;
     
+    // MARK: 加载网络图片
     JhFormCellModel *urlPicture = JhFormCellModel_AddImageCell(@"加载网络图片:", NO);
 //    urlPicture.Jh_noShowAddImgBtn=YES;
 //    urlPicture.Jh_hideDeleteButton = YES;
+    
     urlPicture.Jh_imageArr =@[@"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_00.png",
                               @"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_05.png",
                               @"https://gitee.com/iotjh/Picture/raw/master/FormDemo/form_demo_06.png"];
     
+    // MARK: 加载网络视频
     JhFormCellModel *urlVideo = JhFormCellModel_AddImageCell(@"加载网络视频:", NO);
 //    urlVideo.Jh_noShowAddImgBtn=YES;
 //    urlVideo.Jh_hideDeleteButton = YES;
@@ -174,16 +165,15 @@
     urlVideo.Jh_initImageArr =@[assetModel1,assetModel2,assetModel3,assetModel4];
     urlVideo.Jh_selectImageType = JhSelectImageTypeAll;
     
+    // MARK: 添加图片，没有提示标题
     JhFormCellModel *picture_noTitle = JhFormCellModel_AddImageCell(@"", NO);
     picture_noTitle.Jh_maxImageCount = 2;
 
-    
-    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,pwd,cell4,cell5,cell6,picture,video,urlPicture,urlVideo,picture_noTitle]];
-    
-    JhFormSectionModel *section0 = JhSectionModel_Add(cellArr0);
-    
+    NSArray *cells = @[cell0,cell1,cell2,cell3,pwd,cell4,cell5,cell6,picture,video,urlPicture,urlVideo,picture_noTitle];
+    JhFormSectionModel *section0 = JhSectionModel_Add(cells);
     [self.Jh_formModelArr addObject:section0];
     
+    // MARK: 表单提交按钮
     self.Jh_submitStr = @"提 交";
     self.Jh_formSubmitBlock = ^{
         NSLog(@" 点击提交按钮 ");
@@ -204,25 +194,20 @@
         
         // 这里只是简单描述校验逻辑，可根据自身需求封装数据校验逻辑
         [JhFormHandler Jh_checkFormNullDataWithWithDatas:weakSelf.Jh_formModelArr success:^{
-            
+            // 校验成功处理...
             [weakSelf SubmitRequest];
-            
         } failure:^(NSString *error) {
+            // 校验失败处理...
             NSLog(@"error====%@",error);
-//            [JhProgressHUD showText:error];
         }];
-        
     };
-    
 }
 
-#pragma mark - 提交请求
+#pragma mark - Actions
+
+// 提交按钮点击事件
 -(void)SubmitRequest{
     
-    
-    
 }
-
-
 
 @end

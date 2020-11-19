@@ -10,23 +10,14 @@
 #import "JhFormConst.h"
 #import "SelwynExpandableTextView.h"
 
-@interface JhFormBaseCell()<UITextViewDelegate>
+@interface JhFormBaseCell() <UITextViewDelegate>
 @end
+
 @implementation JhFormBaseCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
-}
-
--(UIImageView *)leftImgView{
+- (UIImageView *)leftImgView {
     if (!_leftImgView) {
-        _leftImgView = [[UIImageView alloc]init];
+        _leftImgView = [[UIImageView alloc] init];
         [self.contentView addSubview:_leftImgView];
     }
     return _leftImgView;
@@ -34,21 +25,22 @@
 
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc]init];
+        _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:Jh_TitleFont];
         _titleLabel.adjustsFontSizeToFitWidth = YES;
-        [self.contentView addSubview:_titleLabel];
+        _titleLabel.numberOfLines = 0;
         
         if (@available(iOS 13.0, *)) {
             _titleLabel.textColor = UIColor.labelColor;
         }
+        [self.contentView addSubview:_titleLabel];
     }
     return _titleLabel;
 }
 
 - (SelwynExpandableTextView *)rightTextView {
     if (!_rightTextView) {
-        _rightTextView = [[SelwynExpandableTextView alloc]init];
+        _rightTextView = [[SelwynExpandableTextView alloc] init];
         _rightTextView.delegate = self;
         _rightTextView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0);
         _rightTextView.textContainer.lineFragmentPadding = 0;
@@ -65,19 +57,17 @@
         
         if (@available(iOS 13.0, *)) {
             _rightTextView.placeholderTextColor = UIColor.placeholderTextColor;
-            if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-                _rightTextView.textColor = UIColor.labelColor;
-            }else {
-                _rightTextView.textColor = Jh_rightTextViewTextColor;
-            }
+            
+            BOOL isDarkMode = (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark);
+            _rightTextView.textColor = (isDarkMode ? UIColor.labelColor : Jh_rightTextViewTextColor);
         }
     }
     return _rightTextView;
 }
 
--(UIView *)rightView{
+- (UIView *)rightView {
     if (!_rightView) {
-        _rightView = [[UIView alloc]init];
+        _rightView = [[UIView alloc] init];
         _rightView.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:_rightView];
     }
@@ -97,14 +87,11 @@
     if (@available(iOS 13.0, *)) {
         _titleLabel.textColor = UIColor.labelColor;
         _rightTextView.placeholderTextColor = UIColor.placeholderTextColor;
-        if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-            _rightTextView.textColor = UIColor.labelColor;
-        }else {
-            _rightTextView.textColor = Jh_rightTextViewTextColor;
-        }
+        
+        BOOL isDarkMode = (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark);
+        _rightTextView.textColor = (isDarkMode ? UIColor.labelColor : Jh_rightTextViewTextColor);
         [self.baseTableView reloadData];
     }
 }
-
 
 @end

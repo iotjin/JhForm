@@ -35,8 +35,8 @@
 -(UIView *)btnBgView{
     if (!_btnBgView) {
 
-        UIView *bgView = [[UIView alloc]init];
-        bgView.backgroundColor =JhRandomColor;
+        UIView *bgView = [[UIView alloc] init];
+        bgView.backgroundColor = JhRandomColor;
 
 //        JhPositionButton *btn1 = [[JhPositionButton alloc]init];
 //        [btn1 setTitle:@"选项一" forState:UIControlStateNormal];
@@ -75,6 +75,7 @@
     }
     return _btnBgView;
 }
+
 - (void)ClickSelectBtn:(UIButton *)button {
     button.selected = !button.selected;
 }
@@ -83,20 +84,21 @@
     [super viewDidLoad];
     
     self.Jh_navTitle = @"表单Demo2 - 自定义cell";
-    
-    [self initModel];
-    
+    [self initializeForm];
+    [self configureIOS13Theme];
 }
 
 #pragma mark - initModel
--(void)initModel{
+
+- (void)initializeForm {
+    
     __weak typeof(self) weakSelf = self;
     
     //第一组
     NSMutableArray *cellArr0 = [NSMutableArray array];
     
-    //右侧自定义View
-    UIView *rightView = [[UIView alloc]init];
+    // 右侧自定义 View
+    UIView *rightView = [[UIView alloc] init];
     rightView.backgroundColor = JhRandomColor;
 
     JhFormCellModel *cell0 = JhFormCellModel_AddCustumRightCell(@"右侧自定义:");
@@ -111,8 +113,7 @@
         }];
     };
     
-    
-    //底部自定义View
+    // 底部自定义View
     UIView *bottomView = [[UIView alloc]init];
     bottomView.backgroundColor = JhRandomColor;
     
@@ -132,13 +133,13 @@
     
     JhFormSectionModel *section0 = JhSectionModel_Add(cellArr0);
     
-    JhBaseHeaderView *headerV = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, kWidth, 44)];
+    JhBaseHeaderView *headerV = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, Jh_SCRREN_WIDTH, 44)];
     headerV.Jh_leftTitle = @"第一组头部";
     section0.Jh_headerView = headerV;
     section0.Jh_headerHeight= headerV.bounds.size.height;
     self.headerV = headerV;
     
-    JhBaseHeaderView *footerV = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, kWidth, 44)];
+    JhBaseHeaderView *footerV = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, Jh_SCRREN_WIDTH, 44)];
     footerV.Jh_leftTitle = @"第一组尾部";
     section0.Jh_footerView = footerV;
     section0.Jh_footerHeight= footerV.bounds.size.height;
@@ -175,49 +176,42 @@
     Section1_cell2.Jh_defaultHeight = 60;
     Section1_cell2.JhCellClickCenterTextBlock = ^{
           NSLog(@" 点击了退出登录 ");
-//        [JhProgressHUD showText:@"点击了退出登录"];
     };
     
     [cellArr1 addObjectsFromArray: @[Section1_cell0,Section1_cell1,Section1_cell2]];
     JhFormSectionModel *section1 = JhSectionModel_Add(cellArr1);
     
-    JhBaseHeaderView *headerV2 = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, kWidth, 44)];
+    JhBaseHeaderView *headerV2 = [[JhBaseHeaderView alloc] initWithFrame:CGRectMake(0, 0, Jh_SCRREN_WIDTH, 44)];
     headerV2.Jh_leftTitle = @"第二组头部";
     headerV2.Jh_rightBtnTitle = @"更多";
     headerV2.JhHeaderClickRightBtnBlock = ^{
         NSLog(@" 点击更多按钮 ");
-//         [JhProgressHUD showText:@"点击更多按钮"];
     };
     section1.Jh_headerView = headerV2;
     section1.Jh_headerHeight= headerV2.bounds.size.height;
     self.headerV2 = headerV2;
     
-        
     [self.Jh_formModelArr addObject:section0];
     [self.Jh_formModelArr addObject:section1];
     
-    //提交按钮相关设置（当个页面），全局配置在JhFormConst文件中修改
-    self.Jh_submitBtnBgColor = [UIColor redColor]; //全局配置背景色要去修改BaseThemeColor
+    // 提交按钮相关设置（当个页面），全局配置在 JhFormConst 文件中修改
+    self.Jh_submitBtnBgColor = [UIColor redColor]; // 全局配置背景色要去修改 BaseThemeColor
     self.Jh_submitBtnTBSpace = 30;
     self.Jh_submitBtnLRSpace = 100;
     self.Jh_submitBtnHeight = 50;
     self.Jh_submitBtnTextColor = [UIColor yellowColor];
     self.Jh_submitBtnCornerRadius = 25.0;
     self.Jh_submitBtnTextFontSize = 22;
-    //粗体
-    self.Jh_submitBtn.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold"size:30];
-    //边框
+    // 粗体
+    self.Jh_submitBtn.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:30];
+    // 边框
     self.Jh_submitBtn.layer.borderWidth = 2;
     self.Jh_submitBtn.layer.borderColor = [[UIColor grayColor] CGColor];
     self.Jh_submitStr = @"提 交";
     
     self.Jh_formSubmitBlock = ^{
         NSLog(@" 点击提交按钮 ");
-//         [JhProgressHUD showText:@"点击提交按钮"];
     };
-    
-    [self configureIOS13Theme];
-    
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -229,7 +223,7 @@
     }
 }
 
--(void)configureIOS13Theme{
+- (void)configureIOS13Theme {
     if (@available(iOS 13.0, *)) {
         if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
             self.headerV.backgroundColor = UIColor.systemBackgroundColor;
@@ -245,12 +239,10 @@
 }
 
 #pragma mark - 提交请求
+
+// 提交按钮点击事件
 -(void)SubmitRequest{
     
-    
-    
 }
-
-
 
 @end

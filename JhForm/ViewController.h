@@ -6,11 +6,8 @@
 //  Copyright © 2019 Jh. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "JhFormTableViewVC.h"
 
 @interface ViewController : JhFormTableViewVC
 
-
 @end
-

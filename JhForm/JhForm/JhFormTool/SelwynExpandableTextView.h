@@ -8,9 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-/**
- SelwynExpandableTextView 可高度自适应的UITextView
- */
+/// 可高度自适应的 UITextView
 @interface SelwynExpandableTextView : UITextView
 
 @property (nonatomic, assign) NSUInteger currentLength;

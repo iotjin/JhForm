@@ -23,11 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
 @interface UITableView (JhFormSelectCell)
 
 - (JhFormSelectCell *)selectCellWithId:(NSString *)cellId;
-
 
 @end
 

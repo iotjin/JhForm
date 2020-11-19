@@ -38,12 +38,13 @@ static NSString *const JhUnitMillion = @"万元";
 /** 按钮单选或多选的cell  */
 + (instancetype)Jh_selectBtnWithTitle:(NSString *)title editable:(BOOL)editable required:(BOOL)required;
 
-/********************************* 以下方法快速创建本文居右的cell ********************************/
-/** 右侧text 不可编辑的cell */
+#pragma mark - 快速创建本文居右的 cell
+
+/// 添加一个左标题，右文字(居右)、不可编辑的 cell
 + (instancetype)Jh_TextCellWithTitle:(NSString *)title info:(NSString *)info;
-/** 右侧箭头 可选择的cell */
+/// 添加一个左标题，右文字(居右)、带右箭头的可选择 cell
 + (instancetype)Jh_ArrowCellWithTitle:(NSString *)title info:(NSString *)info;
-/** 右侧SwitchBtn 的cell */
+/// 添加一个左标题，右侧为 Switch 开关的 cell
 + (instancetype)Jh_SwitchBtnCellWithTitle:(NSString *)title switchBtn_on:(BOOL)Jh_switchBtn_on;
 
 @end
@@ -101,27 +102,24 @@ inline JhFormCellModel *JhFormCellModel_AddSelectBtnCell(NSString * _Nonnull tit
     return [JhFormCellModel Jh_selectBtnWithTitle:title editable:editable required:required];
 }
 
+#pragma mark - 快速创建本文居右的 cell
 
-/********************************* 以下方法快速创建本文居右的cell ********************************/
-
-#pragma mark - 添加一个左标题,右文字(居右)的不可编辑的cell
+/// 添加一个左标题，右文字(居右)、不可编辑的 cell
 inline JhFormCellModel *JhFormCellModel_AddRightTextCell(NSString * _Nonnull title, NSString * _Nullable info) {
     return [JhFormCellModel Jh_TextCellWithTitle:title info:info];
 }
-#pragma mark -  添加一个左标题,右文字(居右)的可选择的cell
+
+/// 添加一个左标题，右文字(居右)、带右箭头的可选择 cell
 inline JhFormCellModel *JhFormCellModel_AddRightArrowCell(NSString * _Nonnull title, NSString * _Nullable info) {
     return [JhFormCellModel Jh_ArrowCellWithTitle:title info:info];
 }
-#pragma mark - 快捷添加一个左标题,右SwitchBtn 的cell
+
+/// 添加一个左标题，右侧为 Switch 开关的 cell
 inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull title, BOOL Jh_switchBtn_on) {
     return [JhFormCellModel Jh_SwitchBtnCellWithTitle:title switchBtn_on:Jh_switchBtn_on];
 }
-/********************************* 以下方法快速创建本文居右的cell ********************************/
-
-
 
 @implementation JhFormCellModel
-
 
 + (instancetype)Jh_cellWithTitle:(NSString *)title info:(NSString *)info cellType:(JhFormCellType)cellType editable:(BOOL)editable required:(BOOL)required keyboardType:(UIKeyboardType)keyboardType {
     return [[self alloc]initWithTitle:title info:info cellType:cellType editable:editable required:required keyboardType:keyboardType images:nil showPlaceholder:YES];
@@ -165,27 +163,27 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
 
 /********************************* 本文居右的cell ********************************/
 
-/** 右侧text 不可编辑的cell */
+/// 添加一个左标题，右文字(居右)、不可编辑的 cell
 + (instancetype)Jh_TextCellWithTitle:(NSString *)title info:(NSString *)info {
-    JhFormCellModel *model = [[self alloc]initWithTitle:title info:info cellType:JhFormCellTypeInput editable:NO required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
+    JhFormCellModel *model = [[self alloc] initWithTitle:title info:info cellType:JhFormCellTypeInput editable:NO required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
     model.Jh_InfoTextAlignment = JhFormCellInfoTextAlignmentRight;
     return model;
 }
-/** 右侧箭头 可选择的cell */
+
+/// 添加一个左标题，右文字(居右)、带右箭头的可选择 cell
 + (instancetype)Jh_ArrowCellWithTitle:(NSString *)title info:(NSString *)info {
-    JhFormCellModel *model = [[self alloc]initWithTitle:title info:info cellType:JhFormCellTypeSelect editable:YES required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
+    JhFormCellModel *model = [[self alloc] initWithTitle:title info:info cellType:JhFormCellTypeSelect editable:YES required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
     model.Jh_InfoTextAlignment = JhFormCellInfoTextAlignmentRight;
     return model;
 }
-/** 右侧SwitchBtn 的cell */
+
+/// 添加一个左标题，右侧为 Switch 开关的 cell
 + (instancetype)Jh_SwitchBtnCellWithTitle:(NSString *)title switchBtn_on:(BOOL)Jh_switchBtn_on {
-    JhFormCellModel *model = [[self alloc]initWithTitle:title info:nil cellType:JhFormCellTypeRightSwitchBtn editable:YES required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
+    JhFormCellModel *model = [[self alloc] initWithTitle:title info:nil cellType:JhFormCellTypeRightSwitchBtn editable:YES required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
     model.Jh_InfoTextAlignment = JhFormCellInfoTextAlignmentRight;
     model.Jh_switchBtn_on = Jh_switchBtn_on;
     return model;
 }
-
-
 
 - (instancetype)initWithTitle:(NSString *)title info:(NSString *)info cellType:(JhFormCellType)cellType editable:(BOOL)editable required:(BOOL)required keyboardType:(UIKeyboardType)keyboardType images:(NSArray *)images showPlaceholder:(BOOL)showPlaceholder {
     self = [super init];
@@ -212,13 +210,11 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
 
 #pragma mark -- 根据表单条目类型设置条目缺省高度
 - (void)jh_setDefaultHeight:(JhFormCellType)cellType {
-    if(cellType ==JhFormCellTypeTextViewInput){
+    if(cellType == JhFormCellTypeTextViewInput) {
         self.Jh_defaultHeight = Jh_DefaultTextViewCellHeight;
-    }
-    else if(cellType ==JhFormCellTypeCustumBottom){
+    } else if (cellType == JhFormCellTypeCustumBottom) {
         self.Jh_defaultHeight = Jh_DefaultCustumBottomViewCellHeight;
-    }
-    else {
+    } else {
         self.Jh_defaultHeight = Jh_DefaultCellHeight;
     }
 }
@@ -325,26 +321,23 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
  设置表单条目附带单位
  */
 -(void)setJh_cellUnitType:(JhFormCellUnitType)Jh_cellUnitType {
-    NSString *tempUnit = self.Jh_unit ?: @"";
+    NSString *tempUnit = self.Jh_unit? : @"";
     switch (Jh_cellUnitType) {
-        case JhFormCellUnitTypeNone:
-        {
+        case JhFormCellUnitTypeNone: {
             tempUnit = @"";
-        }
             break;
-        case JhFormCellUnitTypeYuan:
-        {
+        }
+        case JhFormCellUnitTypeYuan: {
             tempUnit = JhUnitYuan;
-        }
             break;
-        case JhFormCellUnitTypeYear:
-        {
+        }
+        case JhFormCellUnitTypeYear: {
             tempUnit = JhUnitYear;
-        }
             break;
-        case JhFormCellUnitTypeMillion:
-        {
+        }
+        case JhFormCellUnitTypeMillion: {
             tempUnit = JhUnitMillion;
+            break;
         }
         default:
             break;
@@ -469,6 +462,5 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
     _Jh_titleTextColor = Jh_titleTextColor;
     [self jh_setAttributedTitleWithRequired:self.Jh_required title:self.Jh_title cellModelType:self.Jh_cellType];
 }
-
 
 @end

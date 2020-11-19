@@ -23,8 +23,7 @@
                 self.text = [toBeString substringToIndex:maxLength];
             }
         }
-    }
-    else{
+    } else {
         if (toBeString.length > maxLength) {
             self.text = [toBeString substringToIndex:maxLength];
         }

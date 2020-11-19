@@ -18,7 +18,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
 @interface UITableView (JhFormCenterTextCell)
 
 - (JhFormCenterTextCell *)CenterTextWithId:(NSString *)cellId;

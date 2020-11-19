@@ -10,42 +10,31 @@
 #import "ViewController.h"
 #import "IQKeyboardManager.h"
 
-@interface AppDelegate ()
-
-@end
-
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 
-    ViewController *mainView = [[ViewController alloc]init];
-
-    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:mainView];
+    ViewController *mainViewController = [[ViewController alloc] init];
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:mainViewController];
     
-    [self.window setRootViewController:nav];
-
+    self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
-    
-    
     [self configIQKeyboardManager];
-    
     return YES;
 }
 
 #pragma mark - 键盘处理
+
 - (void)configIQKeyboardManager{
     [IQKeyboardManager sharedManager].enable = YES;
-    //工具条
+    // 是否在键盘上方显示工具条，默认值为 YES
     [IQKeyboardManager sharedManager].enableAutoToolbar = YES;
-    //点击背景收回键盘
+    // 点击触摸到 UITextField/View 以外的地方时退出键盘。默认值为 NO。
     [IQKeyboardManager sharedManager].shouldResignOnTouchOutside = YES;
     [IQKeyboardManager sharedManager].toolbarDoneBarButtonItemText = @"完成";
-    [IQKeyboardManager sharedManager].toolbarTintColor=[UIColor lightGrayColor];
+    [IQKeyboardManager sharedManager].toolbarTintColor = [UIColor lightGrayColor];
     [IQKeyboardManager sharedManager].keyboardDistanceFromTextField = 5.0f;
 }
 
