@@ -26,14 +26,9 @@
     if(data.Jh_cellBgColor){
         self.backgroundColor = data.Jh_cellBgColor;
     }
-    if (data.Jh_Cell_NoEdit == YES) {
-        self.userInteractionEnabled = NO;
-    }else{
-        self.userInteractionEnabled = YES;
-    }
-    
-    if (self.data.Jh_hiddenLine == YES) {
-        self.separatorInset=UIEdgeInsetsMake(0,0,0,MAXFLOAT);
+    self.userInteractionEnabled = !data.Jh_Cell_NoEdit;
+    if (self.data.Jh_hiddenLine) {
+        self.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
     }
 }
 

@@ -56,17 +56,6 @@
 
 @implementation JhFormSelectBtnCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    
-    // Configure the view for the selected state
-}
-
 - (NSMutableArray *)selectTitleArray{
     if (!_selectTitleArray) {
         _selectTitleArray = [NSMutableArray arrayWithCapacity:0];
@@ -307,11 +296,7 @@
     if(data.Jh_cellBgColor){
         self.backgroundColor = data.Jh_cellBgColor;
     }
-    if (data.Jh_Cell_NoEdit == YES || self.data.Jh_editable == NO) {
-        self.userInteractionEnabled = NO;
-    }else{
-        self.userInteractionEnabled = YES;
-    }
+    self.userInteractionEnabled = !(data.Jh_Cell_NoEdit || !self.data.Jh_editable);
 }
 
 - (void)layoutSubviews {
@@ -404,7 +389,6 @@
     }
     return MAX(data.Jh_defaultHeight, height);
 }
-
 
 @end
 

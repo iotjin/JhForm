@@ -39,9 +39,6 @@ typedef void(^JhInputCompletion)(NSString *text);
 
 @end
 
-/**
- JhFormInputCell 对于UITableView的分类，实现JhFormInputCell初始化
- */
 @interface UITableView (JhFormInputCell)
 
 - (JhFormInputCell *)inputCellWithId:(NSString *)cellId;

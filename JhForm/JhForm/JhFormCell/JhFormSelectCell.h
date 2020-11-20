@@ -12,9 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class JhFormCellModel;
 
-/**
- JhFormSelectCell 表单选择条目
- */
+/// JhFormSelectCell 表单选择条目
 @interface JhFormSelectCell : JhFormBaseCell
 
 @property (nonatomic, strong) JhFormCellModel *data;

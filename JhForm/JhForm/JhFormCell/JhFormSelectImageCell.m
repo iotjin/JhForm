@@ -29,7 +29,7 @@
 
 @implementation JhFormSelectImageCell
 
--(UILabel *)tipsLabel{
+- (UILabel *)tipsLabel {
     if (!_tipsLabel) {
         _tipsLabel =[[UILabel alloc]init];
         _tipsLabel.font = [UIFont systemFontOfSize:13];
@@ -40,17 +40,17 @@
     return _tipsLabel;
 }
 
--(UIView *)line1{
+- (UIView *)line1 {
     if (!_line1) {
-        _line1=[[UIView alloc]init];
-        _line1.backgroundColor=BaselineColor;
+        _line1=[[UIView alloc] init];
+        _line1.backgroundColor = BaselineColor;
         [self.contentView addSubview:_line1];
         [self configureIOS13Theme];
     }
     return _line1;
 }
 
--(UIView *)BottomImageBgView{
+- (UIView *)BottomImageBgView {
     if (!_BottomImageBgView) {
         _BottomImageBgView = [[UIView alloc]init];
         _BottomImageBgView.backgroundColor = [UIColor clearColor];
@@ -78,7 +78,7 @@
     return _oneManager;
 }
 
--(HXPhotoView *)onePhotoView{
+- (HXPhotoView *)onePhotoView {
     if (!_onePhotoView) {
         _onePhotoView = [[HXPhotoView alloc] initWithFrame:CGRectMake(15, 5, Jh_SCRREN_WIDTH - 15*2-3*3, itemH) manager:self.oneManager];
         _onePhotoView.outerCamera = YES;
@@ -95,9 +95,8 @@
     [self layoutSubviews];
 }
 
-#pragma mark -  根据photoView来判断是哪一个选择器
-- (void)photoView:(HXPhotoView *)photoView changeComplete:(NSArray<HXPhotoModel *> *)allList photos:(NSArray<HXPhotoModel *> *)photos videos:(NSArray<HXPhotoModel *> *)videos original:(BOOL)isOriginal {    
-//    NSSLog(@" 选择图片cell - allList %@",allList);
+#pragma mark -  根据 photoView 来判断是哪一个选择器
+- (void)photoView:(HXPhotoView *)photoView changeComplete:(NSArray<HXPhotoModel *> *)allList photos:(NSArray<HXPhotoModel *> *)photos videos:(NSArray<HXPhotoModel *> *)videos original:(BOOL)isOriginal {
     self.data.Jh_imageAllList = allList;
     if (self.data.Jh_selectImageType == JhSelectImageTypeImage) {
         [self getOriginalImage:photos original:isOriginal];
@@ -110,9 +109,9 @@
     [self Jh_reloadData];
 }
 
-//获取原图
+// 获取原图
 -(void)getOriginalImage:(NSArray<HXPhotoModel *> *)photos original:(BOOL)isOriginal{
-    //获取原图
+    // 获取原图
     [photos hx_requestImageWithOriginal:isOriginal completion:^(NSArray<UIImage *> * _Nullable imageArray, NSArray<HXPhotoModel *> * _Nullable errorArray) {
         self.selectImgArr = imageArray;
 //      NSSLog(@" 选择图片cell - selectImgArr %@",self.selectImgArr);
@@ -120,7 +119,7 @@
     }];
 }
 
-//获取视频
+// 获取视频
 -(void)getVideo:(NSArray<HXPhotoModel *> *)videos{
     NSMutableArray *mArr = [NSMutableArray array];
     //导出视频地址
@@ -148,21 +147,16 @@
     }];
 }
 
-
 -(void)setData:(JhFormCellModel *)data{
     _data= data;
     
     self.titleLabel.attributedText = data.Jh_attributedTitle;
-    if(data.Jh_maxImageCount){
+    if (data.Jh_maxImageCount) {
         self.oneManager.configuration.maxNum = data.Jh_maxImageCount;
         self.oneManager.configuration.photoMaxNum = data.Jh_maxImageCount;
     }
     
-    if (data.Jh_selectImageType == JhSelectImageTypeAll) {
-        self.oneManager.configuration.selectTogether = YES;
-    }else{
-        self.oneManager.configuration.selectTogether = NO;
-    }
+    self.oneManager.configuration.selectTogether = (data.Jh_selectImageType == JhSelectImageTypeAll);
     
     if (data.Jh_selectImageType) {
         self.oneManager.type = data.Jh_selectImageType;
@@ -175,7 +169,7 @@
         self.oneManager.configuration.videoMinimumDuration = data.Jh_videoMinimumDuration;
     }
     
-    if (data.Jh_noShowAddImgBtn==YES) {
+    if (data.Jh_noShowAddImgBtn) {
         self.onePhotoView.showAddCell = NO;
         self.onePhotoView.editEnabled = NO;
     }
@@ -225,14 +219,8 @@
     }
     self.onePhotoView.hideDeleteButton = data.Jh_hideDeleteButton;
     
-    if (data.Jh_Cell_NoEdit == YES) {
-        self.userInteractionEnabled = NO;
-    }else{
-        self.userInteractionEnabled = YES;
-    }
+    self.userInteractionEnabled = !data.Jh_Cell_NoEdit;
 }
-
-
 
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -243,7 +231,7 @@
         self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, Jh_SCRREN_WIDTH - 2*Jh_EdgeMargin, Jh_TitleHeight);
         self.line1.frame= CGRectMake(Jh_LineEdgeMargin,CGRectGetMaxY(self.titleLabel.frame)+Jh_EdgeMargin, Jh_SCRREN_WIDTH - Jh_LineEdgeMargin, 1);
         self.BottomImageBgView.frame = CGRectMake(0, CGRectGetMaxY(_line1.frame)+10, Jh_SCRREN_WIDTH, CGRectGetHeight(self.onePhotoView.frame)+10);
-    }else{
+    } else {
         self.BottomImageBgView.frame = CGRectMake(0,10, Jh_SCRREN_WIDTH, CGRectGetHeight(self.onePhotoView.frame)+10);
     }
     
@@ -253,7 +241,7 @@
     
 }
 
-//高度自适应
+// 高度自适应
 + (CGFloat)heightWithCellModelData:(JhFormCellModel *)data {
     NSInteger row = 1;
     if (data.Jh_noShowAddImgBtn == YES) {
@@ -279,17 +267,12 @@
 
 -(void)configureIOS13Theme {
     if (@available(iOS 13.0, *)) {
-        if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-            self.line1.backgroundColor = [UIColor separatorColor];
-        }else {
-            self.line1.backgroundColor = BaselineColor;
-        }
+        BOOL isDarkMode = (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark);
+        self.line1.backgroundColor = (isDarkMode ? UIColor.separatorColor : BaselineColor);
     }
 }
 
-
 @end
-
 
 @implementation UITableView (JhFormCustumBottomCell)
 

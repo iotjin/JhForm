@@ -12,7 +12,7 @@
 
 @implementation JhFormSwitchBtnCell
 
--(UISwitch *)switchBtn {
+- (UISwitch *)switchBtn {
     if (!_switchBtn) {
         _switchBtn = [[UISwitch alloc]init];
         _switchBtn.backgroundColor = [UIColor clearColor];
@@ -22,11 +22,11 @@
     return _switchBtn;
 }
 
--(void)switchBtnChange:(id)sender {
+- (void)switchBtnChange:(id)sender {
     UISwitch *mySwitch = (UISwitch *)sender;
     self.data.Jh_switchBtn_on = mySwitch.on;
     if (self.data.Jh_switchBtnBlock) {
-        self.data.Jh_switchBtnBlock(mySwitch.on,mySwitch);
+        self.data.Jh_switchBtnBlock(mySwitch.on, mySwitch);
     }
 }
 
@@ -40,14 +40,10 @@
     self.switchBtn.onTintColor = data.Jh_switchOnTintColor;
     self.switchBtn.tintColor = data.Jh_switchTintColor;
     self.switchBtn.enabled = data.Jh_editable;
-    if(data.Jh_cellBgColor){
+    if (data.Jh_cellBgColor) {
         self.backgroundColor = data.Jh_cellBgColor;
     }
-    if (data.Jh_Cell_NoEdit == YES) {
-        self.userInteractionEnabled = NO;
-    }else{
-        self.userInteractionEnabled = YES;
-    }
+    self.userInteractionEnabled = !data.Jh_Cell_NoEdit;
 }
 
 - (void)layoutSubviews {

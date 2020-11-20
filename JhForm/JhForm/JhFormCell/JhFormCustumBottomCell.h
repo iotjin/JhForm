@@ -14,13 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JhFormCustumBottomCell : JhFormBaseCell
 
-/** 自定义视图 */
+/// 自定义视图
 @property (nonatomic, strong) UIView *CustumBottomView;
-
 @property (nonatomic, strong) JhFormCellModel *data;
 
 @end
-
 
 @interface UITableView (JhFormCustumBottomCell)
 

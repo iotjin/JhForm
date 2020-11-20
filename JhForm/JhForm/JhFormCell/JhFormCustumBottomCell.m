@@ -10,7 +10,6 @@
 #import "JhFormCellModel.h"
 #import "JhFormConst.h"
 
-
 @interface JhFormCustumBottomCell()
 
 @property (nonatomic, strong) UIView *line1;
@@ -19,7 +18,7 @@
 
 @implementation JhFormCustumBottomCell
 
--(UIView *)line1{
+- (UIView *)line1 {
     if (!_line1) {
         _line1=[[UIView alloc]init];
         _line1.backgroundColor=BaselineColor;
@@ -30,7 +29,7 @@
     return _line1;
 }
 
--(UIView *)CustumBottomView{
+- (UIView *)CustumBottomView {
     if (!_CustumBottomView) {
         _CustumBottomView = [[UIView alloc]init];
         _CustumBottomView.backgroundColor = [UIColor clearColor];
@@ -39,17 +38,13 @@
     return _CustumBottomView;
 }
 
--(void)setData:(JhFormCellModel *)data{
+- (void)setData:(JhFormCellModel *)data{
     _data= data;
     self.titleLabel.attributedText = data.Jh_attributedTitle;
-    if(data.Jh_cellBgColor){
+    if (data.Jh_cellBgColor) {
         self.backgroundColor = data.Jh_cellBgColor;
     }
-    if (data.Jh_Cell_NoEdit == YES) {
-        self.userInteractionEnabled = NO;
-    }else{
-        self.userInteractionEnabled = YES;
-    }
+    self.userInteractionEnabled = !data.Jh_Cell_NoEdit;
 }
 
 
@@ -76,16 +71,12 @@
 
 -(void)configureIOS13Theme{
     if (@available(iOS 13.0, *)) {
-        if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-            self.line1.backgroundColor = [UIColor separatorColor];
-        }else {
-            self.line1.backgroundColor = BaselineColor;
-        }
+        BOOL isDarkMode = (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark);
+        self.line1.backgroundColor = (isDarkMode ? UIColor.separatorColor : BaselineColor);
     }
 }
 
 @end
-
 
 @implementation UITableView (JhFormCustumBottomCell)
 
@@ -98,7 +89,6 @@
     }
     return cell;
 }
-
 
 @end
 

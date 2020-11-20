@@ -25,22 +25,18 @@
 -(void)setData:(JhFormCellModel *)data{
     _data= data;
     
-    if (data.Jh_titleMultiLineShow==YES) {
+    if (data.Jh_titleMultiLineShow) {
         self.titleLabel.adjustsFontSizeToFitWidth = NO;
         self.titleLabel.numberOfLines = 0;
     }
     self.titleLabel.attributedText = data.Jh_attributedTitle;
-    if(data.Jh_custumRightCellShowArrow == YES){
+    if (data.Jh_custumRightCellShowArrow) {
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
-    if(data.Jh_cellBgColor){
+    if (data.Jh_cellBgColor) {
         self.backgroundColor = data.Jh_cellBgColor;
     }
-    if (data.Jh_Cell_NoEdit == YES) {
-        self.userInteractionEnabled = NO;
-    }else{
-        self.userInteractionEnabled = YES;
-    }
+    self.userInteractionEnabled = !data.Jh_Cell_NoEdit;
 }
 
 - (void)layoutSubviews {

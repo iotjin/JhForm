@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) JhFormCellModel *data;
 
 /** 密码样式cell 输入完成 */
-@property (nonatomic,   copy) void(^Jh_pwdInputCompletion )(NSString *text);
+@property (nonatomic, copy) void(^Jh_pwdInputCompletion )(NSString *text);
 
 @end
 

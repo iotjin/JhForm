@@ -16,12 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 表单 section 包含的条目数组
 @property (nonatomic, strong, nonnull) NSArray *Jh_sectionModelArr;
-
 /// section header 高度
 @property (nonatomic, assign) CGFloat Jh_headerHeight;
 /// section footer 高度
 @property (nonatomic, assign) CGFloat Jh_footerHeight;
-
 /// section header 视图
 @property (nonatomic, strong, nullable) UIView *Jh_headerView;
 /// section footer 视图

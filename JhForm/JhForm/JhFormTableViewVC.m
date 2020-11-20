@@ -59,14 +59,14 @@
 
 - (UITableView *)Jh_formTableView {
     if (!_Jh_formTableView) {
-        _Jh_formTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavHeight, Jh_SCRREN_WIDTH, Jh_SCREEN_HEIGHT-kNavHeight-kBottomSafeHeight)];
+        _Jh_formTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, Jh_NAV_HEIGHT, Jh_SCRREN_WIDTH, Jh_SCREEN_HEIGHT-Jh_NAV_HEIGHT-Jh_BOTTOM_SAFE_HEIGHT)];
         _Jh_formTableView.backgroundColor = BaseBgWhiteColor;
         _Jh_formTableView.showsVerticalScrollIndicator = NO;
         _Jh_formTableView.showsHorizontalScrollIndicator = NO;
         _Jh_formTableView.dataSource = self;
         _Jh_formTableView.delegate = self;
+        _Jh_formTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, CGFLOAT_MIN)];
         _Jh_formTableView.tableFooterView = self.footerView;
-        _Jh_formTableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, CGFLOAT_MIN)];
         
         UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];
         // 加上这句不会影响你 tableview 上的 action (button,cell selected...)
@@ -78,7 +78,7 @@
 
 - (UIView *)footerView {
     if (!_footerView) {
-        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, Jh_SCRREN_WIDTH, Jh_SubmitBtn_Height + Jh_SubmitBtn_TBSpace*2)];
+        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Jh_SCRREN_WIDTH, Jh_SubmitBtn_Height + Jh_SubmitBtn_TBSpace*2)];
         _footerView.backgroundColor = [UIColor clearColor];
         
         // 提交按钮
@@ -112,9 +112,11 @@
 - (void)setJh_navRightTitle:(NSString *)Jh_navRightTitle {
     _Jh_navRightTitle = Jh_navRightTitle;
     if (Jh_navRightTitle.length) {
-        UIColor *color = [UIColor blackColor];
+        UIColor *color;
         if (@available(iOS 13.0, *)) {
-            color = [UIColor labelColor];
+            color = UIColor.labelColor;
+        } else {
+            color = UIColor.blackColor;
         }
         UIBarButtonItem *rightBarButton = [UIBarButtonItem itemWithTitle:Jh_navRightTitle titleColor:color target:self action:@selector(ClickRightItem)];
         self.navigationItem.rightBarButtonItem = rightBarButton;
@@ -213,32 +215,31 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSParameterAssert([self.Jh_formModelArr[section] isKindOfClass:[JhFormSectionModel class]]);
+    NSParameterAssert([self.Jh_formModelArr[section] isKindOfClass:JhFormSectionModel.class]);
     JhFormSectionModel *sectionModel = self.Jh_formModelArr[section];
     return sectionModel.Jh_sectionModelArr.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    __weak typeof(self) weakSelf = self;
-    
     JhFormSectionModel *sectionModel = self.Jh_formModelArr[indexPath.section];
-    NSParameterAssert([sectionModel.Jh_sectionModelArr[indexPath.row] isKindOfClass:[JhFormCellModel class]]);
+    NSParameterAssert([sectionModel.Jh_sectionModelArr[indexPath.row] isKindOfClass:JhFormCellModel.class]);
     JhFormCellModel *cellModel = sectionModel.Jh_sectionModelArr[indexPath.row];
     
-    CGFloat LeftTitleWidth = self.Jh_leftTitleWidth ? self.Jh_leftTitleWidth :Jh_TitleWidth;
+    CGFloat LeftTitleWidth = (self.Jh_leftTitleWidth ? : Jh_TitleWidth);
     
-    if(self.Jh_leftTitleHiddenRedStar ==YES){
+    if (self.Jh_leftTitleHiddenRedStar) {
         cellModel.Jh_titleHiddenRedStar = YES;
     }
     
-    if(self.Jh_useLightTheme ==YES){
-        if(@available(iOS 13.0,*)){
+    if (self.Jh_useLightTheme) {
+        if(@available(iOS 13.0,*)) {
             self.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
         }
     }
     
     // 表单条目类别判断
+    __weak typeof(self) weakSelf = self;
     if (cellModel.Jh_cellType == JhFormCellTypeTextViewInput) {
         NSString *cell_id = [NSString stringWithFormat:@"textViewInput_cell_id_%ld%ld", (long)[indexPath section], (long)[indexPath row]];
         JhFormTextViewInputCell *cell = [tableView textViewInputCellWithId:cell_id];
@@ -365,24 +366,24 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     JhFormSectionModel *sectionModel = self.Jh_formModelArr[section];
-    return sectionModel.Jh_headerHeight > 0 ? sectionModel.Jh_headerHeight:0.01;
+    return (sectionModel.Jh_headerHeight > 0 ? sectionModel.Jh_headerHeight : 0.01);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     JhFormSectionModel *sectionModel = self.Jh_formModelArr[section];
-    return sectionModel.Jh_footerHeight > 0 ? sectionModel.Jh_footerHeight:0.01;
+    return (sectionModel.Jh_footerHeight > 0 ? sectionModel.Jh_footerHeight : 0.01);
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     JhFormSectionModel *sectionModel = self.Jh_formModelArr[section];
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, sectionModel.Jh_headerHeight)];
-    return sectionModel.Jh_headerView ? sectionModel.Jh_headerView:headerView;
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, sectionModel.Jh_headerHeight)];
+    return (sectionModel.Jh_headerView ? sectionModel.Jh_headerView : headerView);
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     JhFormSectionModel *sectionModel = self.Jh_formModelArr[section];
-    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, sectionModel.Jh_footerHeight)];
-    return sectionModel.Jh_footerView ? sectionModel.Jh_footerView:footerView;
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, sectionModel.Jh_footerHeight)];
+    return (sectionModel.Jh_footerView ? sectionModel.Jh_footerView : footerView);
 }
 
 #pragma mark -- 表单条目响应block处理

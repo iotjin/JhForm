@@ -17,7 +17,7 @@
 
 @implementation JhFormPwdCell
 
--(UITextField *)Jh_pwdTextField{
+- (UITextField *)Jh_pwdTextField {
     if (!_Jh_pwdTextField) {
         UITextField *textField = [[UITextField alloc]init];
         textField.textColor = Jh_rightTextViewTextColor;
@@ -34,7 +34,7 @@
     return _Jh_pwdTextField;
 }
 
--(void)setData:(JhFormCellModel *)data{
+- (void)setData:(JhFormCellModel *)data {
     _data= data;
     if (data.Jh_titleMultiLineShow==YES) {
         self.titleLabel.adjustsFontSizeToFitWidth = NO;
@@ -53,17 +53,13 @@
     if (data.Jh_InfoTextAlignment == JhFormCellInfoTextAlignmentRight) {
         self.Jh_pwdTextField.textAlignment = NSTextAlignmentRight;
     }
-    if(data.Jh_cellBgColor){
+    if (data.Jh_cellBgColor) {
         self.backgroundColor = data.Jh_cellBgColor;
     }
-    if(data.Jh_rightViewWidth>0 && data.Jh_rightViewBlock){
+    if (data.Jh_rightViewWidth>0 && data.Jh_rightViewBlock) {
         data.Jh_rightViewBlock(self.rightView);
     }
-    if (data.Jh_Cell_NoEdit == YES) {
-        self.userInteractionEnabled = NO;
-    }else{
-        self.userInteractionEnabled = YES;
-    }
+    self.userInteractionEnabled = !data.Jh_Cell_NoEdit;
 }
 
 - (void)layoutSubviews {
@@ -100,8 +96,7 @@
     
 }
 
-
--(void)textFieldDidBeginEditing:(UITextField *)textField {
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
     self.Jh_pwdTextField.text = [self.data.Jh_info addUnit:self.data.Jh_unit];
 }
 
@@ -131,7 +126,7 @@
     }];
 }
 
--(void)textFieldDidEndEditing:(UITextField *)textField{
+- (void)textFieldDidEndEditing:(UITextField *)textField {
     self.Jh_pwdTextField.text = [self.data.Jh_info addUnit:self.data.Jh_unit];
     if (self.data.JhInputBlock) {
         self.data.JhInputBlock(self.Jh_pwdTextField.text ,YES);
@@ -145,23 +140,16 @@
             [self configureIOS13Theme];
         }
     }
-    
 }
 
 -(void)configureIOS13Theme{
     if (@available(iOS 13.0, *)) {
-        if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-            self.Jh_pwdTextField.textColor = UIColor.labelColor;
-        }else {
-            self.Jh_pwdTextField.textColor = Jh_rightTextViewTextColor;
-        }
+        BOOL isDarkMode = (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark);
+        self.Jh_pwdTextField.textColor = (isDarkMode ? UIColor.labelColor : Jh_rightTextViewTextColor);
     }
 }
 
-
-
 @end
-
 
 @implementation UITableView (JhFormPwdCell)
 

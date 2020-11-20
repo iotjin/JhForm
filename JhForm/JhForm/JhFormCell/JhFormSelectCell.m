@@ -37,7 +37,7 @@
     if(data.Jh_cellBgColor){
         self.backgroundColor = data.Jh_cellBgColor;
     }
-    if (data.Jh_hiddenArrow ==YES) {
+    if (data.Jh_hiddenArrow) {
         self.accessoryType = UITableViewCellAccessoryNone;
     }else{
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -47,14 +47,10 @@
         data.Jh_rightViewBlock(self.rightView);
     }
     
-    if (data.Jh_Cell_NoEdit == YES) {
-        self.userInteractionEnabled = NO;
-    }else{
-        self.userInteractionEnabled = YES;
-    }
+    self.userInteractionEnabled = !data.Jh_Cell_NoEdit;
     
-    if (self.data.Jh_hiddenLine == YES) {
-        self.separatorInset=UIEdgeInsetsMake(0,0,0,MAXFLOAT);
+    if (self.data.Jh_hiddenLine) {
+        self.separatorInset = UIEdgeInsetsMake(0,0,0,MAXFLOAT);
     }
 }
 
@@ -120,8 +116,6 @@
     }
 }
 
-
-
 + (CGFloat)heightWithCellModelData:(JhFormCellModel *)data {
     CGFloat width = data.Jh_title.length ? (data.Jh_titleWidth + 2*Jh_EdgeMargin + 40) : (2*Jh_Margin_left+3);
     CGFloat infoHeight = [data.Jh_info sizeWithFontSize:Jh_InfoFont maxSize:CGSizeMake(Jh_SCRREN_WIDTH - width, MAXFLOAT)].height;
@@ -133,7 +127,6 @@
     CGFloat infoHeight = [data.Jh_info sizeWithFontSize:Jh_InfoFont maxSize:CGSizeMake(Jh_SCRREN_WIDTH - width, MAXFLOAT)].height;
     return infoHeight;
 }
-
 
 @end
 

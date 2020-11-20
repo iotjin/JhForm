@@ -71,9 +71,9 @@ typedef void(^JhCellSelectCellBlock)(JhFormCellModel *cellModel);
 typedef void(^JhCellCustumRightViewBlock)(UIView *RightView);
 typedef void(^JhCellCustumBottomViewBlock)(UIView *BottomView);
 typedef void(^JhCellCustumALLViewBlock)(UIView *AllView);
-typedef void (^JhCellSwitchBtnBlock)(BOOL switchBtn_on,UISwitch *switchBtn);
+typedef void (^JhCellSwitchBtnBlock)(BOOL switchBtn_on, UISwitch *switchBtn);
 /** 获取输入内容 和 输入状态 */
-typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
+typedef void(^JhInputBlock)(NSString *text, BOOL isInputCompletion);
 
 /// 对表单条目提供动态配置
 @interface JhFormCellModel : NSObject
@@ -140,7 +140,7 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 /**
  标题换行展示 (默认值为 NO，单行展示)
  
- 可生效的cell：JhFormInputCell,JhFormPwdCell,JhFormSelectCell,JhFormCustumRightCell
+ 可生效的 cell：JhFormInputCell,JhFormPwdCell,JhFormSelectCell,JhFormCustumRightCell
  */
 @property (nonatomic, assign) BOOL Jh_titleMultiLineShow;
 
@@ -253,7 +253,7 @@ typedef void(^JhInputBlock)(NSString *text ,BOOL isInputCompletion);
 /** JhFormCellTypeImage 类别中表示最大选择图片数，默认8 */
 @property (nonatomic, assign) NSUInteger Jh_maxImageCount;
 
-/** 选择图片底部的提示文字，默认不设置,显示图片 cell 左下角 */
+/** 选择图片底部的提示文字，默认不设置, 显示图片 cell 左下角 */
 @property (nonatomic, strong) NSString *Jh_tipsInfo;
 
 /** 选择图片底部提示文字的颜色 */
@@ -386,10 +386,10 @@ FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_Add(NSString * _Nonnull title
 FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_Info(NSString * _Nonnull title, NSString * _Nullable info, JhFormCellType cellType);
 
 /** 快捷添加一个输入类型的 cell，默认样式：居左，可编辑*/
-FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddInputCell(NSString * _Nonnull title,NSString * _Nullable info, BOOL required, UIKeyboardType keyboardType);
+FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddInputCell(NSString * _Nonnull title, NSString * _Nullable info, BOOL required, UIKeyboardType keyboardType);
 
 /** 快捷添加一个选择类型的 cell，默认样式：居左 */
-FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddSelectCell(NSString * _Nonnull title,NSString * _Nullable info, BOOL required);
+FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddSelectCell(NSString * _Nonnull title, NSString * _Nullable info, BOOL required);
 
 /** 快捷添加一个选择图片的 cell */
 FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddImageCell(NSString * _Nonnull title, BOOL required);
@@ -407,16 +407,16 @@ FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddCustumBottomCell(NSString 
 FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddCenterTextCell(NSString * _Nonnull title);
 
 /** 快捷添加一个密码输入类型的cell，默认样式：居左，可编辑 */
-FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddPwdInputCell(NSString * _Nonnull title,NSString * _Nullable info, BOOL required);
+FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddPwdInputCell(NSString * _Nonnull title, NSString * _Nullable info, BOOL required);
 
 /** 快捷添加一个完全自定义View的cell */
 FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddCustumALLViewCell(CGFloat cellHeight);
 
 /** 快捷添加一个按钮单选或多选的cell */
-FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddSelectBtnCell(NSString * _Nonnull title,BOOL editable, BOOL required);
+FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddSelectBtnCell(NSString * _Nonnull title, BOOL editable, BOOL required);
 
 #pragma mark - 快速创建本文居右的 cell
-// !!!: 以下方法快捷创建的 cell 不是必选的，需要必须的话再设置 required 为 YES。
+// !!!: 以下方法快捷创建的 cell 不是必选的，如果需要设置为必选类型，请设置 Jh_required 属性值为 YES。
 
 /// 添加一个左标题，右文字(居右)、不可编辑的 cell
 FOUNDATION_EXPORT JhFormCellModel *JhFormCellModel_AddRightTextCell(NSString * _Nonnull title, NSString * _Nullable info);

@@ -18,11 +18,11 @@
 #define Jh_SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 
 /** X是44,其他是20 */
-#define kStatusBarHeight [[UIApplication sharedApplication] statusBarFrame].size.height
-#define kContentNavBarHeight 44.0
-#define kTabBarHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?83:49)
-#define kNavHeight (kStatusBarHeight + kContentNavBarHeight)
-#define kBottomSafeHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?34:0)
+#define Jh_STATUS_BAR_HEIGHT [[UIApplication sharedApplication] statusBarFrame].size.height
+#define Jh_CONTENT_NAV_BAR_HEIGHT 44.0
+#define Jh_TAB_BAR_HEIGHT ([[UIApplication sharedApplication] statusBarFrame].size.height>20?83:49)
+#define Jh_NAV_HEIGHT (Jh_STATUS_BAR_HEIGHT + Jh_CONTENT_NAV_BAR_HEIGHT)
+#define Jh_BOTTOM_SAFE_HEIGHT ([[UIApplication sharedApplication] statusBarFrame].size.height>20?34:0)
 
 #define JhColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 #define JhGrayColor(v)   JhColor((v), (v), (v))

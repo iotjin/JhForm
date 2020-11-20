@@ -13,7 +13,7 @@
 #import "NSString+JhForm.h"
 #import "UITextView+TextLimit.h"
 
-@interface JhFormTextViewInputCell()<UITextViewDelegate>
+@interface JhFormTextViewInputCell() <UITextViewDelegate>
 
 @property (nonatomic, strong) UIView *line1;
 
@@ -43,14 +43,10 @@
     self.rightTextView.showLength = data.Jh_showLength;
     self.rightTextView.maxLength = data.Jh_maxInputLength;
     self.accessoryType = UITableViewCellAccessoryNone;
-    if(data.Jh_cellBgColor){
+    if (data.Jh_cellBgColor) {
         self.backgroundColor = data.Jh_cellBgColor;
     }
-    if (data.Jh_Cell_NoEdit == YES) {
-        self.userInteractionEnabled = NO;
-    }else{
-        self.userInteractionEnabled = YES;
-    }
+    self.userInteractionEnabled = !data.Jh_Cell_NoEdit;
 }
 
 - (void)layoutSubviews {
@@ -60,16 +56,16 @@
         self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset+5, Jh_TitleHeight);
         CGFloat newHeight = [JhFormTextViewInputCell heightWithCellModelData:self.data];
         self.rightTextView.frame = CGRectMake(Jh_Margin_left+3, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - 2*Jh_Margin_left-3, newHeight - 2*Jh_EdgeMargin);
-    }else{
+    } else {
         CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
         self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, self.data.Jh_titleWidth, Jh_TitleHeight);
-        //重置 rightTextView 内边距
+        // 重置 rightTextView 内边距
         self.rightTextView.textContainerInset = UIEdgeInsetsMake(8, 8, 8, 8);
         self.rightTextView.backgroundColor = Jh_textView_BackgroundColor;
         CGFloat newHeight = [JhFormTextViewInputCell heightWithCellModelData:self.data];
         CGFloat width = self.bounds.size.width - 2*Jh_EdgeMargin;
         self.rightTextView.frame = CGRectMake(Jh_EdgeMargin, CGRectGetMaxY(self.titleLabel.frame) + Jh_EdgeMargin, width, newHeight - 3*Jh_EdgeMargin - Jh_TitleHeight);
-        //底部加线
+        // 底部加线
         self.line1.frame= CGRectMake(Jh_LineEdgeMargin,CGRectGetMinY(self.rightTextView.frame)-2, Jh_SCRREN_WIDTH - Jh_LineEdgeMargin, 1);
     }
     [self configureIOS13Theme];
@@ -116,13 +112,9 @@
 
 -(void)configureIOS13Theme{
     if (@available(iOS 13.0, *)) {
-        if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-            self.line1.backgroundColor = [UIColor separatorColor];
-            self.rightTextView.backgroundColor = JhColor(50, 50, 50);
-        }else {
-            self.line1.backgroundColor = BaselineColor;
-            self.rightTextView.backgroundColor = Jh_textView_BackgroundColor;
-        }
+        BOOL isDarkMode = (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark);
+        self.line1.backgroundColor = (isDarkMode ? UIColor.separatorColor : BaselineColor);
+        self.rightTextView.backgroundColor = (isDarkMode ? JhColor(50, 50, 50) : Jh_textView_BackgroundColor);
     }
 }
 
