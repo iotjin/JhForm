@@ -279,7 +279,7 @@
 - (JhFormSelectImageCell *)SelectImageCellWithId:(NSString *)cellId {
     JhFormSelectImageCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
-        cell = [[JhFormSelectImageCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell = [[JhFormSelectImageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.baseTableView = self;
     }
@@ -287,5 +287,3 @@
 }
 
 @end
-
-

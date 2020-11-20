@@ -17,7 +17,7 @@
 #define Jh_SCRREN_WIDTH  [UIScreen mainScreen].bounds.size.width
 #define Jh_SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 
-/** X是44,其他是20 */
+/// 异型屏尺寸，X是44,其他是20
 #define Jh_STATUS_BAR_HEIGHT [[UIApplication sharedApplication] statusBarFrame].size.height
 #define Jh_CONTENT_NAV_BAR_HEIGHT 44.0
 #define Jh_TAB_BAR_HEIGHT ([[UIApplication sharedApplication] statusBarFrame].size.height>20?83:49)

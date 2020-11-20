@@ -83,7 +83,7 @@
 - (JhFormCustumBottomCell *)CustumBottomCellWithId:(NSString *)cellId {
     JhFormCustumBottomCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
-        cell = [[JhFormCustumBottomCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell = [[JhFormCustumBottomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.baseTableView = self;
     }
@@ -91,15 +91,3 @@
 }
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-

@@ -135,7 +135,7 @@
 - (JhFormSelectCell *)selectCellWithId:(NSString *)cellId {
     JhFormSelectCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
-        cell = [[JhFormSelectCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell = [[JhFormSelectCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.baseTableView = self;
     }

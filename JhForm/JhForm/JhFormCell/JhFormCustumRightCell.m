@@ -70,7 +70,7 @@
 - (JhFormCustumRightCell *)CustumRightCellWithId:(NSString *)cellId {
     JhFormCustumRightCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
-        cell = [[JhFormCustumRightCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell = [[JhFormCustumRightCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.baseTableView = self;
     }

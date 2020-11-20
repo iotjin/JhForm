@@ -156,7 +156,7 @@
 - (JhFormPwdCell *)PwdCellWithId:(NSString *)cellId {
     JhFormPwdCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
-        cell = [[JhFormPwdCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell = [[JhFormPwdCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.baseTableView = self;
     }

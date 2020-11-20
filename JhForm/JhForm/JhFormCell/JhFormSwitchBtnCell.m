@@ -60,7 +60,7 @@
 - (JhFormSwitchBtnCell *)SwitchBtnCellWithId:(NSString *)cellId {
     JhFormSwitchBtnCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
-        cell = [[JhFormSwitchBtnCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell = [[JhFormSwitchBtnCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.baseTableView = self;
     }

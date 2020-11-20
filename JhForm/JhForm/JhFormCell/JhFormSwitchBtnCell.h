@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JhFormSwitchBtnCell : JhFormBaseCell
 
-@property (strong, nonatomic) UISwitch  *switchBtn;
+@property (strong, nonatomic) UISwitch *switchBtn;
 @property (strong, nonatomic) JhFormCellModel *data;
 
 @end

@@ -397,7 +397,7 @@
 - (JhFormSelectBtnCell *)SelectBtnCellWithId:(NSString *)cellId {
     JhFormSelectBtnCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
-        cell = [[JhFormSelectBtnCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell = [[JhFormSelectBtnCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.baseTableView = self;
     }
@@ -405,4 +405,3 @@
 }
 
 @end
-

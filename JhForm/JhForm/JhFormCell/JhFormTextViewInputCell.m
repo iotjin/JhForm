@@ -21,10 +21,10 @@
 
 @implementation JhFormTextViewInputCell
 
--(UIView *)line1 {
+- (UIView *)line1 {
     if (!_line1) {
-        _line1=[[UIView alloc]init];
-        _line1.backgroundColor=BaselineColor;
+        _line1 = [[UIView alloc] init];
+        _line1.backgroundColor = BaselineColor;
         [self.contentView addSubview:_line1];
         
         [self configureIOS13Theme];
@@ -32,9 +32,10 @@
     return _line1;
 }
 
--(void)setData:(JhFormCellModel *)data{
+- (void)setData:(JhFormCellModel *)data {
     _data= data;
     self.titleLabel.attributedText = data.Jh_attributedTitle;
+    
     self.rightTextView.text = [data.Jh_info addUnit:data.Jh_unit];
     self.rightTextView.attributedPlaceholder = data.Jh_attributedPlaceholder;
     self.rightTextView.editable = data.Jh_editable;
@@ -125,7 +126,7 @@
 - (JhFormTextViewInputCell *)textViewInputCellWithId:(NSString *)cellId {
     JhFormTextViewInputCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
-        cell = [[JhFormTextViewInputCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+        cell = [[JhFormTextViewInputCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.baseTableView = self;
     }
