@@ -24,9 +24,9 @@ const CGFloat Jh_TitleFont = 15.0f;
 const CGFloat Jh_InfoFont = 15.0f;
 
 /// 表单条目，左侧边缘距离
-const CGFloat Jh_Margin_left = 15.0f;
+const CGFloat Jh_Margin_Left = 15.0f;
 /// 表单条目，右侧边缘距离
-const CGFloat Jh_EdgeMargin= 10.0f;
+const CGFloat Jh_Margin_Right= 10.0f;
 
 /// 红星在前的样式中，tilte 往左侧的偏移量
 const CGFloat Jh_redStarLeftOffset = 5.0f;

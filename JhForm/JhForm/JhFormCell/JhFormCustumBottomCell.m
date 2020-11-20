@@ -11,27 +11,30 @@
 #import "JhFormConst.h"
 
 @interface JhFormCustumBottomCell()
-
-@property (nonatomic, strong) UIView *line1;
-
+@property (nonatomic, strong) UIView *lineView;
 @end
 
 @implementation JhFormCustumBottomCell
 
-- (UIView *)line1 {
-    if (!_line1) {
-        _line1=[[UIView alloc]init];
-        _line1.backgroundColor=BaselineColor;
-        [self.contentView addSubview:_line1];
+- (UIView *)lineView {
+    if (!_lineView) {
+        _lineView = [[UIView alloc] init];
         
-        [self configureIOS13Theme];
+        if (@available(iOS 13.0, *)) {
+            BOOL isDarkMode = (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark);
+            _lineView.backgroundColor = (isDarkMode ? UIColor.separatorColor : BaselineColor);
+        } else {
+            _lineView.backgroundColor = BaselineColor;
+        }
+        
+        [self.contentView addSubview:_lineView];
     }
-    return _line1;
+    return _lineView;
 }
 
 - (UIView *)CustumBottomView {
     if (!_CustumBottomView) {
-        _CustumBottomView = [[UIView alloc]init];
+        _CustumBottomView = [[UIView alloc] init];
         _CustumBottomView.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:_CustumBottomView];
     }
@@ -51,13 +54,14 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    //标题固定top
-    CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
-    self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, Jh_SCRREN_WIDTH - 2*Jh_EdgeMargin, Jh_TitleHeight);
-    //底部加线
-    self.line1.frame= CGRectMake(Jh_LineEdgeMargin,CGRectGetMaxY(self.titleLabel.frame)+10, Jh_SCRREN_WIDTH - Jh_LineEdgeMargin, 1);
+    // 标题固定top
+    CGFloat titleLabel_X = (_data.Jh_titleShowType == JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ? (Jh_Margin_Left - Jh_redStarLeftOffset) : Jh_Margin_Left;
+    self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_Margin_Right, Jh_SCRREN_WIDTH - 2*Jh_Margin_Right, Jh_TitleHeight);
     
-    self.CustumBottomView.frame = CGRectMake(0, CGRectGetMaxY(_line1.frame)+10, Jh_SCRREN_WIDTH, self.bounds.size.height - CGRectGetMaxY(_line1.frame)-20);
+    // 底部线条
+    self.lineView.frame= CGRectMake(Jh_LineEdgeMargin, CGRectGetMaxY(self.titleLabel.frame)+10, Jh_SCRREN_WIDTH - Jh_LineEdgeMargin, 1);
+    
+    self.CustumBottomView.frame = CGRectMake(0, CGRectGetMaxY(_lineView.frame)+10, Jh_SCRREN_WIDTH, self.bounds.size.height - CGRectGetMaxY(_lineView.frame)-20);
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -72,7 +76,7 @@
 -(void)configureIOS13Theme{
     if (@available(iOS 13.0, *)) {
         BOOL isDarkMode = (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark);
-        self.line1.backgroundColor = (isDarkMode ? UIColor.separatorColor : BaselineColor);
+        self.lineView.backgroundColor = (isDarkMode ? UIColor.separatorColor : BaselineColor);
     }
 }
 

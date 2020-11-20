@@ -54,18 +54,18 @@
     [super layoutSubviews];
     
     if (!_data.Jh_title.length) {
-        self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset+5, Jh_TitleHeight);
+        self.titleLabel.frame = CGRectMake(Jh_Margin_Left-Jh_redStarLeftOffset, Jh_Margin_Right, Jh_redStarLeftOffset+5, Jh_TitleHeight);
         CGFloat newHeight = [JhFormTextViewInputCell heightWithCellModelData:self.data];
-        self.rightTextView.frame = CGRectMake(Jh_Margin_left+3, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - 2*Jh_Margin_left-3, newHeight - 2*Jh_EdgeMargin);
+        self.rightTextView.frame = CGRectMake(Jh_Margin_Left+3, Jh_Margin_Right+2, Jh_SCRREN_WIDTH - 2*Jh_Margin_Left-3, newHeight - 2*Jh_Margin_Right);
     } else {
-        CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
-        self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, self.data.Jh_titleWidth, Jh_TitleHeight);
+        CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_Left-Jh_redStarLeftOffset):Jh_Margin_Left;
+        self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_Margin_Right, self.data.Jh_titleWidth, Jh_TitleHeight);
         // 重置 rightTextView 内边距
         self.rightTextView.textContainerInset = UIEdgeInsetsMake(8, 8, 8, 8);
         self.rightTextView.backgroundColor = Jh_textView_BackgroundColor;
         CGFloat newHeight = [JhFormTextViewInputCell heightWithCellModelData:self.data];
-        CGFloat width = self.bounds.size.width - 2*Jh_EdgeMargin;
-        self.rightTextView.frame = CGRectMake(Jh_EdgeMargin, CGRectGetMaxY(self.titleLabel.frame) + Jh_EdgeMargin, width, newHeight - 3*Jh_EdgeMargin - Jh_TitleHeight);
+        CGFloat width = self.bounds.size.width - 2*Jh_Margin_Right;
+        self.rightTextView.frame = CGRectMake(Jh_Margin_Right, CGRectGetMaxY(self.titleLabel.frame) + Jh_Margin_Right, width, newHeight - 3*Jh_Margin_Right - Jh_TitleHeight);
         // 底部加线
         self.line1.frame= CGRectMake(Jh_LineEdgeMargin,CGRectGetMinY(self.rightTextView.frame)-2, Jh_SCRREN_WIDTH - Jh_LineEdgeMargin, 1);
     }
@@ -97,9 +97,9 @@
 }
 
 + (CGFloat)heightWithCellModelData:(JhFormCellModel *)data {
-    CGFloat width = data.Jh_title.length ? (4*Jh_EdgeMargin) : (2*Jh_Margin_left+3);
+    CGFloat width = data.Jh_title.length ? (4*Jh_Margin_Right) : (2*Jh_Margin_Left+3);
     CGFloat infoHeight = [data.Jh_info sizeWithFontSize:Jh_InfoFont maxSize:CGSizeMake(Jh_SCRREN_WIDTH - width, MAXFLOAT)].height;
-    return MAX(data.Jh_defaultHeight, infoHeight + 2*Jh_EdgeMargin);
+    return MAX(data.Jh_defaultHeight, infoHeight + 2*Jh_Margin_Right);
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

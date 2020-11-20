@@ -25,16 +25,11 @@ typedef void(^JhInputCompletion)(NSString *text);
  */
 @interface JhFormInputCell : JhFormBaseCell
 
-/**
- 条目配置参数
- */
 @property (nonatomic, strong) JhFormCellModel *data;
 
 @property (nonatomic, copy) JhInputCompletion inputCompletion;
 
-/**
- 获取条目高度
- */
+/// 获取条目高度
 + (CGFloat)heightWithCellModelData:(JhFormCellModel *)data;
 
 @end

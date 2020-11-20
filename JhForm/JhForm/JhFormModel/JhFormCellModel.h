@@ -129,7 +129,6 @@ typedef void(^JhInputBlock)(NSString *text, BOOL isInputCompletion);
 /** 如果设置该属性为 YES，则整个 cell 不可编辑 */
 @property (nonatomic, assign) BOOL Jh_Cell_NoEdit;
 
-
 /**
  设置单个界面的 cell 文字垂直居中 ，JhFormCellTypeInput，JhFormCellTypeSelect ，JhFormCellTypeSelectBtn 样式生效
  
@@ -149,7 +148,7 @@ typedef void(^JhInputBlock)(NSString *text, BOOL isInputCompletion);
 
 /** title 的宽度，默认值为 100，若标题太长，不想牺牲字体大小，可设置宽度 */
 @property (nonatomic, assign) CGFloat Jh_titleWidth;
-/** title 的高度（一般不用设置） */
+/** title 的高度（一般不用设置，设置 Jh_title 后，内部会自动计算高度）*/
 @property (nonatomic, assign) CGFloat Jh_titleHeight;
 
 /**
@@ -277,10 +276,10 @@ typedef void(^JhInputBlock)(NSString *text, BOOL isInputCompletion);
 /** 图片选择 Cell，混合资源数组，初始化时使用，可展示在线图片或视频资源（Jh_imageArr也可初始化网络图片，此参数优先级高于Jh_imageArr ） */
 @property (nonatomic, strong) NSArray<HXCustomAssetModel*> *Jh_initImageArr;
 
-/** 拍摄的 照片/视频 是否不保存到系统相册，默认保存*/
+/** 拍摄的 照片/视频 是否不保存到系统相册，默认保存 */
 @property (nonatomic, assign) BOOL Jh_imageNoSaveAblum;
 
-/** 相机视频录制最小秒数  -  默认3s  */
+/** 相机视频录制最小秒数，默认3s */
 @property (nonatomic, assign) NSTimeInterval Jh_videoMinimumDuration;
 
 

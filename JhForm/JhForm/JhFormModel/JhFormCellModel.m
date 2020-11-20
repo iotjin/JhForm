@@ -243,6 +243,7 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
 }
 
 /// MARK: 设置默认标题呈现样式
+/// 设置 Jh_title 属性后，最终会将属性字符串赋值到 Jh_attributedTitle 属性
 - (void)jh_setAttributedTitleWithRequired:(BOOL)required title:(NSString *)title cellModelType:(JhFormCellType)cellModelType {
     // 1.设置默认标题文本
     if (required) {
@@ -288,6 +289,8 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
             [attributedTitle addAttribute:NSForegroundColorAttributeName value:UIColor.redColor range:NSMakeRange(title.length - 1, 1)];
         }
     }
+    
+    // 将带有样式的属性字符串赋值到 _Jh_attributedTitle
     _Jh_attributedTitle = attributedTitle;
 }
 
@@ -303,16 +306,26 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
     return [tempImages copy];
 }
 
+- (CGFloat)Jh_titleHeight {
+    CGFloat titleHeight;
+    if (self.Jh_titleMultiLineShow) {
+        // 计算多行字符串的高度
+        NSString *title = self.Jh_attributedTitle.string;
+        titleHeight = [title heightWithFixedWidth:self.Jh_titleWidth textFont:Jh_TitleFont];
+        titleHeight = ((titleHeight > Jh_TitleHeight) ? titleHeight + 5 : Jh_TitleHeight);
+    } else {
+        titleHeight = Jh_TitleHeight;
+    }
+    _Jh_titleHeight = titleHeight;
+    return _Jh_titleHeight;
+}
+
 #pragma mark -- Setter
 
 // 设置表单条目附带单位
 - (void)setJh_cellUnitType:(JhFormCellUnitType)Jh_cellUnitType {
     NSString *tempUnit = self.Jh_unit? : @"";
     switch (Jh_cellUnitType) {
-        case JhFormCellUnitTypeNone: {
-            tempUnit = @"";
-            break;
-        }
         case JhFormCellUnitTypeYuan: {
             tempUnit = JhUnitYuan;
             break;
@@ -388,20 +401,6 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
 
 - (void)setJh_attributedPlaceholder:(NSAttributedString *)Jh_attributedPlaceholder {
     _Jh_attributedPlaceholder = (Jh_attributedPlaceholder ? : [[NSAttributedString alloc] initWithString:@""]);
-}
-
-- (CGFloat)Jh_titleHeight {
-    CGFloat titleHeight;
-    if (self.Jh_titleMultiLineShow) {
-        // 计算多行字符串的高度
-        NSString *title = self.Jh_attributedTitle.string;
-        titleHeight = [title heightWithFixedWidth:self.Jh_titleWidth textFont:Jh_TitleFont];
-        titleHeight = ((titleHeight > Jh_TitleHeight) ? titleHeight + 5 : Jh_TitleHeight);
-    } else {
-        titleHeight = Jh_TitleHeight;
-    }
-    _Jh_titleHeight = titleHeight;
-    return _Jh_titleHeight;
 }
 
 - (void)setJh_tipsInfo:(NSString *)Jh_tipsInfo {

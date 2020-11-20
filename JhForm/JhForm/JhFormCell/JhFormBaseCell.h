@@ -14,15 +14,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JhFormBaseCell : UITableViewCell
 
-@property (nonatomic, strong) SelwynExpandableTextView *rightTextView;
 /// 左侧图片
 @property (nonatomic, strong) UIImageView *leftImgView;
 /// 表单标题
 @property (nonatomic, strong) UILabel *titleLabel;
-/// 表单条目所在的 tableView
-@property (nonatomic,   weak) UITableView *baseTableView;
+/// 可高度自适应的 UITextView
+@property (nonatomic, strong) SelwynExpandableTextView *rightTextView;
 /// 右侧自定义视图
 @property (nonatomic, strong) UIView *rightView;
+/// 表单条目所在的 tableView
+@property (nonatomic, weak) UITableView *baseTableView;
 
 @end
 

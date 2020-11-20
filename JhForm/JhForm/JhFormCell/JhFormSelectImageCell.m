@@ -13,16 +13,13 @@
 #define itemLineCount  4 //图片一行几个
 #define itemH  (Jh_SCRREN_WIDTH - 15*2-3*3)/itemLineCount  //图片的高度
 
-@interface JhFormSelectImageCell()<HXPhotoViewDelegate>
+@interface JhFormSelectImageCell() <HXPhotoViewDelegate>
 
-@property (nonatomic, strong) UIView *line1;
-@property (strong, nonatomic) HXPhotoView *onePhotoView;
-@property (strong, nonatomic) HXPhotoManager *oneManager;
-/** 选中的图片数组 */
-@property (nonatomic, strong) NSArray *selectImgArr;
-/** 图片背景View */
-@property (nonatomic, strong) UIView *BottomImageBgView;
-
+@property (nonatomic, strong) UIView *lineView;
+@property (strong, nonatomic) HXPhotoView *photoView;
+@property (strong, nonatomic) HXPhotoManager *photoManager;
+@property (nonatomic, strong) NSArray *selectImgArr; // 选中的图片数组
+@property (nonatomic, strong) UIView *bottomImageBgView; // 图片背景View
 @property (nonatomic, strong) UILabel *tipsLabel;
 
 @end
@@ -31,7 +28,7 @@
 
 - (UILabel *)tipsLabel {
     if (!_tipsLabel) {
-        _tipsLabel =[[UILabel alloc]init];
+        _tipsLabel =[[UILabel alloc] init];
         _tipsLabel.font = [UIFont systemFontOfSize:13];
         _tipsLabel.textColor = [UIColor colorWithRed:119/255.0 green:119/255.0 blue:119/255.0 alpha:1/1.0];
         _tipsLabel.numberOfLines = 0;
@@ -40,58 +37,63 @@
     return _tipsLabel;
 }
 
-- (UIView *)line1 {
-    if (!_line1) {
-        _line1=[[UIView alloc] init];
-        _line1.backgroundColor = BaselineColor;
-        [self.contentView addSubview:_line1];
-        [self configureIOS13Theme];
+- (UIView *)lineView {
+    if (!_lineView) {
+        _lineView = [[UIView alloc] init];
+        
+        if (@available(iOS 13.0, *)) {
+            BOOL isDarkMode = (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark);
+            _lineView.backgroundColor = (isDarkMode ? UIColor.separatorColor : BaselineColor);
+        } else {
+            _lineView.backgroundColor = BaselineColor;
+        }
+        
+        [self.contentView addSubview:_lineView];
     }
-    return _line1;
+    return _lineView;
 }
 
-- (UIView *)BottomImageBgView {
-    if (!_BottomImageBgView) {
-        _BottomImageBgView = [[UIView alloc]init];
-        _BottomImageBgView.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:_BottomImageBgView];
-        [_BottomImageBgView addSubview:self.onePhotoView];
+- (UIView *)bottomImageBgView {
+    if (!_bottomImageBgView) {
+        _bottomImageBgView = [[UIView alloc] init];
+        _bottomImageBgView.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:_bottomImageBgView];
+        [_bottomImageBgView addSubview:self.photoView];
     }
-    return _BottomImageBgView;
+    return _bottomImageBgView;
 }
 
-- (HXPhotoManager *)oneManager {
-    if (!_oneManager) {
+- (HXPhotoManager *)photoManager {
+    if (!_photoManager) {
         NSInteger maxNum = Jh_GlobalMaxImages;
-        _oneManager = [[HXPhotoManager alloc] initWithType:HXPhotoManagerSelectedTypePhoto];
-        _oneManager.configuration.photoMaxNum = maxNum;
-        _oneManager.configuration.videoMaxNum = 0;
-        _oneManager.configuration.selectTogether = NO;
-        _oneManager.configuration.maxNum = maxNum;
-        _oneManager.configuration.cameraCellShowPreview = NO;
-        _oneManager.configuration.openCamera =NO;
-        _oneManager.configuration.photoCanEdit =NO;
-        _oneManager.configuration.showBottomPhotoDetail = NO;
-        _oneManager.configuration.saveSystemAblum = YES;
+        _photoManager = [[HXPhotoManager alloc] initWithType:HXPhotoManagerSelectedTypePhoto];
+        _photoManager.configuration.photoMaxNum = maxNum;
+        _photoManager.configuration.videoMaxNum = 0;
+        _photoManager.configuration.selectTogether = NO;
+        _photoManager.configuration.maxNum = maxNum;
+        _photoManager.configuration.cameraCellShowPreview = NO;
+        _photoManager.configuration.openCamera =NO;
+        _photoManager.configuration.photoCanEdit =NO;
+        _photoManager.configuration.showBottomPhotoDetail = NO;
+        _photoManager.configuration.saveSystemAblum = YES;
         [HXPhotoCommon photoCommon].requestNetworkAfter= YES;
     }
-    return _oneManager;
+    return _photoManager;
 }
 
-- (HXPhotoView *)onePhotoView {
-    if (!_onePhotoView) {
-        _onePhotoView = [[HXPhotoView alloc] initWithFrame:CGRectMake(15, 5, Jh_SCRREN_WIDTH - 15*2-3*3, itemH) manager:self.oneManager];
-        _onePhotoView.outerCamera = YES;
-        _onePhotoView.lineCount =itemLineCount;
-        _onePhotoView.spacing =3;
-        _onePhotoView.delegate = self;
-        _onePhotoView.addImageName = Jh_AddIcon;
+- (HXPhotoView *)photoView {
+    if (!_photoView) {
+        _photoView = [[HXPhotoView alloc] initWithFrame:CGRectMake(15, 5, Jh_SCRREN_WIDTH - 15*2-3*3, ceil(itemH)) manager:self.photoManager];
+        _photoView.outerCamera = YES; /// 是否把相机功能放在外面 默认NO
+        _photoView.lineCount = itemLineCount;
+        _photoView.delegate = self;
+        _photoView.addImageName = Jh_AddIcon; /// 添加按钮的图片
     }
-    return _onePhotoView;
+    return _photoView;
 }
 
 - (void)photoView:(HXPhotoView *)photoView updateFrame:(CGRect)frame {
-    self.onePhotoView.frame = frame;
+    self.photoView.frame = frame;
     [self layoutSubviews];
 }
 
@@ -114,7 +116,6 @@
     // 获取原图
     [photos hx_requestImageWithOriginal:isOriginal completion:^(NSArray<UIImage *> * _Nullable imageArray, NSArray<HXPhotoModel *> * _Nullable errorArray) {
         self.selectImgArr = imageArray;
-//      NSSLog(@" 选择图片cell - selectImgArr %@",self.selectImgArr);
         self.data.Jh_imageArr = self.selectImgArr;
     }];
 }
@@ -129,7 +130,6 @@
         [model exportVideoWithPresetName:AVAssetExportPresetMediumQuality startRequestICloud:nil iCloudProgressHandler:nil exportProgressHandler:^(float progress, HXPhotoModel * _Nullable model) {
         } success:^(NSURL * _Nullable videoURL, HXPhotoModel * _Nullable model) {
             // 导出完成, videoURL
-            //NSLog(@" videoURL %@ ",videoURL);
             [mArr addObject:videoURL];
             self.data.Jh_selectVideoArr = [mArr copy];
         } failed:nil];
@@ -152,34 +152,35 @@
     
     self.titleLabel.attributedText = data.Jh_attributedTitle;
     if (data.Jh_maxImageCount) {
-        self.oneManager.configuration.maxNum = data.Jh_maxImageCount;
-        self.oneManager.configuration.photoMaxNum = data.Jh_maxImageCount;
+        self.photoManager.configuration.maxNum = data.Jh_maxImageCount;
+        self.photoManager.configuration.photoMaxNum = data.Jh_maxImageCount;
     }
     
-    self.oneManager.configuration.selectTogether = (data.Jh_selectImageType == JhSelectImageTypeAll);
+    self.photoManager.configuration.selectTogether = (data.Jh_selectImageType == JhSelectImageTypeAll);
     
     if (data.Jh_selectImageType) {
-        self.oneManager.type = data.Jh_selectImageType;
+        self.photoManager.type = data.Jh_selectImageType;
     }
     
     if (data.Jh_imageNoSaveAblum){
-        self.oneManager.configuration.saveSystemAblum = !data.Jh_imageNoSaveAblum;
+        self.photoManager.configuration.saveSystemAblum = !data.Jh_imageNoSaveAblum;
     }
     if (data.Jh_videoMinimumDuration) {
-        self.oneManager.configuration.videoMinimumDuration = data.Jh_videoMinimumDuration;
+        self.photoManager.configuration.videoMinimumDuration = data.Jh_videoMinimumDuration;
     }
     
+    // 是否隐藏添加图片按钮，默认显示
     if (data.Jh_noShowAddImgBtn) {
-        self.onePhotoView.showAddCell = NO;
-        self.onePhotoView.editEnabled = NO;
+        self.photoView.showAddCell = NO;
+        self.photoView.editEnabled = NO;
     }
     
     if (data.Jh_selectImageType == JhSelectImageTypeImage) {
         if(data.Jh_imageArr.count){
-            [self.oneManager clearSelectedList];
-            NSMutableArray *mUrlArr = @[].mutableCopy;
+            [self.photoManager clearSelectedList];
+            NSMutableArray *mUrlArr = [NSMutableArray array];
             for (id img in data.Jh_imageArr) {
-                HXPhotoModel *model ;
+                HXPhotoModel *model;
                 if([img isKindOfClass:[UIImage class]]){
                     model = [HXPhotoModel photoModelWithImage:img];
                 }
@@ -190,21 +191,21 @@
                     model = [HXPhotoModel photoModelWithImageURL:img];
                 }
                 if ([img isKindOfClass:[HXPhotoModel class]]) {
-                    model =img;
+                    model = img;
                 }
                 if(model){
                     [mUrlArr addObject:model];
                 }
             }
-            [self.oneManager addLocalModels:mUrlArr];
-            [self.onePhotoView refreshView];
+            [self.photoManager addLocalModels:mUrlArr];
+            [self.photoView refreshView];
         }
     }
     if (data.Jh_selectImageType != JhSelectImageTypeImage) {
         if(data.Jh_initImageArr.count){
-            [self.oneManager clearSelectedList];
-            [self.oneManager addCustomAssetModel:data.Jh_initImageArr];
-            [self.onePhotoView refreshView];
+            [self.photoManager clearSelectedList];
+            [self.photoManager addCustomAssetModel:data.Jh_initImageArr];
+            [self.photoView refreshView];
         }
     }
     
@@ -217,7 +218,7 @@
             self.tipsLabel.textColor = data.Jh_tipsInfoColor;
         }
     }
-    self.onePhotoView.hideDeleteButton = data.Jh_hideDeleteButton;
+    self.photoView.hideDeleteButton = data.Jh_hideDeleteButton;
     
     self.userInteractionEnabled = !data.Jh_Cell_NoEdit;
 }
@@ -227,32 +228,31 @@
     
     if (_data.Jh_title.length) {
         //标题固定top
-        CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
-        self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, Jh_SCRREN_WIDTH - 2*Jh_EdgeMargin, Jh_TitleHeight);
-        self.line1.frame= CGRectMake(Jh_LineEdgeMargin,CGRectGetMaxY(self.titleLabel.frame)+Jh_EdgeMargin, Jh_SCRREN_WIDTH - Jh_LineEdgeMargin, 1);
-        self.BottomImageBgView.frame = CGRectMake(0, CGRectGetMaxY(_line1.frame)+10, Jh_SCRREN_WIDTH, CGRectGetHeight(self.onePhotoView.frame)+10);
+        CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_Left-Jh_redStarLeftOffset):Jh_Margin_Left;
+        self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_Margin_Right, Jh_SCRREN_WIDTH - 2*Jh_Margin_Right, Jh_TitleHeight);
+        self.lineView.frame= CGRectMake(Jh_LineEdgeMargin,CGRectGetMaxY(self.titleLabel.frame)+Jh_Margin_Right, Jh_SCRREN_WIDTH - Jh_LineEdgeMargin, 1);
+        self.bottomImageBgView.frame = CGRectMake(0, CGRectGetMaxY(_lineView.frame)+10, Jh_SCRREN_WIDTH, CGRectGetHeight(self.photoView.frame)+10);
     } else {
-        self.BottomImageBgView.frame = CGRectMake(0,10, Jh_SCRREN_WIDTH, CGRectGetHeight(self.onePhotoView.frame)+10);
+        self.bottomImageBgView.frame = CGRectMake(0,10, Jh_SCRREN_WIDTH, CGRectGetHeight(self.photoView.frame)+10);
     }
     
     if (_data.Jh_tipsInfo.length) {
-        self.tipsLabel.frame = CGRectMake(Jh_Margin_left, CGRectGetMaxY(self.BottomImageBgView.frame)+5, Jh_SCRREN_WIDTH-Jh_Margin_left*2, 15);
+        self.tipsLabel.frame = CGRectMake(Jh_Margin_Left, CGRectGetMaxY(self.bottomImageBgView.frame)+5, Jh_SCRREN_WIDTH-Jh_Margin_Left*2, 15);
     }
-    
 }
 
 // 高度自适应
 + (CGFloat)heightWithCellModelData:(JhFormCellModel *)data {
     NSInteger row = 1;
-    if (data.Jh_noShowAddImgBtn == YES) {
-        row = data.Jh_imageAllList.count <= itemLineCount ? 1 : 2;
+    if (data.Jh_noShowAddImgBtn) {
+        row = ((data.Jh_imageAllList.count <= itemLineCount) ? 1 : 2);
     }else{
-        row = data.Jh_maxImageCount>itemLineCount && data.Jh_imageAllList.count >= itemLineCount ?2:1;
+        row = ((data.Jh_maxImageCount>itemLineCount && data.Jh_imageAllList.count >= itemLineCount) ? 2 : 1);
     }
-    row = row > 2?2: row ; //此处限制最多2行
-    CGFloat titleHeight = data.Jh_title.length ? Jh_TitleHeight+1 +Jh_EdgeMargin*2 : 0 ;
+    row = ( row > 2 ? 2 : row); // !!!: 此处限制最多显示 2 行图片
+    CGFloat titleHeight = data.Jh_title.length ? Jh_TitleHeight+1 +Jh_Margin_Right*2 : 0 ;
     CGFloat tipHeight = data.Jh_tipsInfo.length ? 25 : 0 ;
-    CGFloat height = titleHeight+10+itemH*row +10+tipHeight+5;
+    CGFloat height = (titleHeight + 10 + itemH*row + 10 + tipHeight + 5);
     return height;
 }
 
@@ -268,7 +268,7 @@
 -(void)configureIOS13Theme {
     if (@available(iOS 13.0, *)) {
         BOOL isDarkMode = (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark);
-        self.line1.backgroundColor = (isDarkMode ? UIColor.separatorColor : BaselineColor);
+        self.lineView.backgroundColor = (isDarkMode ? UIColor.separatorColor : BaselineColor);
     }
 }
 

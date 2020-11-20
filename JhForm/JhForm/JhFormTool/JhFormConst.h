@@ -72,9 +72,9 @@ UIKIT_EXTERN const CGFloat Jh_TitleFont;
 UIKIT_EXTERN const CGFloat Jh_InfoFont;
 
 /// 表单条目，左侧边缘距离，默认15.0f
-UIKIT_EXTERN const CGFloat Jh_Margin_left;
+UIKIT_EXTERN const CGFloat Jh_Margin_Left;
 /// 表单条目，右侧边缘距离，默认10.0f
-UIKIT_EXTERN const CGFloat Jh_EdgeMargin;
+UIKIT_EXTERN const CGFloat Jh_Margin_Right;
 
 /// 红星在前的样式中，tilte 往左侧的偏移量，默认5.0f
 UIKIT_EXTERN const CGFloat Jh_redStarLeftOffset;

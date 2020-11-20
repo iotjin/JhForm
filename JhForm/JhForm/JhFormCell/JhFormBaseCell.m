@@ -28,11 +28,13 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:Jh_TitleFont];
         _titleLabel.adjustsFontSizeToFitWidth = YES;
-        _titleLabel.numberOfLines = 0;
         
         if (@available(iOS 13.0, *)) {
             _titleLabel.textColor = UIColor.labelColor;
+        } else {
+            _titleLabel.textColor = Jh_titleColor;
         }
+        
         [self.contentView addSubview:_titleLabel];
     }
     return _titleLabel;
@@ -47,20 +49,22 @@
         _rightTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         _rightTextView.backgroundColor = [UIColor clearColor];
         _rightTextView.font = [UIFont systemFontOfSize:Jh_InfoFont];
-        _rightTextView.textColor = Jh_rightTextViewTextColor;
         _rightTextView.scrollEnabled = NO;
         _rightTextView.autocorrectionType = UITextAutocorrectionTypeNo;
         _rightTextView.layoutManager.allowsNonContiguousLayout = NO;
         _rightTextView.showsVerticalScrollIndicator = NO;
         _rightTextView.showsHorizontalScrollIndicator = NO;
-        [self.contentView addSubview:_rightTextView];
         
         if (@available(iOS 13.0, *)) {
-            _rightTextView.placeholderTextColor = UIColor.placeholderTextColor;
-            
             BOOL isDarkMode = (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark);
             _rightTextView.textColor = (isDarkMode ? UIColor.labelColor : Jh_rightTextViewTextColor);
+            _rightTextView.placeholderTextColor = UIColor.placeholderTextColor;
+        } else {
+            _rightTextView.textColor = Jh_rightTextViewTextColor;
+            _rightTextView.placeholderTextColor = Jh_PlaceholderColor;
         }
+        
+        [self.contentView addSubview:_rightTextView];
     }
     return _rightTextView;
 }
@@ -86,10 +90,11 @@
 -(void)configureIOS13Theme{
     if (@available(iOS 13.0, *)) {
         _titleLabel.textColor = UIColor.labelColor;
-        _rightTextView.placeholderTextColor = UIColor.placeholderTextColor;
         
         BOOL isDarkMode = (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark);
         _rightTextView.textColor = (isDarkMode ? UIColor.labelColor : Jh_rightTextViewTextColor);
+        _rightTextView.placeholderTextColor = UIColor.placeholderTextColor;
+        
         [self.baseTableView reloadData];
     }
 }

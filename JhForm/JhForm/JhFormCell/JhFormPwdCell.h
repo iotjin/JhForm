@@ -14,9 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JhFormPwdCell : JhFormBaseCell
 
-/**
- 右侧 Jh_pwdTextField 控件
- */
+/// 密码输入框
 @property (nonatomic, strong) UITextField  *Jh_pwdTextField;
 
 @property (nonatomic, strong) JhFormCellModel *data;

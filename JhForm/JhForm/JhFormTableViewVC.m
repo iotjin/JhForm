@@ -261,7 +261,7 @@
         cell.data = cellModel;
         cell.data.Jh_titleWidth = LeftTitleWidth;
         if (cellModel.Jh_custumRightViewBlock) {
-            cellModel.Jh_custumRightViewBlock(cell.CustumRightView);
+            cellModel.Jh_custumRightViewBlock(cell.custumRightView);
         }
         return cell;
     } else if (cellModel.Jh_cellType == JhFormCellTypeCustumBottom) {
@@ -309,7 +309,7 @@
         cell.data = cellModel;
         cell.data.Jh_titleWidth = LeftTitleWidth;
         if (cellModel.Jh_custumALLViewBlock) {
-            cellModel.Jh_custumALLViewBlock(cell.CustumALLView);
+            cellModel.Jh_custumALLViewBlock(cell.custumALLView);
         }
         return cell;
     } else if (cellModel.Jh_cellType == JhFormCellTypeSelectBtn) {

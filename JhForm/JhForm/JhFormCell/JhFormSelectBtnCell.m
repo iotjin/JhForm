@@ -44,11 +44,8 @@
 @interface JhFormSelectBtnCell()
 
 @property (nonatomic, strong) UIView *CustumRightView;
-
 @property (nonatomic, strong) NSArray *btnTitleArray;
-
 @property (nonatomic, strong) UIButton *currentSelectBtn;
-
 @property (nonatomic, strong) NSMutableArray *selectTitleArray;
 @property (nonatomic, strong) NSMutableArray *selectIndexArray;
 
@@ -276,7 +273,7 @@
         
     }
     
-    if (isInit == NO) {
+    if (!isInit) {
         self.data.Jh_selectBtnCell_selectTitleArr = self.selectTitleArray;
     }
     self.data.Jh_selectBtnCell_selectIndexArr = self.selectIndexArray;
@@ -286,8 +283,8 @@
 }
 
 -(void)setData:(JhFormCellModel *)data{
-    _data= data;
-    if (data.Jh_titleMultiLineShow==YES) {
+    _data = data;
+    if (data.Jh_titleMultiLineShow) {
         self.titleLabel.adjustsFontSizeToFitWidth = NO;
         self.titleLabel.numberOfLines = 0;
     }
@@ -303,14 +300,14 @@
     [super layoutSubviews];
     
     if (!_data.Jh_title.length) {
-        self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset+5, Jh_TitleHeight);
-        self.CustumRightView.frame =CGRectMake(0, 0, Jh_SCRREN_WIDTH-Jh_Margin_left-Jh_EdgeMargin-3, self.bounds.size.height - CGRectGetMaxY(self.titleLabel.frame));
-    }else{
+        self.titleLabel.frame = CGRectMake(Jh_Margin_Left-Jh_redStarLeftOffset, Jh_Margin_Right, Jh_redStarLeftOffset+5, Jh_TitleHeight);
+        self.CustumRightView.frame =CGRectMake(0, 0, Jh_SCRREN_WIDTH-Jh_Margin_Left-Jh_Margin_Right-3, self.bounds.size.height - CGRectGetMaxY(self.titleLabel.frame));
+    } else {
         //上下排列
         if(self.data.Jh_selectBtnCell_isTopTitleBottomOption){
             
-            CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
-            self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, Jh_SCRREN_WIDTH - 2*Jh_EdgeMargin, Jh_TitleHeight);
+            CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_Left-Jh_redStarLeftOffset):Jh_Margin_Left;
+            self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_Margin_Right, Jh_SCRREN_WIDTH - 2*Jh_Margin_Right, Jh_TitleHeight);
             self.CustumRightView.frame = CGRectMake(0, CGRectGetMaxY(self.titleLabel.frame), Jh_SCRREN_WIDTH, self.bounds.size.height - CGRectGetMaxY(self.titleLabel.frame));
             
         }else{
@@ -318,18 +315,18 @@
             
             /********************************* 左侧标题换行 ********************************/
             CGFloat titleHeight = _data.Jh_titleHeight;
-            CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
-            self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, self.data.Jh_titleWidth, titleHeight);
+            CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_Left-Jh_redStarLeftOffset):Jh_Margin_Left;
+            self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_Margin_Right, self.data.Jh_titleWidth, titleHeight);
             
             if (_data.Jh_titleMultiLineShow==YES) {
-                if (titleHeight >(_data.Jh_defaultHeight-Jh_EdgeMargin*2)){
-                    _data.Jh_defaultHeight = titleHeight+Jh_EdgeMargin*2;
+                if (titleHeight >(_data.Jh_defaultHeight-Jh_Margin_Right*2)){
+                    _data.Jh_defaultHeight = titleHeight+Jh_Margin_Right*2;
                     [self.baseTableView reloadData];
                 }
             }
             /********************************* 左侧标题换行 ********************************/
             
-            self.CustumRightView.frame =CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, 0, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 2*Jh_EdgeMargin) - Jh_CustumRightView_rightEdgeMargin, self.bounds.size.height);
+            self.CustumRightView.frame =CGRectMake(self.data.Jh_titleWidth + 2*Jh_Margin_Right, 0, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 2*Jh_Margin_Right) - Jh_CustumRightView_rightEdgeMargin, self.bounds.size.height);
             
             //文字垂直居中
             if (_data.Jh_cellTextVerticalCenter == true || Jh_CellTextVerticalStyle == JhCellTextVerticalStyleCenter) {
@@ -384,7 +381,7 @@
     }
     CGFloat height = btnY + kBtnHeight + kBtnVerticalMargin;
     if(data.Jh_selectBtnCell_isTopTitleBottomOption){
-        CGFloat titleHeight = data.Jh_title.length ? (Jh_EdgeMargin+Jh_TitleHeight):0;
+        CGFloat titleHeight = data.Jh_title.length ? (Jh_Margin_Right+Jh_TitleHeight):0;
         height = btnY + kBtnHeight + kBtnVerticalMargin + titleHeight;
     }
     return MAX(data.Jh_defaultHeight, height);

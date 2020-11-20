@@ -36,12 +36,11 @@
 
 - (void)setData:(JhFormCellModel *)data {
     _data= data;
-    if (data.Jh_titleMultiLineShow==YES) {
-        self.titleLabel.adjustsFontSizeToFitWidth = NO;
+    if (data.Jh_titleMultiLineShow) {
         self.titleLabel.numberOfLines = 0;
+        self.titleLabel.adjustsFontSizeToFitWidth = NO;
     }
     self.titleLabel.attributedText = data.Jh_attributedTitle;
-    
     self.Jh_pwdTextField.text = [self.data.Jh_info addUnit:self.data.Jh_unit];
     self.Jh_pwdTextField.placeholder = data.Jh_placeholder;
     self.Jh_pwdTextField.attributedPlaceholder = data.Jh_attributedPlaceholder;
@@ -49,14 +48,14 @@
     self.Jh_pwdTextField.keyboardType = data.Jh_keyboardType;
     
     self.accessoryType = UITableViewCellAccessoryNone;
-    //设置右侧文本的对齐方式
+    // 设置右侧文本的对齐方式
     if (data.Jh_InfoTextAlignment == JhFormCellInfoTextAlignmentRight) {
         self.Jh_pwdTextField.textAlignment = NSTextAlignmentRight;
     }
     if (data.Jh_cellBgColor) {
         self.backgroundColor = data.Jh_cellBgColor;
     }
-    if (data.Jh_rightViewWidth>0 && data.Jh_rightViewBlock) {
+    if (data.Jh_rightViewWidth > 0 && data.Jh_rightViewBlock) {
         data.Jh_rightViewBlock(self.rightView);
     }
     self.userInteractionEnabled = !data.Jh_Cell_NoEdit;
@@ -66,34 +65,33 @@
     [super layoutSubviews];
     
     if (!_data.Jh_title.length) {
-        self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset+5, Jh_TitleHeight);
+        self.titleLabel.frame = CGRectMake(Jh_Margin_Left-Jh_redStarLeftOffset, Jh_Margin_Right, Jh_redStarLeftOffset+5, Jh_TitleHeight);
         if(_data.Jh_rightViewWidth>0){
-            self.Jh_pwdTextField.frame =CGRectMake(Jh_Margin_left+3, 0, Jh_SCRREN_WIDTH - 2*Jh_Margin_left - _data.Jh_rightViewWidth-3, self.bounds.size.height);
+            self.Jh_pwdTextField.frame =CGRectMake(Jh_Margin_Left+3, 0, Jh_SCRREN_WIDTH - 2*Jh_Margin_Left - _data.Jh_rightViewWidth-3, self.bounds.size.height);
             self.rightView.frame =CGRectMake(CGRectGetMaxX(self.Jh_pwdTextField.frame), 0, _data.Jh_rightViewWidth, self.bounds.size.height);
         }else{
-            self.Jh_pwdTextField.frame =CGRectMake(Jh_Margin_left+3, 0, Jh_SCRREN_WIDTH - 2*Jh_Margin_left-3, self.bounds.size.height);
+            self.Jh_pwdTextField.frame =CGRectMake(Jh_Margin_Left+3, 0, Jh_SCRREN_WIDTH - 2*Jh_Margin_Left-3, self.bounds.size.height);
         }
     }else{
         /********************************* 左侧标题换行 ********************************/
         CGFloat titleHeight = _data.Jh_titleHeight;
-        CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
-        self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, self.data.Jh_titleWidth, titleHeight);
+        CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_Left-Jh_redStarLeftOffset):Jh_Margin_Left;
+        self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_Margin_Right, self.data.Jh_titleWidth, titleHeight);
         if (_data.Jh_titleMultiLineShow==YES) {
-            if (titleHeight >(_data.Jh_defaultHeight-Jh_EdgeMargin*2)){
-                _data.Jh_defaultHeight = titleHeight+Jh_EdgeMargin*2;
+            if (titleHeight >(_data.Jh_defaultHeight-Jh_Margin_Right*2)){
+                _data.Jh_defaultHeight = titleHeight+Jh_Margin_Right*2;
                 [self.baseTableView reloadData];
             }
         }
         /********************************* 左侧标题换行 ********************************/
         
         if(_data.Jh_rightViewWidth>0){
-            self.Jh_pwdTextField.frame =CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, 0, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 3*Jh_EdgeMargin)-_data.Jh_rightViewWidth, self.bounds.size.height);
+            self.Jh_pwdTextField.frame =CGRectMake(self.data.Jh_titleWidth + 2*Jh_Margin_Right, 0, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 3*Jh_Margin_Right)-_data.Jh_rightViewWidth, self.bounds.size.height);
             self.rightView.frame =CGRectMake(CGRectGetMaxX(self.Jh_pwdTextField.frame), 0, _data.Jh_rightViewWidth, self.bounds.size.height);
         }else{
-            self.Jh_pwdTextField.frame =CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, 0, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 3*Jh_EdgeMargin), self.bounds.size.height);
+            self.Jh_pwdTextField.frame =CGRectMake(self.data.Jh_titleWidth + 2*Jh_Margin_Right, 0, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 3*Jh_Margin_Right), self.bounds.size.height);
         }
     }
-    
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {

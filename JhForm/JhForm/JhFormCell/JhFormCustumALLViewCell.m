@@ -12,13 +12,13 @@
 
 @implementation JhFormCustumALLViewCell
 
-- (UIView *)CustumALLView {
-    if (!_CustumALLView) {
-        _CustumALLView = [[UIView alloc] init];
-        _CustumALLView.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:_CustumALLView];
+- (UIView *)custumALLView {
+    if (!_custumALLView) {
+        _custumALLView = [[UIView alloc] init];
+        _custumALLView.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:_custumALLView];
     }
-    return _CustumALLView;
+    return _custumALLView;
 }
 
 - (void)setData:(JhFormCellModel *)data {
@@ -26,16 +26,16 @@
     if (data.Jh_cellBgColor) {
         self.backgroundColor = data.Jh_cellBgColor;
     }
-    self.userInteractionEnabled = !data.Jh_Cell_NoEdit;
     if (self.data.Jh_hiddenLine) {
         self.separatorInset = UIEdgeInsetsMake(0, 0, 0, MAXFLOAT);
     }
+    self.userInteractionEnabled = !data.Jh_Cell_NoEdit;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    self.CustumALLView.frame = CGRectMake(Jh_Margin_left, 0, Jh_SCRREN_WIDTH-Jh_Margin_left-Jh_EdgeMargin, self.data.Jh_defaultHeight);
+    self.custumALLView.frame = CGRectMake(Jh_Margin_Left, 0, Jh_SCRREN_WIDTH-Jh_Margin_Left-Jh_Margin_Right, self.data.Jh_defaultHeight);
 }
 
 @end

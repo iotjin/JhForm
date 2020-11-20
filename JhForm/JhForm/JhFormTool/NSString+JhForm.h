@@ -26,18 +26,10 @@
  */
 - (CGSize)sizeWithFontSize:(CGFloat)fontSize maxSize:(CGSize)maxSize;
 
-/**
- 一串字符在固定宽度下，正常显示所需要的高度(字符串固定宽度计算高度)
- 实现参考：<https://github.com/shaojiankui/JKCategories/blob/master/JKCategories/Foundation/NSString/NSString%2BJKSize.m>
- 
- @param string 字符串
- @param width 宽度
- @param font 大小
- @return 高度
- */
-+ (CGFloat)Jh_stingAutoHeightWithString:(NSString *)string Width:(CGFloat)width Font:(NSInteger)font;
-
-// 替换上面的类方法
+/// 给定最大宽度和字体大小，计算字符串的高度
+/// 实现参考：<https://github.com/shaojiankui/JKCategories/blob/master/JKCategories/Foundation/NSString/NSString%2BJKSize.m>
+/// @param width 给定最大宽度
+/// @param font 字符串字体大小
 - (CGFloat)heightWithFixedWidth:(CGFloat)width textFont:(NSInteger)font;
 
 @end

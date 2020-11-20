@@ -4,7 +4,7 @@
 //
 //  Created by Jh on 2019/3/13.
 //  Copyright © 2019 Jh. All rights reserved.
-//  表单标题居中Cell
+//  表单标题居中 Cell
 
 #import "JhFormBaseCell.h"
 

@@ -26,25 +26,6 @@
     return CGSizeMake(ceil(textSize.width), ceil(textSize.height));
 }
 
-+ (CGFloat)Jh_stingAutoHeightWithString:(NSString *)string
-                                  Width:(CGFloat)width
-                                   Font:(NSInteger)font
-{    
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    NSDictionary *attributes = @{
-        NSFontAttributeName: [UIFont systemFontOfSize:font],
-        NSParagraphStyleAttributeName: paragraphStyle
-    };
-
-    CGSize textSize = [string boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
-                                           options:(NSStringDrawingUsesLineFragmentOrigin |
-                                                    NSStringDrawingUsesFontLeading)
-                                        attributes:attributes
-                                           context:nil].size;
-    return ceil(textSize.height);
-}
-
 - (CGFloat)heightWithFixedWidth:(CGFloat)width textFont:(NSInteger)font {
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;

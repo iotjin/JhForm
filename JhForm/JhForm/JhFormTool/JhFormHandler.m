@@ -28,7 +28,9 @@
                     title = [title substringToIndex:title.length - 1];
                 }
                 
-                if (cellModel.Jh_cellType == JhFormCellTypeInput || cellModel.Jh_cellType == JhFormCellTypeTextViewInput || cellModel.Jh_cellType == JhFormCellTypePwdInput) {
+                if (cellModel.Jh_cellType == JhFormCellTypeInput ||
+                    cellModel.Jh_cellType == JhFormCellTypeTextViewInput ||
+                    cellModel.Jh_cellType == JhFormCellTypePwdInput) {
                     if (!cellModel.Jh_info || [cellModel.Jh_info isEqualToString:@""]) {
                         failure([NSString stringWithFormat:@"请输入%@", title]);
                         return;

@@ -4,7 +4,7 @@
 //
 //  Created by Jh on 2019/1/8.
 //  Copyright © 2019 Jh. All rights reserved.
-//  表单底部自定义Cell，标题居上，底部自定义View。支持标题隐藏。
+//  表单底部自定义 Cell，标题居上，底部自定义View。支持标题隐藏。
 
 #import "JhFormBaseCell.h"
 
