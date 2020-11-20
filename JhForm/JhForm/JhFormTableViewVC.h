@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <HXPhotoPicker.h>
 #import "JhFormConst.h"
-#import "HXPhotoPicker.h"
 #import "JhFormCellModel.h"
 #import "JhFormSectionModel.h"
 #import "JhFormHandler.h"

@@ -8,10 +8,6 @@
 
 #import "JhBaseHeaderView.h"
 
-@interface JhBaseHeaderView ()
-
-@end
-
 @implementation JhBaseHeaderView
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -24,8 +20,7 @@
     return self;
 }
 
-
--(void)setJh_leftTitle:(NSString *)Jh_leftTitle{
+- (void)setJh_leftTitle:(NSString *)Jh_leftTitle {
     
     _Jh_leftTitle = Jh_leftTitle;
     
@@ -37,8 +32,7 @@
     }
 }
 
-
--(void)setJh_rightBtnTitle:(NSString *)Jh_rightBtnTitle{
+- (void)setJh_rightBtnTitle:(NSString *)Jh_rightBtnTitle {
     _Jh_rightBtnTitle = Jh_rightBtnTitle;
     
     if (Jh_rightBtnTitle) {
@@ -49,13 +43,11 @@
     }
 }
 
-
--(void)setJh_rightBtnImage:(UIImage *)Jh_rightBtnImage{
+- (void)setJh_rightBtnImage:(UIImage *)Jh_rightBtnImage {
     _Jh_rightBtnImage = Jh_rightBtnImage;
     
     [self.Jh_rightBtn setImage:Jh_rightBtnImage forState:UIControlStateNormal];
 }
-
 
 - (IBAction)handleButton:(id)sender {
     //调用

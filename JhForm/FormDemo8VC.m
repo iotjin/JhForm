@@ -7,8 +7,8 @@
 //
 
 #import "FormDemo8VC.h"
-#import "Masonry.h"
-#import "HXPhotoPicker.h"
+#import <Masonry.h>
+#import <HXPhotoPicker.h>
 
 #define JhColor(r, g, b)     [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 #define JhRandomColor JhColor(arc4random_uniform(255), arc4random_uniform(255), arc4random_uniform(255))

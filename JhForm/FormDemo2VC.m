@@ -7,7 +7,7 @@
 //
 
 #import "FormDemo2VC.h"
-#import "Masonry.h"
+#import <Masonry.h>
 #import "JhBaseHeaderView.h"
 
 #define JhColor(r, g, b)     [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]

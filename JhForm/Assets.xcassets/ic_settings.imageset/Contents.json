@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "ic_settings.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "ic_settings.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

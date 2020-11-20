@@ -1,0 +1,32 @@
+PODS:
+  - HXPhotoPicker (3.1.4):
+    - HXPhotoPicker/Default (= 3.1.4)
+  - HXPhotoPicker/Default (3.1.4)
+  - IQKeyboardManager (6.5.6)
+  - Masonry (1.1.0)
+  - SDWebImage (5.9.4):
+    - SDWebImage/Core (= 5.9.4)
+  - SDWebImage/Core (5.9.4)
+
+DEPENDENCIES:
+  - HXPhotoPicker
+  - IQKeyboardManager
+  - Masonry
+  - SDWebImage
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - HXPhotoPicker
+    - IQKeyboardManager
+    - Masonry
+    - SDWebImage
+
+SPEC CHECKSUMS:
+  HXPhotoPicker: 0b8483ece5c15a34108e039a6bbd1bf553e6df31
+  IQKeyboardManager: 2a6e97afdafc7becf0cb17a9a8d795e3a980717f
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  SDWebImage: b69257f4ab14e9b6a2ef53e910fdf914d8f757c1
+
+PODFILE CHECKSUM: 014eaff2495be8040af7013555fe06ebe4496d07
+
+COCOAPODS: 1.9.3

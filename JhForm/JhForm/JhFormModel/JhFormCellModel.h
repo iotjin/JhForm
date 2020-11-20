@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "HXPhotoPicker.h"
+#import <HXPhotoPicker.h>
 
 /** 图标  CheckBox   未选中 */
 #define kIcon_CheckBoxNormal @"JhForm.bundle/ic_checkbox_normal"
