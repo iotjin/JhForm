@@ -9,68 +9,46 @@
 #import "JhFormSelectImageCell.h"
 #import "JhFormCellModel.h"
 #import "JhFormConst.h"
+#import "JhTextView.h"
 
-#define itemLineCount  4 //图片一行几个
-#define itemH  (kWidth - 15*2-3*3)/itemLineCount  //图片的高度
+@interface JhFormSelectImageCell()
 
+#if kHasHXPhotoPicker
+<HXPhotoViewDelegate>
 
-@interface JhFormSelectImageCell()<HXPhotoViewDelegate>
-
-@property (nonatomic, strong) UIView *line1;
 @property (strong, nonatomic) HXPhotoView *onePhotoView;
 @property (strong, nonatomic) HXPhotoManager *oneManager;
+#endif
+
 /** 选中的图片数组 */
 @property (nonatomic, strong) NSArray *selectImgArr;
 /** 图片背景View */
-@property (nonatomic, strong) UIView *BottomImageBgView;
+@property (nonatomic, strong) UIView *bottomImageBgView;
 
-@property (nonatomic, strong) UILabel *tipsLabel;
+@property (nonatomic, assign) BOOL  isInit;
 
 @end
 
 @implementation JhFormSelectImageCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
+- (void)Jh_initUI {
+    self.isInit = YES;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
-}
-
--(UILabel *)tipsLabel{
-    if (!_tipsLabel) {
-        _tipsLabel =[[UILabel alloc]init];
-        _tipsLabel.font = [UIFont systemFontOfSize:13];
-        _tipsLabel.textColor = [UIColor colorWithRed:119/255.0 green:119/255.0 blue:119/255.0 alpha:1/1.0];
-        _tipsLabel.numberOfLines = 0;
-        [self.contentView addSubview:_tipsLabel];
+- (UIView *)bottomImageBgView {
+    if (!_bottomImageBgView) {
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:view];
+        _bottomImageBgView = view;
+#if kHasHXPhotoPicker
+        [_bottomImageBgView addSubview:self.onePhotoView];
+#endif
     }
-    return _tipsLabel;
+    return _bottomImageBgView;
 }
 
--(UIView *)line1{
-    if (!_line1) {
-        _line1=[[UIView alloc]init];
-        _line1.backgroundColor=BaselineColor;
-        [self.contentView addSubview:_line1];
-        [self configureIOS13Theme];
-    }
-    return _line1;
-}
-
--(UIView *)BottomImageBgView{
-    if (!_BottomImageBgView) {
-        _BottomImageBgView = [[UIView alloc]init];
-        _BottomImageBgView.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:_BottomImageBgView];
-        [_BottomImageBgView addSubview:self.onePhotoView];
-    }
-    return _BottomImageBgView;
-}
-
+#if kHasHXPhotoPicker
 - (HXPhotoManager *)oneManager {
     if (!_oneManager) {
         NSInteger maxNum = Jh_GlobalMaxImages;
@@ -84,17 +62,18 @@
         _oneManager.configuration.photoCanEdit =NO;
         _oneManager.configuration.showBottomPhotoDetail = NO;
         _oneManager.configuration.saveSystemAblum = YES;
+        _oneManager.configuration.photoStyle = Jh_ThemeType == JhThemeTypeAuto ? HXPhotoStyleDefault : HXPhotoStyleInvariant;
         [HXPhotoCommon photoCommon].requestNetworkAfter= YES;
     }
     return _oneManager;
 }
 
--(HXPhotoView *)onePhotoView{
+- (HXPhotoView *)onePhotoView {
     if (!_onePhotoView) {
-        _onePhotoView = [[HXPhotoView alloc] initWithFrame:CGRectMake(15, 5, kWidth - 15*2-3*3, itemH) manager:self.oneManager];
+        _onePhotoView = [[HXPhotoView alloc] initWithFrame:CGRectMake(Jh_ImageLeftMargin, Jh_OnePhotoViewTopMargin, Jh_OnePhotoViewWidth, Jh_ImageHeight) manager:self.oneManager];
         _onePhotoView.outerCamera = YES;
-        _onePhotoView.lineCount =itemLineCount;
-        _onePhotoView.spacing =3;
+        _onePhotoView.lineCount = Jh_ImageOneLineCount;
+        _onePhotoView.spacing = Jh_ImageMargin;
         _onePhotoView.delegate = self;
         _onePhotoView.addImageName = Jh_AddIcon;
     }
@@ -106,33 +85,34 @@
     [self layoutSubviews];
 }
 
-#pragma mark -  根据photoView来判断是哪一个选择器
-- (void)photoView:(HXPhotoView *)photoView changeComplete:(NSArray<HXPhotoModel *> *)allList photos:(NSArray<HXPhotoModel *> *)photos videos:(NSArray<HXPhotoModel *> *)videos original:(BOOL)isOriginal {    
-//    NSSLog(@" 选择图片cell - allList %@",allList);
-    self.data.Jh_imageAllList = allList;
-    if (self.data.Jh_selectImageType == JhSelectImageTypeImage) {
+#pragma mark -  根据 photoView 来判断是哪一个选择器
+- (void)photoView:(HXPhotoView *)photoView changeComplete:(NSArray<HXPhotoModel *> *)allList photos:(NSArray<HXPhotoModel *> *)photos videos:(NSArray<HXPhotoModel *> *)videos original:(BOOL)isOriginal {
+    self.cellModel.Jh_imageAllList = allList;
+    if (self.cellModel.Jh_selectImageType == JhSelectImageTypeImage) {
         [self getOriginalImage:photos original:isOriginal];
-    }else if (self.data.Jh_selectImageType == JhSelectImageTypeVideo) {
+    } else if (self.cellModel.Jh_selectImageType == JhSelectImageTypeVideo) {
         [self getVideo:videos];
-    }else {
+    } else {
         [self getOriginalImage:photos original:isOriginal];
         [self getVideo:videos];
     }
     [self Jh_reloadData];
 }
 
-//获取原图
--(void)getOriginalImage:(NSArray<HXPhotoModel *> *)photos original:(BOOL)isOriginal{
-    //获取原图
+// 获取原图
+-(void)getOriginalImage:(NSArray<HXPhotoModel *> *)photos original:(BOOL)isOriginal {
+    // 获取原图
+    JhWeakSelf
     [photos hx_requestImageWithOriginal:isOriginal completion:^(NSArray<UIImage *> * _Nullable imageArray, NSArray<HXPhotoModel *> * _Nullable errorArray) {
-        self.selectImgArr = imageArray;
-//      NSSLog(@" 选择图片cell - selectImgArr %@",self.selectImgArr);
-        self.data.Jh_imageArr = self.selectImgArr;
+        weakSelf.selectImgArr = imageArray;
+        weakSelf.cellModel.Jh_imageArr = self.selectImgArr;
+        [weakSelf Jh_reloadData];
     }];
 }
 
-//获取视频
--(void)getVideo:(NSArray<HXPhotoModel *> *)videos{
+// 获取视频
+-(void)getVideo:(NSArray<HXPhotoModel *> *)videos {
+    JhWeakSelf
     NSMutableArray *mArr = [NSMutableArray array];
     //导出视频地址
     for (int i=0; i< videos.count; i++) {
@@ -143,59 +123,55 @@
             // 导出完成, videoURL
             //NSLog(@" videoURL %@ ",videoURL);
             [mArr addObject:videoURL];
-            self.data.Jh_selectVideoArr = [mArr copy];
+            weakSelf.cellModel.Jh_selectVideoArr = [mArr copy];
+            [weakSelf Jh_reloadData];
         } failed:nil];
     }
 }
 
+#endif
+
 #pragma mark -- 刷新当前图片数据
 - (void)Jh_reloadData {
-    if (self.JhImageSelectBlock) {
-        self.JhImageSelectBlock(self.selectImgArr);
+    if (self.cellModel.Jh_imageSelectBlock) {
+        self.cellModel.Jh_imageSelectBlock(self.selectImgArr);
     }
+    JhWeakSelf
     [UIView performWithoutAnimation:^{
-        [self.baseTableView beginUpdates];
-        [self.baseTableView endUpdates];
+        [weakSelf.baseTableView beginUpdates];
+        [weakSelf.baseTableView endUpdates];
     }];
 }
 
+#pragma mark - JhFormProtocol
 
--(void)setData:(JhFormCellModel *)data{
-    _data= data;
+- (void)Jh_configCellModel:(JhFormCellModel *)cellModel {
+    [super Jh_configCellModel:cellModel];
     
-    self.titleLabel.attributedText = data.Jh_attributedTitle;
-    if(data.Jh_maxImageCount){
-        self.oneManager.configuration.maxNum = data.Jh_maxImageCount;
-        self.oneManager.configuration.photoMaxNum = data.Jh_maxImageCount;
+#if kHasHXPhotoPicker
+    if (cellModel.Jh_maxImageCount) {
+        self.oneManager.configuration.maxNum = cellModel.Jh_maxImageCount;
+        self.oneManager.configuration.photoMaxNum = cellModel.Jh_maxImageCount;
     }
-    
-    if (data.Jh_selectImageType == JhSelectImageTypeAll) {
-        self.oneManager.configuration.selectTogether = YES;
-    }else{
-        self.oneManager.configuration.selectTogether = NO;
+    self.oneManager.configuration.selectTogether = (cellModel.Jh_selectImageType == JhSelectImageTypeAll);
+    if (cellModel.Jh_selectImageType) {
+        self.oneManager.type = cellModel.Jh_selectImageType;
     }
-    
-    if (data.Jh_selectImageType) {
-        self.oneManager.type = data.Jh_selectImageType;
+    if (cellModel.Jh_imageNoSaveAblum){
+        self.oneManager.configuration.saveSystemAblum = !cellModel.Jh_imageNoSaveAblum;
     }
-    
-    if (data.Jh_imageNoSaveAblum){
-        self.oneManager.configuration.saveSystemAblum = !data.Jh_imageNoSaveAblum;
+    if (cellModel.Jh_videoMinimumDuration) {
+        self.oneManager.configuration.videoMinimumDuration = cellModel.Jh_videoMinimumDuration;
     }
-    if (data.Jh_videoMinimumDuration) {
-        self.oneManager.configuration.videoMinimumDuration = data.Jh_videoMinimumDuration;
-    }
-    
-    if (data.Jh_noShowAddImgBtn==YES) {
+    if (cellModel.Jh_noShowAddImgBtn) {
         self.onePhotoView.showAddCell = NO;
         self.onePhotoView.editEnabled = NO;
     }
-    
-    if (data.Jh_selectImageType == JhSelectImageTypeImage) {
-        if(data.Jh_imageArr.count){
+    if (cellModel.Jh_selectImageType == JhSelectImageTypeImage && self.isInit) {
+        if (cellModel.Jh_imageArr.count) {
             [self.oneManager clearSelectedList];
             NSMutableArray *mUrlArr = @[].mutableCopy;
-            for (id img in data.Jh_imageArr) {
+            for (id img in cellModel.Jh_imageArr) {
                 HXPhotoModel *model ;
                 if([img isKindOfClass:[UIImage class]]){
                     model = [HXPhotoModel photoModelWithImage:img];
@@ -215,105 +191,56 @@
             }
             [self.oneManager addLocalModels:mUrlArr];
             [self.onePhotoView refreshView];
+            self.isInit = NO;
         }
     }
-    if (data.Jh_selectImageType != JhSelectImageTypeImage) {
-        if(data.Jh_initImageArr.count){
+    if (cellModel.Jh_selectImageType != JhSelectImageTypeImage && self.isInit) {
+        if(cellModel.Jh_mixImageArr.count){
             [self.oneManager clearSelectedList];
-            [self.oneManager addCustomAssetModel:data.Jh_initImageArr];
+            [self.oneManager addCustomAssetModel:cellModel.Jh_mixImageArr];
             [self.onePhotoView refreshView];
+            self.isInit = NO;
         }
     }
+    self.onePhotoView.hideDeleteButton = cellModel.Jh_hideDeleteButton;
+#endif
     
-    if(data.Jh_cellBgColor){
-        self.backgroundColor = data.Jh_cellBgColor;
-    }
-    if (data.Jh_tipsInfo.length) {
-        self.tipsLabel.text = data.Jh_tipsInfo;
-        if (data.Jh_tipsInfoColor) {
-            self.tipsLabel.textColor = data.Jh_tipsInfoColor;
-        }
-    }
-    self.onePhotoView.hideDeleteButton = data.Jh_hideDeleteButton;
-    
-    if (data.Jh_Cell_NoEdit == YES) {
-        self.userInteractionEnabled = NO;
-    }else{
-        self.userInteractionEnabled = YES;
-    }
 }
-
-
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    if (_data.Jh_title.length) {
-        //标题固定top
-        CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
-        self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, Jh_SCRREN_WIDTH - 2*Jh_EdgeMargin, Jh_TitleHeight);
-        self.line1.frame= CGRectMake(Jh_LineEdgeMargin,CGRectGetMaxY(self.titleLabel.frame)+Jh_EdgeMargin, Jh_SCRREN_WIDTH - Jh_LineEdgeMargin, 1);
-        self.BottomImageBgView.frame = CGRectMake(0, CGRectGetMaxY(_line1.frame)+10, Jh_SCRREN_WIDTH, CGRectGetHeight(self.onePhotoView.frame)+10);
-    }else{
-        self.BottomImageBgView.frame = CGRectMake(0,10, Jh_SCRREN_WIDTH, CGRectGetHeight(self.onePhotoView.frame)+10);
+    self.rightTextView.hidden = YES;
+    if (!self.cellModel.Jh_title.length) {
+        self.line.hidden = YES;
+#if kHasHXPhotoPicker
+        self.bottomImageBgView.frame = CGRectMake(0, 0, Jh_ScreenWidth, CGRectGetHeight(self.onePhotoView.frame)+Jh_OnePhotoViewTopMargin*2);
+#endif
+    } else {
+#if kHasHXPhotoPicker
+        self.line.hidden = NO;
+        self.line.frame = CGRectMake(Jh_LineLeftMargin, CGRectGetMaxY(self.titleLabel.frame)+Jh_Margin+Jh_LineHeight, Jh_ScreenWidth - Jh_LineLeftMargin, Jh_LineHeight);
+        self.bottomImageBgView.frame = CGRectMake(0, CGRectGetMaxY(self.line.frame), Jh_ScreenWidth, CGRectGetHeight(self.onePhotoView.frame)+Jh_OnePhotoViewTopMargin*2);
+#endif
     }
-    
-    if (_data.Jh_tipsInfo.length) {
-        self.tipsLabel.frame = CGRectMake(Jh_Margin_left, CGRectGetMaxY(self.BottomImageBgView.frame)+5, Jh_SCRREN_WIDTH-Jh_Margin_left*2, 15);
+    //右侧按钮
+    if (self.cellModel.Jh_rightBtnWidth>0) {
+        CGFloat topHeight = self.cellModel.Jh_titleHeight + Jh_Margin*2;
+        CGFloat rightBtnWidth = Jh_SetValueAndDefault(self.cellModel.Jh_rightBtnWidth, 0);
+        CGFloat rightBtnHeight = Jh_SetValueAndDefault(self.cellModel.Jh_rightBtnHeight, topHeight);
+        CGFloat rightBtnX = Jh_ScreenWidth-Jh_RightViewLeftMargin-rightBtnWidth-Jh_RightMargin;
+        CGFloat rightBtnY = self.cellModel.Jh_rightBtnHeight ? (topHeight - self.cellModel.Jh_rightBtnHeight)/2 : 0;
+        self.rightBtn.Jh_x = rightBtnX;
+        self.rightBtn.Jh_y = rightBtnY;
+        self.rightBtn.Jh_height = rightBtnHeight;
     }
-    
-}
-
-//高度自适应
-+ (CGFloat)heightWithCellModelData:(JhFormCellModel *)data {
-    NSInteger row = 1;
-    if (data.Jh_noShowAddImgBtn == YES) {
-        row = data.Jh_imageAllList.count <= itemLineCount ? 1 : 2;
-    }else{
-        row = data.Jh_maxImageCount>itemLineCount && data.Jh_imageAllList.count >= itemLineCount ?2:1;
+    //提示文字
+    if (self.cellModel.Jh_tipInfo.length) {
+        self.tipLabel.frame = CGRectMake(Jh_LeftMargin, self.cellModel.Jh_cellHeight - Jh_TipInfoTopMargin*2 - Jh_TipInfoHeight, Jh_ScreenWidth-Jh_LeftMargin*2, Jh_TipInfoHeight);
     }
-    row = row > 2?2: row ; //此处限制最多2行
-    CGFloat titleHeight = data.Jh_title.length ? Jh_TitleHeight+1 +Jh_EdgeMargin*2 : 0 ;
-    CGFloat tipHeight = data.Jh_tipsInfo.length ? 25 : 0 ;
-    CGFloat height = titleHeight+10+itemH*row +10+tipHeight+5;
-    return height;
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    if (@available(iOS 13.0, *)) {
-        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self configureIOS13Theme];
-        }
+    if (self.cellModel.Jh_hiddenCustomLine == YES) {
+        self.line.hidden = YES;
     }
-}
-
--(void)configureIOS13Theme {
-    if (@available(iOS 13.0, *)) {
-        if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-            self.line1.backgroundColor = [UIColor separatorColor];
-        }else {
-            self.line1.backgroundColor = BaselineColor;
-        }
-    }
-}
-
-
-@end
-
-
-@implementation UITableView (JhFormCustumBottomCell)
-
-- (JhFormSelectImageCell *)SelectImageCellWithId:(NSString *)cellId {
-    JhFormSelectImageCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
-    if (!cell) {
-        cell = [[JhFormSelectImageCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.baseTableView = self;
-    }
-    return cell;
 }
 
 @end
-
-

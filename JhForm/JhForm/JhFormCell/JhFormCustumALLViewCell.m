@@ -9,70 +9,42 @@
 #import "JhFormCustumALLViewCell.h"
 #import "JhFormCellModel.h"
 #import "JhFormConst.h"
+#import "JhTextView.h"
+
+@interface JhFormCustumALLViewCell ()
+
+/** 完全自定义视图 */
+@property (nonatomic, strong) UIView *custumALLView;
+
+@end
 
 @implementation JhFormCustumALLViewCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
+-(UIView *)custumALLView {
+    if (!_custumALLView) {
+        UIView *view = [[UIView alloc]init];
+        view.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:view];
+        _custumALLView = view;
+    }
+    return _custumALLView;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
-}
+#pragma mark - JhFormProtocol
 
-
-
--(UIView *)CustumALLView{
-    if (!_CustumALLView) {
-        _CustumALLView = [[UIView alloc]init];
-        _CustumALLView.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:_CustumALLView];
-        
-    }
-    return _CustumALLView;
-}
-
-
--(void)setData:(JhFormCellModel *)data{
-    _data= data;
-    if(data.Jh_cellBgColor){
-        self.backgroundColor = data.Jh_cellBgColor;
-    }
-    if (data.Jh_Cell_NoEdit == YES) {
-        self.userInteractionEnabled = NO;
-    }else{
-        self.userInteractionEnabled = YES;
-    }
+- (void)Jh_configCellModel:(JhFormCellModel *)cellModel {
+    [super Jh_configCellModel:cellModel];
     
-    if (self.data.Jh_hiddenLine == YES) {
-        self.separatorInset=UIEdgeInsetsMake(0,0,0,MAXFLOAT);
-    }
+    self.titleLabel.hidden = YES;
+    self.rightTextView.hidden = YES;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
-    self.CustumALLView.frame =CGRectMake(Jh_Margin_left,0, Jh_SCRREN_WIDTH -Jh_Margin_left-Jh_EdgeMargin, self.data.Jh_defaultHeight);
-}
-
-
-
-@end
-
-
-
-@implementation UITableView (JhFormCustumALLViewCell)
-
-- (JhFormCustumALLViewCell *)CustumALLCellWithId:(NSString *)cellId {
-    JhFormCustumALLViewCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
-    if (!cell) {
-        cell = [[JhFormCustumALLViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.baseTableView = self;
+    self.custumALLView.frame =CGRectMake(Jh_LeftMargin,0, Jh_ScreenWidth -Jh_LeftMargin-Jh_RightMargin, self.cellModel.Jh_cellHeight);
+    if (self.cellModel.Jh_custumALLViewBlock) {
+        self.cellModel.Jh_custumALLViewBlock(self.custumALLView);
     }
-    return cell;
 }
 
 @end

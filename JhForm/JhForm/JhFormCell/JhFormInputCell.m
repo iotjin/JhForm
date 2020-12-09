@@ -8,172 +8,177 @@
 
 #import "JhFormInputCell.h"
 #import "JhFormCellModel.h"
+#import "JhTextView.h"
 #import "JhFormConst.h"
-#import "SelwynExpandableTextView.h"
-#import "UITextView+TextLimit.h"
-#import "NSString+JhForm.h"
-
-@interface JhFormInputCell()<UITextViewDelegate>
-@end
 
 @implementation JhFormInputCell
 
+#pragma mark - JhFormProtocol
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-}
-
--(void)setData:(JhFormCellModel *)data{
-    _data= data;
-    
-    if (data.Jh_titleMultiLineShow==YES) {
+- (void)Jh_configCellModel:(JhFormCellModel *)cellModel {
+    self.cellModel = cellModel;
+    if (cellModel.Jh_titleMultiLineShow) {
         self.titleLabel.adjustsFontSizeToFitWidth = NO;
         self.titleLabel.numberOfLines = 0;
     }
-    
-    //    self.titleLabel.text = data.title;
-    self.titleLabel.attributedText = data.Jh_attributedTitle;
-    self.rightTextView.text = [data.Jh_info addUnit:data.Jh_unit];
-    self.rightTextView.attributedPlaceholder = data.Jh_attributedPlaceholder;
-    self.rightTextView.editable = data.Jh_editable;
-    self.rightTextView.keyboardType = data.Jh_keyboardType;
-    self.accessoryType = UITableViewCellAccessoryNone;
-    
+    self.titleLabel.text = cellModel.Jh_title;
+    self.titleLabel.font = JhFontsize(Jh_SetValueAndDefault(cellModel.Jh_titleFont, Jh_TitleFont));
+    self.titleLabel.textColor = Jh_SetValueAndDefault(cellModel.Jh_titleTextColor, Jh_TitleColor);
+    self.userInteractionEnabled = !cellModel.Jh_cellNotEdit;
+    self.accessoryType =cellModel.Jh_isShowArrow ==YES? UITableViewCellAccessoryDisclosureIndicator: UITableViewCellAccessoryNone;
+    if (cellModel.Jh_cellBgColor) {
+        self.backgroundColor = cellModel.Jh_cellBgColor;
+    }
+    //下划线
+    if (cellModel.Jh_lineLeftMargin) {
+        self.separatorInset=UIEdgeInsetsMake(0,cellModel.Jh_lineLeftMargin, 0, 0);
+    }
+    if (cellModel.Jh_hiddenLine == YES) {
+        self.separatorInset=UIEdgeInsetsMake(0,0,0,MAXFLOAT);
+    }
+    self.rightTextView.text = cellModel.Jh_info;
+    self.rightTextView.textColor = Jh_SetValueAndDefault(cellModel.Jh_infoTextColor, Jh_InfoTextColor);
+    self.rightTextView.font = JhFontsize(Jh_SetValueAndDefault(cellModel.Jh_infoFont, Jh_InfoFont));
+    self.rightTextView.editable = cellModel.Jh_editable;
+    self.rightTextView.keyboardType = cellModel.Jh_keyboardType;
+    self.rightTextView.Jh_placeholder = cellModel.Jh_placeholder;
+    self.rightTextView.Jh_textContainerInset = cellModel.Jh_textContainerInset;
+    self.rightTextView.Jh_placeholderFont = Jh_SetValueAndDefault(cellModel.Jh_placeholderFont, Jh_InfoFont);
+    self.rightTextView.Jh_placeholderColor = Jh_SetValueAndDefault(cellModel.Jh_placeholderColor, Jh_PlaceholderColor);
+    self.rightTextView.Jh_maxLength = Jh_SetValueAndDefault(cellModel.Jh_maxInputLength, Jh_MaxInputLength);
+    self.rightTextView.Jh_showLengthNumber = cellModel.Jh_showLength;
+    JhWeakSelf
+    self.rightTextView.Jh_cellInputBlock = ^(NSString * _Nonnull inputText, NSInteger inputState) {
+        cellModel.Jh_info = inputText;
+        [UIView performWithoutAnimation:^{
+            [weakSelf.baseTableView beginUpdates];
+            [weakSelf.baseTableView endUpdates];
+        }];
+        if (cellModel.Jh_cellInputBlock) {
+            cellModel.Jh_cellInputBlock(inputText, inputState);
+        }
+    };
+    //左侧图片
+    if (self.cellModel.Jh_leftImgName.length) {
+        self.leftImgView.image = [UIImage imageNamed:self.cellModel.Jh_leftImgName];
+    }
     //设置右侧文本的对齐方式
-    if (data.Jh_InfoTextAlignment == JhFormCellInfoTextAlignmentRight) {
-        self.rightTextView.textAlignment = NSTextAlignmentRight;
+    if (cellModel.Jh_InfoTextAlignment == JhFormCellInfoTextAlignmentRight) {
+        self.rightTextView.Jh_textAlignment = NSTextAlignmentRight;
     }
-    if(data.Jh_cellBgColor){
-        self.backgroundColor = data.Jh_cellBgColor;
+    if (cellModel.Jh_rightViewWidth>0 && cellModel.Jh_rightViewBlock) {
+        cellModel.Jh_rightViewBlock(self.rightView);
     }
-    if(data.Jh_rightViewWidth>0 && data.Jh_rightViewBlock){
-        data.Jh_rightViewBlock(self.rightView);
+    //右侧按钮
+    if (self.cellModel.Jh_rightBtnWidth>0) {
+        self.rightBtn.backgroundColor = Jh_SetValueAndDefault(self.cellModel.Jh_rightBtnBgColor, [UIColor clearColor]);
+        self.rightBtn.layer.cornerRadius = Jh_SetValueAndDefault(self.cellModel.Jh_rightBtnCornerRadius, 0);
+        //右侧按钮标题
+        if (self.cellModel.Jh_rightBtnTitle.length) {
+            //按钮的title右对齐
+            if (self.cellModel.Jh_rightBtnTitleCenter) {
+                self.rightBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+            } else {
+                self.rightBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+            }
+            [self.rightBtn setTitle:self.cellModel.Jh_rightBtnTitle forState:UIControlStateNormal];
+            self.rightBtn.titleLabel.font = JhFontsize(Jh_SetValueAndDefault(self.cellModel.Jh_rightBtnTitleFont, Jh_SuffixTextFont));
+            UIColor *titleColor = Jh_SetValueAndDefault(self.cellModel.Jh_rightBtnTitleColor,Jh_SuffixTextColor);
+            [self.rightBtn setTitleColor:titleColor forState:UIControlStateNormal];
+        }
+        //右侧按钮图片
+        if (self.cellModel.Jh_rightBtnImgName.length) {
+            UIImage *btnImage = [UIImage imageNamed:self.cellModel.Jh_rightBtnImgName];
+            [self.rightBtn setImage:btnImage forState:UIControlStateNormal];
+            UIImage *selectImg = btnImage;
+            if (self.cellModel.Jh_rightBtnSelectImgName.length) {
+                selectImg = [UIImage imageNamed:self.cellModel.Jh_rightBtnSelectImgName];
+            }
+            [self.rightBtn setImage:selectImg forState:UIControlStateSelected];
+            if (cellModel.Jh_rightBtnCornerRadius) {
+                self.rightBtn.layer.masksToBounds=YES;
+            }
+        }
     }
-    if (data.Jh_Cell_NoEdit == YES) {
-        self.userInteractionEnabled = NO;
-    }else{
-        self.userInteractionEnabled = YES;
+    //提示文字
+    if (cellModel.Jh_tipInfo.length) {
+        self.tipLabel.text = cellModel.Jh_tipInfo;
+        self.tipLabel.textColor = Jh_SetValueAndDefault(cellModel.Jh_tipInfoColor, Jh_TipInfoColor);
+        self.tipLabel.font = JhFontsize(Jh_SetValueAndDefault(cellModel.Jh_tipInfoFont, Jh_TipInfoFont));
     }
-    
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
-    if (!_data.Jh_title.length) {
-        self.titleLabel.frame = CGRectMake(Jh_Margin_left-Jh_redStarLeftOffset, Jh_EdgeMargin, Jh_redStarLeftOffset+5, Jh_TitleHeight);
-        CGFloat newHeight = [JhFormInputCell heightWithCellModelData:self.data];
-        
-        if(_data.Jh_rightViewWidth>0){
-            self.rightTextView.frame = CGRectMake(Jh_Margin_left+3, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - 2*Jh_Margin_left - _data.Jh_rightViewWidth-3, newHeight - 2*Jh_EdgeMargin);
-            self.rightView.frame =CGRectMake(CGRectGetMaxX(self.rightTextView.frame), 0, _data.Jh_rightViewWidth, self.bounds.size.height);
-        }else{
-            self.rightTextView.frame = CGRectMake(Jh_Margin_left+3, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - 2*Jh_Margin_left-3, newHeight - 2*Jh_EdgeMargin);
+    //获取高度
+    CGFloat cellHeight = self.cellModel.Jh_cellHeight;
+    CGFloat titleHeight = self.cellModel.Jh_titleHeight;
+    CGFloat textViewHeight = self.cellModel.Jh_textViewHeight;
+    //cell垂直居中
+    BOOL isCenter = self.cellModel.Jh_cellTextVerticalCenter == true || Jh_CellTextVerticalStyle == JhCellTextVerticalStyleCenter;
+    CGFloat titleY = isCenter ? (cellHeight-titleHeight)/2 : Jh_Margin;
+    //红星
+    JhTitleShowType titleShowType = Jh_SetValueAndDefault(self.cellModel.Jh_titleShowType, Jh_TitleShowType);
+    BOOL isShowRedStar = titleShowType == JhTitleShowTypeRedStarFront && self.cellModel.Jh_required == YES;
+    self.redStarLabel.hidden = !isShowRedStar;
+    if (isShowRedStar) {
+        self.redStarLabel.frame = CGRectMake(Jh_LeftMargin- Jh_RedStarWidth, isCenter ? titleY : Jh_Margin, isShowRedStar ? Jh_RedStarWidth : 0, titleHeight);
+    }
+    //标题
+    CGFloat titleWidth = self.cellModel.Jh_title.length ? self.cellModel.Jh_titleWidth : 0;
+    self.titleLabel.frame = CGRectMake(Jh_LeftMargin, titleY, titleWidth, titleHeight);
+    //如设置左侧图片，则显示图片
+    CGFloat imgAndMarginWidth = 0;
+    if (self.cellModel.Jh_leftImgName.length) {
+        CGFloat imgW = Jh_SetValueAndDefault(self.cellModel.Jh_leftImgWH, Jh_LeftImgWH);
+        CGFloat marginW = Jh_SetValueAndDefault(self.cellModel.Jh_leftImgRightMargin, Jh_LeftImgRightMargin);
+        imgAndMarginWidth = imgW + marginW;
+        self.leftImgView.frame = CGRectMake(Jh_LeftMargin, isCenter ? (cellHeight-imgW)/2 : Jh_Margin,imgW, imgW);
+        if (titleWidth) {
+            self.titleLabel.Jh_x = Jh_LeftMargin+imgAndMarginWidth;
+            self.titleLabel.Jh_width = titleWidth-imgAndMarginWidth;
         }
-    }else{
-        /********************************* 左侧标题换行 ********************************/
-        CGFloat titleHeight = _data.Jh_titleHeight;
-        CGFloat titleLabel_X = (_data.Jh_titleShowType==JhTitleShowTypeRedStarFront && _data.Jh_required ==YES) ?(Jh_Margin_left-Jh_redStarLeftOffset):Jh_Margin_left;
-        self.titleLabel.frame = CGRectMake(titleLabel_X, Jh_EdgeMargin, self.data.Jh_titleWidth, titleHeight);
-
-        if (_data.Jh_titleMultiLineShow==YES) {
-            if (titleHeight >(_data.Jh_defaultHeight-Jh_EdgeMargin*2)){
-                _data.Jh_defaultHeight = titleHeight+Jh_EdgeMargin*2;
-                [self.baseTableView reloadData];
+    }
+    //rightTextView
+    CGFloat textView_X = !self.cellModel.Jh_title.length ? (Jh_LeftMargin+imgAndMarginWidth+Jh_InfoLeftMargin) : (Jh_LeftMargin+titleWidth+Jh_InfoLeftMargin);
+    CGFloat textView_Y = isCenter ? (cellHeight - textViewHeight)/2 : Jh_Margin;
+    self.rightTextView.frame = CGRectMake(textView_X, textView_Y, self.cellModel.Jh_textViewWidth,textViewHeight);
+    //右侧按钮
+    if (self.cellModel.Jh_rightBtnWidth>0) {
+        CGFloat rightBtnY = self.cellModel.Jh_rightBtnHeight ? (cellHeight - self.cellModel.Jh_rightBtnHeight)/2 : 0;
+        CGFloat rightBtnWidth = Jh_SetValueAndDefault(self.cellModel.Jh_rightBtnWidth, 0);
+        CGFloat rightBtnHeight = Jh_SetValueAndDefault(self.cellModel.Jh_rightBtnHeight, cellHeight);
+        self.rightBtn.hidden = NO;
+        self.rightBtn.frame = CGRectMake(CGRectGetMaxX(self.rightTextView.frame)+Jh_RightViewLeftMargin, rightBtnY, rightBtnWidth, rightBtnHeight);
+        //右侧按钮图片
+        if (self.cellModel.Jh_rightBtnImgName.length) {
+            CGFloat width = self.cellModel.Jh_rightBtnWidth;
+            CGFloat imgWH = Jh_SetValueAndDefault(self.cellModel.Jh_rightBtnImgWH, Jh_LeftImgWH);
+            CGFloat imgTextMargin = Jh_SetValueAndDefault(self.cellModel.Jh_rightBtnImgTextMargin, Jh_RightBtnImgTextMargin);
+            //图片右对齐
+            if (self.cellModel.Jh_rightBtnTitle.length) {
+                CGFloat textWidth = [NSString Jh_autoWidthWithString:self.cellModel.Jh_rightBtnTitle font:Jh_SetValueAndDefault(self.cellModel.Jh_rightBtnTitleFont, Jh_SuffixTextFont)];
+                CGFloat left = width-imgTextMargin-textWidth-imgWH;
+                CGFloat right = textWidth+imgTextMargin;
+                CGFloat top = (cellHeight-imgWH)/2;
+                CGFloat bottom = top;
+                self.rightBtn.imageEdgeInsets = UIEdgeInsetsMake(top, left, bottom, right);
             }
         }
-        /********************************* 左侧标题换行 ********************************/
-        
-        CGFloat newHeight = [JhFormInputCell heightWithCellModelData:self.data];
-        if(_data.Jh_rightViewWidth>0){
-            self.rightTextView.frame = CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 3*Jh_EdgeMargin)-_data.Jh_rightViewWidth, newHeight - 2*Jh_EdgeMargin);
-            self.rightView.frame =CGRectMake(CGRectGetMaxX(self.rightTextView.frame), 0, _data.Jh_rightViewWidth, self.bounds.size.height);
-        }else{
-            self.rightTextView.frame = CGRectMake(self.data.Jh_titleWidth + 2*Jh_EdgeMargin, Jh_EdgeMargin+2, Jh_SCRREN_WIDTH - (self.data.Jh_titleWidth + 3*Jh_EdgeMargin), newHeight - 2*Jh_EdgeMargin);
-        }
-        
-        //文字垂直居中
-        if (_data.Jh_cellTextVerticalCenter == true || Jh_CellTextVerticalStyle == JhCellTextVerticalStyleCenter) {
-            CGFloat titleLabelY = (newHeight -titleHeight)/2;
-            self.titleLabel.hx_y = titleLabelY;
-            CGFloat infoHeight = [JhFormInputCell infoHeightWithCellModelData:self.data];
-            CGFloat infoY = (newHeight -infoHeight)/2;
-            self.rightTextView.hx_y = infoY;
-            self.rightTextView.hx_h = infoHeight;
-        }
+    }
+    //右侧自定义view
+    if (self.cellModel.Jh_rightViewWidth>0) {
+        self.rightBtn.hidden = YES;
+        self.rightView.frame =CGRectMake(CGRectGetMaxX(self.rightTextView.frame)+Jh_RightViewLeftMargin, 0, self.cellModel.Jh_rightViewWidth, cellHeight);
     }
 }
 
-- (void)textViewDidBeginEditing:(UITextView *)textView {
-    self.rightTextView.text = self.data.Jh_info;
-}
-
-- (void)textViewDidChange:(UITextView *)textView {
-    if (self.data.Jh_maxInputLength > 0) {
-        // 限制输入字数
-        [self.rightTextView textLimitWithMaxLength:self.data.Jh_maxInputLength];
+//右侧按钮点击事件
+- (void)Jh_clickRightButton:(UIButton *)button {
+    button.selected = !button.isSelected;
+    if (self.cellModel.Jh_rightBtnWidth>0 && self.cellModel.Jh_rightBtnClickBlock) {
+        self.cellModel.Jh_rightBtnClickBlock(self.rightBtn);
     }
-    if (self.inputCompletion) {
-        self.inputCompletion(self.rightTextView.text);
-    }
-    if (_data.JhInputBlock) {
-        _data.JhInputBlock(self.rightTextView.text ,NO);
-    }
-    // 防止输入时表单因刷新动画抖动
-    [UIView performWithoutAnimation:^{
-        [self.baseTableView beginUpdates];
-        [self.baseTableView endUpdates];
-    }];
-}
-
-
-- (void)textViewDidEndEditing:(UITextView *)textView {
-    self.rightTextView.text = [self.data.Jh_info addUnit:self.data.Jh_unit];
-    if (_data.JhInputBlock) {
-        _data.JhInputBlock(self.rightTextView.text ,YES);
-    }
-}
-
-+ (CGFloat)heightWithCellModelData:(JhFormCellModel *)data{
-    CGFloat width;
-    if (!data.Jh_title.length) {
-        width = (data.Jh_rightViewWidth>0) ? (2*Jh_Margin_left+data.Jh_rightViewWidth+3) : (2*Jh_Margin_left+3);
-    }else{
-        width = (data.Jh_rightViewWidth>0) ? (data.Jh_titleWidth + 3*Jh_EdgeMargin+data.Jh_rightViewWidth) : (data.Jh_titleWidth + 3*Jh_EdgeMargin);
-    }
-    CGFloat infoHeight = [data.Jh_info sizeWithFontSize:Jh_InfoFont maxSize:CGSizeMake(Jh_SCRREN_WIDTH -width, MAXFLOAT)].height;
-    return MAX(data.Jh_defaultHeight, infoHeight + 2*Jh_EdgeMargin);
-}
-
-+ (CGFloat)infoHeightWithCellModelData:(JhFormCellModel *)data{
-    CGFloat width;
-    if (!data.Jh_title.length) {
-        width = (data.Jh_rightViewWidth>0) ? (2*Jh_Margin_left+data.Jh_rightViewWidth+3) : (2*Jh_Margin_left+3);
-    }else{
-        width = (data.Jh_rightViewWidth>0) ? (data.Jh_titleWidth + 3*Jh_EdgeMargin+data.Jh_rightViewWidth) : (data.Jh_titleWidth + 3*Jh_EdgeMargin);
-    }
-    CGFloat infoHeight = [data.Jh_info sizeWithFontSize:Jh_InfoFont maxSize:CGSizeMake(Jh_SCRREN_WIDTH - width, MAXFLOAT)].height;
-    return infoHeight;
-}
-
-
-@end
-
-
-@implementation UITableView (JhFormInputCell)
-
-- (JhFormInputCell *)inputCellWithId:(NSString *)cellId {
-    JhFormInputCell *cell = [self dequeueReusableCellWithIdentifier:cellId];
-    if (!cell) {
-        cell = [[JhFormInputCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.baseTableView = self;
-    }
-    return cell;
 }
 
 @end

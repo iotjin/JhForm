@@ -7,224 +7,221 @@
 //
 
 #import "JhFormCellModel.h"
-#import "JhFormConst.h"
 #import "NSString+JhForm.h"
-
-static NSString *const JhUnitYuan = @"元";
-static NSString *const JhUnitYear = @"年";
-static NSString *const JhUnitMillion = @"万元";
 
 @interface JhFormCellModel()
 
-+ (instancetype)Jh_cellWithTitle:(NSString *)title info:(NSString *)info cellType:(JhFormCellType)cellType editable:(BOOL)editable required:(BOOL)required keyboardType:(UIKeyboardType)keyboardType;
-
-+ (instancetype)Jh_cellWithTitle:(NSString *)title info:(NSString *)info cellType:(JhFormCellType)cellType;
-
-/** 输入类型的cell(默认样式,居左,可编辑) */
-+ (instancetype)Jh_inputCellWithTitle:(NSString *)title info:(NSString *)info required: (BOOL)required keyboardType:(UIKeyboardType)keyboardType;
-
-/** 选择类型的cell(默认样式,居左,可编辑) */
-+ (instancetype)Jh_selectCellWithTitle:(NSString *)title info:(NSString *)info required: (BOOL)required;
-
-/** 选择图片的cell */
-+ (instancetype)Jh_imageCellWithTitle:(NSString *)title required: (BOOL)required;
-
-/** 密码输入类型的cell(默认样式,居左,可编辑) */
-+ (instancetype)Jh_pwdInputCellWithTitle:(NSString *)title info:(NSString *)info required: (BOOL)required;
-
-/** 完全自定义类型的cell */
-+ (instancetype)Jh_custumALLViewCellWithCellHeight:(CGFloat)cellHeight;
-
-/** 按钮单选或多选的cell  */
-+ (instancetype)Jh_selectBtnWithTitle:(NSString *)title editable:(BOOL)editable required:(BOOL)required;
-
-/********************************* 以下方法快速创建本文居右的cell ********************************/
-/** 右侧text 不可编辑的cell */
-+ (instancetype)Jh_TextCellWithTitle:(NSString *)title info:(NSString *)info;
-/** 右侧箭头 可选择的cell */
-+ (instancetype)Jh_ArrowCellWithTitle:(NSString *)title info:(NSString *)info;
-/** 右侧SwitchBtn 的cell */
-+ (instancetype)Jh_SwitchBtnCellWithTitle:(NSString *)title switchBtn_on:(BOOL)Jh_switchBtn_on;
+/** JhFormCellModel_Add 快捷构建新增表单Cell  */
++ (instancetype)Jh_initWithTitle:(NSString *)title info:(NSString *)info cellType:(JhFormCellType)cellType editable:(BOOL)editable required:(BOOL)required keyboardType:(UIKeyboardType)keyboardType images:(NSArray *)images showPlaceholder:(BOOL)showPlaceholder;
 
 @end
 
-inline JhFormCellModel *JhFormCellModel_Add(NSString * _Nonnull title, NSString * _Nullable info, JhFormCellType cellType, BOOL editable, BOOL required, UIKeyboardType keyboardType) {
-    return [JhFormCellModel Jh_cellWithTitle:title info:info cellType:cellType editable:editable required:required keyboardType:keyboardType];
+#pragma mark - ******************************* 快捷构建新增表单Cell ********************************
+
+/**  默认 - 快捷构建新增表单Cell  */
+inline JhFormCellModel *JhFormCellModel_AddCell(NSString * _Nonnull title, NSString * _Nullable info, JhFormCellType cellType, BOOL editable, BOOL required, UIKeyboardType keyboardType) {
+    return [JhFormCellModel Jh_initWithTitle:title info:info cellType:cellType editable:editable required:required keyboardType:keyboardType images:nil showPlaceholder:YES];
 }
 
-inline JhFormCellModel *JhFormCellModel_Info(NSString * _Nonnull title, NSString * _Nullable info, JhFormCellType cellType) {
-    return [JhFormCellModel Jh_cellWithTitle:title info:info cellType:cellType];
+/** 快捷构建展示Cell（ 非必填，不可编辑 ） */
+inline JhFormCellModel *JhFormCellModel_AddInfoCell(NSString * _Nonnull title, NSString * _Nullable info, JhFormCellType cellType) {
+    return [JhFormCellModel Jh_initWithTitle:title info:info cellType:cellType editable:NO required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
 }
 
-/** 快捷添加一个输入类型的cell(默认样式,居左,可编辑) */
-inline JhFormCellModel *JhFormCellModel_AddInputCell(NSString * _Nonnull title,NSString * _Nullable info, BOOL required, UIKeyboardType keyboardType){
-    return [JhFormCellModel Jh_inputCellWithTitle:title info:info required:required keyboardType:keyboardType];
+/** 快捷构建录入Cell（ 左标题，右录入框 (文字居左)，可编辑 ） */
+inline JhFormCellModel *JhFormCellModel_AddInputCell(NSString * _Nonnull title,NSString * _Nullable info, BOOL required, UIKeyboardType keyboardType) {
+    return [JhFormCellModel Jh_initWithTitle:title info:info cellType:JhFormCellTypeInput editable:YES required:required keyboardType:keyboardType images:nil showPlaceholder:YES];
 }
 
-/** 快捷添加一个选择类型的cell(默认样式,居左,可编辑) */
-inline JhFormCellModel *JhFormCellModel_AddSelectCell(NSString * _Nonnull title,NSString * _Nullable info, BOOL required){
-    return [JhFormCellModel Jh_selectCellWithTitle:title info:info required:required];
+/** 快捷构建选择Cell（ 左标题，右文字(居左)，带箭头，可选择 ） */
+inline JhFormCellModel *JhFormCellModel_AddSelectCell(NSString * _Nonnull title,NSString * _Nullable info, BOOL required) {
+    return [JhFormCellModel Jh_initWithTitle:title info:info cellType:JhFormCellTypeSelect editable:YES required:required keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:YES];
 }
 
-/** 快捷添加一个选择图片的cell */
-inline JhFormCellModel *JhFormCellModel_AddImageCell(NSString * _Nonnull title, BOOL required) {
-    return [JhFormCellModel Jh_imageCellWithTitle:title required:required];
+/** 快捷构建一个TextView录入类型的Cell（上标题，下TextView，可编辑，显示字数统计 ）*/
+inline JhFormCellModel *JhFormCellModel_AddTextViewInputCell(NSString * _Nonnull title,NSString * _Nullable info, BOOL required) {
+    JhFormCellModel *model = [JhFormCellModel Jh_initWithTitle:title info:info cellType:JhFormCellTypeTextViewInput editable:YES required:required keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:YES];
+    model.Jh_showLength = YES;
+    return model;
 }
 
-/** 快捷添加一个密码输入类型的cell(默认样式,居左,可编辑) */
+/** 快捷构建密码录入Cell（ 左标题，右录入框 (居左)，可编辑 ） */
 inline JhFormCellModel *JhFormCellModel_AddPwdInputCell(NSString * _Nonnull title,NSString * _Nullable info, BOOL required) {
-    return [JhFormCellModel Jh_pwdInputCellWithTitle:title info:info required:required];
+    return [JhFormCellModel Jh_initWithTitle:title info:info cellType:JhFormCellTypePwdInput editable:YES required:required keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:YES];
 }
 
-/** 快捷添加一个完全自定义View的cell */
-inline JhFormCellModel *JhFormCellModel_AddCustumALLViewCell(CGFloat cellHeight) {
-    return [JhFormCellModel Jh_custumALLViewCellWithCellHeight:cellHeight];
+/** 快捷构建选择图片Cell */
+inline JhFormCellModel *JhFormCellModel_AddImageCell(NSString * _Nonnull title, BOOL required) {
+    return [JhFormCellModel Jh_initWithTitle:title info:nil cellType:JhFormCellTypeSelectImage editable:YES required:required keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
 }
 
-
-/** 快捷添加右侧自定义View cell*/
-inline JhFormCellModel *JhFormCellModel_AddCustumRightCell(NSString * _Nonnull title) {
-    return [JhFormCellModel Jh_cellWithTitle:title info:nil cellType:JhFormCellTypeCustumRight];
-}
-/** 快捷添加底部自定义View cell*/
-inline JhFormCellModel *JhFormCellModel_AddCustumBottomCell(NSString * _Nonnull title) {
-    return  [JhFormCellModel Jh_cellWithTitle:title info:nil cellType:JhFormCellTypeCustumBottom];
-}
-
-/** 快捷添加一个文本居中的 cell*/
-inline JhFormCellModel *JhFormCellModel_AddCenterTextCell(NSString * _Nonnull title) {
-    return [JhFormCellModel Jh_cellWithTitle:title info:nil cellType:JhFormCellTypeCenterTextCell];
-}
-
-/** 快捷添加一个按钮单选或多选的cell */
+/** 快捷构建按钮单选或多选Cell （ 左标题，右文字按钮组，可选择 ）*/
 inline JhFormCellModel *JhFormCellModel_AddSelectBtnCell(NSString * _Nonnull title,BOOL editable, BOOL required) {
-    return [JhFormCellModel Jh_selectBtnWithTitle:title editable:editable required:required];
+    return [JhFormCellModel Jh_initWithTitle:title info:nil cellType:JhFormCellTypeSelectBtn editable:editable required:required keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
 }
 
+/** 快捷构建右侧自定义View Cell */
+inline JhFormCellModel *JhFormCellModel_AddCustumRightCell(NSString * _Nonnull title) {
+    return [JhFormCellModel Jh_initWithTitle:title info:nil cellType:JhFormCellTypeCustumRight editable:NO required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
+}
 
-/********************************* 以下方法快速创建本文居右的cell ********************************/
+/** 快捷构建底部自定义View Cell*/
+inline JhFormCellModel *JhFormCellModel_AddCustumBottomCell(NSString * _Nonnull title) {
+    return [JhFormCellModel Jh_initWithTitle:title info:nil cellType:JhFormCellTypeCustumBottom editable:NO required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
+}
 
-#pragma mark - 添加一个左标题,右文字(居右)的不可编辑的cell
+/** 快捷构建完全自定义View Cell */
+inline JhFormCellModel *JhFormCellModel_AddCustumALLViewCell(CGFloat cellHeight) {
+    JhFormCellModel *model = [JhFormCellModel Jh_initWithTitle:nil info:nil cellType:JhFormCellTypeCustumALLView editable:NO required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
+    model.Jh_cellHeight = cellHeight;
+    return model;
+}
+
+/** 快捷构建 标题居中Cell */
+inline JhFormCellModel *JhFormCellModel_AddCenterTextCell(NSString * _Nonnull title) {
+    return [JhFormCellModel Jh_initWithTitle:title info:nil cellType:JhFormCellTypeCenterTextCell editable:NO required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
+}
+
+#pragma mark - 快速创建本文居右的Cell
+
+/** 右文本 - 快捷添加一个info(居右)的 不可编辑 Cell */
 inline JhFormCellModel *JhFormCellModel_AddRightTextCell(NSString * _Nonnull title, NSString * _Nullable info) {
-    return [JhFormCellModel Jh_TextCellWithTitle:title info:info];
+    JhFormCellModel *model = [JhFormCellModel Jh_initWithTitle:title info:info cellType:JhFormCellTypeInput editable:NO required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
+    model.Jh_InfoTextAlignment = JhFormCellInfoTextAlignmentRight;
+    return model;
 }
-#pragma mark -  添加一个左标题,右文字(居右)的可选择的cell
+
+/** 右箭头 - 快捷添加一个info(居右)带箭头 Cell */
 inline JhFormCellModel *JhFormCellModel_AddRightArrowCell(NSString * _Nonnull title, NSString * _Nullable info) {
-    return [JhFormCellModel Jh_ArrowCellWithTitle:title info:info];
+    JhFormCellModel *model = [JhFormCellModel Jh_initWithTitle:title info:info cellType:JhFormCellTypeSelect editable:NO required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
+    model.Jh_InfoTextAlignment = JhFormCellInfoTextAlignmentRight;
+    return model;
 }
-#pragma mark - 快捷添加一个左标题,右SwitchBtn 的cell
+
+/** 右Switch - 快捷添加一个右侧为 SwitchBtn Cell */
 inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull title, BOOL Jh_switchBtn_on) {
-    return [JhFormCellModel Jh_SwitchBtnCellWithTitle:title switchBtn_on:Jh_switchBtn_on];
-}
-/********************************* 以下方法快速创建本文居右的cell ********************************/
-
-
-
-@implementation JhFormCellModel
-
-
-+ (instancetype)Jh_cellWithTitle:(NSString *)title info:(NSString *)info cellType:(JhFormCellType)cellType editable:(BOOL)editable required:(BOOL)required keyboardType:(UIKeyboardType)keyboardType {
-    return [[self alloc]initWithTitle:title info:info cellType:cellType editable:editable required:required keyboardType:keyboardType images:nil showPlaceholder:YES];
-}
-+ (instancetype)Jh_cellWithTitle:(NSString *)title info:(NSString *)info cellType:(JhFormCellType)cellType {
-    return [[self alloc]initWithTitle:title info:info cellType:cellType editable:NO required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
-}
-
-/** 输入类型的cell(默认样式,居左,可编辑) */
-+ (instancetype)Jh_inputCellWithTitle:(NSString *)title info:(NSString *)info required: (BOOL)required keyboardType:(UIKeyboardType)keyboardType {
-    return [[self alloc]initWithTitle:title info:info cellType:JhFormCellTypeInput editable:YES required:required keyboardType:keyboardType images:nil showPlaceholder:YES];
-}
-
-/** 选择类型的cell(默认样式,居左,可编辑) */
-+ (instancetype)Jh_selectCellWithTitle:(NSString *)title info:(NSString *)info required: (BOOL)required {
-    return [[self alloc]initWithTitle:title info:info cellType:JhFormCellTypeSelect editable:YES required:required keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:YES];
-}
-
-/** 选择图片的cell */
-+ (instancetype)Jh_imageCellWithTitle:(NSString *)title required: (BOOL)required {
-    return [[self alloc]initWithTitle:title info:nil cellType:JhFormCellTypeSelectImage editable:YES required:required keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
-}
-
-/** 密码输入类型的cell(默认样式,居左,可编辑) */
-+ (instancetype)Jh_pwdInputCellWithTitle:(NSString *)title info:(NSString *)info required: (BOOL)required {
-    return [[self alloc]initWithTitle:title info:info cellType:JhFormCellTypePwdInput editable:YES required:required keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:YES];
-}
-
-/** 完全自定义类型的cell*/
-+ (instancetype)Jh_custumALLViewCellWithCellHeight:(CGFloat)cellHeight {
-    JhFormCellModel *model = [[self alloc]initWithTitle:@"" info:@"" cellType:JhFormCellTypeCustumALLView editable:NO required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
-    model.Jh_defaultHeight = cellHeight;
-    return model;
-}
-
-/** 按钮单选或多选的cell  */
-+ (instancetype)Jh_selectBtnWithTitle:(NSString *)title editable:(BOOL)editable required:(BOOL)required {
-    return [[self alloc]initWithTitle:title info:@"" cellType:JhFormCellTypeSelectBtn editable:editable required:required keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
-}
-
-
-/********************************* 本文居右的cell ********************************/
-
-/** 右侧text 不可编辑的cell */
-+ (instancetype)Jh_TextCellWithTitle:(NSString *)title info:(NSString *)info {
-    JhFormCellModel *model = [[self alloc]initWithTitle:title info:info cellType:JhFormCellTypeInput editable:NO required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
-    model.Jh_InfoTextAlignment = JhFormCellInfoTextAlignmentRight;
-    return model;
-}
-/** 右侧箭头 可选择的cell */
-+ (instancetype)Jh_ArrowCellWithTitle:(NSString *)title info:(NSString *)info {
-    JhFormCellModel *model = [[self alloc]initWithTitle:title info:info cellType:JhFormCellTypeSelect editable:YES required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
-    model.Jh_InfoTextAlignment = JhFormCellInfoTextAlignmentRight;
-    return model;
-}
-/** 右侧SwitchBtn 的cell */
-+ (instancetype)Jh_SwitchBtnCellWithTitle:(NSString *)title switchBtn_on:(BOOL)Jh_switchBtn_on {
-    JhFormCellModel *model = [[self alloc]initWithTitle:title info:nil cellType:JhFormCellTypeRightSwitchBtn editable:YES required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
+    JhFormCellModel *model = [JhFormCellModel Jh_initWithTitle:title info:nil cellType:JhFormCellTypeSwitchBtn editable:YES required:NO keyboardType:UIKeyboardTypeDefault images:nil showPlaceholder:NO];
     model.Jh_InfoTextAlignment = JhFormCellInfoTextAlignmentRight;
     model.Jh_switchBtn_on = Jh_switchBtn_on;
     return model;
 }
 
+@implementation JhFormCellModel
 
++ (instancetype)Jh_initWithTitle:(NSString *)title info:(NSString *)info cellType:(JhFormCellType)cellType editable:(BOOL)editable required:(BOOL)required keyboardType:(UIKeyboardType)keyboardType images:(NSArray *)images showPlaceholder:(BOOL)showPlaceholder {
+    return [[self alloc] initWithTitle:title info:info cellType:cellType editable:editable required:required keyboardType:keyboardType images:images showPlaceholder:showPlaceholder];
+}
+
+
+#pragma mark - ******************************* init ********************************
 
 - (instancetype)initWithTitle:(NSString *)title info:(NSString *)info cellType:(JhFormCellType)cellType editable:(BOOL)editable required:(BOOL)required keyboardType:(UIKeyboardType)keyboardType images:(NSArray *)images showPlaceholder:(BOOL)showPlaceholder {
     self = [super init];
     if (self) {
-        self.Jh_cellUnitType = JhFormCellUnitTypeNone;
-        self.Jh_maxInputLength = Jh_GlobalMaxInputLength;
-        self.Jh_maxImageCount = self.Jh_maxImageCount ? self.Jh_maxImageCount : Jh_GlobalMaxImages;
-        self.Jh_titleWidth = self.Jh_titleWidth ? self.Jh_titleWidth : Jh_TitleWidth;
+        if (cellType == JhFormCellTypeSelectImage) {
+            self.Jh_maxImageCount = Jh_SetValueAndDefault(self.Jh_maxImageCount, Jh_GlobalMaxImages);
+            self.Jh_imageArr = images;
+        }
+        self.Jh_titleWidth = Jh_SetValueAndDefault(self.Jh_titleWidth, Jh_TitleWidth);
+        self.Jh_titleFont = Jh_SetValueAndDefault(self.Jh_titleFont, Jh_TitleFont);
+        self.Jh_infoFont = Jh_SetValueAndDefault(self.Jh_infoFont, Jh_InfoFont);
         self.Jh_title = title;
         self.Jh_info = info;
         self.Jh_cellType = cellType;
         self.Jh_editable = editable;
         self.Jh_required = required;
-        self.Jh_titleShowType = JhTitleShowTypeRedStarFront;
         self.Jh_keyboardType = keyboardType;
-        self.Jh_imageArr = images;
         self.Jh_showPlaceholder = showPlaceholder;
-        [self jh_setDefaultHeight:cellType];
-        [self jh_setPlaceholderWithShow:showPlaceholder cellModelType:cellType];
-        [self jh_setAttributedTitleWithRequired:required title:title cellModelType:cellType];
+        
+        [self setDefaultHeight:cellType];
+        [self setTitleWithRequired:required title:title cellModelType:cellType];
+        [self setPlaceholderWithShow:showPlaceholder cellModelType:cellType];
+        if (cellType == JhFormCellTypeTextViewInput) {
+            self.Jh_textContainerInset = UIEdgeInsetsMake(8, 8, 8, 8);
+        } else{
+            self.Jh_textContainerInset = UIEdgeInsetsMake(2, 0, -2, 0);
+        }
     }
     return self;
 }
 
-#pragma mark -- 根据表单条目类型设置条目缺省高度
-- (void)jh_setDefaultHeight:(JhFormCellType)cellType {
-    if(cellType ==JhFormCellTypeTextViewInput){
-        self.Jh_defaultHeight = Jh_DefaultTextViewCellHeight;
+-(NSString *)Jh_cellClassName {
+    if (!_Jh_cellClassName) {
+        switch (self.Jh_cellType) {
+            case JhFormCellTypeInput: return @"JhFormInputCell";
+                break;
+            case JhFormCellTypeSelect: return @"JhFormSelectCell";
+                break;
+            case JhFormCellTypeTextViewInput: return @"JhFormTextViewInputCell";
+                break;
+            case JhFormCellTypeCustumRight: return @"JhFormCustumRightCell";
+                break;
+            case JhFormCellTypeSwitchBtn:  return @"JhFormSwitchBtnCell";
+                break;
+            case JhFormCellTypeCenterTextCell: return @"JhFormCenterTextCell";
+                break;
+            case JhFormCellTypeCustumBottom: return @"JhFormCustumBottomCell";
+                break;
+            case JhFormCellTypeSelectImage:  return @"JhFormSelectImageCell";
+                break;
+            case JhFormCellTypePwdInput: return @"JhFormPwdCell";
+                break;
+            case JhFormCellTypeCustumALLView: return @"JhFormCustumALLViewCell";
+                break;
+            case JhFormCellTypeSelectBtn: return @"JhFormSelectBtnCell";
+                break;
+            default:
+                break;
+        }
     }
-    else if(cellType ==JhFormCellTypeCustumBottom){
-        self.Jh_defaultHeight = Jh_DefaultCustumBottomViewCellHeight;
+    return _Jh_cellClassName;
+}
+
+//表单Cell类型设置Cell默认高度
+- (void)setDefaultHeight:(JhFormCellType)cellType {
+    if(cellType ==JhFormCellTypeTextViewInput) {
+        self.Jh_cellHeight = Jh_DefaultInputTextViewHeight+Jh_DefaultCellHeight+Jh_LineHeight;
+    }
+    else if(cellType ==JhFormCellTypeCustumBottom) {
+        self.Jh_cellHeight = Jh_DefaultCustumBottomViewCellHeight;
+    }
+    else if(cellType ==JhFormCellTypeSelectImage) {
+        [self updateSelectImageCellHeight];
     }
     else {
-        self.Jh_defaultHeight = Jh_DefaultCellHeight;
+        self.Jh_cellHeight = Jh_DefaultCellHeight;
     }
 }
 
-#pragma mark -- 设置是否显示输入框占位字符
-- (void)jh_setPlaceholderWithShow:(BOOL)show cellModelType:(JhFormCellType)cellType {
+//设置标题显示
+- (void)setTitleWithRequired:(BOOL)required title:(NSString *)title cellModelType:(JhFormCellType)cellModelType {
+    if (required) {
+        if (Jh_TitleShowType == JhTitleShowTypeAddText) {
+            switch (self.Jh_cellType) {
+                case JhFormCellTypeInput:
+                case JhFormCellTypePwdInput:
+                case JhFormCellTypeTextViewInput:
+                {
+                    title = [NSString stringWithFormat:@"%@(必填)", title];
+                }
+                    break;
+                case JhFormCellTypeSelect:
+                case JhFormCellTypeSelectImage:
+                case JhFormCellTypeSelectBtn:
+                {
+                    title = [NSString stringWithFormat:@"%@(必选)", title];
+                }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    _Jh_title = title;
+}
+
+//设置是否显示录入框占位字符
+- (void)setPlaceholderWithShow:(BOOL)show cellModelType:(JhFormCellType)cellType {
     if (!show) {
         self.Jh_placeholder = @"";
         return;
@@ -248,65 +245,150 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
     }
 }
 
-#pragma mark -- 设置标题显示
-- (void)jh_setAttributedTitleWithRequired:(BOOL)required title:(NSString *)title cellModelType:(JhFormCellType)cellModelType {
-    if (required) {
-        if (self.Jh_titleShowType == JhTitleShowTypeAddText) {
-            switch (self.Jh_cellType) {
-                case JhFormCellTypeInput:
-                case JhFormCellTypePwdInput:
-                case JhFormCellTypeTextViewInput:
-                {
-                    title = [NSString stringWithFormat:@"%@(必填)", title];
-                }
-                    break;
-                case JhFormCellTypeSelect:
-                case JhFormCellTypeSelectImage:
-                {
-                    title = [NSString stringWithFormat:@"%@(必选)", title];
-                }
-                    break;
-                default:
-                    break;
+//更新标题高度
+- (CGFloat )upDateJh_titleHeight {
+    CGFloat titleHeight = Jh_TitleHeight;
+    BOOL isCenter = self.Jh_cellTextVerticalCenter == YES || Jh_CellTextVerticalStyle == JhCellTextVerticalStyleCenter;
+    if (self.Jh_titleMultiLineShow==YES || isCenter) {
+        titleHeight = [NSString Jh_autoHeightWithString:self.Jh_title width:self.Jh_titleWidth font:self.Jh_titleFont];
+    }
+    return self.Jh_titleHeight = titleHeight;
+}
+
+//更新textView宽度
+-(CGFloat )upDateJh_textViewWidth {
+    CGFloat width = 0.0;
+    if (self.Jh_cellType == JhFormCellTypeTextViewInput) {
+        return self.Jh_textViewWidth = Jh_ScreenWidth - Jh_LeftMargin - Jh_RightMargin;
+    }
+    CGFloat leftImgWidth = self.Jh_leftImgName.length ? self.Jh_leftImgWH +self.Jh_leftImgRightMargin : 0;
+    CGFloat rightBtnWidth = self.Jh_rightBtnWidth ? self.Jh_rightBtnWidth +Jh_RightViewLeftMargin: 0;
+    if (!self.Jh_title.length) {
+        width = (self.Jh_rightViewWidth>0) ? (Jh_LeftMargin+leftImgWidth +Jh_InfoLeftMargin+ Jh_RightViewLeftMargin+self.Jh_rightViewWidth +Jh_RightMargin) : (Jh_LeftMargin+Jh_InfoLeftMargin+rightBtnWidth+Jh_RightMargin);
+    } else {
+        width = (self.Jh_rightViewWidth>0) ? (Jh_LeftMargin+self.Jh_titleWidth+Jh_InfoLeftMargin+Jh_RightViewLeftMargin+self.Jh_rightViewWidth+Jh_RightMargin) : (Jh_LeftMargin+self.Jh_titleWidth+Jh_InfoLeftMargin+rightBtnWidth+Jh_RightMargin);
+    }
+    if (self.Jh_isShowArrow || (self.Jh_cellType == JhFormCellTypeSelect && !self.Jh_hiddenArrow) ) {
+        width = width + Jh_rightArrowWidth;
+    }
+    return self.Jh_textViewWidth = Jh_ScreenWidth - width;
+}
+
+//更新textView高度
+-(CGFloat )upDateJh_textViewHeight {
+    CGFloat textViewWidth = [self upDateJh_textViewWidth];
+    CGFloat marginLR = self.Jh_textContainerInset.left + self.Jh_textContainerInset.right;
+    CGFloat marginTB = self.Jh_textContainerInset.top + self.Jh_textContainerInset.bottom;
+    CGFloat textViewHeight = [NSString Jh_autoHeightWithString:self.Jh_info width:textViewWidth-marginLR font:self.Jh_infoFont] + marginTB;
+    if (textViewHeight <= Jh_TitleHeight) {
+        textViewHeight = Jh_TitleHeight;
+    }
+    if (self.Jh_showLength) {
+        textViewHeight += 15;
+    }
+    if (self.Jh_cellType == JhFormCellTypeTextViewInput) {
+        return self.Jh_textViewHeight = MAX(Jh_DefaultInputTextViewHeight,textViewHeight);
+    }
+    if (self.Jh_cellType == JhFormCellTypePwdInput) {
+        return self.Jh_textViewHeight = Jh_DefaultCellHeight - 2*Jh_Margin;
+    }
+    return self.Jh_textViewHeight = textViewHeight;
+}
+
+//更新Cell高度，主要是左标题右info结构的cell
+- (CGFloat )upDateInputCellHeight {
+    CGFloat cellHeight = self.Jh_cellHeight;
+    CGFloat titleHeight = [self upDateJh_titleHeight];
+    CGFloat textViewHeight = [self upDateJh_textViewHeight];
+    CGFloat textHeight = MAX(titleHeight, textViewHeight);
+    if (textHeight + 2*Jh_Margin >= Jh_DefaultCellHeight) {
+        cellHeight = textHeight  + 2*Jh_Margin;
+    } else {
+        cellHeight = cellHeight;
+    }
+    if (self.Jh_cellType == JhFormCellTypeTextViewInput) {
+        CGFloat titleH = self.Jh_title.length ? Jh_DefaultCellHeight:0;
+        if (textHeight > Jh_DefaultInputTextViewHeight) {
+            cellHeight = textHeight +titleH+Jh_LineHeight+Jh_Margin;
+        } else {
+            cellHeight = Jh_DefaultInputTextViewHeight+titleH+Jh_LineHeight+Jh_Margin;
+        }
+    }
+    CGFloat tipHeight = self.Jh_tipInfo.length ? Jh_TipInfoHeight : 0;
+    return self.Jh_cellHeight = cellHeight + tipHeight;
+}
+
+#pragma mark - ******************************* cell 高度计算 ********************************
+
+- (void)upDateJh_cellHeight {
+    if (self.Jh_cellType == JhFormCellTypeSelectImage) {
+        [self updateSelectImageCellHeight];
+    } else if (self.Jh_cellType == JhFormCellTypeSelectBtn) {
+        [self updateSelectBtnCellHeight];
+    } else {
+        [self upDateInputCellHeight];
+    }
+}
+
+//选择图片高度自适应
+-(void)updateSelectImageCellHeight {
+    CGFloat titleHeight = self.Jh_title.length ? self.Jh_titleHeight+Jh_Margin*2 +Jh_LineHeight : 0;
+    CGFloat tipHeight = self.Jh_tipInfo.length>0 ? Jh_TipInfoHeight + Jh_TipInfoTopMargin*2 : 0 ;
+    CGFloat height = titleHeight + tipHeight;
+#if kHasHXPhotoPicker
+    NSInteger row = 1;
+    NSInteger count = self.Jh_imageAllList.count;
+    count = (self.Jh_noShowAddImgBtn == YES || count == self.Jh_maxImageCount)? count : count+1;
+    row = count % Jh_ImageOneLineCount == 0 ? count / Jh_ImageOneLineCount : count / Jh_ImageOneLineCount + 1;
+    CGFloat imageViewHeight = (row-1)*Jh_ImageMargin + row*Jh_ImageHeight;
+    height += Jh_OnePhotoViewTopMargin*2 + imageViewHeight;
+#endif
+    self.Jh_cellHeight = height;
+}
+
+//选择按钮高度自适应
+- (void)updateSelectBtnCellHeight {
+    NSArray *tempArr = self.Jh_selectBtnCell_btnTitleArr;
+    if (!tempArr.count) {
+        return ;
+    }
+    CGFloat kBtnStartX = Jh_SetValueAndDefault(self.Jh_selectBtnCell_leftMargin, Jh_SelectBtnCell_LeftMargin);
+    CGFloat kBtnHorizontalMargin = Jh_SetValueAndDefault(self.Jh_selectBtnCell_btnHorizontalMargin, Jh_SelectBtnCell_BtnHorizontalMargin);
+    CGFloat kBtnVerticalMargin = Jh_SetValueAndDefault(self.Jh_selectBtnCell_btnVerticalMargin, Jh_SelectBtnCell_BtnVerticalMargin);
+    CGFloat kBtnHeight = Jh_SetValueAndDefault(self.Jh_selectBtnCell_btnHeight, Jh_SelectBtnCell_BtnHeight);
+    CGFloat kBtnTitleBlank = Jh_SetValueAndDefault(self.Jh_selectBtnCell_btnTitleBlank, Jh_SelectBtnCell_BtnTitleBlank);
+    CGFloat kBtnIconSpace = Jh_SetValueAndDefault(self.Jh_selectBtnCell_btnIconSpace, Jh_SelectBtnCell_BtnIconSpace);
+    CGFloat kBtnIconW = 20+kBtnIconSpace;
+    //初始行_列的X、Y值设置
+    CGFloat btnX = kBtnStartX;
+    CGFloat btnY = kBtnVerticalMargin;
+    for (int i = 0; i < tempArr.count; i++) {
+        //宽度自适应计算宽度
+        CGFloat btnTextWidth = [tempArr[i] Jh_sizeWithFontSize:Jh_InfoFont maxSize:CGSizeMake(MAXFLOAT,kBtnHeight)].width;
+        //按钮文字左右加空白
+        CGFloat btnWidth = btnTextWidth+kBtnTitleBlank*2 + (self.Jh_selectBtnCell_hiddenLeftIcon ? 0:kBtnIconW);
+        //判断是否换行（宽度计算得知当前行不够放置时换行计算累加Y值）
+        CGFloat rightViewWidth = Jh_ScreenWidth - self.Jh_titleWidth -Jh_RightMargin;
+        if (self.Jh_selectBtnCell_isSingleLineDisplay) {
+            btnX = kBtnStartX;
+            if (i!=0) {
+                btnY += (kBtnHeight+kBtnVerticalMargin);//Y值累加，具体值请结合项目自身需求设置 （值 = 按钮高度+按钮间隙）
+            }
+        } else {
+            if (btnX+btnWidth > rightViewWidth-kBtnStartX) {
+                btnX = kBtnStartX;
+                btnY += (kBtnHeight+kBtnVerticalMargin);//Y值累加，具体值请结合项目自身需求设置 （值 = 按钮高度+按钮间隙）
             }
         }
-        else if (self.Jh_titleShowType == JhTitleShowTypeRedStarFront) {
-            title = [NSString stringWithFormat:@"*%@", title];
-        }
-        else if (self.Jh_titleShowType == JhTitleShowTypeRedStarBack) {
-            title = [NSString stringWithFormat:@"%@*", title];
-        }
+        //一个按钮添加之后累加X值后续计算使用
+        btnX = btnX+btnWidth + kBtnHorizontalMargin;
     }
-    
-    UIColor *TitleColor = self.Jh_titleTextColor ? self.Jh_titleTextColor : Jh_titleColor;
-    
-    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:title attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:Jh_TitleFont], NSForegroundColorAttributeName:TitleColor}];
-    
-    if (@available(iOS 13.0, *)) {
-        if (self.Jh_titleTextColor) {
-            TitleColor = self.Jh_titleTextColor;
-        } else {
-            UIColor *dyColor = [UIColor colorWithDynamicProvider:^UIColor * _Nonnull(UITraitCollection * _Nonnull trainCollection) {
-                if ([trainCollection userInterfaceStyle] == UIUserInterfaceStyleLight) {
-                    return [UIColor labelColor];
-                } else {
-                    return [UIColor labelColor];
-                }
-            }];
-            TitleColor = dyColor;
-        }
-        [attributedTitle  addAttribute:NSForegroundColorAttributeName value:TitleColor range:NSMakeRange(0, title.length)];
+    CGFloat height = btnY + kBtnHeight + kBtnVerticalMargin;
+    if(self.Jh_selectBtnCell_isTopTitleBottomOption){
+        CGFloat titleHeight = self.Jh_title.length ? (Jh_Margin+Jh_TitleHeight):0;
+        height = btnY + kBtnHeight + kBtnVerticalMargin + titleHeight;
     }
-    
-    if (required) {
-        if (self.Jh_titleShowType == JhTitleShowTypeRedStarFront) {
-            [attributedTitle addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 1)];
-        }
-        else if (self.Jh_titleShowType == JhTitleShowTypeRedStarBack) {
-            [attributedTitle addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(title.length - 1, 1)];
-        }
-    }
-    _Jh_attributedTitle = attributedTitle;
+    self.Jh_cellHeight = height;
 }
 
 #pragma mark -- 重写get方法
@@ -321,154 +403,184 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
 }
 
 #pragma mark -- 重写属性set方法，防止单独改变属性无响应效果
-/**
- 设置表单条目附带单位
- */
--(void)setJh_cellUnitType:(JhFormCellUnitType)Jh_cellUnitType {
-    NSString *tempUnit = self.Jh_unit ?: @"";
-    switch (Jh_cellUnitType) {
-        case JhFormCellUnitTypeNone:
-        {
-            tempUnit = @"";
-        }
-            break;
-        case JhFormCellUnitTypeYuan:
-        {
-            tempUnit = JhUnitYuan;
-        }
-            break;
-        case JhFormCellUnitTypeYear:
-        {
-            tempUnit = JhUnitYear;
-        }
-            break;
-        case JhFormCellUnitTypeMillion:
-        {
-            tempUnit = JhUnitMillion;
-        }
-        default:
-            break;
-    }
-    _Jh_unit = tempUnit;
+
+-(void)setJh_cellTextVerticalCenter:(BOOL)Jh_cellTextVerticalCenter {
+    _Jh_cellTextVerticalCenter = Jh_cellTextVerticalCenter;
+    if (self.Jh_cellType == JhFormCellTypeSelect || self.Jh_cellType == JhFormCellTypeSwitchBtn) return;
+    [self upDateJh_cellHeight];
 }
 
-/**
- 根据单位设置单元格单位类别，防止单位与单元格式不一致
- */
--(void)setJh_unit:(NSString *)Jh_unit {
-    _Jh_unit =Jh_unit;
-    if ([Jh_unit isEqualToString:@""]) {
-        _Jh_cellUnitType = JhFormCellUnitTypeNone;
-    }
-    else if (Jh_unit == JhUnitYuan) {
-        _Jh_cellUnitType = JhFormCellUnitTypeYuan;
-    }
-    else if (Jh_unit == JhUnitYear) {
-        _Jh_cellUnitType = JhFormCellUnitTypeYear;
-    }
-    else if (Jh_unit == JhUnitMillion) {
-        _Jh_cellUnitType = JhFormCellUnitTypeMillion;
-    }
-    else {
-        _Jh_cellUnitType = JhFormCellUnitTypeCustom;
-    }
-}
-
--(void)setJh_imageArr:(NSArray *)Jh_imageArr {
-    _Jh_imageArr =Jh_imageArr;
-    [self Jh_selectImageArr];
-}
-
--(void)setJh_title:(NSString *)Jh_title {
-    _Jh_title = Jh_title;
-    [self jh_setAttributedTitleWithRequired:self.Jh_required title:Jh_title cellModelType:self.Jh_cellType];
+-(void)setJh_titleMultiLineShow:(BOOL)Jh_titleMultiLineShow {
+    _Jh_titleMultiLineShow = Jh_titleMultiLineShow;
+    [self upDateJh_cellHeight];
 }
 
 -(void)setJh_required:(BOOL)Jh_required {
     _Jh_required = Jh_required;
-    [self jh_setAttributedTitleWithRequired:Jh_required title:self.Jh_title cellModelType:self.Jh_cellType];
+    [self setTitleWithRequired:Jh_required title:self.Jh_title cellModelType:self.Jh_cellType];
+    [self upDateJh_cellHeight];
 }
 
 -(void)setJh_cellType:(JhFormCellType)Jh_cellType {
     _Jh_cellType = Jh_cellType;
-    [self jh_setDefaultHeight:Jh_cellType];
-    [self jh_setAttributedTitleWithRequired:self.Jh_required title:self.Jh_title cellModelType:Jh_cellType];
-    [self jh_setPlaceholderWithShow:self.Jh_showPlaceholder cellModelType:Jh_cellType];
+    [self setDefaultHeight:Jh_cellType];
+    [self setTitleWithRequired:self.Jh_required title:self.Jh_title cellModelType:Jh_cellType];
+    [self setPlaceholderWithShow:self.Jh_showPlaceholder cellModelType:Jh_cellType];
+    [self upDateJh_cellHeight];
 }
-
--(void)setJh_showPlaceholder:(BOOL)Jh_showPlaceholder {
-    _Jh_showPlaceholder = Jh_showPlaceholder;
-    [self jh_setPlaceholderWithShow:Jh_showPlaceholder cellModelType:self.Jh_cellType];
-}
-
--(void)setJh_placeholder:(NSString *)Jh_placeholder {
-    _Jh_placeholder =Jh_placeholder;
-    NSAttributedString *attributedPlaceholder = [[NSAttributedString alloc]initWithString:Jh_placeholder ?: @"" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:Jh_InfoFont],NSForegroundColorAttributeName:Jh_PlaceholderColor}];
-    _Jh_attributedPlaceholder = attributedPlaceholder;
-}
-
-- (void)setJh_placeholderFont:(CGFloat)Jh_placeholderFont {
-    _Jh_placeholderFont = Jh_placeholderFont;
-    NSAttributedString *attributedPlaceholder = [[NSAttributedString alloc]initWithString:self.Jh_placeholder ?: @"" attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:Jh_placeholderFont],NSForegroundColorAttributeName:Jh_PlaceholderColor}];
-    self.Jh_attributedPlaceholder = attributedPlaceholder;
-}
-
--(void)setJh_attributedPlaceholder:(NSAttributedString *)Jh_attributedPlaceholder {
-    _Jh_attributedPlaceholder = Jh_attributedPlaceholder ?: [[NSAttributedString alloc]initWithString:@""];
-}
-
--(CGFloat)Jh_titleHeight {
-    CGFloat titleHeight;
-    if (self.Jh_titleMultiLineShow==YES) {
-        NSString *title = [NSString stringWithFormat:@"%@",self.Jh_attributedTitle.string];
-        titleHeight = [NSString Jh_stingAutoHeightWithString:title Width:self.Jh_titleWidth Font:Jh_TitleFont];
-        if (titleHeight > Jh_TitleHeight) {
-            titleHeight = titleHeight+5;
-        }else{
-            titleHeight = Jh_TitleHeight;
-        }
-    }else{
-        titleHeight = Jh_TitleHeight;
-    }
-    _Jh_titleHeight =titleHeight;
-    return _Jh_titleHeight;
-}
-
--(void)setJh_tipsInfo:(NSString *)Jh_tipsInfo {
-    _Jh_tipsInfo = Jh_tipsInfo;
-    if (self.Jh_cellType ==JhFormCellTypeSelectImage) {
-        self.Jh_defaultHeight += 25;
-    }
-}
-
-//-(void)setJh_maxImageCount:(NSUInteger)Jh_maxImageCount {
-//    _Jh_maxImageCount =Jh_maxImageCount;
-//    if (self.Jh_cellType ==JhFormCellTypeSelectImage) {
-//        if (Jh_maxImageCount<5) {
-//            self.Jh_defaultHeight = Jh_DefaultSelectImageCellHeight_oneRow;
-//        }
-//    }
-//}
-
 
 -(void)setJh_titleShowType:(JhTitleShowType)Jh_titleShowType {
     _Jh_titleShowType = Jh_titleShowType;
-    [self jh_setAttributedTitleWithRequired:self.Jh_required title:self.Jh_title cellModelType:self.Jh_cellType];
+    [self setTitleWithRequired:self.Jh_required title:self.Jh_title cellModelType:self.Jh_cellType];
+    [self upDateJh_cellHeight];
 }
 
 -(void)setJh_titleHiddenRedStar:(BOOL)Jh_titleHiddenRedStar {
     _Jh_titleHiddenRedStar = Jh_titleHiddenRedStar;
     if (Jh_titleHiddenRedStar ==YES) {
         self.Jh_titleShowType = JhTitleShowTypeOnlyTitle;
-    }else{
+    } else {
         self.Jh_titleShowType = JhTitleShowTypeRedStarFront;
     }
 }
 
--(void)setJh_titleTextColor:(UIColor *)Jh_titleTextColor {
-    _Jh_titleTextColor = Jh_titleTextColor;
-    [self jh_setAttributedTitleWithRequired:self.Jh_required title:self.Jh_title cellModelType:self.Jh_cellType];
+-(void)setJh_title:(NSString *)Jh_title {
+    _Jh_title = Jh_title;
+    [self setTitleWithRequired:self.Jh_required title:Jh_title cellModelType:self.Jh_cellType];
+    [self upDateJh_cellHeight];
 }
 
+-(void)setJh_titleFont:(CGFloat)Jh_titleFont {
+    _Jh_titleFont = Jh_titleFont;
+    [self upDateJh_cellHeight];
+}
+
+- (void)setJh_info:(NSString *)Jh_info {
+    _Jh_info = Jh_info;
+    [self upDateJh_cellHeight];
+}
+
+-(void)setJh_infoFont:(CGFloat)Jh_infoFont {
+    _Jh_infoFont = Jh_infoFont;
+    [self upDateJh_cellHeight];
+}
+
+-(void)setJh_titleWidth:(CGFloat)Jh_titleWidth {
+    _Jh_titleWidth = Jh_titleWidth;
+    if (self.Jh_cellType == JhFormCellTypeSelect || self.Jh_cellType == JhFormCellTypeSwitchBtn) return;
+    [self upDateJh_cellHeight];
+}
+
+-(void)setJh_showPlaceholder:(BOOL)Jh_showPlaceholder {
+    _Jh_showPlaceholder = Jh_showPlaceholder;
+    [self setPlaceholderWithShow:Jh_showPlaceholder cellModelType:self.Jh_cellType];
+}
+
+- (void)setJh_rightViewWidth:(CGFloat)Jh_rightViewWidth {
+    _Jh_rightViewWidth = Jh_rightViewWidth;
+    [self upDateJh_cellHeight];
+}
+
+-(void)setJh_rightBtnWidth:(CGFloat)Jh_rightBtnWidth {
+    _Jh_rightBtnWidth = Jh_rightBtnWidth;
+    [self upDateJh_cellHeight];
+}
+
+-(void)setJh_showLength:(BOOL)Jh_showLength {
+    _Jh_showLength = Jh_showLength;
+    [self upDateJh_cellHeight];
+}
+
+-(void)setJh_textContainerInset:(UIEdgeInsets)Jh_textContainerInset{
+    _Jh_textContainerInset = Jh_textContainerInset;
+    [self upDateJh_cellHeight];
+}
+
+-(void)setJh_imageArr:(NSArray *)Jh_imageArr {
+    _Jh_imageArr = Jh_imageArr;
+    if (Jh_imageArr.count > self.Jh_maxImageCount) {
+        _Jh_imageArr = [Jh_imageArr subarrayWithRange:NSMakeRange(0, self.Jh_maxImageCount)];
+    }
+    [self Jh_selectImageArr];
+    [self updateSelectImageCellHeight];
+}
+#if kHasHXPhotoPicker
+- (void)setJh_imageAllList:(NSArray<HXPhotoModel *> *)Jh_imageAllList {
+    _Jh_imageAllList = Jh_imageAllList;
+    [self updateSelectImageCellHeight];
+}
+
+- (void)setJh_mixImageArr:(NSArray<HXCustomAssetModel *> *)Jh_mixImageArr {
+    _Jh_mixImageArr = Jh_mixImageArr;
+    [self updateSelectImageCellHeight];
+}
+#endif
+
+-(void)setJh_maxImageCount:(NSUInteger)Jh_maxImageCount {
+    _Jh_maxImageCount =Jh_maxImageCount;
+    [self updateSelectImageCellHeight];
+}
+
+-(void)setJh_tipInfo:(NSString *)Jh_tipInfo {
+    _Jh_tipInfo = Jh_tipInfo;
+    [self upDateJh_cellHeight];
+}
+
+// 选择按钮Cell
+- (void)setJh_selectBtnCell_isSingleLineDisplay:(BOOL)Jh_selectBtnCell_isSingleLineDisplay{
+    _Jh_selectBtnCell_isSingleLineDisplay = Jh_selectBtnCell_isSingleLineDisplay;
+    [self updateSelectBtnCellHeight];
+}
+
+-(void)setJh_selectBtnCell_isTopTitleBottomOption:(BOOL)Jh_selectBtnCell_isTopTitleBottomOption{
+    _Jh_selectBtnCell_isTopTitleBottomOption = Jh_selectBtnCell_isTopTitleBottomOption;
+    [self updateSelectBtnCellHeight];
+}
+
+- (void)setJh_selectBtnCell_btnTitleArr:(NSArray *)Jh_selectBtnCell_btnTitleArr{
+    _Jh_selectBtnCell_btnTitleArr = Jh_selectBtnCell_btnTitleArr;
+    [self updateSelectBtnCellHeight];
+}
+
+-(void)setJh_selectBtnCell_selectTitleArr:(NSArray *)Jh_selectBtnCell_selectTitleArr{
+    _Jh_selectBtnCell_selectTitleArr = Jh_selectBtnCell_selectTitleArr;
+    [self updateSelectBtnCellHeight];
+}
+
+-(void)setJh_selectBtnCell_hiddenLeftIcon:(BOOL)Jh_selectBtnCell_hiddenLeftIcon{
+    _Jh_selectBtnCell_hiddenLeftIcon = Jh_selectBtnCell_hiddenLeftIcon;
+    [self updateSelectBtnCellHeight];
+}
+
+-(void)setJh_selectBtnCell_leftMargin:(CGFloat)Jh_selectBtnCell_leftMargin{
+    _Jh_selectBtnCell_leftMargin = Jh_selectBtnCell_leftMargin;
+    [self updateSelectBtnCellHeight];
+}
+
+-(void)setJh_selectBtnCell_btnHorizontalMargin:(CGFloat)Jh_selectBtnCell_btnHorizontalMargin{
+    _Jh_selectBtnCell_btnHorizontalMargin = Jh_selectBtnCell_btnHorizontalMargin;
+    [self updateSelectBtnCellHeight];
+}
+
+-(void)setJh_selectBtnCell_btnVerticalMargin:(CGFloat)Jh_selectBtnCell_btnVerticalMargin{
+    _Jh_selectBtnCell_btnVerticalMargin = Jh_selectBtnCell_btnVerticalMargin;
+    [self updateSelectBtnCellHeight];
+}
+
+-(void)setJh_selectBtnCell_btnHeight:(CGFloat)Jh_selectBtnCell_btnHeight{
+    _Jh_selectBtnCell_btnHeight = Jh_selectBtnCell_btnHeight;
+    [self updateSelectBtnCellHeight];
+}
+
+-(void)setJh_selectBtnCell_btnTitleBlank:(CGFloat)Jh_selectBtnCell_btnTitleBlank{
+    _Jh_selectBtnCell_btnTitleBlank = Jh_selectBtnCell_btnTitleBlank;
+    [self updateSelectBtnCellHeight];
+}
+
+-(void)setJh_selectBtnCell_btnIconSpace:(CGFloat)Jh_selectBtnCell_btnIconSpace{
+    _Jh_selectBtnCell_btnIconSpace = Jh_selectBtnCell_btnIconSpace;
+    [self updateSelectBtnCellHeight];
+}
 
 @end
+

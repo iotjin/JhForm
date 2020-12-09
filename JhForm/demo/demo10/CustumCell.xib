@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="103" id="KGk-i7-Jjw" customClass="CustumCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="103"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="103"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lufei" translatesAutoresizingMaskIntoConstraints="NO" id="KCV-wI-hil">
+                        <rect key="frame" x="15" y="20" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="NG7-lf-8A7"/>
+                            <constraint firstAttribute="height" constant="40" id="htR-Pa-hUV"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="张三" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfc-ro-LNB">
+                        <rect key="frame" x="65" y="20" width="31" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="Eg6-oD-xKE"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dmf-DC-pV8">
+                        <rect key="frame" x="65" y="45" width="240" height="47"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w12-bH-pGr">
+                        <rect key="frame" x="215" y="13" width="90" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="JDo-vQ-CuE"/>
+                            <constraint firstAttribute="width" constant="90" id="SHx-YL-Rud"/>
+                        </constraints>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" title="关注">
+                            <color key="titleColor" systemColor="systemOrangeColor"/>
+                        </state>
+                        <state key="selected" title="已关注">
+                            <color key="titleColor" systemColor="systemGray2Color"/>
+                        </state>
+                        <connections>
+                            <action selector="ClickBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="VMA-qG-Jf1"/>
+                        </connections>
+                    </button>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PS1-md-Xs1">
+                        <rect key="frame" x="151" y="10" width="51" height="31"/>
+                        <connections>
+                            <action selector="ClickSwitchBtn:" destination="KGk-i7-Jjw" eventType="valueChanged" id="Bzj-Kk-fSe"/>
+                        </connections>
+                    </switch>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="dmf-DC-pV8" secondAttribute="trailing" constant="15" id="1cf-7b-hyd"/>
+                    <constraint firstItem="KCV-wI-hil" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="4uf-rg-zN1"/>
+                    <constraint firstAttribute="trailing" secondItem="w12-bH-pGr" secondAttribute="trailing" constant="15" id="9zj-8I-En3"/>
+                    <constraint firstItem="dmf-DC-pV8" firstAttribute="leading" secondItem="bfc-ro-LNB" secondAttribute="leading" id="XIG-1n-D4S"/>
+                    <constraint firstItem="bfc-ro-LNB" firstAttribute="top" secondItem="KCV-wI-hil" secondAttribute="top" id="YCV-S8-TTZ"/>
+                    <constraint firstItem="PS1-md-Xs1" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="kgr-Cb-fnZ"/>
+                    <constraint firstItem="w12-bH-pGr" firstAttribute="centerY" secondItem="PS1-md-Xs1" secondAttribute="centerY" id="nzm-Nb-O1R"/>
+                    <constraint firstItem="bfc-ro-LNB" firstAttribute="leading" secondItem="KCV-wI-hil" secondAttribute="trailing" constant="10" id="plS-9A-tIV"/>
+                    <constraint firstItem="KCV-wI-hil" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="qSa-Nt-E3y"/>
+                    <constraint firstItem="w12-bH-pGr" firstAttribute="leading" secondItem="PS1-md-Xs1" secondAttribute="trailing" constant="15" id="sF9-ed-Hfs"/>
+                    <constraint firstItem="dmf-DC-pV8" firstAttribute="top" secondItem="bfc-ro-LNB" secondAttribute="bottom" constant="5" id="v6P-tE-QIF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="btn" destination="w12-bH-pGr" id="4ss-mt-hoP"/>
+                <outlet property="contentLabel" destination="dmf-DC-pV8" id="aFY-p2-orh"/>
+                <outlet property="imgView" destination="KCV-wI-hil" id="yhZ-fC-iCG"/>
+                <outlet property="nameLabel" destination="bfc-ro-LNB" id="8Y4-IV-XEr"/>
+                <outlet property="switchBtn" destination="PS1-md-Xs1" id="bFj-Wi-jKe"/>
+            </connections>
+            <point key="canvasLocation" x="-123.18840579710145" y="106.80803571428571"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="lufei" width="900" height="768"/>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

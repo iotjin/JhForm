@@ -9,51 +9,48 @@
 #import "JhFormHandler.h"
 #import <UIKit/UIKit.h>
 #import "JhFormCellModel.h"
-
 #import "JhFormSectionModel.h"
 
 @implementation JhFormHandler
 
-+ (void)Jh_checkFormNullDataWithWithDatas:(NSArray *)datas success:(void(^)(void))success failure:(void(^)(NSString *error))failure {
-    for (int sec = 0; sec < datas.count; sec++) {
++ (void)Jh_checkEmptyWithFormData:(NSArray *)datas success:(void(^)(void))success failure:(void(^)(NSString *error))failure {
+    for (int section = 0; section < datas.count; section++) {
+        JhFormSectionModel *sectionModel = datas[section];
         
-        JhFormSectionModel *sectionModel = datas[sec];
         for (int row = 0; row < sectionModel.Jh_sectionModelArr.count; row++) {
-            JhFormCellModel *rowItem = sectionModel.Jh_sectionModelArr[row];
-            
-            if (rowItem.Jh_required) {
-                
-                //我设置的标题都带:所以通过去掉: 拼接提示信息
-                NSString *title = [NSString stringWithFormat:@"%@",rowItem.Jh_title];
-                NSString *NewTitle = [title substringToIndex:title.length-1];
-                
-                if (rowItem.Jh_cellType == JhFormCellTypeInput || rowItem.Jh_cellType == JhFormCellTypeTextViewInput || rowItem.Jh_cellType == JhFormCellTypePwdInput) {
-                    if (!rowItem.Jh_info || [rowItem.Jh_info isEqualToString:@""]) {
-                        failure([NSString stringWithFormat:@"请输入%@", NewTitle]);
+            JhFormCellModel *cellModel = sectionModel.Jh_sectionModelArr[row];
+            if (cellModel.Jh_required) {
+                NSString *title = cellModel.Jh_title;
+                // 删除标题末尾的:之前进行判断
+                if ([title hasSuffix:@":"] || [title hasSuffix:@"："]) {
+                    title = [title substringToIndex:title.length - 1];
+                }
+                if (cellModel.Jh_cellType == JhFormCellTypeInput || cellModel.Jh_cellType == JhFormCellTypeTextViewInput || cellModel.Jh_cellType == JhFormCellTypePwdInput) {
+                    if (!cellModel.Jh_info || [cellModel.Jh_info isEqualToString:@""]) {
+                        failure([NSString stringWithFormat:@"请输入%@", title]);
+                        return;
+                    }
+                } else if (cellModel.Jh_cellType == JhFormCellTypeSelect) {
+                    if (!cellModel.Jh_info || [cellModel.Jh_info isEqualToString:@""]){
+                        failure([NSString stringWithFormat:@"请选择%@", title]);
+                        return;
+                    }
+                } else if (cellModel.Jh_cellType == JhFormCellTypeSelectBtn) {
+                    if (!cellModel.Jh_selectBtnCell_selectTitleArr.count) {
+                        failure([NSString stringWithFormat:@"请选择%@", title]);
                         return;
                     }
                 }
-                else if (rowItem.Jh_cellType == JhFormCellTypeSelect) {
-                    if (!rowItem.Jh_info || [rowItem.Jh_info isEqualToString:@""]) {
-                        failure([NSString stringWithFormat:@"请选择%@", NewTitle]);
+                else if (cellModel.Jh_cellType == JhFormCellTypeSelectImage) {
+                    if (!cellModel.Jh_imageArr || cellModel.Jh_imageArr.count == 0) {
+                        failure([NSString stringWithFormat:@"请选择%@", title]);
                         return;
                     }
                 }
-                else if (rowItem.Jh_cellType == JhFormCellTypeSelectImage) {
-                    if (!rowItem.Jh_imageArr || rowItem.Jh_imageArr.count == 0) {
-                        failure([NSString stringWithFormat:@"请选择%@", NewTitle]);
-                        return;
-                    }
-                }
-                
             }
         }
     }
     success();
 }
-
-
-
-
 
 @end

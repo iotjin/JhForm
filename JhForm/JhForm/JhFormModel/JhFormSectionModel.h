@@ -11,47 +11,43 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/**
- JhFormSectionModel 主要对表单section条目提供动态配置属性
- */
+/// 对表单 section Cell提供动态配置
 @interface JhFormSectionModel : NSObject
 
-/**
- 表单section包含的条目集合
- */
+/// 表单 section 包含的Cell数组
 @property (nonatomic, strong, nonnull) NSArray *Jh_sectionModelArr;
-
-/**
- 表单section头部高度
- */
+/// section header 高度
 @property (nonatomic, assign) CGFloat Jh_headerHeight;
-
-/**
- 表单section尾部高度
- */
+/// section footer 高度
 @property (nonatomic, assign) CGFloat Jh_footerHeight;
+/// section header 视图，优先级高于下面单个属性设置
+@property (nonatomic, strong) UIView *Jh_headerView;
+/// section footer 视图，优先级高于下面单个属性设置
+@property (nonatomic, strong) UIView *Jh_footerView;
 
-/**
- 表单section头部视图
- */
-@property (nonatomic, strong, nullable) UIView *Jh_headerView;
+/// 头部标题
+@property (nonatomic, strong) NSString *Jh_headerTitle;
+/// 头部标题字体大小，默认15
+@property (nonatomic, assign) CGFloat Jh_headerTitleFont;
+/// 头部标题字体颜色，默认JhBaseLabelColor
+@property (nonatomic, strong) UIColor *Jh_headerTitleColor;
+/// 头部背景颜色，默认 JhBaseBgColor
+@property (nonatomic, strong) UIColor *Jh_headerBgColor;
 
-/**
- 表单section尾部视图
- */
-@property (nonatomic, strong, nullable) UIView *Jh_footerView;
+/// 尾部标题
+@property (nonatomic, strong) NSString *Jh_footerTitle;
+/// 尾部标题字体大小，默认15
+@property (nonatomic, assign) CGFloat Jh_footerTitleFont;
+/// 尾部标题字体颜色，默认JhBaseLabelColor
+@property (nonatomic, strong) UIColor *Jh_footerTitleColor;
+/// 尾部标题字体颜色，默认 JhBaseBgColor
+@property (nonatomic, strong) UIColor *Jh_footerBgColor;
+
 
 @end
 
-
-/**
- 快捷构建表单section条目
-
- @param Jh_sectionModelArr 表单section包含的条目集合
- */
+/// 快捷添加表单 section
+/// @param Jh_sectionModelArr 表单 section 包含的Cell数组
 FOUNDATION_EXPORT JhFormSectionModel *JhSectionModel_Add(NSArray * _Nonnull Jh_sectionModelArr);
-
-
-
 
 NS_ASSUME_NONNULL_END

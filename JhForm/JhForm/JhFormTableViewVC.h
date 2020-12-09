@@ -6,17 +6,14 @@
 //  Copyright © 2019 Jh. All rights reserved.
 //
 
-
-
 #import <UIKit/UIKit.h>
 #import "JhFormConst.h"
-#import "HXPhotoPicker.h"
+#import "JhFormTableView.h"
 #import "JhFormCellModel.h"
 #import "JhFormSectionModel.h"
 #import "JhFormHandler.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
 
 typedef void(^JhFormSubmitBlock)(void);
 
@@ -25,13 +22,19 @@ typedef void(^JhFormSubmitBlock)(void);
 /**
  表单tableView
  */
-@property (nonatomic, strong) UITableView *Jh_formTableView;
+@property (nonatomic, strong) JhFormTableView *Jh_formTableView;
 
 /** 表单数据源，数据源格式应为 @[JhFormSection..]，否则断言会直接崩溃 */
 @property (nonatomic, strong) NSMutableArray *Jh_formModelArr;
 
+/** 添加sectionModel 数据源 */
+-(void)Jh_addSectionModel:(JhFormSectionModel *)sectionModel;
+
 /** 提交操作事件block，包含提交操作表单页面提交按钮点击事件实现回调 */
 @property (nonatomic,   copy) JhFormSubmitBlock Jh_formSubmitBlock;
+
+/** Cell的点击回调  */
+@property (nonatomic,   copy) void(^Jh_formCellSelectBlock)(JhFormCellModel *cellModel,NSIndexPath *indexPath);
 
 /** 隐藏默认的footerView */
 @property (nonatomic, assign) BOOL Jh_hiddenDefaultFooterView;
@@ -84,11 +87,8 @@ typedef void(^JhFormSubmitBlock)(void);
 /** 统一配置cell左侧title的宽度(默认100) */
 @property (nonatomic, assign) CGFloat Jh_leftTitleWidth;
 
-/** 可隐藏整个页面的红星按只有标题显示 */
-@property (nonatomic, assign) CGFloat Jh_leftTitleHiddenRedStar;
-
-/** 设置主题为light(不跟随系统设置切换 ,iOS13生效) */
-@property (nonatomic, assign) BOOL Jh_useLightTheme;
+/** 可隐藏整个页面的红星按只有标题显示，还是必填 */
+@property (nonatomic, assign) BOOL Jh_leftTitleHiddenRedStar;
 
 
 @end

@@ -1,0 +1,1 @@
+../../../HXPhotoPicker/HXPhotoPicker/HXPhotoEdit/HXPhotoEditConfiguration.h

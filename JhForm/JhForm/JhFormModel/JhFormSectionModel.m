@@ -9,9 +9,7 @@
 #import "JhFormSectionModel.h"
 
 @interface JhFormSectionModel()
-
 + (instancetype)Jh_sectionModelArr:(NSArray *)modelArr;
-
 @end
 
 inline JhFormSectionModel *JhSectionModel_Add(NSArray * _Nonnull Jh_sectionModelArr) {
@@ -20,19 +18,15 @@ inline JhFormSectionModel *JhSectionModel_Add(NSArray * _Nonnull Jh_sectionModel
 
 @implementation JhFormSectionModel
 
-
 + (instancetype)Jh_sectionModelArr:(NSArray *)modelArr {
-    return [[self alloc]initWithModelArr:modelArr];
+    return [[self alloc] initWithModelArr:modelArr];
 }
 
 - (instancetype)initWithModelArr:(NSArray *)modelArr {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         self.Jh_sectionModelArr = modelArr;
     }
     return self;
 }
-
-
 
 @end

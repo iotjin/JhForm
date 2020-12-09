@@ -1,5 +1,5 @@
 //
-//  JhFormBaseCell.m
+//  JhFormBaseCell.h
 //  JhForm
 //
 //  Created by Jh on 2019/1/4.
@@ -7,104 +7,135 @@
 //
 
 #import "JhFormBaseCell.h"
+#import "JhFormCellModel.h"
+#import "JhTextView.h"
 #import "JhFormConst.h"
-#import "SelwynExpandableTextView.h"
 
-@interface JhFormBaseCell()<UITextViewDelegate>
+@interface JhFormBaseCell()
+
 @end
+
 @implementation JhFormBaseCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.backgroundColor = JhBaseCellBgColor;
+        [self Jh_initUI];
+    }
+    return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
+- (void)Jh_initUI {}
+
+-(UILabel *)redStarLabel {
+    if (!_redStarLabel) {
+        UILabel *label = [[UILabel alloc]init];
+        label.text = @"*";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor redColor];
+        label.font = JhFontsize(15);
+        [self.contentView addSubview:label];
+        _redStarLabel = label;
+    }
+    return _redStarLabel;
 }
 
--(UIImageView *)leftImgView{
+- (UIImageView *)leftImgView {
     if (!_leftImgView) {
-        _leftImgView = [[UIImageView alloc]init];
-        [self.contentView addSubview:_leftImgView];
+        UIImageView *imgView = [[UIImageView alloc] init];
+        [self.contentView addSubview:imgView];
+        _leftImgView = imgView;
     }
     return _leftImgView;
 }
 
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc]init];
-        _titleLabel.font = [UIFont systemFontOfSize:Jh_TitleFont];
-        _titleLabel.adjustsFontSizeToFitWidth = YES;
-        [self.contentView addSubview:_titleLabel];
-        
-        if (@available(iOS 13.0, *)) {
-            _titleLabel.textColor = UIColor.labelColor;
-        }
+        UILabel *label = [[UILabel alloc]init];
+        label.textColor = [UIColor whiteColor];
+        label.adjustsFontSizeToFitWidth = YES;
+        label.numberOfLines = 0;
+        label.font = JhFontsize(Jh_TitleFont);
+        label.textColor = Jh_TitleColor;
+        [self.contentView addSubview:label];
+        _titleLabel = label;
     }
     return _titleLabel;
 }
 
-- (SelwynExpandableTextView *)rightTextView {
+-(JhTextView *)rightTextView {
     if (!_rightTextView) {
-        _rightTextView = [[SelwynExpandableTextView alloc]init];
-        _rightTextView.delegate = self;
-        _rightTextView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0);
-        _rightTextView.textContainer.lineFragmentPadding = 0;
-        _rightTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        _rightTextView.backgroundColor = [UIColor clearColor];
-        _rightTextView.font = [UIFont systemFontOfSize:Jh_InfoFont];
-        _rightTextView.textColor = Jh_rightTextViewTextColor;
-        _rightTextView.scrollEnabled = NO;
-        _rightTextView.autocorrectionType = UITextAutocorrectionTypeNo;
-        _rightTextView.layoutManager.allowsNonContiguousLayout = NO;
-        _rightTextView.showsVerticalScrollIndicator = NO;
-        _rightTextView.showsHorizontalScrollIndicator = NO;
-        [self.contentView addSubview:_rightTextView];
-        
-        if (@available(iOS 13.0, *)) {
-            _rightTextView.placeholderTextColor = UIColor.placeholderTextColor;
-            if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-                _rightTextView.textColor = UIColor.labelColor;
-            }else {
-                _rightTextView.textColor = Jh_rightTextViewTextColor;
-            }
-        }
+        JhTextView *textView = [[JhTextView alloc]init];
+        textView.textContainer.lineFragmentPadding = 0;
+        textView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        textView.backgroundColor = [UIColor clearColor];
+        textView.scrollEnabled = NO;
+        textView.autocorrectionType = UITextAutocorrectionTypeNo;
+        textView.layoutManager.allowsNonContiguousLayout = NO;
+        textView.showsVerticalScrollIndicator = NO;
+        textView.showsHorizontalScrollIndicator = NO;
+        textView.font = JhFontsize(Jh_InfoFont);
+        textView.textColor = Jh_InfoTextColor;
+        textView.Jh_placeholderFont = Jh_InfoFont;
+        textView.Jh_placeholderColor = Jh_PlaceholderColor;
+        [self.contentView addSubview:textView];
+        _rightTextView = textView;
     }
     return _rightTextView;
 }
 
--(UIView *)rightView{
+-(UIButton *)rightBtn {
+    if (!_rightBtn) {
+        UIButton * button = [[UIButton alloc]init];
+        button.titleLabel.font = JhFontsize(Jh_SuffixTextFont);
+        [button setTitleColor:Jh_SuffixTextColor forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(Jh_clickRightButton:) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView addSubview:button];
+        _rightBtn = button;
+    }
+    return _rightBtn;
+}
+
+//右侧按钮点击事件
+- (void)Jh_clickRightButton:(UIButton *)button {}
+
+- (UIView *)rightView {
     if (!_rightView) {
-        _rightView = [[UIView alloc]init];
-        _rightView.backgroundColor = [UIColor clearColor];
-        [self.contentView addSubview:_rightView];
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = [UIColor clearColor];
+        [self.contentView addSubview:view];
+        _rightView = view;
     }
     return _rightView;
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    if (@available(iOS 13.0, *)) {
-        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-            [self configureIOS13Theme];
-        }
+- (UILabel *)tipLabel {
+    if (!_tipLabel) {
+        UILabel *label = [[UILabel alloc]init];
+        label.numberOfLines = 0;
+        label.textColor = Jh_TipInfoColor;
+        label.font = JhFontsize(Jh_TipInfoFont);
+        [self.contentView addSubview:label];
+        _tipLabel = label;
     }
+    return _tipLabel;
 }
 
--(void)configureIOS13Theme{
-    if (@available(iOS 13.0, *)) {
-        _titleLabel.textColor = UIColor.labelColor;
-        _rightTextView.placeholderTextColor = UIColor.placeholderTextColor;
-        if (UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-            _rightTextView.textColor = UIColor.labelColor;
-        }else {
-            _rightTextView.textColor = Jh_rightTextViewTextColor;
-        }
-        [self.baseTableView reloadData];
+- (UIView *)line {
+    if (!_line) {
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = JhBaseLineColor;
+        [self.contentView addSubview:view];
+        _line = view;
     }
+    return _line;
 }
 
+#pragma mark - JhFormProtocol
+
+- (void)Jh_configCellModel:(JhFormCellModel *)cellModel {
+    self.cellModel = cellModel;
+}
 
 @end

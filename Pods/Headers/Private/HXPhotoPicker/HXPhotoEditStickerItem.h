@@ -1,0 +1,1 @@
+../../../HXPhotoPicker/HXPhotoPicker/HXPhotoEdit/View/HXPhotoEditStickerItem.h

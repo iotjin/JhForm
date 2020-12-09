@@ -1,0 +1,1 @@
+../../../HXPhotoPicker/HXPhotoPicker/Model/HXPhotoViewCellCustomProtocol.h

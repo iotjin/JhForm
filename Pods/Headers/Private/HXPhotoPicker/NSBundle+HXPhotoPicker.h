@@ -1,0 +1,1 @@
+../../../HXPhotoPicker/HXPhotoPicker/Category/NSBundle+HXPhotoPicker.h

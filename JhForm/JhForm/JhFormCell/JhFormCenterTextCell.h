@@ -1,27 +1,16 @@
 //
 //  JhFormCenterTextCell.h
-//  JhReader
+//  JhForm
 //
 //  Created by Jh on 2019/3/13.
 //  Copyright © 2019 Jh. All rights reserved.
-//  表单标题居中Cell
+//  表单标题居中Cell，可设置左侧图标，配置标题相关属性
 
-#import "JhFormBaseCell.h"
+#import "JhFormInputCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class JhFormCellModel;
-
-@interface JhFormCenterTextCell : JhFormBaseCell
-
-@property (nonatomic, strong) JhFormCellModel *data;
-
-@end
-
-
-@interface UITableView (JhFormCenterTextCell)
-
-- (JhFormCenterTextCell *)CenterTextWithId:(NSString *)cellId;
+@interface JhFormCenterTextCell : JhFormInputCell
 
 @end
 
