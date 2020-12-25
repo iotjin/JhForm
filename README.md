@@ -12,6 +12,7 @@ JhForm - 自定义表单工具类，通过动态配置表单model，可以更加
 
 ## 目录
 * [特性](#特性)
+* [简介](#简介)
 * [安装](#安装)
 * [使用](#使用)
 * [要求](#要求)
@@ -37,6 +38,18 @@ JhForm - 自定义表单工具类，通过动态配置表单model，可以更加
 - [x] 提交按钮和导航条配置
 - [x] 录入样式排版：左标题右详情，或者上标题下详情
 - [x] 快速构建设置界面
+
+
+## <a id="简介"></a> 简介 - Introduce
+ <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/JhForm.png">
+
+- JhFormModel：配置单个cell、section
+- JhFormTableViewVC：持有JhFormTableView，配置导航条和底部提交按钮，添加数据源
+- JhFormConst：全局配置默认属性
+- JhFormHandler：model的数据校验
+- JhFormCell：继承JhFormBaseCell，遵循JhFormProtocol，根据JhFormModel实现不同cell
+- JhFormTableView：通过传入的数据源，创建遵循JhFormProtocol的cell，根据sectionModel创建header和footer
+- JhFormProtocol：通过cellModel 配置对应的cell，配置cell高度（可选）
 
 
 ## <a id="安装"></a> 安装 - Installation
