@@ -2,8 +2,8 @@
 //  HXPreviewVideoView.m
 //  HXPhotoPickerExample
 //
-//  Created by 洪欣 on 2019/11/15.
-//  Copyright © 2019 洪欣. All rights reserved.
+//  Created by Silence on 2019/11/15.
+//  Copyright © 2019 Silence. All rights reserved.
 //
 
 #import "HXPreviewVideoView.h"
@@ -52,9 +52,10 @@
     return self;
 }
 - (void)setup {
+    self.playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    self.playerLayer.player = self.player;
     self.videoManualPause = NO;
     self.layer.masksToBounds = YES;
-    [self.layer addSublayer:self.playerLayer];
     [self addSubview:self.playBtn];
     
     
@@ -436,13 +437,11 @@
         self.playBtn.hidden = YES;
     }
 }
++ (Class)layerClass {
+    return AVPlayerLayer.class;
+}
 - (AVPlayerLayer *)playerLayer {
-    if (!_playerLayer) {
-        _playerLayer = [[AVPlayerLayer alloc] init];
-        _playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-        _playerLayer.player = self.player;
-    }
-    return _playerLayer;
+    return (AVPlayerLayer *)self.layer;
 }
 - (AVPlayer *)player {
     if (!_player) {
@@ -486,12 +485,7 @@
 }
 - (void)layoutSubviews {
     [super layoutSubviews];
-    if (!CGRectEqualToRect(self.playerLayer.frame, self.bounds)) {
-        [CATransaction begin];
-        [CATransaction setDisableActions:YES];
-        self.playerLayer.frame = self.bounds;
-        [CATransaction commit];
-    }
+    self.playerLayer.frame = self.bounds;
     
     self.loadingView.hx_centerX = self.hx_w / 2;
     self.loadingView.hx_centerY = self.hx_h / 2;

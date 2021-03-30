@@ -2,8 +2,8 @@
 //  HX_PhotoManager.m
 //  HXPhotoPickerExample
 //
-//  Created by 洪欣 on 17/2/8.
-//  Copyright © 2017年 洪欣. All rights reserved.
+//  Created by Silence on 17/2/8.
+//  Copyright © 2017年 Silence. All rights reserved.
 //
 
 #import "HXPhotoManager.h"
@@ -552,11 +552,15 @@
     if (self.selectedList.count) {
         self.selectedAssetList = [NSMutableArray arrayWithCapacity:self.selectedList.count];
         self.tempSelectedModelList = [NSMutableArray arrayWithCapacity:self.selectedList.count];
+        NSInteger index = 0;
         for (HXPhotoModel *model in _selectedList) {
+            model.selectedIndex = index;
+            model.selectIndexStr = @(index + 1).stringValue;
             if (model.asset) {
                 [self.selectedAssetList addObject:model.asset];
                 [self.tempSelectedModelList addObject:model];
             }
+            index++;
         }
     }
     if (self.iCloudUploadArray.count) {
@@ -671,7 +675,7 @@
             [allArray insertObject:model atIndex:0];
         }
     }
-    if (_tempCameraAssetModels) {
+    if (_tempCameraAssetModels && !self.configuration.singleSelected) {
         NSInteger index = 0;
         for (HXPhotoModel *model in _tempCameraAssetModels) {
             if (self.configuration.reverseDate) {
@@ -834,9 +838,9 @@
         }
     }
     if (model.subType == HXPhotoModelMediaSubTypeVideo) {
-        if (model.videoDuration < self.configuration.videoMinimumSelectDuration) { 
+        if (round(model.videoDuration) < self.configuration.videoMinimumSelectDuration) { 
             return [NSString stringWithFormat:[NSBundle hx_localizedStringForKey:@"视频少于%ld秒，无法选择"], self.configuration.videoMinimumSelectDuration];
-        }else if (model.videoDuration >= self.configuration.videoMaximumSelectDuration + 1) {
+        }else if (round(model.videoDuration) >= self.configuration.videoMaximumSelectDuration + 1) {
             if (self.configuration.selectVideoBeyondTheLimitTimeAutoEdit &&
                 self.configuration.videoCanEdit) {
                 if (model.cameraVideoType == HXPhotoModelMediaTypeCameraVideoTypeNetWork) {
@@ -1349,6 +1353,9 @@
     self.firstHasCameraAsset = YES;
 }
 - (void)afterSelectedListdeletePhotoModel:(HXPhotoModel *)model {
+    if ([self.tempCameraAssetModels containsObject:model]) {
+        [self.tempCameraAssetModels removeObject:model];
+    }
     if (![self.endSelectedList containsObject:model]) {
         return;
     }

@@ -15,6 +15,7 @@
 		E93D3F8D21E58DDB003DC702 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3F8C21E58DDB003DC702 /* main.m */; };
 		E93D3F9721E58DDB003DC702 /* JhFormTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3F9621E58DDB003DC702 /* JhFormTests.m */; };
 		E93D3FA221E58DDB003DC702 /* JhFormUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E93D3FA121E58DDB003DC702 /* JhFormUITests.m */; };
+		ED7F078D2611D50C001E8A09 /* FormDemo11VC.m in Sources */ = {isa = PBXBuildFile; fileRef = ED7F078C2611D50C001E8A09 /* FormDemo11VC.m */; };
 		ED88AFCF25809C2A004502BF /* FormDemo7VC.m in Sources */ = {isa = PBXBuildFile; fileRef = ED88AF7125809C2A004502BF /* FormDemo7VC.m */; };
 		ED88AFD025809C2A004502BF /* FormDemo6VC.m in Sources */ = {isa = PBXBuildFile; fileRef = ED88AF7225809C2A004502BF /* FormDemo6VC.m */; };
 		ED88AFD125809C2A004502BF /* FormDemo10VC.m in Sources */ = {isa = PBXBuildFile; fileRef = ED88AF7425809C2A004502BF /* FormDemo10VC.m */; };
@@ -106,6 +107,8 @@
 		E93D3F9D21E58DDB003DC702 /* JhFormUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JhFormUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E93D3FA121E58DDB003DC702 /* JhFormUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JhFormUITests.m; sourceTree = "<group>"; };
 		E93D3FA321E58DDB003DC702 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ED7F078B2611D50C001E8A09 /* FormDemo11VC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FormDemo11VC.h; sourceTree = "<group>"; };
+		ED7F078C2611D50C001E8A09 /* FormDemo11VC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FormDemo11VC.m; sourceTree = "<group>"; };
 		ED88AF7125809C2A004502BF /* FormDemo7VC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormDemo7VC.m; sourceTree = "<group>"; };
 		ED88AF7225809C2A004502BF /* FormDemo6VC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormDemo6VC.m; sourceTree = "<group>"; };
 		ED88AF7425809C2A004502BF /* FormDemo10VC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormDemo10VC.m; sourceTree = "<group>"; };
@@ -318,6 +321,8 @@
 				ED88AF8A25809C2A004502BF /* FormDemo8VC.m */,
 				ED88AF8125809C2A004502BF /* FormDemo9VC.h */,
 				ED88AF9525809C2A004502BF /* FormDemo9VC.m */,
+				ED7F078B2611D50C001E8A09 /* FormDemo11VC.h */,
+				ED7F078C2611D50C001E8A09 /* FormDemo11VC.m */,
 				ED88AF8B25809C2A004502BF /* headerfooter */,
 				ED88AF9625809C2A004502BF /* ViewController.h */,
 				ED88AF8025809C2A004502BF /* ViewController.m */,
@@ -706,6 +711,7 @@
 				ED88AFD725809C2A004502BF /* FormDemo1VC.m in Sources */,
 				ED88B04E25809D39004502BF /* JhFormPwdCell.m in Sources */,
 				ED88B05425809D3A004502BF /* JhFormCenterTextCell.m in Sources */,
+				ED7F078D2611D50C001E8A09 /* FormDemo11VC.m in Sources */,
 				ED88AFD925809C2A004502BF /* FormDemo3VC.m in Sources */,
 				ED88B05825809D3A004502BF /* JhFormConst.m in Sources */,
 				ED88AFD525809C2A004502BF /* FormDemo4VC.m in Sources */,
@@ -816,7 +822,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -869,7 +875,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -890,7 +896,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Jh.JhForm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -910,7 +916,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Jh.JhForm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

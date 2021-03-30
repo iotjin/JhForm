@@ -2,8 +2,8 @@
 //  HXVideoEditViewController.m
 //  HXPhotoPickerExample
 //
-//  Created by 洪欣 on 2017/12/31.
-//  Copyright © 2017年 洪欣. All rights reserved.
+//  Created by Silence on 2017/12/31.
+//  Copyright © 2017年 Silence. All rights reserved.
 //
 
 #import "HXVideoEditViewController.h"
@@ -1063,7 +1063,7 @@ HXEditFrameViewDelegate
     left.size.width += hxImageWidth * 4;
     CGRect right = self.rightImageView.frame;
     right.origin.x -= hxImageWidth * 2;
-    right.size.width = hxImageWidth * 4;
+    right.size.width += hxImageWidth * 4;
     
     if (CGRectContainsPoint(left, point)) {
         return self.leftImageView;

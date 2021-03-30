@@ -2,12 +2,13 @@
 //  HXAssetManager.m
 //  HXPhotoPickerExample
 //
-//  Created by 洪欣 on 2020/11/5.
-//  Copyright © 2020 洪欣. All rights reserved.
+//  Created by Silence on 2020/11/5.
+//  Copyright © 2020 Silence. All rights reserved.
 //
 
 #import "HXAssetManager.h"
 #import "HXAlbumModel.h"
+#import "NSString+HXExtension.h"
 
 @implementation HXAssetManager
 
@@ -98,7 +99,35 @@
     }];
     return resultImage;
 }
++ (void)requestVideoURL:(PHAsset *)asset completion:(void (^)(NSURL * _Nullable))completion {
+    [self requestAVAssetForAsset:asset networkAccessAllowed:YES progressHandler:nil completion:^(AVAsset * _Nonnull avAsset, AVAudioMix * _Nonnull audioMix, NSDictionary * _Nonnull info) {
+//        if ([avAsset isKindOfClass:AVURLAsset.class]) {
+//            if (completion) {
+//                completion([(AVURLAsset *)avAsset URL]);
+//            }
+//        }else {
+            PHAssetResource *videoResource = [PHAssetResource assetResourcesForAsset:asset].firstObject;
+            NSString *fileName = [[NSString hx_fileName] stringByAppendingString:@".mp4"];
+            NSString *fullPathToFile = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
+            NSURL *videoURL = [NSURL fileURLWithPath:fullPathToFile];
+            PHAssetResourceRequestOptions *options = [[PHAssetResourceRequestOptions alloc] init];
+            options.networkAccessAllowed = YES;
+            [[PHAssetResourceManager defaultManager] writeDataForAssetResource:videoResource toFile:videoURL options:options completionHandler:^(NSError * _Nullable error) {
+                if (!error) {
+                    if (completion) {
+                        completion(videoURL);
+                    }
+                }else {
+                    completion(nil);
+                }
+            }];
+//        }
+    }];
+}
 + (CGSize)getAssetTargetSizeWithAsset:(PHAsset *)asset width:(CGFloat)width {
+    if (!asset) {
+        return CGSizeMake(width, width);
+    }
     CGFloat scale = 0.8f;
     CGFloat aspectRatio = asset.pixelWidth / (CGFloat)asset.pixelHeight;
     CGFloat initialWidth = width;

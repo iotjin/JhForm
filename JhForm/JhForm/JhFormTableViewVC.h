@@ -90,6 +90,8 @@ typedef void(^JhFormSubmitBlock)(void);
 /** 可隐藏整个页面的红星按只有标题显示，还是必填 */
 @property (nonatomic, assign) BOOL Jh_leftTitleHiddenRedStar;
 
+/** 统一配置页面主题样式 */
+@property (nonatomic, assign) JhThemeType Jh_themeType;
 
 @end
 

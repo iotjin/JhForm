@@ -2,8 +2,8 @@
 //  HXPhotoTools.h
 //  HXPhotoPickerExample
 //
-//  Created by 洪欣 on 17/2/8.
-//  Copyright © 2017年 洪欣. All rights reserved.
+//  Created by Silence on 17/2/8.
+//  Copyright © 2017年 Silence. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -90,7 +90,10 @@
 
 + (BOOL)platform;
 + (BOOL)isIphone6;
++ (BOOL)isIphone12Mini;
 
+/// 判断RTL语言
++ (BOOL)isRTLLanguage;
 
 /// 判断网络地址是否在本地存在
 /// 如果文件夹不存在则会创建文件夹

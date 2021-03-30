@@ -184,6 +184,10 @@
     self.cellModel.Jh_selectBtnCell_selectIndexArr = self.selectIndexArray;
     //    NSLog(@" 选中的title数组 %@ ",self.cellModel.Jh_selectBtnCell_selectTitleArr);
     //    NSLog(@" 选中的index数组 %@ ",self.cellModel.Jh_selectBtnCell_selectIndexArr);
+    
+    if (self.cellModel.Jh_selectBtnCellClickBlock) {
+        self.cellModel.Jh_selectBtnCellClickBlock(title,[index integerValue]);
+    }
 }
 
 #pragma mark - JhFormProtocol

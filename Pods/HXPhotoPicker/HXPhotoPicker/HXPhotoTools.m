@@ -2,8 +2,8 @@
 //  HXPhotoTools.m
 //  HXPhotoPickerExample
 //
-//  Created by 洪欣 on 17/2/8.
-//  Copyright © 2017年 洪欣. All rights reserved.
+//  Created by Silence on 17/2/8.
+//  Copyright © 2017年 Silence. All rights reserved.
 //
 
 #import "HXPhotoTools.h"
@@ -496,7 +496,7 @@ NSString *const hx_kKeyContentIdentifier = @"com.apple.quicktime.content.identif
                 [[PHAssetCollectionChangeRequest changeRequestForAssetCollection:collection] insertAssets:@[createdAsset] atIndexes:[NSIndexSet indexSetWithIndex:0]];
             } error:&error];
             
-            if (error) {
+            if (error != nil) {
                 if (HXShowLog) NSSLog(@"保存自定义相册失败");
             } else {
                 if (HXShowLog) NSSLog(@"保存自定义相册成功");
@@ -524,7 +524,6 @@ NSString *const hx_kKeyContentIdentifier = @"com.apple.quicktime.content.identif
         NSError * error1 = nil;
         __block NSString * createCollectionID = nil;
         [[PHPhotoLibrary sharedPhotoLibrary] performChangesAndWait:^{
-            NSString * title = [NSBundle mainBundle].infoDictionary[(NSString *)kCFBundleNameKey];
             createCollectionID = [PHAssetCollectionChangeRequest creationRequestForAssetCollectionWithTitle:title].placeholderForCreatedAssetCollection.localIdentifier;
         } error:&error1];
         
@@ -586,6 +585,24 @@ NSString *const hx_kKeyContentIdentifier = @"com.apple.quicktime.content.identif
         have = YES;
     } 
     return have;
+}
++ (BOOL)isIphone12Mini {
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    
+    NSString *platform = [NSString stringWithCString:systemInfo.machine encoding:NSASCIIStringEncoding];
+    if([platform isEqualToString:@"iPhone13,1"]) {
+        return YES;
+    }else if ([platform isEqualToString:@"x86_64"] || [platform isEqualToString:@"i386"]) {
+        if (([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) && !HX_UI_IS_IPAD : NO)) {
+            return YES;
+        }
+    }
+    return NO;
+}
++ (BOOL)isRTLLanguage
+{
+    return [NSLocale characterDirectionForLanguage:[[NSLocale currentLocale] objectForKey:NSLocaleLanguageCode]] == NSLocaleLanguageDirectionRightToLeft;
 }
 
 + (BOOL)fileExistsAtVideoURL:(NSURL *)videoURL {
@@ -1033,9 +1050,20 @@ NSString *const hx_kKeyContentIdentifier = @"com.apple.quicktime.content.identif
     if (@available(iOS 13.0, *)) {
         UIStatusBarManager *statusBarManager = [UIApplication sharedApplication].windows.firstObject.windowScene.statusBarManager;
         statusBarHeight = statusBarManager.statusBarFrame.size.height;
+        if ([HXPhotoTools isIphone12Mini]) {
+            statusBarHeight = 50;
+        }else {
+            if ([UIApplication sharedApplication].statusBarHidden) {
+                statusBarHeight = HX_IS_IPhoneX_All ? 44: 20;
+            }
+        }
     }
     else {
-        statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+        if ([UIApplication sharedApplication].statusBarHidden) {
+            statusBarHeight = HX_IS_IPhoneX_All ? 44: 20;
+        }else {
+            statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+        }
     }
     return statusBarHeight;
 }

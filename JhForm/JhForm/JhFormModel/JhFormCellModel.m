@@ -122,6 +122,7 @@ inline JhFormCellModel *JhFormCellModel_AddSwitchBtnCell(NSString * _Nonnull tit
             self.Jh_maxImageCount = Jh_SetValueAndDefault(self.Jh_maxImageCount, Jh_GlobalMaxImages);
             self.Jh_imageArr = images;
         }
+        self.Jh_cellThemeType = Jh_ThemeType;
         self.Jh_titleWidth = Jh_SetValueAndDefault(self.Jh_titleWidth, Jh_TitleWidth);
         self.Jh_titleFont = Jh_SetValueAndDefault(self.Jh_titleFont, Jh_TitleFont);
         self.Jh_infoFont = Jh_SetValueAndDefault(self.Jh_infoFont, Jh_InfoFont);

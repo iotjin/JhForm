@@ -7,7 +7,7 @@ JhForm - 自定义表单工具类，通过动态配置表单model，可以更加
 | ------ | ------ | ------ |
 | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo1_dark.jpg" width="187" height="419"> | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo3.jpg" width="187" height="419"> | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo4.jpg" width="187" height="419"> |
 | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo6.jpg" width="187" height="419"> | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo7.jpg" width="187" height="419"> | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo8.jpg" width="187" height="419"> |
-| <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo9.jpg" width="187" height="419"> | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo10.jpg" width="187" height="419"> |  |
+| <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo9.jpg" width="187" height="419"> | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo10.jpg" width="187" height="419"> |  | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo11.gif" width="187" height="419">
 
 
 ## 目录
@@ -34,7 +34,7 @@ JhForm - 自定义表单工具类，通过动态配置表单model，可以更加
 - [x] 支持右侧、底部、完全自定义样式
 - [x] 右侧箭头显隐设置
 - [x] 引用自定义xib Cell与model
-- [x] 支持暗黑模式
+- [x] 支持暗黑模式、主题切换
 - [x] 提交按钮和导航条配置
 - [x] 录入样式排版：左标题右详情，或者上标题下详情
 - [x] 快速构建设置界面
@@ -70,8 +70,8 @@ JhForm - 自定义表单工具类，通过动态配置表单model，可以更加
 ```ruby
 # 将以下内容添加到您的Podfile中：
 
-#  选择图片依赖HXPhotoPicker和SDWebImage，可以分开加或者使用： pod 'HXPhotoPicker/SDWebImage', '3.1.6'
-pod 'HXPhotoPicker', '3.1.6'
+#  选择图片依赖HXPhotoPicker和SDWebImage，可以分开加或者使用： pod 'HXPhotoPicker/SDWebImage', '3.1.9'
+pod 'HXPhotoPicker', '3.1.9'
 pod 'SDWebImage', '5.10.0'
 # 选择图片下载在线视频需要使用AFNetworking
 pod 'AFNetworking', '4.0.1'
@@ -130,7 +130,7 @@ pod repo update 或 rm ~/Library/Caches/CocoaPods/search_index.json
 * 默认自定义样式：支持右侧自定义、底部自定义、完全自定义
 * 底部提交按钮：默认展示，可设置隐藏、按钮字体、颜色、背景色
 * 导航条：设置title，右侧文字、图标、点击事件
-* 暗黑模式：默认自动切换
+* 暗黑模式：默认跟随系统自动切换
 
 注：<br>
 
@@ -424,7 +424,9 @@ self.Jh_submitStr = @"提 交";
  //可隐藏整个页面的红星按只有标题显示
  self.Jh_leftTitleHiddenRedStar =YES;
  //统一设置左侧title的宽度
- self.Jh_leftTitleWidth = 120;   
+ self.Jh_leftTitleWidth = 120;
+ //单页面主题设置
+ self.Jh_themeType = JhThemeTypeDark;
 ```
 </details>
 
@@ -466,6 +468,19 @@ self.Jh_submitStr = @"提 交";
 ```
 </details>
 
+<details>
+  <summary><strong>主题切换</strong></summary>
+   
+```objc
+  //按照const中的Jh_ThemeType = JhThemeTypeAuto ，做主题切换处理
+  //状态栏和导航条是在页面进行处理的
+  //主题切换具体代码查看demo11
+
+ self.Jh_themeType = JhThemeTypeDark; //单页面主题设置
+ 
+```
+</details>
+
 <br>
 
 * 更多请下载工程查看
@@ -477,6 +492,7 @@ self.Jh_submitStr = @"提 交";
   <summary><strong>最近更新</strong></summary>
    
 ```
+* 2021.03.30 - v2.1.0版本，暗黑模式优化，HXPhotoPicker更新至v3.1.9版本 <br>
 * 2020.12.09 - v2.0.0版本，代码重构，支持自定义xib Cell与model，此版本变动较大，若引用v1.5.0版本之前版本谨慎更新 <br>
 * 2020.11.13 - v1.5.0版本，添加视频选择效果，支持本地和网络视频选择与展示 <br>
 ```

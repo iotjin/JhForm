@@ -2,8 +2,8 @@
 //  HXPhotoCommon.m
 //  HXPhotoPickerExample
 //
-//  Created by 洪欣 on 2019/1/8.
-//  Copyright © 2019年 洪欣. All rights reserved.
+//  Created by Silence on 2019/1/8.
+//  Copyright © 2019年 Silence. All rights reserved.
 //
 
 #import "HXPhotoCommon.h"
@@ -303,6 +303,7 @@ static id instance;
     [downloadTask resume];
     return downloadTask;
 #else
+    /// pod导入的请改成 "HXPhotoPicker/SDWebImage_AF" 或 "HXPhotoPicker/YYWebImage_AF"
     NSSLog(@"没有导入AFNetworking网络框架无法下载视频");
     return nil;
 #endif

@@ -2,8 +2,8 @@
 //  HX_PhotoManager.h
 //  HXPhotoPickerExample
 //
-//  Created by 洪欣 on 17/2/8.
-//  Copyright © 2017年 洪欣. All rights reserved.
+//  Created by Silence on 17/2/8.
+//  Copyright © 2017年 Silence. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -27,6 +27,13 @@
 
 /// 相关配置
 @property (strong, nonatomic) HXPhotoConfiguration *configuration;
+
+/// 控制器生命周期，根据Class来判断具体类型，具体包括
+/// [HXAlbumListViewController、HXCustomCameraViewController、HXCustomNavigationController、HXPhotoViewController、HXPhotoPreviewViewController]
+@property (copy, nonatomic) void (^ viewWillAppear)(UIViewController *viewController);
+@property (copy, nonatomic) void (^ viewDidAppear)(UIViewController *viewController);
+@property (copy, nonatomic) void (^ viewWillDisappear)(UIViewController *viewController);
+@property (copy, nonatomic) void (^ viewDidDisappear)(UIViewController *viewController);
 
 /// 选择照片界面完成时的dismiss时是否需要动画效果
 /// 默认YES

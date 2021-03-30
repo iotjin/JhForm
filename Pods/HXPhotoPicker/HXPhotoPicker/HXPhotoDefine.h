@@ -2,8 +2,8 @@
 //  HXPhotoDefine.h
 //  HXPhotoPickerExample
 //
-//  Created by 洪欣 on 2017/11/24.
-//  Copyright © 2017年 洪欣. All rights reserved.
+//  Created by Silence on 2017/11/24.
+//  Copyright © 2017年 Silence. All rights reserved.
 //
 
 #ifndef HXPhotoDefine_h
@@ -13,7 +13,7 @@
 #import "NSBundle+HXPhotoPicker.h"
 
 /// 当前版本
-#define HXVersion @"3.1.6"
+#define HXVersion @"3.1.9"
 
 // 日志输出
 #ifdef DEBUG

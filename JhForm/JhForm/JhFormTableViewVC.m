@@ -48,15 +48,23 @@
     }
 }
 
-//暗黑模式颜色已通过分类处理，此处是处理Light样式
+//暗黑模式颜色已通过分类处理，此处是处理整个页面的Auto、Light、Dark样式
 - (void)Jh_configureIOS13Theme {
     self.view.backgroundColor = JhBaseBgColor;
     if (@available(iOS 13.0, *)) {
-        switch (Jh_ThemeType) {
+        JhThemeType type = Jh_ThemeType;
+        if (self.Jh_themeType) {
+            type = self.Jh_themeType;
+        }
+        switch (type) {
             case JhThemeTypeAuto:
+                self.overrideUserInterfaceStyle = UIUserInterfaceStyleUnspecified;
                 break;
             case JhThemeTypeLight:
                 self.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
+                break;
+            case JhThemeTypeDark:
+                self.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
                 break;
             default:
                 break;
@@ -170,6 +178,16 @@
     _Jh_formModelArr = self.mArr;
 }
 
+-(void)setJh_themeType:(JhThemeType)Jh_themeType {
+    _Jh_themeType = Jh_themeType;
+    for (JhFormSectionModel *sectionModel in self.mArr) {
+        for (JhFormCellModel *cellModel in sectionModel.Jh_sectionModelArr) {
+            cellModel.Jh_cellThemeType = Jh_themeType;
+        }
+    }
+    self.Jh_formTableView.Jh_formModelArr = self.mArr;
+    [self Jh_configureIOS13Theme];
+}
 
 #pragma mark - 导航栏
 
@@ -181,10 +199,7 @@
 -(void)setJh_navRightTitle:(NSString *)Jh_navRightTitle {
     _Jh_navRightTitle = Jh_navRightTitle;
     if (Jh_navRightTitle.length) {
-        UIColor *color = [UIColor blackColor];
-        if (@available(iOS 13.0, *)) {
-            color = [UIColor labelColor];
-        }
+        UIColor *color = JhBaseNavTextColor;
         UIBarButtonItem *rightItem = [UIBarButtonItem Jh_itemWithTitle:Jh_navRightTitle titleColor:color target:self action:@selector(ClickNavRightItem)];
         self.navigationItem.rightBarButtonItems =  @[rightItem];
     }

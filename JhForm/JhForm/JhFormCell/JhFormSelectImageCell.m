@@ -59,10 +59,10 @@
         _oneManager.configuration.maxNum = maxNum;
         _oneManager.configuration.cameraCellShowPreview = NO;
         _oneManager.configuration.openCamera =NO;
-        _oneManager.configuration.photoCanEdit =NO;
+        //        _oneManager.configuration.photoCanEdit =NO;
         _oneManager.configuration.showBottomPhotoDetail = NO;
         _oneManager.configuration.saveSystemAblum = YES;
-        _oneManager.configuration.photoStyle = Jh_ThemeType == JhThemeTypeAuto ? HXPhotoStyleDefault : HXPhotoStyleInvariant;
+        _oneManager.configuration.photoStyle = Jh_ThemeType == JhThemeTypeAuto ? HXPhotoStyleDefault :(Jh_ThemeType == JhThemeTypeLight? HXPhotoStyleInvariant : HXPhotoStyleDark);
         [HXPhotoCommon photoCommon].requestNetworkAfter= YES;
     }
     return _oneManager;
@@ -149,6 +149,7 @@
     [super Jh_configCellModel:cellModel];
     
 #if kHasHXPhotoPicker
+    self.oneManager.configuration.photoStyle = cellModel.Jh_cellThemeType == JhThemeTypeAuto ? HXPhotoStyleDefault :(cellModel.Jh_cellThemeType == JhThemeTypeLight? HXPhotoStyleInvariant : HXPhotoStyleDark);
     if (cellModel.Jh_maxImageCount) {
         self.oneManager.configuration.maxNum = cellModel.Jh_maxImageCount;
         self.oneManager.configuration.photoMaxNum = cellModel.Jh_maxImageCount;
@@ -203,9 +204,50 @@
         }
     }
     self.onePhotoView.hideDeleteButton = cellModel.Jh_hideDeleteButton;
+    //弹出的相册界面的设置
+    UIColor *themeColor = JhBaseThemeColor;
+    UIColor *navColor = [UIColor whiteColor];
+    UIColor *navTitleColor = [UIColor blackColor];
+    self.oneManager.configuration.navBarBackgroudColor = navColor;
+    self.oneManager.configuration.navigationTitleColor= navTitleColor;
+    self.oneManager.configuration.bottomViewBgColor = navColor;
+    self.oneManager.configuration.themeColor = themeColor;
+    self.oneManager.configuration.previewSelectedBtnBgColor = themeColor;
+    self.oneManager.configuration.cameraFocusBoxColor = themeColor;
+    self.oneManager.configuration.albumListViewCellSelectBgColor = JhBaseCellBgColor;
+    //    self.oneManager.configuration.bottomDoneBtnTitleColor = [UIColor purpleColor];
+    //    self.oneManager.configuration.cellSelectedBgColor = [UIColor redColor];
+    JhWeakSelf
+    self.oneManager.viewWillAppear = ^(UIViewController *viewController) {
+        [weakSelf updateStatusBar:cellModel];
+    };
+    self.oneManager.viewWillDisappear = ^(UIViewController *viewController) {
+        [weakSelf updateStatusBar:cellModel];
+    };
+    //    self.onePhotoView.didCancelBlock = ^{
+    //    };
+    //    self.onePhotoView.didAddCellBlock = ^(HXPhotoView * _Nonnull myPhotoView) {
+    //    };
+    
 #endif
     
 }
+
+#if kHasHXPhotoPicker
+- (void)updateStatusBar:(JhFormCellModel *)cellModel {
+    if (Jh_IOS13_Later) {
+        if (cellModel.Jh_cellThemeType == JhThemeTypeAuto) {
+            self.oneManager.configuration.statusBarStyle = UIStatusBarStyleDefault;
+        }
+        if (cellModel.Jh_cellThemeType == JhThemeTypeLight) {
+            self.oneManager.configuration.statusBarStyle = UIStatusBarStyleDarkContent;
+        }
+        if (cellModel.Jh_cellThemeType == JhThemeTypeDark) {
+            self.oneManager.configuration.statusBarStyle = UIStatusBarStyleLightContent;
+        }
+    }
+}
+#endif
 
 - (void)layoutSubviews {
     [super layoutSubviews];

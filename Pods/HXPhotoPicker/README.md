@@ -14,6 +14,8 @@
 | <img src="http://tsnrhapp.oss-cn-hangzhou.aliyuncs.com/chartle/show_tag_3_2.PNG"> | <img src="http://tsnrhapp.oss-cn-hangzhou.aliyuncs.com/chartle/sample_graph_8.PNG"> | <img src="http://tsnrhapp.oss-cn-hangzhou.aliyuncs.com/chartle/sample_graph_6.PNG"> |
 | <img src="http://tsnrhapp.oss-cn-hangzhou.aliyuncs.com/chartle/show_gif_tag_1.gif"> | <img src="http://tsnrhapp.oss-cn-hangzhou.aliyuncs.com/chartle/show_gif_tag_2.gif"> | <img src="http://tsnrhapp.oss-cn-hangzhou.aliyuncs.com/chartle/show_gif_tag_3.gif"> |
 
+> [Swift版本](https://github.com/SilenceLove/HXPHPicker)
+
 ## 目录
 * [特性](#特性)
 * [安装](#安装)
@@ -39,7 +41,7 @@
 - [x] 长按拖动改变顺序
 - [x] 自定义相机拍照、录制视频
 - [x] 自定义转场动画
-- [x] 查看、选择LivePhoto IOS9.1以上才有用
+- [x] 查看、选择LivePhoto iOS9.1以上才有用
 - [x] 浏览网络图片、网络视频
 - [x] 仿微信编辑图片功能
 - [x] 自定义裁剪视频时长
@@ -63,13 +65,13 @@
 ``` ruby
 # 将以下内容添加到您的Podfile中：
 # 不使用网络图片功能
-pod 'HXPhotoPicker', '~> 3.1.6'
+pod 'HXPhotoPicker', '~> 3.1.9'
   
 # 使用SDWebImage加载网络图片
-pod 'HXPhotoPicker/SDWebImage', '~> 3.1.6'
+pod 'HXPhotoPicker/SDWebImage', '~> 3.1.9'
   
 # 使用YYWebImage加载网络图片
-pod 'HXPhotoPicker/YYWebImage', '~> 3.1.6'
+pod 'HXPhotoPicker/YYWebImage', '~> 3.1.9'
 
 # 搜索不到库或最新版时请执行
 pod repo update 或 rm ~/Library/Caches/CocoaPods/search_index.json
@@ -714,8 +716,9 @@ frame.size.height 就是 HXPhotoView 的正确高度
   <summary><strong>最近更新</strong></summary>
    
 ```
-- v3.1.6　-　修复相机界面内存泄漏问题、相册权限为部分时拍照错乱问题、requestImageAfterFinishingSelection为YES时未获取原图问题
-- v3.1.5　-　修复获取保存本地的视频时，选中下标错误显示为视频时长、优化手势动画效果、编辑图片时支持圆形裁剪框
+- v3.1.9　-　优化连续编辑大图出现的内存问题，修复相机拍照后预览崩溃问题
+- v3.1.8　-　修复保存自定义相册无效问题
+- v3.1.7　-　修复相机闪光灯失效问题、视频转场动画效果优化、HXPhotoModel添加获取原视频地址方法、添加属性控制预览界面是否直接加载原图
 ```
 </details>
    
@@ -723,6 +726,8 @@ frame.size.height 就是 HXPhotoView 的正确高度
   <summary><strong>历史记录</strong></summary>
    
 ```
+- v3.1.6　-　修复相机界面内存泄漏问题、相册权限为部分时拍照错乱问题、requestImageAfterFinishingSelection为YES时未获取原图问题
+- v3.1.5　-　修复获取保存本地的视频时，选中下标错误显示为视频时长、优化手势动画效果、编辑图片时支持圆形裁剪框
 - v3.1.4　-　fix previewPhoto为nil
 - v3.1.3　-　修复dark模式下选择按钮颜色错误、退出选择界面时清空缓存、修复iOS14下iCloud上视频可以加载失败问题、提高列表/大图清晰度、修复过滤PHAsset时总数量不对问题
 - v3.1.2　-　适配iPhone12、去除警告、添加可过滤PHAssetCollection、PHAsset功能

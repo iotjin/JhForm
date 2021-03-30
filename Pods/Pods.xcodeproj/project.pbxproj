@@ -498,7 +498,7 @@
 		22FE66A2C1E0B3FC7E4B9CF04574D751 /* HXPhotoEditGraffitiColorView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HXPhotoEditGraffitiColorView.m; path = HXPhotoPicker/HXPhotoEdit/View/HXPhotoEditGraffitiColorView.m; sourceTree = "<group>"; };
 		23342CC8C9E9ECFD6DF4AD400348AA76 /* HXPhotoViewTransition.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HXPhotoViewTransition.m; path = HXPhotoPicker/TransitionAnimation/HXPhotoViewTransition.m; sourceTree = "<group>"; };
 		233E5034A30AEF79AF91140562C5CACC /* SDWebImageCacheSerializer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageCacheSerializer.m; path = SDWebImage/Core/SDWebImageCacheSerializer.m; sourceTree = "<group>"; };
-		24DDD4A0849B06C0942057220E1E81B2 /* libHXPhotoPicker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libHXPhotoPicker.a; path = libHXPhotoPicker.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		24DDD4A0849B06C0942057220E1E81B2 /* libHXPhotoPicker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHXPhotoPicker.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		24FDC73272235694F1261A5F3CCCFADE /* UIImageView+WebCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+WebCache.m"; path = "SDWebImage/Core/UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		258D0C411619095463A4F1EFCB401A69 /* HXPhotoEditingView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HXPhotoEditingView.h; path = HXPhotoPicker/HXPhotoEdit/View/HXPhotoEditingView.h; sourceTree = "<group>"; };
 		2596FD176AAC86D09A37047F7B85481D /* SDWebImageDownloaderOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageDownloaderOperation.h; path = SDWebImage/Core/SDWebImageDownloaderOperation.h; sourceTree = "<group>"; };
@@ -668,7 +668,7 @@
 		96888048800581C1719B57061405EE2A /* HXPhotoPicker-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HXPhotoPicker-prefix.pch"; sourceTree = "<group>"; };
 		97829C92F33CDC84D489AB7399EDC7A0 /* HXCustomCameraController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HXCustomCameraController.h; path = HXPhotoPicker/Controller/HXCustomCameraController.h; sourceTree = "<group>"; };
 		97A429C0670F43D36505B53F10695BCD /* IQNSArray+Sort.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQNSArray+Sort.h"; path = "IQKeyboardManager/Categories/IQNSArray+Sort.h"; sourceTree = "<group>"; };
-		98527D7196957AAB07B79E2E2AFDE23E /* libIQKeyboardManager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libIQKeyboardManager.a; path = libIQKeyboardManager.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		98527D7196957AAB07B79E2E2AFDE23E /* libIQKeyboardManager.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIQKeyboardManager.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		98A1D160C488C288EACF497A4BE1E1AA /* IQKeyboardManager-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "IQKeyboardManager-dummy.m"; sourceTree = "<group>"; };
 		98BDEBF827FA3505ECEDFAE92E4368C3 /* HXPhotoEditChartletModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HXPhotoEditChartletModel.m; path = HXPhotoPicker/HXPhotoEdit/Model/HXPhotoEditChartletModel.m; sourceTree = "<group>"; };
 		98D6D8F736DB4E051EDFFFB4D1963CD8 /* UIImage+GIF.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+GIF.h"; path = "SDWebImage/Core/UIImage+GIF.h"; sourceTree = "<group>"; };
@@ -681,7 +681,7 @@
 		9CB6209A3E42C76F0DEFDAA624FC5E38 /* UIColor+SDHexString.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIColor+SDHexString.h"; path = "SDWebImage/Private/UIColor+SDHexString.h"; sourceTree = "<group>"; };
 		9D00FAC8752A90D8E130BFC5A80A46E0 /* HXCustomCameraViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HXCustomCameraViewController.m; path = HXPhotoPicker/Controller/HXCustomCameraViewController.m; sourceTree = "<group>"; };
 		9D2419CDBFDF5652C2E6BFD8524ECFB7 /* SDmetamacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDmetamacros.h; path = SDWebImage/Private/SDmetamacros.h; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E71CC5393105DD2E47E098437D042F7 /* SDWeakProxy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWeakProxy.h; path = SDWebImage/Private/SDWeakProxy.h; sourceTree = "<group>"; };
 		9F3EEAE1FF7A6A6286911FF59C339392 /* IQUIView+IQKeyboardToolbar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "IQUIView+IQKeyboardToolbar.h"; path = "IQKeyboardManager/IQToolbar/IQUIView+IQKeyboardToolbar.h"; sourceTree = "<group>"; };
 		9F735B1B0950E5B81D9D1EC635610299 /* HXPhotoEditSplashView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HXPhotoEditSplashView.h; path = HXPhotoPicker/HXPhotoEdit/View/HXPhotoEditSplashView.h; sourceTree = "<group>"; };
@@ -696,7 +696,7 @@
 		A3142EC02491D0C13C815A46236CFD27 /* HXPhotoPreviewLivePhotoCell.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HXPhotoPreviewLivePhotoCell.h; path = HXPhotoPicker/View/HXPhotoPreviewLivePhotoCell.h; sourceTree = "<group>"; };
 		A3AD60A2ADD293BD64522BD3213DD9F2 /* HXPhotoViewPresentTransition.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HXPhotoViewPresentTransition.h; path = HXPhotoPicker/TransitionAnimation/HXPhotoViewPresentTransition.h; sourceTree = "<group>"; };
 		A434868B101F762230269C7E2BAB5253 /* HXPhotoEditGridMaskLayer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HXPhotoEditGridMaskLayer.h; path = HXPhotoPicker/HXPhotoEdit/View/HXPhotoEditGridMaskLayer.h; sourceTree = "<group>"; };
-		A4FA15D44DF6BAC7550EDEED10862AA3 /* libAFNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libAFNetworking.a; path = libAFNetworking.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4FA15D44DF6BAC7550EDEED10862AA3 /* libAFNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAFNetworking.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A50587C0780ED9E3ACB3FAFFCA3FA643 /* HXPhotoEditGridLayer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HXPhotoEditGridLayer.m; path = HXPhotoPicker/HXPhotoEdit/View/HXPhotoEditGridLayer.m; sourceTree = "<group>"; };
 		A50CCDB4B343D2F41106DF352D3D5481 /* HXPhotoModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HXPhotoModel.h; path = HXPhotoPicker/Model/HXPhotoModel.h; sourceTree = "<group>"; };
 		A5A4A7BCC9BB743C42C71E9D870FC7DB /* HXPhotoManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HXPhotoManager.h; path = HXPhotoPicker/HXPhotoManager.h; sourceTree = "<group>"; };
@@ -722,7 +722,7 @@
 		AED702BDDC6DF1A1D1B62011678A3FC6 /* SDFileAttributeHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDFileAttributeHelper.m; path = SDWebImage/Private/SDFileAttributeHelper.m; sourceTree = "<group>"; };
 		AF210B8F91F0F16443B89A9521E62754 /* AFURLSessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLSessionManager.m; path = AFNetworking/AFURLSessionManager.m; sourceTree = "<group>"; };
 		B0676088498BDAD8D8E40E710033344D /* SDMemoryCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDMemoryCache.h; path = SDWebImage/Core/SDMemoryCache.h; sourceTree = "<group>"; };
-		B0B214D775196BA7CA8E17E53048A493 /* libSDWebImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libSDWebImage.a; path = libSDWebImage.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0B214D775196BA7CA8E17E53048A493 /* libSDWebImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSDWebImage.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B221D6B05A7140CE1CD6FB3337C9577B /* HXPhotoConfiguration.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HXPhotoConfiguration.h; path = HXPhotoPicker/HXPhotoConfiguration.h; sourceTree = "<group>"; };
 		B3779B8D6A40F622B324C96E546E8669 /* IQKeyboardManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQKeyboardManager.h; path = IQKeyboardManager/IQKeyboardManager.h; sourceTree = "<group>"; };
 		B476552FBCCD99630CEB816C0C4E6EE9 /* NSBezierPath+SDRoundedCorners.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSBezierPath+SDRoundedCorners.m"; path = "SDWebImage/Private/NSBezierPath+SDRoundedCorners.m"; sourceTree = "<group>"; };
@@ -739,7 +739,7 @@
 		BF5E81244C84A38F91C8A6AE7B3B763C /* IQUIViewController+Additions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "IQUIViewController+Additions.m"; path = "IQKeyboardManager/Categories/IQUIViewController+Additions.m"; sourceTree = "<group>"; };
 		BF757BCEB7A1F3E9B2593584B6CF7087 /* SDWebImageOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageOperation.m; path = SDWebImage/Core/SDWebImageOperation.m; sourceTree = "<group>"; };
 		C15BAFD55F9A4F4EC9E1FCF853CE4590 /* UIProgressView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIProgressView+AFNetworking.m"; path = "UIKit+AFNetworking/UIProgressView+AFNetworking.m"; sourceTree = "<group>"; };
-		C1D35E3A4F5AB2D3377C203D98920281 /* libPods-JhForm.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-JhForm.a"; path = "libPods-JhForm.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1D35E3A4F5AB2D3377C203D98920281 /* libPods-JhForm.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JhForm.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C26904FA6E9DAE2ABBB462C858B12498 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLRequestSerialization.m; path = AFNetworking/AFURLRequestSerialization.m; sourceTree = "<group>"; };
 		C4929CAA81ED1E32A612BEF87BA9003D /* Pods-JhForm-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-JhForm-acknowledgements.plist"; sourceTree = "<group>"; };
 		C4DE9DBBE0960C67D6098EE99DFDCEF9 /* SDWebImageOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageOperation.h; path = SDWebImage/Core/SDWebImageOperation.h; sourceTree = "<group>"; };
@@ -921,7 +921,6 @@
 				532BE268B6B43DFA7D3DF9370423F20A /* Core */,
 				318465E248291F3E0A824E47A8BD1668 /* Support Files */,
 			);
-			name = SDWebImage;
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
@@ -944,7 +943,6 @@
 				90881C8C8134A401D579D28A15FF94AD /* Support Files */,
 				1FB3139FD9F0784BEBA4DFD1E2319C68 /* UIKit */,
 			);
-			name = AFNetworking;
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
@@ -1184,7 +1182,6 @@
 				F3EAB759168035DB5CBB4103A1F55D8E /* Default */,
 				0CABEE22FB83AE9524E5CF6422292D92 /* Support Files */,
 			);
-			name = HXPhotoPicker;
 			path = HXPhotoPicker;
 			sourceTree = "<group>";
 		};
@@ -1271,7 +1268,6 @@
 				BF5E81244C84A38F91C8A6AE7B3B763C /* IQUIViewController+Additions.m */,
 				D0D2577BCEFC65867BB850DF54CE1AB5 /* Support Files */,
 			);
-			name = IQKeyboardManager;
 			path = IQKeyboardManager;
 			sourceTree = "<group>";
 		};
@@ -2141,7 +2137,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2357,7 +2353,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";

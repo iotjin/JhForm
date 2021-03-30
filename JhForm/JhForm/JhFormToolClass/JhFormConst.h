@@ -12,8 +12,8 @@
 #import "NSString+JhForm.h"
 #import "UIView+JhView.h"
 
-/// 版本号（20201209）
-#define kVersion @"2.0.0"
+/// 版本号（20210330）
+#define kVersion @"2.1.0"
 
 
 /// 屏幕宽度、高度
@@ -43,9 +43,11 @@
 #define Jh_SetValueAndDefault(value,defaultValue) (value ?: defaultValue)
 
 /// 设置lightColor 和 darkColor
-#define Jh_SetLightAndDark(light,dark) Jh_ThemeType==JhThemeTypeLight? [UIColor Jh_colorWithLightColor:light darkColor:light]:[UIColor Jh_colorWithLightColor:light darkColor:dark]
+#define Jh_SetLightAndDark(light,dark) Jh_ThemeType == JhThemeTypeAuto?[UIColor Jh_colorWithLightColor:light darkColor:dark]:(Jh_ThemeType == JhThemeTypeLight?[UIColor Jh_colorWithLightColor:light darkColor:light]:[UIColor Jh_colorWithLightColor:dark darkColor:dark])
 
-/// 主题色
+#define Jh_IsDark if(Jh_IOS13_Later)return UITraitCollection.currentTraitCollection.userInterfaceStyle == UIUserInterfaceStyleDark; return false;
+
+/// 主题色，选择图片中的导航条使用了主题色
 #define JhBaseThemeColor JhColor(46, 150, 213)
 ///  背景色
 #define JhBaseBgColor Jh_SetLightAndDark(JhGrayColor(248),JhBaseBgColor_dark)
@@ -59,11 +61,21 @@
 #define JhBaseLabelColor JhGrayColor(51)
 #define JhBaseLabelColor_Dark JhGrayColor(198)
 
+/// 页面设置lightColor 和 darkColor
+#define Jh_PageSetLightAndDark(light,dark) self.Jh_themeType ? (self.Jh_themeType== JhThemeTypeAuto?[UIColor Jh_colorWithLightColor:light darkColor:dark]:(self.Jh_themeType == JhThemeTypeLight?[UIColor Jh_colorWithLightColor:light darkColor:light]:[UIColor Jh_colorWithLightColor:dark darkColor:dark])): (Jh_ThemeType== JhThemeTypeAuto?[UIColor Jh_colorWithLightColor:light darkColor:dark]:(Jh_ThemeType == JhThemeTypeLight?[UIColor Jh_colorWithLightColor:light darkColor:light]:[UIColor Jh_colorWithLightColor:dark darkColor:dark]))
+
+/// 导航条背景色
+#define JhBaseNavBgColor Jh_PageSetLightAndDark(JhBaseThemeColor, JhGrayColor(20))
+/// 导航条标题颜色
+#define JhBaseNavTitleColor Jh_PageSetLightAndDark(UIColor.whiteColor, JhBaseLabelColor_Dark)
+/// 导航条文字颜色
+#define JhBaseNavTextColor JhBaseNavTitleColor
 
 /// 主题样式
 typedef NS_ENUM(NSInteger, JhThemeType) {
     JhThemeTypeAuto = 0,   // 跟随系统设置自动切换，默认值
     JhThemeTypeLight,      // 浅色模式
+    JhThemeTypeDark,       // 深色模式
 };
 
 /// cell文字垂直方向对齐样式（title和info）

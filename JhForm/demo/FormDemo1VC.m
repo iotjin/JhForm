@@ -18,6 +18,12 @@
     NSLog(@" FormDemo1VC - dealloc ");
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    NSUserDefaults *user= [NSUserDefaults standardUserDefaults];
+    self.Jh_themeType = [[user objectForKey:@"kCurrentTheme"] integerValue];
+    self.Jh_navRightTitle = @"文字";
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -29,7 +35,7 @@
 -(void)setNav{
     
     self.Jh_navTitle = @"Demo1 - 默认";
-    self.Jh_navRightTitle =@"文字"; //也可以设置图片
+    self.Jh_navRightTitle = @"文字"; //也可以设置图片
     JhWeakSelf
     self.JhClickNavRightItemBlock = ^{
         NSLog(@" 点击跳转 ");

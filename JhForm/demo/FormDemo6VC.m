@@ -47,6 +47,10 @@
     JhFormCellModel *cell1 = JhFormCellModel_AddSelectBtnCell(@"单选2选项", YES, YES);
     cell1.Jh_selectBtnCell_btnTitleArr = @[@"男",@"女"];
     cell1.Jh_selectBtnCell_btnHorizontalMargin = 40;
+    cell1.Jh_selectBtnCellClickBlock = ^(NSString * _Nonnull selectText, NSInteger selectIndex) {
+        NSLog(@" selectText %@ ",selectText);
+        NSLog(@" selectIndex %zd ",selectIndex);
+    };
     
     //单选，3个选项，设置图标
     JhFormCellModel *cell2 = JhFormCellModel_AddSelectBtnCell(@"单选3选项", YES, YES);
@@ -139,7 +143,7 @@
         JhLog(@" cell8 - selectIndexArr%@ -- selectTitleArr%@ ",cell8.Jh_selectBtnCell_selectIndexArr,cell8.Jh_selectBtnCell_selectTitleArr);
         NSLog(@" 其它---------------------------------- ");
         JhLog(@" cell9 - selectIndexArr%@ -- selectTitleArr%@ ",cell9.Jh_selectBtnCell_selectIndexArr,cell9.Jh_selectBtnCell_selectTitleArr);
-
+        
         [weakSelf SubmitRequest];
     };
     

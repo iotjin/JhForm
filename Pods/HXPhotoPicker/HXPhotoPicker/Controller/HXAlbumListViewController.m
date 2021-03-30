@@ -2,8 +2,8 @@
 //  HXDateAlbumViewController.m
 //  HXPhotoPickerExample
 //
-//  Created by 洪欣 on 2017/10/14.
-//  Copyright © 2017年 洪欣. All rights reserved.
+//  Created by Silence on 2017/10/14.
+//  Copyright © 2017年 Silence. All rights reserved.
 //
 
 #import "HXAlbumListViewController.h" 
@@ -171,9 +171,21 @@ UITableViewDelegate
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self changeStatusBarStyle];
+    if (self.manager.viewWillAppear) {
+        self.manager.viewWillAppear(self);
+    }
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    if (self.manager.viewWillDisappear) {
+        self.manager.viewWillDisappear(self);
+    }
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    if (self.manager.viewDidDisappear) {
+        self.manager.viewDidDisappear(self);
+    }
 }
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
@@ -199,6 +211,9 @@ UITableViewDelegate
             }
         }
 #endif
+    }
+    if (self.manager.viewDidAppear) {
+        self.manager.viewDidAppear(self);
     }
 }
 - (void)setupUI {
@@ -496,11 +511,13 @@ UITableViewDelegate
     NSInteger photoCount = self.model.count;
     HXWeakSelf
     PHAsset *asset = self.model.assetResult.lastObject;
-    self.requestId1 = [HXAssetManager requestThumbnailImageForAsset:asset targetWidth:300 completion:^(UIImage * _Nonnull result, NSDictionary<NSString *,id> * _Nonnull info) {
-        if (weakSelf.model.assetResult.lastObject == asset && result) {
-            weakSelf.coverView1.image = result;
-        }
-    }];
+    if (asset) {
+        self.requestId1 = [HXAssetManager requestThumbnailImageForAsset:asset targetWidth:300 completion:^(UIImage * _Nonnull result, NSDictionary<NSString *,id> * _Nonnull info) {
+            if (weakSelf.model.assetResult.lastObject == asset && result) {
+                weakSelf.coverView1.image = result;
+            }
+        }];
+    }
     
     self.photoNumberLb.text = [@(photoCount + self.model.cameraCount).stringValue hx_countStrBecomeComma];
     if (self.getResultCompleteBlock) {

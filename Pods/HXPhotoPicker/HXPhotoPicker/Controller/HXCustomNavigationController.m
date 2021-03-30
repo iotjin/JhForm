@@ -2,8 +2,8 @@
 //  HXCustomNavigationController.m
 //  HXPhotoPickerExample
 //
-//  Created by 洪欣 on 2017/10/31.
-//  Copyright © 2017年 洪欣. All rights reserved.
+//  Created by Silence on 2017/10/31.
+//  Copyright © 2017年 Silence. All rights reserved.
 //
 
 #import "HXCustomNavigationController.h"
@@ -200,12 +200,33 @@
         }];
     });
 }
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (self.manager.viewWillAppear) {
+        self.manager.viewWillAppear(self);
+    }
+}
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (self.manager.viewDidAppear) {
+        self.manager.viewDidAppear(self);
+    }
+}
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     if (_timer) {
         self.didPresentImagePicker = NO;
         [self.timer invalidate];
         self.timer = nil;
+    }
+    if (self.manager.viewWillDisappear) {
+        self.manager.viewWillDisappear(self);
+    }
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    if (self.manager.viewDidDisappear) {
+        self.manager.viewDidDisappear(self);
     }
 }
 - (void)viewDidLoad {

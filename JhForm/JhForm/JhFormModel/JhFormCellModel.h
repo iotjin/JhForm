@@ -58,6 +58,9 @@ typedef NS_ENUM(NSInteger, JhSelectImageType) {
 /** 获取当前录入文字 和 录入状态 （ 0、开始录入；1、发生改变；2、录入完成）  */
 @property (nonatomic,   copy) void(^Jh_cellInputBlock)(NSString *inputText,NSInteger inputStates);
 
+/** 选择按钮 Cell 点击按钮选项的 Block */
+@property (nonatomic,   copy) void(^Jh_selectBtnCellClickBlock)(NSString *selectText,NSInteger selectIndex);
+
 /**
  右侧设置自定义视图，需要先设置 Jh_rightViewWidth
  
@@ -184,6 +187,9 @@ typedef NS_ENUM(NSInteger, JhSelectImageType) {
 #pragma mark - ******************************* 以下为Cell的样式配置 ********************************
 
 #pragma mark - Cell 通用配置
+
+/** cell 主题样式  */
+@property (nonatomic, assign) JhThemeType Jh_cellThemeType;
 
 /** 表单Cell，高度，默认值为 44.0f, 可根据需求设置(如果设置底部自定义view 最好设置view的高度+60 ) */
 @property (nonatomic, assign) CGFloat Jh_cellHeight;

@@ -2,8 +2,8 @@
 //  HXPhotoView.m
 //  HXPhotoPickerExample
 //
-//  Created by 洪欣 on 17/2/17.
-//  Copyright © 2017年 洪欣. All rights reserved.
+//  Created by Silence on 17/2/17.
+//  Copyright © 2017年 Silence. All rights reserved.
 //
 
 #import "HXPhotoView.h"
@@ -296,7 +296,9 @@
  刷新视图
  */
 - (void)refreshView {
-    [self setupDataWithAllList:self.manager.afterSelectedArray.copy photos:self.manager.afterSelectedPhotoArray.copy videos:self.manager.afterSelectedVideoArray.copy original:self.manager.afterOriginal];
+    if (!self.manager.configuration.singleSelected) {
+        [self setupDataWithAllList:self.manager.afterSelectedArray.copy photos:self.manager.afterSelectedPhotoArray.copy videos:self.manager.afterSelectedVideoArray.copy original:self.manager.afterOriginal];
+    }
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.tempShowAddCell ? self.dataList.count + 1 : self.dataList.count;
@@ -665,11 +667,11 @@
             return;
         }
         // 当选中视频个数没有达到最大个数时就添加到选中数组中 
-        if (model.videoDuration < self.manager.configuration.videoMinimumSelectDuration) {
+        if (round(model.videoDuration) < self.manager.configuration.videoMinimumSelectDuration) {
             
             [[self hx_viewController].view hx_showImageHUDText:[NSString stringWithFormat:[NSBundle hx_localizedStringForKey:@"视频少于%ld秒，无法选择"], self.manager.configuration.videoMinimumSelectDuration]];
             return;
-        }else if (model.videoDuration >= self.manager.configuration.videoMaximumSelectDuration + 1) {
+        }else if (round(model.videoDuration) >= self.manager.configuration.videoMaximumSelectDuration + 1) {
             [[self hx_viewController].view hx_showImageHUDText:[NSString stringWithFormat:[NSBundle hx_localizedStringForKey:@"视频大于%ld秒，无法选择"], self.manager.configuration.videoMaximumSelectDuration]];
             return;
         }else if ([self.manager afterSelectVideoCountIsMaximum]) {

@@ -2,8 +2,8 @@
 //  HXPhotoViewController.m
 //  HXPhotoPickerExample
 //
-//  Created by 洪欣 on 2017/10/14.
-//  Copyright © 2017年 洪欣. All rights reserved.
+//  Created by Silence on 2017/10/14.
+//  Copyright © 2017年 Silence. All rights reserved.
 //
 
 #import "HXPhotoViewController.h"
@@ -144,6 +144,9 @@ HX_PhotoEditViewControllerDelegate
     if (self.needChangeViewFrame) {
         self.needChangeViewFrame = NO;
     }
+    if (self.manager.viewWillAppear) {
+        self.manager.viewWillAppear(self);
+    }
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -152,9 +155,21 @@ HX_PhotoEditViewControllerDelegate
             [self.cameraCell starRunning];
         }
     }
+    if (self.manager.viewDidAppear) {
+        self.manager.viewDidAppear(self);
+    }
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    if (self.manager.viewWillDisappear) {
+        self.manager.viewWillDisappear(self);
+    }
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    if (self.manager.viewDidDisappear) {
+        self.manager.viewDidDisappear(self);
+    }
 }
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
@@ -1062,6 +1077,9 @@ HX_PhotoEditViewControllerDelegate
         if (firstSelectModel) {
             scrollIndexPath = [NSIndexPath indexPathForItem:[self.allArray indexOfObject:firstSelectModel] inSection:0];
             position = UICollectionViewScrollPositionCenteredVertically;
+        }else {
+            scrollIndexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+            position = UICollectionViewScrollPositionTop;
         }
     }
     if (scrollIndexPath) {
@@ -1272,9 +1290,9 @@ HX_PhotoEditViewControllerDelegate
                             weakSelf.manager.configuration.shouldUseCamera(weakSelf, cameraType, weakSelf.manager);
                         }
                         weakSelf.manager.configuration.useCameraComplete = ^(HXPhotoModel *model) {
-                            if (model.videoDuration < weakSelf.manager.configuration.videoMinimumSelectDuration) {
+                            if (round(model.videoDuration) < weakSelf.manager.configuration.videoMinimumSelectDuration) {
                                 [weakSelf.view hx_showImageHUDText:[NSString stringWithFormat:[NSBundle hx_localizedStringForKey:@"视频少于%ld秒，无法选择"], weakSelf.manager.configuration.videoMinimumSelectDuration]];
-                            }else if (model.videoDuration >= weakSelf.manager.configuration.videoMaximumSelectDuration + 1) {
+                            }else if (round(model.videoDuration) >= weakSelf.manager.configuration.videoMaximumSelectDuration + 1) {
                                 [weakSelf.view hx_showImageHUDText:[NSString stringWithFormat:[NSBundle hx_localizedStringForKey:@"视频大于%ld秒，无法选择"], weakSelf.manager.configuration.videoMaximumSelectDuration]];
                             }
                             [weakSelf customCameraViewController:nil didDone:model];

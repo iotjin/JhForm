@@ -2,8 +2,8 @@
 //  HXCustomCameraViewController.m
 //  HXPhotoPickerExample
 //
-//  Created by 洪欣 on 2017/9/30.
-//  Copyright © 2017年 洪欣. All rights reserved.
+//  Created by Silence on 2017/9/30.
+//  Copyright © 2017年 Silence. All rights reserved.
 //
 
 #import "HXCustomCameraViewController.h"
@@ -172,7 +172,7 @@ CLLocationManagerDelegate
 }
 - (void)setupImageOutput {
     [self.cameraController initImageOutput];
-    self.cameraController.flashMode = 2;
+    self.cameraController.flashMode = AVCaptureFlashModeAuto;
 }
 - (void)setupMovieOutput {
     [self.cameraController addAudioInput];
@@ -255,8 +255,7 @@ CLLocationManagerDelegate
     
     self.previewView.maxScale = [self.cameraController maxZoomFactor];
     [self resetCameraZoom];
-    
-    self.cameraController.flashMode = 0;
+    self.cameraController.flashMode = AVCaptureFlashModeAuto;
     [self setupFlashAndTorchBtn];
     self.previewView.tapToExposeEnabled = self.cameraController.cameraSupportsTapToExpose;
     self.previewView.tapToFocusEnabled = self.cameraController.cameraSupportsTapToFocus;
@@ -325,6 +324,9 @@ CLLocationManagerDelegate
         [previewLayerConnection setVideoOrientation:(AVCaptureVideoOrientation)[[UIApplication sharedApplication] statusBarOrientation]];
     
     [self preferredStatusBarUpdateAnimation];
+    if (self.manager.viewWillAppear) {
+        self.manager.viewWillAppear(self);
+    }
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -334,16 +336,25 @@ CLLocationManagerDelegate
 #pragma clang diagnostic pop
     [self.cameraController stopMontionUpdate];
     [self preferredStatusBarUpdateAnimation];
+    if (self.manager.viewWillDisappear) {
+        self.manager.viewWillDisappear(self);
+    }
 }
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.navigationController setNavigationBarHidden:YES];
     [self.cameraController startMontionUpdate];
+    if (self.manager.viewDidAppear) {
+        self.manager.viewDidAppear(self);
+    }
 }
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [self stopTimer];
     [self.cameraController stopSession];
+    if (self.manager.viewDidDisappear) {
+        self.manager.viewDidDisappear(self);
+    }
 } 
 - (void)dealloc {
     if (HX_ALLOW_LOCATION && _locationManager) {

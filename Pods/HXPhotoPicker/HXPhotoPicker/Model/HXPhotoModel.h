@@ -2,8 +2,8 @@
 //  HXPhotoModel.h
 //  HXPhotoPickerExample
 //
-//  Created by 洪欣 on 17/2/8.
-//  Copyright © 2017年 洪欣. All rights reserved.
+//  Created by Silence on 17/2/8.
+//  Copyright © 2017年 Silence. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -251,6 +251,12 @@
                                                success:(HXModelImageDataSuccessBlock _Nullable)success
                                                 failed:(HXModelFailedBlock _Nullable)failed;
 
+- (PHImageRequestID)requestImageDataWithLoadOriginalImage:(BOOL)originalImage
+                                       startRequestICloud:(HXModelStartRequestICloud)startRequestICloud
+                                          progressHandler:(HXModelProgressHandler)progressHandler
+                                                  success:(HXModelImageDataSuccessBlock)success
+                                                   failed:(HXModelFailedBlock)failed;
+
 /// 请求获取AVAsset
 - (PHImageRequestID)requestAVAssetStartRequestICloud:(HXModelStartRequestICloud _Nullable)startRequestICloud
                                      progressHandler:(HXModelProgressHandler _Nullable)progressHandler
@@ -318,6 +324,10 @@
 - (void)getAssetURLWithVideoPresetName:(NSString * _Nullable)presetName
                                success:(HXModelURLHandler _Nullable)success
                                 failed:(HXModelFailedBlock _Nullable)failed;
+
+/// 获取原视频地址
+- (void)getVideoURLWithSuccess:(HXModelURLHandler _Nullable)success
+                        failed:(HXModelFailedBlock _Nullable)failed;
 
 @property (assign, nonatomic) CGFloat previewContentOffsetX;
 

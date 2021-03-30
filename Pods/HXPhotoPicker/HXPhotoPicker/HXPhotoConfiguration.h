@@ -2,8 +2,8 @@
 //  HXPhotoConfiguration.h
 //  HXPhotoPickerExample
 //
-//  Created by 洪欣 on 2017/11/21.
-//  Copyright © 2017年 洪欣. All rights reserved.
+//  Created by Silence on 2017/11/21.
+//  Copyright © 2017年 Silence. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -25,6 +25,9 @@ HXPhotoPreviewViewController;
 
 /// 查看LivePhoto是否自动播放，为NO时需要长按才可播放
 @property (assign, nonatomic) BOOL livePhotoAutoPlay;
+
+/// 预览大图时允许不先加载小图，直接加载原图
+@property (assign, nonatomic) BOOL allowPreviewDirectLoadOriginalImage;
 
 /// 允许滑动的方式选择资源 - 默认允许
 /// 类似系统相册和QQ滑动选择逻辑
