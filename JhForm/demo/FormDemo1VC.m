@@ -10,6 +10,10 @@
 
 @interface FormDemo1VC ()
 
+@property (nonatomic, strong) JhFormCellModel *cell2;
+@property (nonatomic, strong) JhFormCellModel *cell3;
+@property (nonatomic, strong) JhFormCellModel *picture;
+
 @end
 
 @implementation FormDemo1VC
@@ -21,7 +25,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     NSUserDefaults *user= [NSUserDefaults standardUserDefaults];
     self.Jh_themeType = [[user objectForKey:@"kCurrentTheme"] integerValue];
-    self.Jh_navRightTitle = @"文字";
+    self.Jh_navRightTitle = @"清空数据";
 }
 
 - (void)viewDidLoad {
@@ -35,11 +39,15 @@
 -(void)setNav{
     
     self.Jh_navTitle = @"Demo1 - 默认";
-    self.Jh_navRightTitle = @"文字"; //也可以设置图片
+    self.Jh_navRightTitle = @"清空数据"; //也可以设置图片
     JhWeakSelf
     self.JhClickNavRightItemBlock = ^{
         NSLog(@" 点击跳转 ");
-        [weakSelf.view hx_showImageHUDText:@"点击文字"];
+        [weakSelf.view hx_showImageHUDText:@"清空数据"];
+        weakSelf.cell2.Jh_selectBtnCell_isClearSelected = YES;
+        weakSelf.cell3.Jh_info = @"";
+        weakSelf.picture.Jh_isClearImage = YES;
+        [weakSelf.Jh_formTableView reloadData];//刷新
     };
 }
 
@@ -74,13 +82,13 @@
     };
     
     //单选，3个选项，设置图标
-    JhFormCellModel *cell2 = JhFormCellModel_AddSelectBtnCell(@"单选3选项", YES, YES);
-    cell2.Jh_selectBtnCell_btnTitleArr = @[@"上午",@"下午",@"晚上"];
-    cell2.Jh_selectBtnCell_unSelectIcon=Jh_Icon_CheckBoxNormal;
-    cell2.Jh_selectBtnCell_selectIcon=Jh_Icon_CheckBoxSelect;
+    self.cell2 = JhFormCellModel_AddSelectBtnCell(@"单选3选项", YES, YES);
+    self.cell2.Jh_selectBtnCell_btnTitleArr = @[@"上午",@"下午",@"晚上"];
+    self.cell2.Jh_selectBtnCell_unSelectIcon=Jh_Icon_CheckBoxNormal;
+    self.cell2.Jh_selectBtnCell_selectIcon=Jh_Icon_CheckBoxSelect;
     
     //添加默认Cell
-    JhFormCellModel *cell3 = JhFormCellModel_AddCell(@"用户名:", @"", JhFormCellTypeInput, YES, YES, UIKeyboardTypeDefault);
+    self.cell3 = JhFormCellModel_AddCell(@"用户名:", @"", JhFormCellTypeInput, YES, YES, UIKeyboardTypeDefault);
     
     //录入cell
     JhFormCellModel *name = JhFormCellModel_AddInputCell(@"姓名:", @"", YES, UIKeyboardTypeDefault);
@@ -123,10 +131,10 @@
     textViewInput.Jh_placeholder = @"请输入备注(最多50字)";
     textViewInput.Jh_maxInputLength = 500;
     
-    JhFormCellModel *picture = JhFormCellModel_AddImageCell(@"选择图片:", YES);
-//    picture.Jh_tipInfo =@"这是一条默认颜色的提示信息(不设置不显示)";
-//    picture.Jh_leftImgName = @"ic_album";
-//    picture.Jh_leftImgRightMargin = 5;
+    self.picture = JhFormCellModel_AddImageCell(@"选择图片:", YES);
+    //    picture.Jh_tipInfo =@"这是一条默认颜色的提示信息(不设置不显示)";
+    //    picture.Jh_leftImgName = @"ic_album";
+    //    picture.Jh_leftImgRightMargin = 5;
     
     JhFormCellModel *video = JhFormCellModel_AddImageCell(@"选择视频:", NO);
     video.Jh_maxImageCount = 2;
@@ -135,7 +143,7 @@
     video.Jh_selectImageType = JhSelectImageTypeVideo;
     video.Jh_videoMinimumDuration = 1;
     
-    [cellArr0 addObjectsFromArray: @[cell0,cell1,switchBtn,cell2,cell3,name,phone,pwd,selectCell,textViewInput,picture,video]];
+    [cellArr0 addObjectsFromArray: @[cell0,cell1,switchBtn,self.cell2,self.cell3,name,phone,pwd,selectCell,textViewInput,self.picture,video]];
     
     JhFormSectionModel *section0 = JhSectionModel_Add(cellArr0);
     
@@ -147,15 +155,15 @@
         
         NSLog(@" cell0.Jh_info - %@", cell0.Jh_info);
         NSLog(@" cell1.Jh_info - %@", cell1.Jh_info);
-        NSLog(@" cell2 选中按钮 - %@", cell2.Jh_selectBtnCell_selectIndexArr);
+        NSLog(@" cell2 选中按钮 - %@", weakSelf.cell2.Jh_selectBtnCell_selectIndexArr);
         NSLog(@" 开关的状态 - %@", switchBtn.Jh_switchBtn_on ? @"YES" : @"NO");
-        NSLog(@" cell3.Jh_info - %@", cell3.Jh_info);
+        NSLog(@" cell3.Jh_info - %@", weakSelf.cell3.Jh_info);
         NSLog(@" name.Jh_info - %@", name.Jh_info);
         NSLog(@" phone.Jh_info - %@", phone.Jh_info);
         NSLog(@" pwd.Jh_info - %@", pwd.Jh_info);
         NSLog(@" textViewInput.Jh_info - %@", textViewInput.Jh_info);
         
-        NSLog(@" 选择图片 - picture : %@ ",picture.Jh_selectImageArr);
+        NSLog(@" 选择图片 - picture : %@ ",weakSelf.picture.Jh_selectImageArr);
         NSLog(@" 选择图片 - video : %@ ",video.Jh_selectVideoArr);
         
         // 这里只是简单描述校验逻辑，可根据自身需求封装数据校验逻辑

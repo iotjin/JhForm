@@ -161,6 +161,9 @@ typedef NS_ENUM(NSInteger, JhSelectImageType) {
 @property (nonatomic, strong) NSArray<HXCustomAssetModel*> *Jh_mixImageArr;
 #endif
 
+/// 清空所有图片、视频数据，默认false
+@property (nonatomic, assign) BOOL Jh_isClearImage;
+
 
 /** 选择按钮Cell，标题数组  */
 @property (nonatomic, strong) NSArray *Jh_selectBtnCell_btnTitleArr;
@@ -168,6 +171,9 @@ typedef NS_ENUM(NSInteger, JhSelectImageType) {
 @property (nonatomic, strong) NSArray *Jh_selectBtnCell_selectTitleArr;
 /** 选择按钮Cell，选中index数组，如需初始化时设置选中，使用selectTitleArr数组  */
 @property (nonatomic, strong) NSArray *Jh_selectBtnCell_selectIndexArr;
+
+/// 选择按钮Cell，清空选中按钮，重置到默认选中第一个
+@property (nonatomic, assign) BOOL Jh_selectBtnCell_isClearSelected;
 
 
 #pragma mark - 备用字段

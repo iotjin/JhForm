@@ -143,6 +143,18 @@
     }];
 }
 
+#pragma mark -- 清空所有图片、视频数据
+- (void)Jh_clearImage {
+    [self.oneManager clearSelectedList];
+    self.cellModel.Jh_imageArr = @[];
+    self.cellModel.Jh_selectImageArr = @[];
+    self.cellModel.Jh_selectVideoArr = @[];
+    self.cellModel.Jh_imageAllList = @[];
+    self.cellModel.Jh_mixImageArr = @[];
+    [self.onePhotoView refreshView];
+    [self Jh_reloadData];
+}
+
 #pragma mark - JhFormProtocol
 
 - (void)Jh_configCellModel:(JhFormCellModel *)cellModel {
@@ -202,6 +214,9 @@
             [self.onePhotoView refreshView];
             self.isInit = NO;
         }
+    }
+    if (cellModel.Jh_isClearImage) {
+        [self Jh_clearImage];
     }
     self.onePhotoView.hideDeleteButton = cellModel.Jh_hideDeleteButton;
     //弹出的相册界面的设置

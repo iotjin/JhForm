@@ -120,7 +120,7 @@
             btn.imageEdgeInsets = UIEdgeInsetsMake(0, -kBtnIconSpace, 0, 0);
         }
         btn.tag = i;
-        [btn addTarget:self action:@selector(ClickButton:isInit:) forControlEvents:UIControlEventTouchUpInside];
+        [btn addTarget:self action:@selector(ClickButton:isInit:isNormalSelect:) forControlEvents:UIControlEventTouchUpInside];
         [self.custumRightView addSubview:btn];
         //一个按钮添加之后累加X值后续计算使用
         //        btnX = CGRectGetMaxX(btn.frame)+kBtnHorizontalMargin;
@@ -131,19 +131,24 @@
                 NSString *tempStr = self.cellModel.Jh_selectBtnCell_selectTitleArr[j];
                 //设置选中样式
                 if ([self.btnTitleArray containsObject:tempStr] && [tempStr isEqualToString:self.btnTitleArray[i]]) {
-                    [self ClickButton:btn isInit:YES];
+                    [self ClickButton:btn isInit:YES isNormalSelect:YES];
                 }
             }
         } else {
             //默认选中第一个
             if (i==0) {
-                [self ClickButton:btn isInit:NO];
+                [self ClickButton:btn isInit:NO isNormalSelect:YES];
             }
         }
     }
 }
 
--(void)ClickButton:(UIButton*)button isInit:(BOOL)isInit {
+
+/// 点击按钮事件
+/// @param button 按钮
+/// @param isInit 是否初始化
+/// @param isNormalSelect   是否是人为点击按钮，当值为NO是人为点击
+-(void)ClickButton:(UIButton*)button isInit:(BOOL)isInit isNormalSelect:(BOOL)isNormalSelect {
     UIColor *kBtnNormalBgColor = Jh_SetValueAndDefault(self.cellModel.Jh_selectBtnCell_btnBgColor, Jh_SelectBtnCell_BtnBgColor);
     UIColor *kBtnSelectBgColor = Jh_SetValueAndDefault(self.cellModel.Jh_selectBtnCell_btnSelectBgColor, Jh_SelectBtnCell_BtnSelectBgColor);
     NSString *title = button.titleLabel.text;
@@ -185,7 +190,7 @@
     //    NSLog(@" 选中的title数组 %@ ",self.cellModel.Jh_selectBtnCell_selectTitleArr);
     //    NSLog(@" 选中的index数组 %@ ",self.cellModel.Jh_selectBtnCell_selectIndexArr);
     
-    if (self.cellModel.Jh_selectBtnCellClickBlock) {
+    if (self.cellModel.Jh_selectBtnCellClickBlock && isNormalSelect == NO) {
         self.cellModel.Jh_selectBtnCellClickBlock(title,[index integerValue]);
     }
 }
@@ -195,6 +200,9 @@
 - (void)Jh_configCellModel:(JhFormCellModel *)cellModel {
     [super Jh_configCellModel:cellModel];
     self.rightTextView.hidden = YES;
+    if (cellModel.Jh_selectBtnCell_isClearSelected && self.custumRightView.subviews.count) {
+        [self ClickButton:self.custumRightView.subviews[0] isInit:NO isNormalSelect:YES];
+    }
 }
 
 - (void)layoutSubviews {
