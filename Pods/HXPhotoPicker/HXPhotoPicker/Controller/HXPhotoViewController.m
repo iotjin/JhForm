@@ -281,9 +281,16 @@ HX_PhotoEditViewControllerDelegate
 #pragma mark - < private >
 - (void)setupUI {
     [self.view addSubview:self.collectionView];
+    if ([HXPhotoTools authorizationStatusIsLimited]) {
+        [self.view addSubview:self.limitView];
+    }
     if (!self.manager.configuration.singleSelected) {
         [self.view addSubview:self.bottomView];
     }
+    [self setupNav];
+    [self changeColor];
+}
+- (void)setupNav {
     UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithTitle:[NSBundle hx_localizedStringForKey:@"取消"] style:UIBarButtonItemStylePlain target:self action:@selector(didCancelClick)];
     if (self.manager.configuration.albumShowMode == HXPhotoAlbumShowModePopup) {
         if (self.manager.configuration.photoListCancelLocation == HXPhotoListCancelButtonLocationTypeLeft) {
@@ -305,7 +312,6 @@ HX_PhotoEditViewControllerDelegate
     }else {
         self.navigationItem.rightBarButtonItem = cancelItem;
     }
-    [self changeColor];
 }
 - (void)changeColor {
     UIColor *backgroundColor;
@@ -348,6 +354,20 @@ HX_PhotoEditViewControllerDelegate
     
     _albumBgView.backgroundColor = [albumBgColor colorWithAlphaComponent:0.5f];
     
+    if (@available(iOS 15.0, *)) {
+        UINavigationBarAppearance *appearance = [[UINavigationBarAppearance alloc] init];
+        appearance.titleTextAttributes = self.navigationController.navigationBar.titleTextAttributes;
+        switch (self.manager.configuration.navBarStyle) {
+            case UIBarStyleDefault:
+                appearance.backgroundEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+                break;
+            default:
+                appearance.backgroundEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+                break;
+        }
+        self.navigationController.navigationBar.standardAppearance = appearance;
+        self.navigationController.navigationBar.scrollEdgeAppearance = appearance;
+    }
 }
 - (void)deviceOrientationChanged:(NSNotification *)notify {
     self.beforeOrientationIndexPath = [self.collectionView indexPathsForVisibleItems].firstObject;
@@ -365,7 +385,7 @@ HX_PhotoEditViewControllerDelegate
     CGFloat albumHeight = cellHeight * count;
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     CGFloat albumMaxHeight;
-    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
+    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown || HX_UI_IS_IPAD) {
         albumMaxHeight = self.manager.configuration.popupTableViewHeight;
     }else {
         albumMaxHeight = self.manager.configuration.popupTableViewHorizontalHeight;
@@ -382,7 +402,7 @@ HX_PhotoEditViewControllerDelegate
     NSInteger lineCount = self.manager.configuration.rowCount;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
-    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
+    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown || HX_UI_IS_IPAD) {
         lineCount = self.manager.configuration.rowCount;
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }else if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft){
@@ -760,7 +780,8 @@ HX_PhotoEditViewControllerDelegate
         NSMutableArray *reloadSelectArray = [NSMutableArray array];
         for (NSIndexPath *indexPath in indexPaths) {
             HXPhotoModel *model = self.allArray[indexPath.item];
-            if (model.type == HXPhotoModelMediaTypeCamera) {
+            if (model.type == HXPhotoModelMediaTypeCamera ||
+                model.type == HXPhotoModelMediaTypeLimit) {
                 continue;
             }
             if (model.subType == HXPhotoModelMediaSubTypeVideo && !canSelectVideo) {
@@ -810,7 +831,8 @@ HX_PhotoEditViewControllerDelegate
         NSArray * filterArray = [self.panSelectIndexPaths filteredArrayUsingPredicate:filterPredicate];
         for (NSIndexPath *indexPath in filterArray) {
             HXPhotoModel *model = self.allArray[indexPath.item];
-            if (model.type == HXPhotoModelMediaTypeCamera) {
+            if (model.type == HXPhotoModelMediaTypeCamera ||
+                model.type == HXPhotoModelMediaTypeLimit) {
                 continue;
             }
             if (model.subType == HXPhotoModelMediaSubTypeVideo && !canSelectVideo) {
@@ -1057,6 +1079,9 @@ HX_PhotoEditViewControllerDelegate
     }
 }
 - (void)collectionViewReloadFinishedWithFirstSelectModel:(HXPhotoModel *)firstSelectModel {
+    if (self.allArray.count == 0) {
+        return;
+    }
     if (!self.manager.configuration.singleSelected) {
         self.bottomView.selectCount = self.manager.selectedArray.count;
     }
@@ -1202,6 +1227,17 @@ HX_PhotoEditViewControllerDelegate
             cell.hidden = YES;
         }
         return cell;
+    }else if (model.type == HXPhotoModelMediaTypeLimit) {
+        HXPhotoLimitViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HXPhotoLimitViewCellId" forIndexPath:indexPath];
+        cell.lineColor = self.manager.configuration.photoListLimitCellLineColor;
+        cell.lineDarkColor = self.manager.configuration.photoListLimitCellLineDarkColor;
+        cell.textColor = self.manager.configuration.photoListLimitCellTextColor;
+        cell.textDarkColor = self.manager.configuration.photoListLimitCellTextDarkColor;
+        cell.textFont = self.manager.configuration.photoListLimitCellTextFont;
+        cell.bgColor = self.manager.configuration.photoListLimitCellBackgroundColor;
+        cell.bgDarkColor = self.manager.configuration.photoListLimitCellBackgroundDarkColor;
+        [cell config];
+        return cell;
     }else {
         HXPhotoViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HXPhotoViewCellID" forIndexPath:indexPath];
         cell.delegate = self;
@@ -1313,6 +1349,10 @@ HX_PhotoEditViewControllerDelegate
                 }
             });
         }];
+    }else if (model.type == HXPhotoModelMediaTypeLimit) {
+        if (@available(iOS 14, *)) {
+            [[PHPhotoLibrary sharedPhotoLibrary] presentLimitedLibraryPickerFromViewController:self];
+        }
     }else {
         HXPhotoViewCell *cell = (HXPhotoViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
         if (cell.model.isICloud) {
@@ -1431,7 +1471,10 @@ HX_PhotoEditViewControllerDelegate
 }
 - (UIViewController *)previewViewControlerWithIndexPath:(NSIndexPath *)indexPath {
     HXPhotoViewCell *cell = (HXPhotoViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-    if (!cell || cell.model.type == HXPhotoModelMediaTypeCamera || cell.model.isICloud) {
+    if (!cell ||
+        cell.model.type == HXPhotoModelMediaTypeCamera ||
+        cell.model.type == HXPhotoModelMediaTypeLimit ||
+        cell.model.isICloud) {
         return nil;
     }
     if (cell.model.networkPhotoUrl) {
@@ -1469,7 +1512,10 @@ HX_PhotoEditViewControllerDelegate
         return nil;
     }
     HXPhotoViewCell *cell = (HXPhotoViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-    if (!cell || cell.model.type == HXPhotoModelMediaTypeCamera || cell.model.isICloud) {
+    if (!cell ||
+        cell.model.type == HXPhotoModelMediaTypeCamera ||
+        cell.model.type == HXPhotoModelMediaTypeLimit ||
+        cell.model.isICloud) {
         return nil;
     }
     if (cell.model.networkPhotoUrl) {
@@ -1593,6 +1639,13 @@ HX_PhotoEditViewControllerDelegate
         cell.selectMaskLayer.hidden = YES;
         selectBtn.selected = NO;
     }else {
+        if (self.manager.shouldSelectModel) {
+            NSString *str = self.manager.shouldSelectModel(cell.model);
+            if (str) {
+                [self.view hx_showImageHUDText: [NSBundle hx_localizedStringForKey:str]];
+                return;
+            }
+        }
         NSString *str = [self.manager maximumOfJudgment:cell.model];
         if (str) {
             if ([str isEqualToString:@"selectVideoBeyondTheLimitTimeAutoEdit"]) {
@@ -2107,7 +2160,7 @@ HX_PhotoEditViewControllerDelegate
         self.albumBgView.alpha = 0;
         UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
         CGFloat navBarHeight = hxNavigationBarHeight;
-        if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
+        if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown || HX_UI_IS_IPAD) {
             navBarHeight = hxNavigationBarHeight;
         }else if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft){
             if ([UIApplication sharedApplication].statusBarHidden) {
@@ -2142,6 +2195,20 @@ HX_PhotoEditViewControllerDelegate
         }];
     }
 }
+- (HXPhotoLimitView *)limitView {
+    if (!_limitView) {
+        CGFloat y = self.view.hx_h - hxBottomMargin - 15 - 40;
+        if (!self.manager.configuration.singleSelected) {
+            y = self.view.hx_h - self.bottomView.hx_h - 10 - 40;
+        }
+        _limitView = [[HXPhotoLimitView alloc] initWithFrame:CGRectMake(12, y, self.view.hx_w - 24, 40)];
+        [_limitView setBlurEffectStyle:self.manager.configuration.photoListLimitBlurStyle];
+        [_limitView setTextColor:self.manager.configuration.photoListLimitTextColor];
+        [_limitView setSettingColor:self.manager.configuration.photoListLimitSettingColor];
+        [_limitView setCloseColor:self.manager.configuration.photoListLimitCloseColor];
+    }
+    return _limitView;
+}
 - (HXPhotoBottomView *)bottomView {
     if (!_bottomView) {
         _bottomView = [[HXPhotoBottomView alloc] initWithFrame:CGRectMake(0, self.view.hx_h - 50 - hxBottomMargin, self.view.hx_w, 50 + hxBottomMargin)];
@@ -2161,6 +2228,7 @@ HX_PhotoEditViewControllerDelegate
         _collectionView.alwaysBounceVertical = YES;
         [_collectionView registerClass:[HXPhotoViewCell class] forCellWithReuseIdentifier:@"HXPhotoViewCellID"];
         [_collectionView registerClass:[HXPhotoCameraViewCell class] forCellWithReuseIdentifier:@"HXPhotoCameraViewCellId"];
+        [_collectionView registerClass:[HXPhotoLimitViewCell class] forCellWithReuseIdentifier:@"HXPhotoLimitViewCellId"];
         [_collectionView registerClass:[HXPhotoViewSectionFooterView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"sectionFooterId"];
         
 #ifdef __IPHONE_11_0
@@ -2377,6 +2445,84 @@ HX_PhotoEditViewControllerDelegate
     return _tempCameraView;
 }
 @end
+    
+@interface HXPhotoLimitViewCell()
+@property (strong, nonatomic) CAShapeLayer *lineLayer;
+@property (strong, nonatomic) UILabel *textLb;
+@end
+
+@implementation HXPhotoLimitViewCell
+
+- (CAShapeLayer *)lineLayer {
+    if (!_lineLayer) {
+        _lineLayer = [CAShapeLayer layer];
+        _lineLayer.lineWidth = 4;
+        _lineLayer.lineCap = kCALineCapRound;
+        _lineLayer.fillColor = [UIColor clearColor].CGColor;
+        _lineLayer.contentsScale = [UIScreen mainScreen].scale;
+    }
+    return _lineLayer;
+}
+- (UILabel *)textLb {
+    if (!_textLb) {
+        _textLb = [[UILabel alloc] init];
+        _textLb.text = [NSBundle hx_localizedStringForKey:@"更多"];
+        _textLb.textAlignment = NSTextAlignmentCenter;
+        _textLb.adjustsFontSizeToFitWidth = YES;
+    }
+    return _textLb;
+}
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self.contentView.layer addSublayer:self.lineLayer];
+        [self.contentView addSubview:self.textLb];
+    }
+    return self;
+}
+    
+- (void)config {
+    self.backgroundColor = [HXPhotoCommon photoCommon].isDark ? self.bgDarkColor : self.bgColor;
+    self.lineLayer.strokeColor = [HXPhotoCommon photoCommon].isDark ? self.lineDarkColor.CGColor : self.lineColor.CGColor;
+    self.textLb.textColor = [HXPhotoCommon photoCommon].isDark ? self.textDarkColor : self.textColor;
+    self.textLb.font = self.textFont;
+}
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.lineLayer.frame = self.bounds;
+    CGFloat centerX = self.hx_w * 0.5;
+    CGFloat centerY = (self.hx_h - 20) * 0.5;
+    CGFloat margin = 12.5;
+    self.textLb.hx_x = 0;
+    self.textLb.hx_y = centerY + 23;
+    self.textLb.hx_w = self.hx_w;
+    self.textLb.hx_h = [self.textLb hx_getTextHeight];
+    
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    
+    [path moveToPoint:CGPointMake(centerX - margin, centerY)];
+    [path addLineToPoint:CGPointMake(centerX + margin, centerY)];
+    
+    [path moveToPoint:CGPointMake(centerX, centerY - margin)];
+    [path addLineToPoint:CGPointMake(centerX, centerY + margin)];
+    
+    self.lineLayer.path = path.CGPath;
+}
+    
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+
+#ifdef __IPHONE_13_0
+    if (@available(iOS 13.0, *)) {
+        if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+            [self config];
+        }
+    }
+#endif
+}
+    
+@end
+    
 @interface HXPhotoViewCell ()
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UIView *maskView;
@@ -2503,7 +2649,8 @@ HX_PhotoEditViewControllerDelegate
         HXWeakSelf
         if (model.type == HXPhotoModelMediaTypeCamera ||
             model.type == HXPhotoModelMediaTypeCameraPhoto ||
-            model.type == HXPhotoModelMediaTypeCameraVideo) {
+            model.type == HXPhotoModelMediaTypeCameraVideo ||
+            model.type == HXPhotoModelMediaTypeLimit) {
             if (model.thumbPhoto.images.count) {
                 self.imageView.image = nil;
                 self.imageView.image = model.thumbPhoto.images.firstObject;
@@ -2809,7 +2956,8 @@ HX_PhotoEditViewControllerDelegate
     }
 }
 - (void)didSelectClick:(UIButton *)button {
-    if (self.model.type == HXPhotoModelMediaTypeCamera) {
+    if (self.model.type == HXPhotoModelMediaTypeCamera ||
+        self.model.type == HXPhotoModelMediaTypeLimit) {
         return;
     }
     if (self.model.isICloud) {
@@ -2830,7 +2978,7 @@ HX_PhotoEditViewControllerDelegate
     self.maskView.frame = self.bounds;
     self.stateLb.frame = CGRectMake(0, self.hx_h - 18, self.hx_w - 7, 18);
     self.bottomMaskLayer.frame = CGRectMake(0, self.hx_h - 25, self.hx_w, 27);
-//    [self setSelectBtnFrame];
+    [self setSelectBtnFrame];
     self.selectMaskLayer.frame = self.bounds;
     self.iCloudMaskLayer.frame = self.bounds;
     self.iCloudIcon.hx_x = self.hx_w - 3 - self.iCloudIcon.hx_w;

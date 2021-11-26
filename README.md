@@ -70,8 +70,8 @@ JhForm - 自定义表单工具类，通过动态配置表单model，可以更加
 ```ruby
 # 将以下内容添加到您的Podfile中：
 
-#  选择图片依赖HXPhotoPicker和SDWebImage，可以分开加或者使用： pod 'HXPhotoPicker/SDWebImage', '3.1.9'
-pod 'HXPhotoPicker', '3.1.9'
+#  选择图片依赖HXPhotoPicker和SDWebImage，可以分开加或者使用： pod 'HXPhotoPicker/SDWebImage', '3.2.7'
+pod 'HXPhotoPicker', '3.2.7'
 pod 'SDWebImage', '5.10.0'
 # 选择图片下载在线视频需要使用AFNetworking
 pod 'AFNetworking', '4.0.1'
@@ -492,6 +492,7 @@ self.Jh_submitStr = @"提 交";
   <summary><strong>最近更新</strong></summary>
    
 ```
+* 2021.11.26 - v2.3.0版本，iOS15适配，HXPhotoPicker更新至v3.2.7版本 <br>
 * 2021.07.02 - v2.2.0版本，新增图片、选择按钮选中数组清空属性 <br>
 * 2021.03.30 - v2.1.0版本，暗黑模式优化，HXPhotoPicker更新至v3.1.9版本 <br>
 * 2020.12.09 - v2.0.0版本，代码重构，支持自定义xib Cell与model，此版本变动较大，若引用v1.5.0版本之前版本谨慎更新 <br>

@@ -14,9 +14,9 @@ PODS:
   - AFNetworking/Serialization (4.0.1)
   - AFNetworking/UIKit (4.0.1):
     - AFNetworking/NSURLSession
-  - HXPhotoPicker (3.1.9):
-    - HXPhotoPicker/Default (= 3.1.9)
-  - HXPhotoPicker/Default (3.1.9)
+  - HXPhotoPicker (3.2.7):
+    - HXPhotoPicker/Default (= 3.2.7)
+  - HXPhotoPicker/Default (3.2.7)
   - IQKeyboardManager (6.5.6)
   - SDWebImage (5.10.0):
     - SDWebImage/Core (= 5.10.0)
@@ -24,7 +24,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (= 4.0.1)
-  - HXPhotoPicker (= 3.1.9)
+  - HXPhotoPicker (= 3.2.7)
   - IQKeyboardManager (= 6.5.6)
   - SDWebImage (= 5.10.0)
 
@@ -37,10 +37,10 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
-  HXPhotoPicker: e1816ff27f17c3926f6e83aebbb9f4b329324f0b
+  HXPhotoPicker: 472f8f0c8dc0dc70534dc630b7e20fe09b342e02
   IQKeyboardManager: 2a6e97afdafc7becf0cb17a9a8d795e3a980717f
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
 
-PODFILE CHECKSUM: f7c635ded820630da0570f70b73f510cdd99971f
+PODFILE CHECKSUM: a3d3bb38a9b69a17162467d69f04cce02468f299
 
 COCOAPODS: 1.10.0

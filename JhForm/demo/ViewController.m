@@ -46,6 +46,17 @@
     UIColor *navTitleColor = JhBaseNavTitleColor;
     self.navigationController.navigationBar.barTintColor = navBgColor;
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:navTitleColor};
+    // iOS15适配
+    if (@available(iOS 15.0, *)) {
+        NSDictionary *titleTextAttributes = @{NSFontAttributeName:JhFontsize(18), NSForegroundColorAttributeName:navTitleColor};
+        UINavigationBarAppearance *appearance = [UINavigationBarAppearance new];
+        appearance.backgroundColor = navBgColor;
+        appearance.titleTextAttributes = titleTextAttributes;
+        // standardAppearance：常规状态, 标准外观，iOS15之后不设置的时候，导航栏背景透明
+        self.navigationController.navigationBar.standardAppearance = appearance;
+        // scrollEdgeAppearance：被scrollview向下拉的状态, 滚动时外观，不设置的时候，使用标准外观
+        self.navigationController.navigationBar.scrollEdgeAppearance = appearance;
+    }
 }
 
 //状态栏切换先设置 info View controller-based status bar appearance 为 NO

@@ -42,6 +42,7 @@ static id instance;
 - (instancetype)init {
     self = [super init];
     if (self) {
+        self.audioSessionCategory = AVAudioSessionCategoryPlayback;
         self.isVCBasedStatusBarAppearance = [[[NSBundle mainBundle]objectForInfoDictionaryKey:@"UIViewControllerBasedStatusBarAppearance"] boolValue];
         
 #if HasAFNetworking
@@ -240,7 +241,7 @@ static id instance;
     if (!cameraImage) {
         _cameraImage = nil;
     }
-    UIImage *image = [cameraImage hx_scaleImagetoScale:0.4];
+    UIImage *image = [cameraImage hx_scaleImagetoScale:0.5];
     if (image) {
         _cameraImage = image;
     }else {

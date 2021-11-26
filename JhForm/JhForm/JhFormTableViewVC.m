@@ -29,6 +29,7 @@
     [self Jh_formTableView];
     [self Jh_configureIOS11];
     [self Jh_configureIOS13Theme];
+    [self Jh_configureIOS15];
 }
 
 - (void)Jh_configureIOS11 {
@@ -78,6 +79,15 @@
         if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
             [self Jh_configureIOS13Theme];
         }
+    }
+}
+
+- (void)Jh_configureIOS15 {
+    // 适配iOS15，tableView的section设置
+    // iOS15中，tableView会给每一个section的顶部（header以上）再加上一个22像素的高度，形成一个section和section之间的间距
+    // 新增的sectionHeaderTopPadding会使表头新增一段间隙，默认为UITableViewAutomaticDimension
+    if (@available(iOS 15.0, *)) {
+        self.Jh_formTableView.sectionHeaderTopPadding = 0;
     }
 }
 

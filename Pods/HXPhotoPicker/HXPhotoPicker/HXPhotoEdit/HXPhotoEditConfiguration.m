@@ -15,6 +15,8 @@
     if (self) {
         self.maximumLimitTextLength = 0;
         self.supportRotation = YES;
+        self.clippingMinSize = CGSizeMake(80, 80);
+        self.supportedInterfaceOrientations = UIInterfaceOrientationMaskPortrait;
     }
     return self;
 }

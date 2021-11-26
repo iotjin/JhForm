@@ -9,7 +9,7 @@
 #import "HXPhotoManager.h"
 #import <mach/mach_time.h>
 #import "HXAssetManager.h"
-
+#import "PHAsset+HXExtension.h"
 
 @interface HXPhotoManager ()
 //@property (assign, nonatomic) BOOL hasLivePhoto;
@@ -167,6 +167,7 @@
             if ([[[model.localImagePath pathExtension] lowercaseString] isEqualToString:@"gif"]) {
                 photoModel.cameraPhotoType = HXPhotoModelMediaTypeCameraPhotoTypeLocalGif;
             }
+            photoModel.imageSize = model.imageSize;
             photoModel.imageURL = model.localImagePath;
             photoModel.selected = canAddPhoto ? model.selected : NO;
             if (model.selected && canAddPhoto) {
@@ -187,6 +188,7 @@
                 continue;
             }
             HXPhotoModel *photoModel = [HXPhotoModel photoModelWithImageURL:model.networkImageURL thumbURL:model.networkThumbURL];
+            photoModel.imageSize = model.imageSize;
             photoModel.selected = canAddPhoto ? model.selected : NO;
             if (model.selected && canAddPhoto) {
                 [self.endCameraPhotos addObject:photoModel];
@@ -207,6 +209,7 @@
             }
             // 本地视频
             HXPhotoModel *photoModel = [HXPhotoModel photoModelWithVideoURL:model.localVideoURL];
+            photoModel.imageSize = model.imageSize;
             if (photoModel.videoDuration >= self.configuration.videoMaximumSelectDuration + 1) {
                 canAddVideo = NO;
             }else if (photoModel.videoDuration < self.configuration.videoMinimumSelectDuration) {
@@ -232,6 +235,7 @@
             }
             // 网络视频
             HXPhotoModel *photoModel = [HXPhotoModel photoModelWithNetworkVideoURL:model.networkVideoURL videoCoverURL:model.networkImageURL videoDuration:model.videoDuration];
+            photoModel.imageSize = model.imageSize;
             if (photoModel.videoDuration >= self.configuration.videoMaximumSelectDuration + 1) {
                 canAddVideo = NO;
             }else if (photoModel.videoDuration < self.configuration.videoMinimumSelectDuration) {
@@ -263,6 +267,7 @@
             }else {
                 photoModel = [HXPhotoModel photoModelWithLivePhotoNetWorkImage:model.networkImageURL netWorkVideoURL:model.networkVideoURL];
             }
+            photoModel.imageSize = model.imageSize;
             photoModel.selected = canAddPhoto ? model.selected : NO;
             if (model.selected && canAddPhoto) {
                 [self.endCameraPhotos addObject:photoModel];
@@ -303,20 +308,47 @@
             if (model.subType != HXPhotoModelMediaSubTypePhoto) {
                 continue;
             }
-            if (model.assetByte == 0 && model.type != HXPhotoModelMediaTypeCameraPhoto) {
-                [model requestImageDataStartRequestICloud:nil progressHandler:nil success:^(NSData *imageData, UIImageOrientation orientation, HXPhotoModel *model, NSDictionary *info) {
-                    model.assetByte = imageData.length;
-                    dataLength += imageData.length;
-                    assetCount ++;
-                    if (assetCount >= weakSelf.selectedPhotos.count) {
-                        weakSelf.selectPhotoTotalDataLengths = &(dataLength);
-                        NSString *bytes = [HXPhotoTools getBytesFromDataLength:dataLength];
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            if (completion) completion(bytes, dataLength);
-                        });
+            if (model.asset != nil && model.photoEdit == nil) {
+                [model.asset hx_checkForModificationsWithAssetPathMethodCompletion:^(BOOL hasAdj) {
+                    if (hasAdj) {
+                        [model requestImageDataStartRequestICloud:nil progressHandler:nil success:^(NSData *imageData, UIImageOrientation orientation, HXPhotoModel *model, NSDictionary *info) {
+                            model.assetByte = imageData.length;
+                            dataLength += model.assetByte;
+                            assetCount ++;
+                            if (assetCount >= weakSelf.selectedPhotos.count) {
+                                weakSelf.selectPhotoTotalDataLengths = &(dataLength);
+                                NSString *bytes = [HXPhotoTools getBytesFromDataLength:dataLength];
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    if (completion) completion(bytes, dataLength);
+                                });
+                            }
+                        } failed:^(NSDictionary *info, HXPhotoModel *model) {
+                            assetCount ++;
+                            if (assetCount >= weakSelf.selectedPhotos.count) {
+                                weakSelf.selectPhotoTotalDataLengths = &(dataLength);
+                                NSString *bytes = [HXPhotoTools getBytesFromDataLength:dataLength];
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    if (completion) completion(bytes, dataLength);
+                                });
+                            }
+                        }];
+                    }else {
+                        [self requestPhotosBytesWithModel:model completion:^(NSUInteger byte) {
+                            dataLength += byte;
+                            assetCount ++;
+                            if (assetCount >= weakSelf.selectedPhotos.count) {
+                                weakSelf.selectPhotoTotalDataLengths = &(dataLength);
+                                NSString *bytes = [HXPhotoTools getBytesFromDataLength:dataLength];
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    if (completion) completion(bytes, dataLength);
+                                });
+                            }
+                        }];
                     }
-                } failed:^(NSDictionary *info, HXPhotoModel *model) {
-                    dataLength += 0;
+                }];
+            }else {
+                [self requestPhotosBytesWithModel:model completion:^(NSUInteger byte) {
+                    dataLength += byte;
                     assetCount ++;
                     if (assetCount >= weakSelf.selectedPhotos.count) {
                         weakSelf.selectPhotoTotalDataLengths = &(dataLength);
@@ -326,20 +358,26 @@
                         });
                     }
                 }];
-            }else {
-                dataLength += model.assetByte;
-                assetCount ++;
-                if (assetCount >= weakSelf.selectedPhotos.count) {
-                    weakSelf.selectPhotoTotalDataLengths = &(dataLength);
-                    NSString *bytes = [HXPhotoTools getBytesFromDataLength:dataLength];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        if (completion) completion(bytes, dataLength);
-                    });
-                }
             }
         }
     }];
     [self.dataOperationQueue addOperation:operation];
+}
+- (void)requestPhotosBytesWithModel:(HXPhotoModel *)model completion:(void (^)(NSUInteger))completion {
+    if (model.assetByte == 0 && model.type != HXPhotoModelMediaTypeCameraPhoto) {
+        [model requestImageDataStartRequestICloud:nil progressHandler:nil success:^(NSData *imageData, UIImageOrientation orientation, HXPhotoModel *model, NSDictionary *info) {
+            model.assetByte = imageData.length;
+            if (completion) {
+                completion(imageData.length);
+            }
+        } failed:^(NSDictionary *info, HXPhotoModel *model) {
+            if (completion) completion(0);
+        }];
+    }else {
+        if (completion) {
+            completion(model.assetByte);
+        }
+    }
 }
 - (PHFetchOptions *)fetchAlbumOptions {
     if (!_fetchAlbumOptions) {
@@ -674,6 +712,20 @@
         }else {
             [allArray insertObject:model atIndex:0];
         }
+    }
+    if ([HXPhotoTools authorizationStatusIsLimited]) {
+        HXPhotoModel *model = [[HXPhotoModel alloc] init];
+        model.type = HXPhotoModelMediaTypeLimit;
+        if (!self.configuration.reverseDate) {
+            if (self.configuration.openCamera) {
+                [allArray insertObject:model atIndex:allArray.count - 1];
+            }else {
+                [allArray addObject:model];
+            }
+        }else {
+            [allArray insertObject:model atIndex:cameraIndex];
+        }
+        cameraIndex++;
     }
     if (_tempCameraAssetModels && !self.configuration.singleSelected) {
         NSInteger index = 0;

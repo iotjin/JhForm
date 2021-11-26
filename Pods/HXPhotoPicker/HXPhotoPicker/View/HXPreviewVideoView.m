@@ -138,7 +138,7 @@
 }
 - (void)requestAVAssetComplete:(AVAsset *)avAsset {
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
-    [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategorySoloAmbient error: nil];
+    [[AVAudioSession sharedInstance] setCategory: [HXPhotoCommon photoCommon].audioSessionCategory error: nil];
     self.avAsset = avAsset;
     AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:avAsset];
     [self.player replaceCurrentItemWithPlayerItem:playerItem];
@@ -183,6 +183,11 @@
 }
 - (void)pausePlayerAndShowNaviBar {
     [self.player.currentItem seekToTime:CMTimeMake(0, 1)];
+    if ([HXPhotoCommon photoCommon].videoAutoPlayType == HXVideoAutoPlayTypeOnce) {
+        self.isPlayer = NO;
+        self.playBtn.hidden = NO;
+        return;
+    }
     [self.player play];
     self.isPlayer = YES;
 }
@@ -288,7 +293,8 @@
                         self.playBtn.hidden = NO;
                     }
 #endif
-                }else if ([HXPhotoCommon photoCommon].videoAutoPlayType == HXVideoAutoPlayTypeAll) {
+                }else if ([HXPhotoCommon photoCommon].videoAutoPlayType == HXVideoAutoPlayTypeAll ||
+                          [HXPhotoCommon photoCommon].videoAutoPlayType == HXVideoAutoPlayTypeOnce) {
                     [self videoDidPlay];
                     self.playBtnDidPlay = YES;
                 }else {
@@ -394,6 +400,7 @@
 }
 - (void)showOtherView {
     self.isDismiss = NO;
+    self.changeSliderHidden(NO);
     [UIView animateWithDuration:0.2 animations:^{
         self.loadFailedView.alpha = 1;
         self.loadingView.alpha = 1;
@@ -402,6 +409,7 @@
 }
 - (void)hideOtherView:(BOOL)animatoin {
     self.isDismiss = YES;
+    self.changeSliderHidden(YES);
     if (!animatoin) {
         self.loadingView.hidden = YES;
         self.loadFailedView.hidden = YES;

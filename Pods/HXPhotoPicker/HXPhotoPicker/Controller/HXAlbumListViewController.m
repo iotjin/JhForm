@@ -127,7 +127,7 @@ UITableViewDelegate
     CGFloat navBarHeight = hxNavigationBarHeight;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
-    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
+    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown || HX_UI_IS_IPAD) {
         navBarHeight = hxNavigationBarHeight;
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     }else if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft){
@@ -262,6 +262,20 @@ UITableViewDelegate
         }else {
             self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor blackColor]};
         }
+    }
+    if (@available(iOS 15.0, *)) {
+        UINavigationBarAppearance *appearance = [[UINavigationBarAppearance alloc] init];
+        appearance.titleTextAttributes = self.navigationController.navigationBar.titleTextAttributes;
+        switch (self.manager.configuration.navBarStyle) {
+            case UIBarStyleDefault:
+                appearance.backgroundEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+                break;
+            default:
+                appearance.backgroundEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+                break;
+        }
+        self.navigationController.navigationBar.standardAppearance = appearance;
+        self.navigationController.navigationBar.scrollEdgeAppearance = appearance;
     }
 }
 - (void)configTableView {

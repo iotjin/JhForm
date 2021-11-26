@@ -74,7 +74,8 @@ typedef NS_ENUM(NSUInteger, HXPhotoStyle) {
 typedef NS_ENUM(NSUInteger, HXVideoAutoPlayType) {
     HXVideoAutoPlayTypeNormal = 0, //!< 不自动播放
     HXVideoAutoPlayTypeWiFi,       //!< wifi网络下自动播放
-    HXVideoAutoPlayTypeAll         //!< 蜂窝移动和wifi网络下自动播放
+    HXVideoAutoPlayTypeAll,        //!< 蜂窝移动和wifi网络下自动播放
+    HXVideoAutoPlayTypeOnce        //!< 自动播放一次
 };
 
 typedef NS_ENUM(NSUInteger, HXConfigurationType) {
@@ -95,7 +96,8 @@ typedef NS_ENUM(NSUInteger, HXPhotoModelMediaType) {
     HXPhotoModelMediaTypeAudio          = 4,    //!< 预留
     HXPhotoModelMediaTypeCameraPhoto    = 5,    //!< 通过相机拍的临时照片、本地/网络图片
     HXPhotoModelMediaTypeCameraVideo    = 6,    //!< 通过相机录制的视频、本地视频
-    HXPhotoModelMediaTypeCamera         = 7     //!< 跳转相机
+    HXPhotoModelMediaTypeCamera         = 7,    //!< 跳转相机
+    HXPhotoModelMediaTypeLimit          = 8     //!< 限制权限下，更多Cell
 };
 
 typedef NS_ENUM(NSUInteger, HXPhotoModelMediaSubType) {
@@ -129,6 +131,15 @@ typedef NS_ENUM(NSUInteger, HXPhotoModelFormat) {
     HXPhotoModelFormatJPG,          //!< JPG格式
     HXPhotoModelFormatGIF,          //!< GIF格式
     HXPhotoModelFormatHEIC          //!< HEIC格式
+};
+
+typedef NS_ENUM(NSUInteger, HXVideoEditorExportPreset) {
+    HXVideoEditorExportPresetLowQuality = 0,
+    HXVideoEditorExportPresetMediumQuality,
+    HXVideoEditorExportPresetHighQuality,
+    HXVideoEditorExportPresetRatio_640x480,
+    HXVideoEditorExportPresetRatio_960x540,
+    HXVideoEditorExportPresetRatio_1280x720
 };
 
 

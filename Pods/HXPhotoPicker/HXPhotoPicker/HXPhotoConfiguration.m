@@ -44,7 +44,7 @@
     self.supportRotation = YES;
     self.pushTransitionDuration = 0.45f;
     self.popTransitionDuration = 0.35f;
-    self.popInteractiveTransitionDuration = 0.35f;
+    self.popInteractiveTransitionDuration = 0.45f;
     self.doneBtnShowDetail = YES;
     self.videoCanEdit = YES;
     self.photoCanEdit = YES;
@@ -52,12 +52,14 @@
     self.languageType = HXPhotoLanguageTypeSys;
     self.popupTableViewCellHeight = 65.f;
     if (HX_IS_IPhoneX_All) {
-        self.editVideoExportPresetName = AVAssetExportPresetHighestQuality;
+//        self.editVideoExportPresetName = AVAssetExportPresetHighestQuality;
         self.popupTableViewHeight = 450;
     }else {
-        self.editVideoExportPresetName = AVAssetExportPresetMediumQuality;
+//        self.editVideoExportPresetName = AVAssetExportPresetMediumQuality;
         self.popupTableViewHeight = 350;
     }
+    self.editVideoExportPreset = HXVideoEditorExportPresetRatio_960x540;
+    self.videoQuality = 6;
     self.popupTableViewHorizontalHeight = 250; 
     self.albumShowMode = HXPhotoAlbumShowModeDefault;
     
@@ -85,7 +87,7 @@
     self.navBarTranslucent = YES;
     self.bottomViewTranslucent = YES;
     self.selectVideoBeyondTheLimitTimeAutoEdit = NO;
-    self.videoAutoPlayType = HXVideoAutoPlayTypeWiFi;
+    self.videoAutoPlayType = HXVideoAutoPlayTypeOnce;
     self.previewSelectedBtnBgColor = self.themeColor;
     self.changeOriginalTinColor = YES;
     self.downloadNetworkVideo = YES;
@@ -109,6 +111,19 @@
     }
     self.allowSlidingSelection = YES;
     self.livePhotoAutoPlay = YES;
+    
+    self.photoListLimitBlurStyle = UIBlurEffectStyleLight;
+    self.photoListLimitTextColor = [UIColor hx_colorWithHexStr:@"#666666"];
+    self.photoListLimitSettingColor = self.themeColor;
+    self.photoListLimitCloseColor = self.themeColor;
+    
+    self.photoListLimitCellBackgroundColor = [UIColor hx_colorWithHexStr:@"#f1f1f1"];
+    self.photoListLimitCellBackgroundDarkColor = [UIColor hx_colorWithHexStr:@"#333333"];
+    self.photoListLimitCellLineColor = [UIColor hx_colorWithHexStr:@"#999999"];
+    self.photoListLimitCellLineDarkColor = [UIColor hx_colorWithHexStr:@"#ffffff"];
+    self.photoListLimitCellTextColor = [UIColor hx_colorWithHexStr:@"#999999"];
+    self.photoListLimitCellTextDarkColor = [UIColor hx_colorWithHexStr:@"#ffffff"];
+    self.photoListLimitCellTextFont = [UIFont hx_mediumPingFangOfSize:14];
 }
 - (void)setLivePhotoAutoPlay:(BOOL)livePhotoAutoPlay {
     _livePhotoAutoPlay = livePhotoAutoPlay;
@@ -267,6 +282,10 @@
     self.cellSelectedTitleColor = [UIColor whiteColor];
     self.cellDarkSelectBgColor = wxColor;
     self.cellDarkSelectTitleColor = [UIColor whiteColor];
+    self.photoListLimitBlurStyle = UIBlurEffectStyleDark;
+    self.photoListLimitTextColor = [UIColor hx_colorWithHexStr:@"#999999"];
+    self.photoListLimitSettingColor = wxColor;
+    self.photoListLimitCloseColor = [UIColor whiteColor];
     self.previewSelectedBtnBgColor = wxColor;
     self.selectedTitleColor = [UIColor whiteColor];
     self.previewDarkSelectBgColor = wxColor;
@@ -298,6 +317,10 @@
     self.photoListViewBgColor = [UIColor hx_colorWithHexStr:@"#2E2F30"];
     self.photoListBottomPhotoCountTextColor = [UIColor whiteColor];
     self.previewPhotoViewBgColor = [UIColor blackColor];
+    
+    self.photoListLimitCellBackgroundColor = [UIColor hx_colorWithHexStr:@"#383838"];
+    self.photoListLimitCellLineColor = [UIColor hx_colorWithHexStr:@"#ffffff"];
+    self.photoListLimitCellTextColor = [UIColor hx_colorWithHexStr:@"#ffffff"];
 }
 - (HXPhotoEditConfiguration *)photoEditConfigur {
     if (!_photoEditConfigur) {

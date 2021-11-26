@@ -314,7 +314,7 @@ HX_PhotoEditViewControllerDelegate
 - (void)changeSubviewFrame {
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     HXPhotoModel *model = self.modelArray[self.currentModelIndex];
-    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
+    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown || HX_UI_IS_IPAD) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored"-Wdeprecated-declarations"
         if (self.exteriorPreviewStyle == HXPhotoViewPreViewShowStyleDark) {
@@ -750,6 +750,9 @@ HX_PhotoEditViewControllerDelegate
     }
     return (HXPhotoPreviewViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:self.currentModelIndex inSection:0]];
 }
+- (HXPhotoPreviewViewCell *)currentPreviewCell {
+    return (HXPhotoPreviewViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:self.currentModelIndex inSection:0]];
+}
 - (void)changeStatusBarWithHidden:(BOOL)hidden {
     self.statusBarShouldBeHidden = hidden;
 //    [self preferredStatusBarUpdateAnimation];
@@ -852,11 +855,6 @@ HX_PhotoEditViewControllerDelegate
     cell.allowPreviewDirectLoadOriginalImage = self.manager.configuration.allowPreviewDirectLoadOriginalImage;
     cell.cellViewLongPressGestureRecognizerBlock = ^(UILongPressGestureRecognizer * _Nonnull longPress) {
         [weakSelf respondsToLongPress:longPress];
-    };
-    cell.scrollViewDidScroll = ^(UIScrollView *scrollView) {
-        if (weakSelf.currentCellScrollViewDidScroll) {
-            weakSelf.currentCellScrollViewDidScroll(scrollView);
-        }
     };
     [cell setCellDidPlayVideoBtn:^(BOOL play) {
         if (weakSelf.exteriorPreviewStyle == HXPhotoViewPreViewShowStyleDark) {
@@ -993,7 +991,7 @@ HX_PhotoEditViewControllerDelegate
             self.bottomView.enabled = self.manager.configuration.photoCanEdit;
         }
         UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-        if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
+        if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown || HX_UI_IS_IPAD) {
             self.titleLb.text = model.barTitle;
             self.subTitleLb.text = model.barSubTitle;
         }else if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft) {

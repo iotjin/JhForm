@@ -47,6 +47,11 @@
             }
             [weakSelf refreshImageSize];
         };
+        self.previewContentView.videoView.changeSliderHidden = ^(BOOL isHidden) {
+            [UIView animateWithDuration:0.25 animations:^{
+                weakSelf.bottomSliderView.alpha = isHidden ? 0 : 1;
+            }];
+        };
         [self.scrollView addSubview:self.previewContentView];
         [self.contentView addSubview:self.bottomSliderView];
     }
@@ -80,7 +85,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
-    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
+    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown || HX_UI_IS_IPAD) {
         CGFloat sliderY = HX_IS_IPHONEX ? self.hx_h - hxBottomMargin - 50 : self.hx_h - 50;
         if (self.didAddBottomPageControl) {
             sliderY -= HX_IS_IPHONEX ? 10 : 30;

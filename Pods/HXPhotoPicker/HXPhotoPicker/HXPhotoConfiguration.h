@@ -171,7 +171,12 @@ HXPhotoPreviewViewController;
 
 /// 导出裁剪视频的质量
 /// iPhoneX -> AVAssetExportPresetHighestQuality
-@property (copy, nonatomic) NSString *editVideoExportPresetName;
+@property (copy, nonatomic) NSString *editVideoExportPresetName DEPRECATED_MSG_ATTRIBUTE("Invalid attribute, use editVideoExportPreset and videoQuality");
+
+/// 导出裁剪视频的分辨率 默认 HXVideoEditorExportPresetRatio_960x540
+@property (assign, nonatomic) HXVideoEditorExportPreset editVideoExportPreset;
+/// 导出裁剪视频的质量[0-10] 默认 6
+@property (assign, nonatomic) NSInteger videoQuality;
 
 /// 编辑视频时裁剪的最小秒数，如果小于1秒，则为1秒
 @property (assign, nonatomic) NSInteger minVideoClippingTime;
@@ -273,6 +278,30 @@ HXPhotoPreviewViewController;
 @property (copy, nonatomic) void (^useCameraComplete)(HXPhotoModel *model);
 
 #pragma mark - < UI相关 >
+
+/// 相册权限为选择部分时，照片列表添加cell的背景颜色
+@property (strong, nonatomic) UIColor *photoListLimitCellBackgroundColor;
+/// 相册权限为选择部分时，照片列表添加cell暗黑模式下的背景颜色
+@property (strong, nonatomic) UIColor *photoListLimitCellBackgroundDarkColor;
+/// 相册权限为选择部分时，照片列表添加cell的加号颜色
+@property (strong, nonatomic) UIColor *photoListLimitCellLineColor;
+/// 相册权限为选择部分时，照片列表添加cell暗黑模式下的加号颜色
+@property (strong, nonatomic) UIColor *photoListLimitCellLineDarkColor;
+/// 相册权限为选择部分时，照片列表添加cell的文字颜色
+@property (strong, nonatomic) UIColor *photoListLimitCellTextColor;
+/// 相册权限为选择部分时，照片列表添加cell暗黑模式下的文字颜色
+@property (strong, nonatomic) UIColor *photoListLimitCellTextDarkColor;
+/// 相册权限为选择部分时，照片列表添加cell的文字字体
+@property (strong, nonatomic) UIFont *photoListLimitCellTextFont;
+
+/// 限制提示视图：背景样式
+@property (assign, nonatomic) UIBlurEffectStyle photoListLimitBlurStyle;
+/// 限制提示视图：文本颜色
+@property (strong, nonatomic) UIColor *photoListLimitTextColor;
+/// 限制提示视图：设置按钮颜色
+@property (strong, nonatomic) UIColor *photoListLimitSettingColor;
+/// 限制提示视图：关闭按钮颜色
+@property (strong, nonatomic) UIColor *photoListLimitCloseColor;
 
 /// 照片列表上相机cell上的相机未预览时的图标
 @property (copy, nonatomic) NSString *photoListTakePhotoNormalImageNamed;

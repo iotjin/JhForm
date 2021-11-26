@@ -121,7 +121,7 @@
 }
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     if (!self.supportRotation) {
-        return UIInterfaceOrientationMaskPortrait;
+        return self.configuration.supportedInterfaceOrientations;
     }
     if (self.configuration.supportRotation) {
         return UIInterfaceOrientationMaskAll;
@@ -212,7 +212,7 @@
 - (void)changeSubviewFrame {
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     CGFloat leftMargin = hxBottomMargin;
-    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown) {
+    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown || HX_UI_IS_IPAD) {
         leftMargin = 0;
         self.backBtn.hx_x = 20;
         self.backBtn.hx_y = hxNavigationBarHeight - 20 - self.backBtn.hx_h;
@@ -844,9 +844,8 @@
 }
 - (HXPhotoEditingView *)editingView {
     if (!_editingView) {
-        _editingView = [[HXPhotoEditingView alloc] initWithFrame:self.view.bounds];
+        _editingView = [[HXPhotoEditingView alloc] initWithFrame:self.view.bounds config:self.configuration];
         _editingView.onlyCliping = self.onlyCliping;
-        _editingView.configuration = self.configuration;
         _editingView.clippingDelegate = self;
         if (self.configuration.drawColors.count > self.configuration.defaultDarwColorIndex) {
             _editingView.clippingView.imageView.drawView.lineColor = self.configuration.drawColors[self.configuration.defaultDarwColorIndex];
