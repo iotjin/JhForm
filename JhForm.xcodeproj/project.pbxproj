@@ -70,6 +70,9 @@
 		ED88B08F2580AE9D004502BF /* demo2.gif in Resources */ = {isa = PBXBuildFile; fileRef = ED88B0842580AE9D004502BF /* demo2.gif */; };
 		ED88B0902580AE9D004502BF /* demo9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ED88B0852580AE9D004502BF /* demo9.jpg */; };
 		ED88B0912580AE9D004502BF /* demo8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = ED88B0862580AE9D004502BF /* demo8.jpg */; };
+		EDCD8AF12761CC530065C3DF /* DynamicView.m in Sources */ = {isa = PBXBuildFile; fileRef = EDCD8AEF2761CC530065C3DF /* DynamicView.m */; };
+		EDCD8AF22761CC530065C3DF /* DynamicView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EDCD8AF02761CC530065C3DF /* DynamicView.xib */; };
+		EDE00968275F20B1009B222B /* FormDemo12VC.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE00967275F20B1009B222B /* FormDemo12VC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -203,6 +206,11 @@
 		ED88B0842580AE9D004502BF /* demo2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = demo2.gif; sourceTree = "<group>"; };
 		ED88B0852580AE9D004502BF /* demo9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = demo9.jpg; sourceTree = "<group>"; };
 		ED88B0862580AE9D004502BF /* demo8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = demo8.jpg; sourceTree = "<group>"; };
+		EDCD8AEE2761CC530065C3DF /* DynamicView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DynamicView.h; sourceTree = "<group>"; };
+		EDCD8AEF2761CC530065C3DF /* DynamicView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicView.m; sourceTree = "<group>"; };
+		EDCD8AF02761CC530065C3DF /* DynamicView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DynamicView.xib; sourceTree = "<group>"; };
+		EDE00966275F20B1009B222B /* FormDemo12VC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormDemo12VC.h; sourceTree = "<group>"; };
+		EDE00967275F20B1009B222B /* FormDemo12VC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormDemo12VC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -302,6 +310,7 @@
 		ED88AF7025809C2A004502BF /* demo */ = {
 			isa = PBXGroup;
 			children = (
+				EDE00969275F2112009B222B /* demo12 */,
 				ED88AF7325809C2A004502BF /* demo10 */,
 				ED88AF8925809C2A004502BF /* FormDemo1VC.h */,
 				ED88AF7D25809C2A004502BF /* FormDemo1VC.m */,
@@ -486,6 +495,18 @@
 			path = other;
 			sourceTree = "<group>";
 		};
+		EDE00969275F2112009B222B /* demo12 */ = {
+			isa = PBXGroup;
+			children = (
+				EDCD8AEE2761CC530065C3DF /* DynamicView.h */,
+				EDCD8AEF2761CC530065C3DF /* DynamicView.m */,
+				EDCD8AF02761CC530065C3DF /* DynamicView.xib */,
+				EDE00966275F20B1009B222B /* FormDemo12VC.h */,
+				EDE00967275F20B1009B222B /* FormDemo12VC.m */,
+			);
+			path = demo12;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -609,6 +630,7 @@
 				ED88B0882580AE9D004502BF /* demo7.jpg in Resources */,
 				ED88B08E2580AE9D004502BF /* demo1.gif in Resources */,
 				ED88AFD425809C2A004502BF /* CustumCell.xib in Resources */,
+				EDCD8AF22761CC530065C3DF /* DynamicView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -697,6 +719,7 @@
 				ED88AFDA25809C2A004502BF /* ViewController.m in Sources */,
 				ED88B04C25809D39004502BF /* JhFormSwitchBtnCell.m in Sources */,
 				ED88B04F25809D3A004502BF /* JhFormCustumALLViewCell.m in Sources */,
+				EDE00968275F20B1009B222B /* FormDemo12VC.m in Sources */,
 				ED88B04B25809D39004502BF /* JhFormTextViewInputCell.m in Sources */,
 				ED88B05125809D3A004502BF /* JhFormCustumRightCell.m in Sources */,
 				ED88B05325809D3A004502BF /* JhFormSelectImageCell.m in Sources */,
@@ -706,6 +729,7 @@
 				ED88B04425809D39004502BF /* UIView+JhView.m in Sources */,
 				ED88AFDC25809C2A004502BF /* FooterCell.m in Sources */,
 				ED88B04225809D39004502BF /* NSString+JhForm.m in Sources */,
+				EDCD8AF12761CC530065C3DF /* DynamicView.m in Sources */,
 				ED88B05625809D3A004502BF /* JhFormCustumBottomCell.m in Sources */,
 				E93D3F7F21E58DD9003DC702 /* AppDelegate.m in Sources */,
 				ED88AFD725809C2A004502BF /* FormDemo1VC.m in Sources */,
@@ -896,7 +920,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.0;
+				MARKETING_VERSION = 2.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Jh.JhForm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -916,7 +940,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.0;
+				MARKETING_VERSION = 2.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Jh.JhForm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -18,6 +18,7 @@
 #import "FormDemo9VC.h"
 #import "FormDemo10VC.h"
 #import "FormDemo11VC.h"
+#import "FormDemo12VC.h"
 
 @interface ViewController ()
 @end
@@ -124,6 +125,10 @@
     cell10.Jh_jumpClassName = [FormDemo11VC class];
     cell10.Jh_tipInfo = @"demo11";
     
+    JhFormCellModel *cell11 = JhFormCellModel_AddRightArrowCell(@"动态增减cell", nil);
+    cell11.Jh_jumpClassName = [FormDemo12VC class];
+    cell11.Jh_tipInfo = @"demo12";
+    
     
     //    JhFormCellModel *cell0 = JhFormCellModel_AddRightArrowCell(@"默认表单", nil);
     //    cell0.Jh_jumpClassName = [FormDemo1VC class];
@@ -132,7 +137,7 @@
     ////        [weakSelf.navigationController pushViewController:jumpVC animated:YES];
     ////    };
 
-    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,cell4,cell5,cell6,cell7,cell8,cell9,cell10]];
+    [cellArr0 addObjectsFromArray: @[cell0,cell1,cell2,cell3,cell4,cell5,cell6,cell7,cell8,cell9,cell10,cell11]];
     
     JhFormSectionModel *section0= JhSectionModel_Add(cellArr0);
     

@@ -8,6 +8,7 @@ JhForm - 自定义表单工具类，通过动态配置表单model，可以更加
 | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo1_dark.jpg" width="187" height="419"> | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo3.jpg" width="187" height="419"> | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo4.jpg" width="187" height="419"> |
 | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo6.jpg" width="187" height="419"> | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo7.jpg" width="187" height="419"> | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo8.jpg" width="187" height="419"> |
 | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo9.jpg" width="187" height="419"> | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo10.jpg" width="187" height="419"> | <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo11.gif" width="187" height="419">
+| <img src="https://gitee.com/iotjh/Picture/raw/master/GitHub/JhForm/demo12.gif" width="187" height="419"> |  | 
 
 
 ## 目录
@@ -38,6 +39,7 @@ JhForm - 自定义表单工具类，通过动态配置表单model，可以更加
 - [x] 提交按钮和导航条配置
 - [x] 录入样式排版：左标题右详情，或者上标题下详情
 - [x] 快速构建设置界面
+- [x] 动态增减Cell
 
 
 ## <a id="简介"></a> 简介 - Introduce
@@ -492,6 +494,7 @@ self.Jh_submitStr = @"提 交";
   <summary><strong>最近更新</strong></summary>
    
 ```
+* 2021.12.09 - v2.3.1版本，增加动态增减Cell示例（Demo12）<br>
 * 2021.11.26 - v2.3.0版本，iOS15适配，HXPhotoPicker更新至v3.2.7版本 <br>
 * 2021.07.02 - v2.2.0版本，新增图片、选择按钮选中数组清空属性 <br>
 * 2021.03.30 - v2.1.0版本，暗黑模式优化，HXPhotoPicker更新至v3.1.9版本 <br>
