@@ -83,9 +83,9 @@
     };
     bgView.ClickDeleteBlock = ^(UIButton * _Nonnull button) {
         UITableViewCell * cell = (UITableViewCell*) [[[[[button superview] superview]superview]superview]superview];
-        NSIndexPath *IndexPath0 = [self.Jh_formTableView indexPathForCell:cell];
-        [self.cellModelArr removeObjectAtIndex:IndexPath0.row];
-        [self.Jh_formTableView reloadData];
+        NSIndexPath *IndexPath0 = [weakSelf.Jh_formTableView indexPathForCell:cell];
+        [weakSelf.cellModelArr removeObjectAtIndex:IndexPath0.row];
+        [weakSelf.Jh_formTableView reloadData];
     };
     
     JhFormCellModel *money = JhFormCellModel_AddCustumRightCell(@"金额");
@@ -97,8 +97,9 @@
         [rightView addSubview:bgView];
     };
     
+    __weak typeof(money) weakMoney = money;
     bgView.InputBlock = ^(NSString * _Nonnull value) {
-        money.Jh_info_idStr = value;
+        weakMoney.Jh_info_idStr = value;
     };
     
     [self.cellModelArr insertObject:money atIndex:self.cellModelArr.count-1];

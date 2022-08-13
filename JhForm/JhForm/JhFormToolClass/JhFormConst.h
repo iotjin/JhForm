@@ -12,8 +12,8 @@
 #import "NSString+JhForm.h"
 #import "UIView+JhView.h"
 
-/// 版本号（20211209）
-#define kVersion @"2.3.1"
+/// 版本号（20220813）
+#define kVersion @"2.3.2"
 
 
 /// 屏幕宽度、高度

@@ -72,8 +72,8 @@ JhForm - 自定义表单工具类，通过动态配置表单model，可以更加
 ```ruby
 # 将以下内容添加到您的Podfile中：
 
-#  选择图片依赖HXPhotoPicker和SDWebImage，可以分开加或者使用： pod 'HXPhotoPicker/SDWebImage', '3.2.7'
-pod 'HXPhotoPicker', '3.2.7'
+#  选择图片依赖HXPhotoPicker和SDWebImage，可以分开加或者使用： pod 'HXPhotoPicker/SDWebImage', '3.3.1'
+pod 'HXPhotoPicker', '3.3.1'
 pod 'SDWebImage', '5.10.0'
 # 选择图片下载在线视频需要使用AFNetworking
 pod 'AFNetworking', '4.0.1'
@@ -136,9 +136,9 @@ pod repo update 或 rm ~/Library/Caches/CocoaPods/search_index.json
 
 注：<br>
 
-* JhFormCellModel 针对单个页面某些属性动态配置<br>
- * JhFormTableViewVC.h 针对整个页面进行表单提交按钮、导航条配置<br>
- * JhFormConst 针对项目范围内进行属性配置<br>
+* JhFormCellModel 针对单个页面某些属性动态配置
+* JhFormTableViewVC.h 针对整个页面进行表单提交按钮、导航条配置
+* JhFormConst 针对项目范围内进行属性配置
  
 </details>
 
@@ -494,12 +494,13 @@ self.Jh_submitStr = @"提 交";
   <summary><strong>最近更新</strong></summary>
    
 ```
-* 2021.12.09 - v2.3.1版本，增加动态增减Cell示例（Demo12）<br>
-* 2021.11.26 - v2.3.0版本，iOS15适配，HXPhotoPicker更新至v3.2.7版本 <br>
-* 2021.07.02 - v2.2.0版本，新增图片、选择按钮选中数组清空属性 <br>
-* 2021.03.30 - v2.1.0版本，暗黑模式优化，HXPhotoPicker更新至v3.1.9版本 <br>
-* 2020.12.09 - v2.0.0版本，代码重构，支持自定义xib Cell与model，此版本变动较大，若引用v1.5.0版本之前版本谨慎更新 <br>
-* 2020.11.13 - v1.5.0版本，添加视频选择效果，支持本地和网络视频选择与展示 <br>
+* 2022.08.13 - v2.3.2版本，修复MLeaksFinder提示的内存泄漏bug，HXPhotoPicker更新至v3.3.1版本
+* 2021.12.09 - v2.3.1版本，增加动态增减Cell示例（Demo12）
+* 2021.11.26 - v2.3.0版本，iOS15适配，HXPhotoPicker更新至v3.2.7版本 
+* 2021.07.02 - v2.2.0版本，新增图片、选择按钮选中数组清空属性 
+* 2021.03.30 - v2.1.0版本，暗黑模式优化，HXPhotoPicker更新至v3.1.9版本 
+* 2020.12.09 - v2.0.0版本，代码重构，支持自定义xib Cell与model，此版本变动较大，若引用v1.5.0版本之前版本谨慎更新 
+* 2020.11.13 - v1.5.0版本，添加视频选择效果，支持本地和网络视频选择与展示 
 ```
 </details>
    
@@ -507,27 +508,27 @@ self.Jh_submitStr = @"提 交";
   <summary><strong>历史记录</strong></summary>
   
 ```
-* 2020.11.09 - 添加设置样式 <br>
-* 2020.10.30 - 新增JhFormSelectBtnCell <br>
-* 2020.10.23 - HXPhotoPicker更新至v3.1.2版本(iPhone12适配)，增加提交按钮相关属性<br>
-* 2020.10.15 - 添加版本号v1.0.0，HXPhotoPicker更新至v3.1.1版本,处理iOS14图片异常<br>
-* 2020.09.30 - 添加cell文字居中效果 <br>
-* 2020.08.05 - JhFormSelectImageCell优化 <br>
-* 2020.07.24 - JhFormSelectImageCell高度自适应，无加号按钮 优化 <br>
-* 2020.04.28 - HXPhotoPicker更新至v2.4.2版本，JhFormSelectImageCell高度自适应 <br>
-* 2020.01.14 - 优化图片动态更新 <br>
-* 2019.10.16 - 适配iOS13暗黑模式(默认跟随系统自动切换,可控制某个页面一直处于light模式) <br>
-* 2019.09.30 - 添加设置标题颜色属性,添加设置cell不可编辑的属性,添加一些备用字段,修改cell重用的逻辑<br>
-* 2019.09.12 - 修复存在多个相同类型iuputCell右侧自定义view复用的问题<br>
-* 2019.09.11 - 文本输入和密码输入样式增加右侧自定义View,新增只显示右侧输入框样式(设置Jh_title为空即可),标题增加换行展示,选择图片cell增加底部提示文本(不设置默认不显示),优化红星展示方式 <br> 
-* 2019.07.26 - 新增完全自定义样式cell (JhFormCustumALLViewCell) ,添加cell背景色设置属性 "Jh_cellBgColor"<br> 
-* 2019.06.21 - 新增密码输入样式cell (JhFormPwdCell) <br> 
-* 2019.06.18 - 修复switchBtn开关失效的问题 <br> 
-* 2019.04.22 - 添加统一设置标题宽度的属性 "Jh_leftTitleWidth" <br> 
-* 2019.04.18 - 添加单个设置标题宽度的属性 "Jh_titleWidth" <br> 
-* 2019.04.02 - 添加选择最大图片数量属性 <br> 
-* 2019.03.27 - CustumRightCell样式添加显示箭头的属性 <br> 
-* 2019.03.22 - 新增设置导航条右侧文字和图片的方法,添加快捷添加输入样式cell的方法,监听输入文字和输入完成状态的Block <br> 
+* 2020.11.09 - 添加设置样式 
+* 2020.10.30 - 新增JhFormSelectBtnCell 
+* 2020.10.23 - HXPhotoPicker更新至v3.1.2版本(iPhone12适配)，增加提交按钮相关属性
+* 2020.10.15 - 添加版本号v1.0.0，HXPhotoPicker更新至v3.1.1版本,处理iOS14图片异常
+* 2020.09.30 - 添加cell文字居中效果 
+* 2020.08.05 - JhFormSelectImageCell优化 
+* 2020.07.24 - JhFormSelectImageCell高度自适应，无加号按钮 优化 
+* 2020.04.28 - HXPhotoPicker更新至v2.4.2版本，JhFormSelectImageCell高度自适应 
+* 2020.01.14 - 优化图片动态更新 
+* 2019.10.16 - 适配iOS13暗黑模式(默认跟随系统自动切换,可控制某个页面一直处于light模式) 
+* 2019.09.30 - 添加设置标题颜色属性,添加设置cell不可编辑的属性,添加一些备用字段,修改cell重用的逻辑
+* 2019.09.12 - 修复存在多个相同类型iuputCell右侧自定义view复用的问题
+* 2019.09.11 - 文本输入和密码输入样式增加右侧自定义View,新增只显示右侧输入框样式(设置Jh_title为空即可),标题增加换行展示,选择图片cell增加底部提示文本(不设置默认不显示),优化红星展示方式 
+* 2019.07.26 - 新增完全自定义样式cell (JhFormCustumALLViewCell) ,添加cell背景色设置属性 "Jh_cellBgColor"
+* 2019.06.21 - 新增密码输入样式cell (JhFormPwdCell) 
+* 2019.06.18 - 修复switchBtn开关失效的问题 
+* 2019.04.22 - 添加统一设置标题宽度的属性 "Jh_leftTitleWidth"  
+* 2019.04.18 - 添加单个设置标题宽度的属性 "Jh_titleWidth" 
+* 2019.04.02 - 添加选择最大图片数量属性 
+* 2019.03.27 - CustumRightCell样式添加显示箭头的属性 
+* 2019.03.22 - 新增设置导航条右侧文字和图片的方法,添加快捷添加输入样式cell的方法,监听输入文字和输入完成状态的Block
 ```
 </details>
 

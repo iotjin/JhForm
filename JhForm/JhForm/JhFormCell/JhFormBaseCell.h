@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *line;
 
 /// 表单Cell 所在的tableView
-@property (nonatomic, strong) UITableView *baseTableView;
+@property (nonatomic, weak) UITableView *baseTableView;
 
 /// cell配置model
 @property (nonatomic, strong) JhFormCellModel *cellModel;

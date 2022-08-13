@@ -14,18 +14,20 @@ PODS:
   - AFNetworking/Serialization (4.0.1)
   - AFNetworking/UIKit (4.0.1):
     - AFNetworking/NSURLSession
-  - HXPhotoPicker (3.2.7):
-    - HXPhotoPicker/Default (= 3.2.7)
-  - HXPhotoPicker/Default (3.2.7)
+  - HXPhotoPicker (3.3.1):
+    - HXPhotoPicker/Default (= 3.3.1)
+  - HXPhotoPicker/Default (3.3.1)
   - IQKeyboardManager (6.5.6)
+  - MLeaksFinder (1.0.0)
   - SDWebImage (5.10.0):
     - SDWebImage/Core (= 5.10.0)
   - SDWebImage/Core (5.10.0)
 
 DEPENDENCIES:
   - AFNetworking (= 4.0.1)
-  - HXPhotoPicker (= 3.2.7)
+  - HXPhotoPicker (= 3.3.1)
   - IQKeyboardManager (= 6.5.6)
+  - MLeaksFinder (from `https://github.com/Zepo/MLeaksFinder.git`)
   - SDWebImage (= 5.10.0)
 
 SPEC REPOS:
@@ -35,12 +37,22 @@ SPEC REPOS:
     - IQKeyboardManager
     - SDWebImage
 
+EXTERNAL SOURCES:
+  MLeaksFinder:
+    :git: https://github.com/Zepo/MLeaksFinder.git
+
+CHECKOUT OPTIONS:
+  MLeaksFinder:
+    :commit: e4a1eaa0c6b80f61d810c83b9061c7530c5987e5
+    :git: https://github.com/Zepo/MLeaksFinder.git
+
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
-  HXPhotoPicker: 472f8f0c8dc0dc70534dc630b7e20fe09b342e02
+  HXPhotoPicker: f1274d0c931ad8564e0f23f33fe8b6110b639bd7
   IQKeyboardManager: 2a6e97afdafc7becf0cb17a9a8d795e3a980717f
+  MLeaksFinder: 89eb3142bf1bbd0a3d1849543b629399c5da74c5
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
 
-PODFILE CHECKSUM: a3d3bb38a9b69a17162467d69f04cce02468f299
+PODFILE CHECKSUM: 010a7a02c3cdb3a396a1c6d5de974eba19e237fd
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.11.3
